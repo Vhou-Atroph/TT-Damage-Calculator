@@ -100,6 +100,22 @@ bCakeImg=PhotoImage(file='img/birthday-cake.png')
 bCake=Button(thrwFrame,image=bCakeImg)
 wCakeImg=PhotoImage(file='img/wedding-cake.png')
 wCake=Button(thrwFrame,image=wCakeImg)
+#Squirt
+sqrtFrame=Frame(gagFrame)
+sFlowerImg=PhotoImage(file='img/squirting-flower.png')
+sFlower=Button(sqrtFrame,image=sFlowerImg)
+gWaterImg=PhotoImage(file='img/glass-of-water.png')
+gWater=Button(sqrtFrame,image=gWaterImg)
+sGunImg=PhotoImage(file='img/squirt-gun.png')
+sGun=Button(sqrtFrame,image=sGunImg)
+sBottleImg=PhotoImage(file='img/seltzer-bottle.png')
+sBottle=Button(sqrtFrame,image=sBottleImg)
+fHoseImg=PhotoImage(file='img/fire-hose.png')
+fHose=Button(sqrtFrame,image=fHoseImg)
+sCloudImg=PhotoImage(file='img/storm-cloud.png')
+sCloud=Button(sqrtFrame,image=sCloudImg)
+geyserImg=PhotoImage(file='img/geyser.png')
+geyser=Button(sqrtFrame,image=geyserImg)
 
 #Geometry - Main Columns
 col1.grid(column=0,row=0,padx=10) #In retrospect I should have used 0 for the column name too, but it doesn't matter *that* much.
@@ -133,6 +149,15 @@ wFPie.grid(column=3,row=0)
 wCPie.grid(column=4,row=0)
 bCake.grid(column=5,row=0)
 wCake.grid(column=6,row=0)
+#Squirt
+sqrtFrame.grid(column=0,row=2,pady=3)
+sFlower.grid(column=0,row=0)
+gWater.grid(column=1,row=0)
+sGun.grid(column=2,row=0)
+sBottle.grid(column=3,row=0)
+fHose.grid(column=4,row=0)
+sCloud.grid(column=5,row=0)
+geyser.grid(column=6,row=0)
 
 #Run
 window.mainloop()
