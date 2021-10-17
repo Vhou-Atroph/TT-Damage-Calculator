@@ -6,6 +6,20 @@ CONTRIBUTORS:
 - Vhou-Atroph
 '''
 
+#Variables
+global lured
+global organic
+global sndDmg
+global thrwDmg
+global sqrtDmgg
+global drpDmg
+lured=0
+organic=0
+sndDmg=0
+thrwDmg=0
+sqrtDmg=0
+drpDmg=0
+
 #Window
 global window
 window=Tk()
@@ -20,7 +34,7 @@ col2=Frame(window) #Will be used for calculation history
 #Toggles
 togBtns=Frame(col1)
 orgBtn=Button(togBtns,text='Toggle Organic')
-lurChk=Checkbutton(togBtns,text='Cog lured')
+lurChk=Checkbutton(togBtns,text='Cog lured',variable=lured,onvalue=1,offvalue=0)
 clrBtn=Button(togBtns,text='Clear Inputs')
 clcBtn=Button(togBtns,text='Calculate',font=('Arial',10,'bold'))
 emptLbl=Label(togBtns)
@@ -29,7 +43,7 @@ emptLbl=Label(togBtns)
 gagFrame=Frame(col1)
 #Sound
 sndFrame=Frame(gagFrame)
-bHornImg=PhotoImage(file='img/bike-horn.png') #Will likely turn images into raw data at some point
+bHornImg=PhotoImage(file='img/bike-horn.png')
 bHorn=Button(sndFrame,image=bHornImg)
 whistleImg=PhotoImage(file='img/whistle.png')
 whistle=Button(sndFrame,image=whistleImg)
@@ -91,6 +105,23 @@ gPianoImg=PhotoImage(file='img/grand-piano.png')
 gPiano=Button(drpFrame,image=gPianoImg)
 tTanicImg=PhotoImage(file='img/toontanic.png')
 tTanic=Button(drpFrame,image=tTanicImg)
+#Button list - used for mass configuring the gag buttons
+gagBtns=(bHorn,whistle,bugle,aoogah,eTrunk,fHorn,oSinger,cCake,fPSlice,cPSlice,wFPie,wCPie,bCake,wCake,sFlower,gWater,sGun,sBottle,fHose,sCloud,geyser,fPot,sBag,anvil,bWeight,safe,gPiano,tTanic)
+
+#Toggle organic functions
+def togOrgOff():
+  organic=0
+  print("Gags in calculations will no longer be organic!")
+  orgBtn.configure(command=togOrgOn)
+  for i in gagBtns:
+    i.configure(bg='SystemButtonFace')
+def togOrgOn():
+  organic=1
+  print("Gags in calculations will now be organic!")
+  orgBtn.configure(command=togOrgOff)
+  for i in gagBtns:
+    i.configure(bg='darkorange')
+orgBtn.configure(command=togOrgOn)
 
 #Geometry - Main Columns
 col1.grid(column=0,row=0,padx=10) #In retrospect I should have used 0 for the column name too, but it doesn't matter *that* much.
@@ -107,7 +138,7 @@ emptLbl.grid(column=3,row=0,padx=15)
 #Geometry - Gags
 gagFrame.grid(column=0,row=2,pady=10)
 #Sound
-sndFrame.grid(column=0,row=0,pady=3)
+sndFrame.grid(column=0,row=0,pady=1)
 bHorn.grid(column=0,row=0)
 whistle.grid(column=1,row=0)
 bugle.grid(column=2,row=0)
@@ -116,7 +147,7 @@ eTrunk.grid(column=4,row=0)
 fHorn.grid(column=5,row=0)
 oSinger.grid(column=6,row=0)
 #Throw
-thrwFrame.grid(column=0,row=1,pady=3)
+thrwFrame.grid(column=0,row=1,pady=1)
 cCake.grid(column=0,row=0)
 fPSlice.grid(column=1,row=0)
 cPSlice.grid(column=2,row=0)
@@ -125,7 +156,7 @@ wCPie.grid(column=4,row=0)
 bCake.grid(column=5,row=0)
 wCake.grid(column=6,row=0)
 #Squirt
-sqrtFrame.grid(column=0,row=2,pady=3)
+sqrtFrame.grid(column=0,row=2,pady=1)
 sFlower.grid(column=0,row=0)
 gWater.grid(column=1,row=0)
 sGun.grid(column=2,row=0)
@@ -134,7 +165,7 @@ fHose.grid(column=4,row=0)
 sCloud.grid(column=5,row=0)
 geyser.grid(column=6,row=0)
 #Drop
-drpFrame.grid(column=0,row=3,pady=3)
+drpFrame.grid(column=0,row=3,pady=1)
 fPot.grid(column=0,row=0)
 sBag.grid(column=1,row=0)
 anvil.grid(column=2,row=0)
