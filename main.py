@@ -7,6 +7,13 @@ CONTRIBUTORS:
 - Vhou-Atroph
 '''
 
+#Window
+global window
+window=Tk()
+window.title("Toontown Damage Calculator")
+icon=PhotoImage(file="img/whole-cream-pie.png")
+window.iconphoto(True, icon)
+
 #Variables
 global lured
 global organic
@@ -15,20 +22,13 @@ global trwUsed
 global sqtUsed
 global drpUsed
 global totDmg
-lured=0
+lured=IntVar()
 organic=0
 sndUsed=list()
 trwUsed=list()
 sqtUsed=list()
 drpUsed=list()
 totDmg=0
-
-#Window
-global window
-window=Tk()
-window.title("Toontown Damage Calculator")
-icon=PhotoImage(file="img/whole-cream-pie.png")
-window.iconphoto(True, icon)
 
 #Columns
 col1=Frame(window) #Main content of the calculator
@@ -99,7 +99,7 @@ fPot=Button(drpFrame,image=fPotImg)
 sBagImg=PhotoImage(file='img/sandbag.png')
 sBag=Button(drpFrame,image=sBagImg)
 anvilImg=PhotoImage(file='img/anvil.png')
-anvil=Button(drpFrame,image=fHoseImg)
+anvil=Button(drpFrame,image=anvilImg)
 bWeightImg=PhotoImage(file='img/big-weight.png')
 bWeight=Button(drpFrame,image=bWeightImg)
 safeImg=PhotoImage(file='img/safe.png')
@@ -119,8 +119,8 @@ clrHistBtn=Button(hist,text="Clear History")
 
 #Calculation results
 clcResults=Frame(col1)
-dmgThsRnd=Label(clcResults,text="Damage this round:")
-theDmg=Label(clcResults,text="0",font=('Arial',10,'bold'))
+dmgThsRnd=Label(clcResults,text="Damage this round:",font=('Arial',16,'normal'))
+theDmg=Label(clcResults,text="0",font=('Arial',16,'bold'))
 
 #Toggle organic functions
 def togOrgOff():
@@ -142,14 +142,17 @@ orgBtn.configure(command=togOrgOn)
 #Clear inputs function
 def clearInputs():
   print("Clearing gag inputs!")
+  global lured
   global sndUsed
   global trwUsed
   global sqtUsed
   global drpUsed
+  lured.set(0)
   sndUsed=list()
   trwUsed=list()
   sqtUsed=list()
   drpUsed=list()
+  togOrgOff()
 clrBtn.configure(command=clearInputs)
 
 #Clear history function
@@ -246,27 +249,136 @@ def oSingerPrs():
     histBox.insert('1.0',"Gag used: Organic Opera Singer (99)\n")
     histBox.configure(state=DISABLED)
 oSinger.configure(command=oSingerPrs)
+#Throw
+def cCakePrs():
+  if organic==0:
+    trwUsed.append(6)
+    histBox.configure(state=NORMAL)
+    histBox.insert('1.0',"Gag used: Cupcake (6)\n")
+    histBox.configure(state=DISABLED)
+  else:
+    trwUsed.append(7)
+    histBox.configure(state=NORMAL)
+    histBox.insert('1.0',"Gag used: Organic Cupcake (7)\n")
+    histBox.configure(state=DISABLED)
+cCake.configure(command=cCakePrs)
+def fPSlicePrs():
+  if organic==0:
+    trwUsed.append(10)
+    histBox.configure(state=NORMAL)
+    histBox.insert('1.0',"Gag used: Fruit Pie Slice (10)\n")
+    histBox.configure(state=DISABLED)
+  else:
+    trwUsed.append(11)
+    histBox.configure(state=NORMAL)
+    histBox.insert('1.0',"Gag used: Organic Fruit Pie Slice (11)\n")
+    histBox.configure(state=DISABLED)
+fPSlice.configure(command=fPSlicePrs)
+def cPSlicePrs():
+  if organic==0:
+    trwUsed.append(18)
+    histBox.configure(state=NORMAL)
+    histBox.insert('1.0',"Gag used: Cream Pie Slice (18)\n")
+    histBox.configure(state=DISABLED)
+  else:
+    trwUsed.append(19)
+    histBox.configure(state=NORMAL)
+    histBox.insert('1.0',"Gag used: Organic Cream Pie Slice (19)\n")
+    histBox.configure(state=DISABLED)
+cPSlice.configure(command=cPSlicePrs)
+def wFPiePrs():
+  if organic==0:
+    trwUsed.append(27)
+    histBox.configure(state=NORMAL)
+    histBox.insert('1.0',"Gag used: Whole Fruit Pie (27)\n")
+    histBox.configure(state=DISABLED)
+  else:
+    trwUsed.append(29)
+    histBox.configure(state=NORMAL)
+    histBox.insert('1.0',"Gag used: Organic Whole Fruit Pie (29)\n")
+    histBox.configure(state=DISABLED)
+wFPie.configure(command=wFPiePrs)
+def wCPiePrs():
+  if organic==0:
+    trwUsed.append(40)
+    histBox.configure(state=NORMAL)
+    histBox.insert('1.0',"Gag used: Whole Cream Pie (40)\n")
+    histBox.configure(state=DISABLED)
+  else:
+    trwUsed.append(44)
+    histBox.configure(state=NORMAL)
+    histBox.insert('1.0',"Gag used: Organic Whole Cream Pie (44)\n")
+    histBox.configure(state=DISABLED)
+wCPie.configure(command=wCPiePrs)
+def bCakePrs():
+  if organic==0:
+    trwUsed.append(100)
+    histBox.configure(state=NORMAL)
+    histBox.insert('1.0',"Gag used: Birthday Cake (100)\n")
+    histBox.configure(state=DISABLED)
+  else:
+    trwUsed.append(110)
+    histBox.configure(state=NORMAL)
+    histBox.insert('1.0',"Gag used: Organic Birthday Cake (110)\n")
+    histBox.configure(state=DISABLED)
+bCake.configure(command=bCakePrs)
+def wCakePrs():
+  if organic==0:
+    trwUsed.append(120)
+    histBox.configure(state=NORMAL)
+    histBox.insert('1.0',"Gag used: Wedding Cake (120)\n")
+    histBox.configure(state=DISABLED)
+  else:
+    trwUsed.append(132)
+    histBox.configure(state=NORMAL)
+    histBox.insert('1.0',"Gag used: Organic Wedding Cake (132)\n")
+    histBox.configure(state=DISABLED)
+wCake.configure(command=wCakePrs)
 
 #Sound damage calculation
 def sndDmgClc():
   print("Damage of each individual sound gag: "+str(sndUsed))
   global lured
-  lured=0
+  lured.set(0)
   print("If cogs were lured, they aren't anymore! Don't use sound on lured cogs!")
   if len(sndUsed)>1:
     totSndDmg=sum(sndUsed,0)
     totSndDmg=math.ceil(totSndDmg+(totSndDmg*0.2))
-    print("Total sound damage: "+str(totSndDmg))
-  if len(sndUsed)==1:
-    totSndDmg=sum(sndUsed,0)
-    print("Total sound damage: "+str(totSndDmg))
+  else:
+    totSndDmg=sndUsed[0]
+  print("Total sound damage: "+str(totSndDmg))
   global totDmg
   totDmg=totDmg+totSndDmg
+  
+#Throw damage calculation
+def trwDmgClc():
+  print("Damage of each individual throw gag:"+str(trwUsed))
+  global lured
+  if lured.get()==0:
+    print("The cogs are not lured, and there will be no 50% damage bonus.")
+    if len(trwUsed)>1:
+      totTrwDmg=sum(trwUsed,0)
+      totTrwDmg=math.ceil(totTrwDmg+(totTrwDmg*0.2))
+    else:
+      totTrwDmg=trwUsed[0]
+  else:
+    print("The cogs are lured, and there will be a 50% damage bonus.")
+    if len(trwUsed)>1:
+      totTrwDmg=sum(trwUsed,0)
+      totTrwDmg=totTrwDmg+(totTrwDmg/2)+(totTrwDmg*0.2)
+    else:
+      totTrwDmg=trwUsed[0]+(trwUsed[0]/2)
+    lured.set(0)
+  print("Total throw damage: "+str(totTrwDmg))
+  global totDmg
+  totDmg=totDmg+totTrwDmg
 
-#Damage calculation
+#Total damage calculation
 def clcDmg():
   if len(sndUsed)>0:
     sndDmgClc()
+  if len(trwUsed)>0:
+    trwDmgClc()
   global totDmg
   print("Total damage this round: "+str(totDmg))
   theDmg.configure(text=str(totDmg))
