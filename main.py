@@ -116,6 +116,22 @@ sCloudImg=PhotoImage(file='img/storm-cloud.png')
 sCloud=Button(sqrtFrame,image=sCloudImg)
 geyserImg=PhotoImage(file='img/geyser.png')
 geyser=Button(sqrtFrame,image=geyserImg)
+#Drop
+drpFrame=Frame(gagFrame)
+fPotImg=PhotoImage(file='img/flower-pot.png')
+fPot=Button(drpFrame,image=fPotImg)
+sBagImg=PhotoImage(file='img/sandbag.png')
+sBag=Button(drpFrame,image=sBagImg)
+anvilImg=PhotoImage(file='img/anvil.png')
+anvil=Button(drpFrame,image=fHoseImg)
+bWeightImg=PhotoImage(file='img/big-weight.png')
+bWeight=Button(drpFrame,image=bWeightImg)
+safeImg=PhotoImage(file='img/safe.png')
+safe=Button(drpFrame,image=safeImg)
+gPianoImg=PhotoImage(file='img/grand-piano.png')
+gPiano=Button(drpFrame,image=gPianoImg)
+tTanicImg=PhotoImage(file='img/toontanic.png')
+tTanic=Button(drpFrame,image=tTanicImg)
 
 #Geometry - Main Columns
 col1.grid(column=0,row=0,padx=10) #In retrospect I should have used 0 for the column name too, but it doesn't matter *that* much.
@@ -158,6 +174,15 @@ sBottle.grid(column=3,row=0)
 fHose.grid(column=4,row=0)
 sCloud.grid(column=5,row=0)
 geyser.grid(column=6,row=0)
+#Drop
+drpFrame.grid(column=0,row=3,pady=3)
+fPot.grid(column=0,row=0)
+sBag.grid(column=1,row=0)
+anvil.grid(column=2,row=0)
+bWeight.grid(column=3,row=0)
+safe.grid(column=4,row=0)
+gPiano.grid(column=5,row=0)
+tTanic.grid(column=6,row=0)
 
 #Run
 window.mainloop()
