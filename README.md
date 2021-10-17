@@ -1,2 +1,2 @@
-# TT-Damage-Calculator
+# TT-Damage-Calculator (HEAVY WIP)
  Gag damage calculator for Toontown
