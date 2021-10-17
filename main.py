@@ -1,4 +1,5 @@
 from tkinter import *
+import math
 
 '''VERSION 0
 
@@ -9,16 +10,16 @@ CONTRIBUTORS:
 #Variables
 global lured
 global organic
-global sndDmg
-global thrwDmg
-global sqrtDmgg
-global drpDmg
+global sndUsed
+global trwUsed
+global sqtUsed
+global drpUsed
 lured=0
 organic=0
-sndDmg=0
-thrwDmg=0
-sqrtDmg=0
-drpDmg=0
+sndUsed=list()
+trwUsed=list()
+sqtUsed=list()
+drpUsed=list()
 
 #Window
 global window
@@ -39,7 +40,7 @@ clrBtn=Button(togBtns,text='Clear Inputs')
 clcBtn=Button(togBtns,text='Calculate',font=('Arial',10,'bold'))
 emptLbl=Label(togBtns)
 
-#The Gags
+#The Gags (Trap may be added eventually, but it is not a priority.)
 gagFrame=Frame(col1)
 #Sound
 sndFrame=Frame(gagFrame)
@@ -108,20 +109,163 @@ tTanic=Button(drpFrame,image=tTanicImg)
 #Button list - used for mass configuring the gag buttons
 gagBtns=(bHorn,whistle,bugle,aoogah,eTrunk,fHorn,oSinger,cCake,fPSlice,cPSlice,wFPie,wCPie,bCake,wCake,sFlower,gWater,sGun,sBottle,fHose,sCloud,geyser,fPot,sBag,anvil,bWeight,safe,gPiano,tTanic)
 
+#Calculation history
+hist=Frame(col2)
+histLbl=Label(hist,text="History")
+yscroll=Scrollbar(hist)
+histBox=Text(hist,width=25,height=15,state=DISABLED,font=('Arial',10,'normal'),yscrollcommand=yscroll.set)
+clrHistBtn=Button(hist,text="Clear History")
+
+#Calculation results
+clcResults=Frame(col1)
+dmgThsRnd=Label(clcResults,text="Damage this round:")
+theDmg=Label(clcResults,text="0",font=('Arial',10,'bold'))
+
 #Toggle organic functions
 def togOrgOff():
+  global organic
   organic=0
   print("Gags in calculations will no longer be organic!")
   orgBtn.configure(command=togOrgOn)
   for i in gagBtns:
     i.configure(bg='SystemButtonFace',activebackground='SystemButtonFace')
 def togOrgOn():
+  global organic
   organic=1
   print("Gags in calculations will now be organic!")
   orgBtn.configure(command=togOrgOff)
   for i in gagBtns:
     i.configure(bg='darkorange',activebackground='orange')
 orgBtn.configure(command=togOrgOn)
+
+#Clear inputs function
+def clearInputs():
+  print("Clearing gag inputs!")
+  global sndUsed
+  global trwUsed
+  global sqtUsed
+  global drpUsed
+  sndUsed=list()
+  trwUsed=list()
+  sqtUsed=list()
+  drpUsed=list()
+clrBtn.configure(command=clearInputs)
+
+#Clear history function
+def clearHistory():
+  print("Clearing calculcation history!")
+  histBox.configure(state=NORMAL)
+  histBox.delete('1.0', END)
+  histBox.configure(state=DISABLED)
+clrHistBtn.configure(command=clearHistory)
+
+#Clicking on the bike horn button - the first button to be configured, and the button that will be used as the guinea pig for most testing.
+def bHornPrs():
+  if organic==0:
+    sndUsed.append(4)
+    histBox.configure(state=NORMAL)
+    histBox.insert('1.0',"Gag used: Bike Horn (4)\n")
+    histBox.configure(state=DISABLED)
+  else:
+    sndUsed.append(5)
+    histBox.configure(state=NORMAL)
+    histBox.insert('1.0',"Gag used: Organic Bike Horn (5)\n")
+    histBox.configure(state=DISABLED)
+bHorn.configure(command=bHornPrs)
+#Other sound buttons, who gives a fuck
+def whistlePrs():
+  if organic==0:
+    sndUsed.append(7)
+    histBox.configure(state=NORMAL)
+    histBox.insert('1.0',"Gag used: Whistle (7)\n")
+    histBox.configure(state=DISABLED)
+  else:
+    sndUsed.append(8)
+    histBox.configure(state=NORMAL)
+    histBox.insert('1.0',"Gag used: Organic Whistle (8)\n")
+    histBox.configure(state=DISABLED)
+whistle.configure(command=whistlePrs)
+def buglePrs():
+  if organic==0:
+    sndUsed.append(11)
+    histBox.configure(state=NORMAL)
+    histBox.insert('1.0',"Gag used: Bugle (4)\n")
+    histBox.configure(state=DISABLED)
+  else:
+    sndUsed.append(12)
+    histBox.configure(state=NORMAL)
+    histBox.insert('1.0',"Gag used: Organic Bugle (5)\n")
+    histBox.configure(state=DISABLED)
+bugle.configure(command=buglePrs)
+def aoogahPrs():
+  if organic==0:
+    sndUsed.append(16)
+    histBox.configure(state=NORMAL)
+    histBox.insert('1.0',"Gag used: Aoogah (16)\n")
+    histBox.configure(state=DISABLED)
+  else:
+    sndUsed.append(17)
+    histBox.configure(state=NORMAL)
+    histBox.insert('1.0',"Gag used: Organic Aoogah (17)\n")
+    histBox.configure(state=DISABLED)
+aoogah.configure(command=aoogahPrs)
+def eTrunkPrs():
+  if organic==0:
+    sndUsed.append(21)
+    histBox.configure(state=NORMAL)
+    histBox.insert('1.0',"Gag used: Elephant Trunk (21)\n")
+    histBox.configure(state=DISABLED)
+  else:
+    sndUsed.append(23)
+    histBox.configure(state=NORMAL)
+    histBox.insert('1.0',"Gag used: Organic Elephant Trunk (23)\n")
+    histBox.configure(state=DISABLED)
+eTrunk.configure(command=eTrunkPrs)
+def fHornPrs():
+  if organic==0:
+    sndUsed.append(50)
+    histBox.configure(state=NORMAL)
+    histBox.insert('1.0',"Gag used: Foghorn (50)\n")
+    histBox.configure(state=DISABLED)
+  else:
+    sndUsed.append(5)
+    histBox.configure(state=NORMAL)
+    histBox.insert('1.0',"Gag used: Organic Foghorn (55)\n")
+    histBox.configure(state=DISABLED)
+fHorn.configure(command=fHornPrs)
+def oSingerPrs():
+  if organic==0:
+    sndUsed.append(90)
+    histBox.configure(state=NORMAL)
+    histBox.insert('1.0',"Gag used: Opera Singer (90)\n")
+    histBox.configure(state=DISABLED)
+  else:
+    sndUsed.append(99)
+    histBox.configure(state=NORMAL)
+    histBox.insert('1.0',"Gag used: Organic Opera Singer (99)\n")
+    histBox.configure(state=DISABLED)
+oSinger.configure(command=oSingerPrs)
+
+#Sound damage calculation
+def sndDmgClc():
+  print("Damage of each individual sound gag: "+str(sndUsed))
+  global lured
+  lured=0
+  print("If cogs were lured, they aren't anymore! Don't use sound on lured cogs!")
+  if len(sndUsed)>1:
+    totSndDmg=sum(sndUsed,0)
+    totSndDmg=math.ceil(totSndDmg+(totSndDmg*0.2))
+    print("Total sound damage: "+str(totSndDmg))
+  if len(sndUsed)==1:
+    totSndDmg=sum(sndUsed,0)
+    print("Total sound damage: "+str(totSndDmg))
+
+#Damage calculation
+def clcDmg():
+  if len(sndUsed)>0:
+    sndDmgClc()
+  
+clcBtn.configure(command=clcDmg)
 
 #Geometry - Main Columns
 col1.grid(column=0,row=0,padx=10) #In retrospect I should have used 0 for the column name too, but it doesn't matter *that* much.
@@ -173,6 +317,18 @@ bWeight.grid(column=3,row=0)
 safe.grid(column=4,row=0)
 gPiano.grid(column=5,row=0)
 tTanic.grid(column=6,row=0)
+
+#Geometry - Calculation History
+hist.grid(column=0,row=0)
+histLbl.grid(column=0,row=0)
+yscroll.grid(column=1,row=1)
+histBox.grid(column=0,row=1)
+clrHistBtn.grid(column=0,row=2,pady=5)
+
+#Geometry - Calculation Results
+clcResults.grid(column=0,row=0)
+dmgThsRnd.grid(column=0,row=0)
+theDmg.grid(column=1,row=0)
 
 #Run
 window.mainloop()
