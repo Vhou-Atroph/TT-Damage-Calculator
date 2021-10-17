@@ -114,13 +114,13 @@ def togOrgOff():
   print("Gags in calculations will no longer be organic!")
   orgBtn.configure(command=togOrgOn)
   for i in gagBtns:
-    i.configure(bg='SystemButtonFace')
+    i.configure(bg='SystemButtonFace',activebackground='SystemButtonFace')
 def togOrgOn():
   organic=1
   print("Gags in calculations will now be organic!")
   orgBtn.configure(command=togOrgOff)
   for i in gagBtns:
-    i.configure(bg='darkorange')
+    i.configure(bg='darkorange',activebackground='orange')
 orgBtn.configure(command=togOrgOn)
 
 #Geometry - Main Columns
@@ -138,7 +138,7 @@ emptLbl.grid(column=3,row=0,padx=15)
 #Geometry - Gags
 gagFrame.grid(column=0,row=2,pady=10)
 #Sound
-sndFrame.grid(column=0,row=0,pady=1)
+sndFrame.grid(column=0,row=0,)
 bHorn.grid(column=0,row=0)
 whistle.grid(column=1,row=0)
 bugle.grid(column=2,row=0)
@@ -147,7 +147,7 @@ eTrunk.grid(column=4,row=0)
 fHorn.grid(column=5,row=0)
 oSinger.grid(column=6,row=0)
 #Throw
-thrwFrame.grid(column=0,row=1,pady=1)
+thrwFrame.grid(column=0,row=1)
 cCake.grid(column=0,row=0)
 fPSlice.grid(column=1,row=0)
 cPSlice.grid(column=2,row=0)
@@ -156,7 +156,7 @@ wCPie.grid(column=4,row=0)
 bCake.grid(column=5,row=0)
 wCake.grid(column=6,row=0)
 #Squirt
-sqrtFrame.grid(column=0,row=2,pady=1)
+sqrtFrame.grid(column=0,row=2)
 sFlower.grid(column=0,row=0)
 gWater.grid(column=1,row=0)
 sGun.grid(column=2,row=0)
@@ -165,7 +165,7 @@ fHose.grid(column=4,row=0)
 sCloud.grid(column=5,row=0)
 geyser.grid(column=6,row=0)
 #Drop
-drpFrame.grid(column=0,row=3,pady=1)
+drpFrame.grid(column=0,row=3)
 fPot.grid(column=0,row=0)
 sBag.grid(column=1,row=0)
 anvil.grid(column=2,row=0)
