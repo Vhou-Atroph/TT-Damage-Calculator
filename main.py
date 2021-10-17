@@ -6,47 +6,6 @@ CONTRIBUTORS:
 - Vhou-Atroph
 '''
 
-#Dictionaries
-gags={
-#Sound
-"bike horn" : 4,
-"whistle" : 7,
-"bugle" : 11,
-"aoogah" : 16,
-"elephant trunk" : 21,
-"foghorn" : 50,
-"opera singer" : 90,
-
-#Throw
-"cupcake" : 6,
-"fruit pie slice" : 10,
-"cream pie slice" : 17,
-"whole fruit pie" : 27,
-"whole cream pie" : 40,
-"birthday cake" : 100,
-"wedding cake" : 120,
-
-#Squirt
-"squirting flower" : 4,
-"glass of water" : 8,
-"squirt gun" : 12,
-"selzter bottle" : 21,
-"fire hose" : 30,
-"storm cloud" : 80,
-"geyser" : 105,
-
-#Drop
-"flower pot" : 10,
-"sandbag" : 18,
-"anvil" : 30,
-"big weight" : 45,
-"safe" : 60,
-"grand piano" : 170,
-"toontanic" : 180
-}
-
-#NTS gagsOrg dict
-
 #Window
 global window
 window=Tk()
