@@ -62,8 +62,9 @@ col2=Frame(window) #Will be used for calculation history
 togBtns=Frame(col1)
 orgBtn=Button(togBtns,text='Toggle Organic')
 lurChk=Checkbutton(togBtns,text='Cog lured')
-emptLbl=Label(togBtns)
+clrBtn=Button(togBtns,text='Clear Inputs')
 clcBtn=Button(togBtns,text='Calculate',font=('Arial',10,'bold'))
+emptLbl=Label(togBtns)
 
 #The Gags
 gagFrame=Frame(col1)
@@ -83,6 +84,22 @@ fHornImg=PhotoImage(file='img/fog-horn.png')
 fHorn=Button(sndFrame,image=fHornImg)
 oSingerImg=PhotoImage(file='img/opera-singer.png')
 oSinger=Button(sndFrame,image=oSingerImg)
+#Throw
+thrwFrame=Frame(gagFrame)
+cCakeImg=PhotoImage(file='img/cupcake.png')
+cCake=Button(thrwFrame,image=cCakeImg)
+fPSliceImg=PhotoImage(file='img/fruit-pie-slice.png')
+fPSlice=Button(thrwFrame,image=fPSliceImg)
+cPSliceImg=PhotoImage(file='img/cream-pie-slice.png')
+cPSlice=Button(thrwFrame,image=cPSliceImg)
+wFPieImg=PhotoImage(file='img/whole-fruit-pie.png')
+wFPie=Button(thrwFrame,image=wFPieImg)
+wCPieImg=PhotoImage(file='img/whole-cream-pie.png')
+wCPie=Button(thrwFrame,image=wCPieImg)
+bCakeImg=PhotoImage(file='img/birthday-cake.png')
+bCake=Button(thrwFrame,image=bCakeImg)
+wCakeImg=PhotoImage(file='img/wedding-cake.png')
+wCake=Button(thrwFrame,image=wCakeImg)
 
 #Geometry - Main Columns
 col1.grid(column=0,row=0,padx=10) #In retrospect I should have used 0 for the column name too, but it doesn't matter *that* much.
@@ -92,13 +109,14 @@ col2.grid(column=1,row=0)
 togBtns.grid(column=0,row=1,pady=10)
 lurChk.grid(column=0,row=0,padx=5)
 orgBtn.grid(column=1,row=0,padx=5)
-emptLbl.grid(column=2,row=0,padx=60)
-clcBtn.grid(column=3,row=0)
+clrBtn.grid(column=2,row=0,padx=5)
+clcBtn.grid(column=4,row=0,padx=5)
+emptLbl.grid(column=3,row=0,padx=15)
 
 #Geometry - Gags
 gagFrame.grid(column=0,row=2,pady=10)
 #Sound
-sndFrame.grid(column=0,row=0)
+sndFrame.grid(column=0,row=0,pady=3)
 bHorn.grid(column=0,row=0)
 whistle.grid(column=1,row=0)
 bugle.grid(column=2,row=0)
@@ -106,6 +124,15 @@ aoogah.grid(column=3,row=0)
 eTrunk.grid(column=4,row=0)
 fHorn.grid(column=5,row=0)
 oSinger.grid(column=6,row=0)
+#Throw
+thrwFrame.grid(column=0,row=1,pady=3)
+cCake.grid(column=0,row=0)
+fPSlice.grid(column=1,row=0)
+cPSlice.grid(column=2,row=0)
+wFPie.grid(column=3,row=0)
+wCPie.grid(column=4,row=0)
+bCake.grid(column=5,row=0)
+wCake.grid(column=6,row=0)
 
 #Run
 window.mainloop()
