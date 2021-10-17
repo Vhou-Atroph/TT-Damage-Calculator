@@ -14,12 +14,14 @@ global sndUsed
 global trwUsed
 global sqtUsed
 global drpUsed
+global totDmg
 lured=0
 organic=0
 sndUsed=list()
 trwUsed=list()
 sqtUsed=list()
 drpUsed=list()
+totDmg=0
 
 #Window
 global window
@@ -112,8 +114,7 @@ gagBtns=(bHorn,whistle,bugle,aoogah,eTrunk,fHorn,oSinger,cCake,fPSlice,cPSlice,w
 #Calculation history
 hist=Frame(col2)
 histLbl=Label(hist,text="History")
-yscroll=Scrollbar(hist)
-histBox=Text(hist,width=25,height=15,state=DISABLED,font=('Arial',10,'normal'),yscrollcommand=yscroll.set)
+histBox=Text(hist,width=25,height=15,state=DISABLED,font=('Arial',10,'normal'),wrap=WORD)
 clrHistBtn=Button(hist,text="Clear History")
 
 #Calculation results
@@ -259,17 +260,27 @@ def sndDmgClc():
   if len(sndUsed)==1:
     totSndDmg=sum(sndUsed,0)
     print("Total sound damage: "+str(totSndDmg))
+  global totDmg
+  totDmg=totDmg+totSndDmg
 
 #Damage calculation
 def clcDmg():
   if len(sndUsed)>0:
     sndDmgClc()
+  global totDmg
+  print("Total damage this round: "+str(totDmg))
+  theDmg.configure(text=str(totDmg))
+  histBox.configure(state=NORMAL)
+  histBox.insert('1.0',"--------\nDamage calculated: "+str(totDmg)+"\n--------\n")
+  histBox.configure(state=DISABLED)
+  totDmg=0
+  clearInputs()
   
 clcBtn.configure(command=clcDmg)
 
 #Geometry - Main Columns
-col1.grid(column=0,row=0,padx=10) #In retrospect I should have used 0 for the column name too, but it doesn't matter *that* much.
-col2.grid(column=1,row=0)
+col1.grid(column=0,row=0,padx=5) #In retrospect I should have used 0 for the column name too, but it doesn't matter *that* much.
+col2.grid(column=1,row=0,padx=10)
 
 #Geometry - Toggles
 togBtns.grid(column=0,row=1,pady=10)
@@ -321,7 +332,6 @@ tTanic.grid(column=6,row=0)
 #Geometry - Calculation History
 hist.grid(column=0,row=0)
 histLbl.grid(column=0,row=0)
-yscroll.grid(column=1,row=1)
 histBox.grid(column=0,row=1)
 clrHistBtn.grid(column=0,row=2,pady=5)
 
