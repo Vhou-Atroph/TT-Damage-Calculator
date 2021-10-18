@@ -1,7 +1,7 @@
 from tkinter import *
 import math
 
-'''VERSION 1.0.1
+'''VERSION 1.0.2
 
 CONTRIBUTORS:
 - Vhou-Atroph
@@ -13,6 +13,7 @@ window=Tk()
 window.title("Toontown Damage Calculator")
 icon=PhotoImage(file="img/whole-cream-pie.png")
 window.iconphoto(True, icon)
+window.resizable(0,0)
 
 #Variables
 global lured
