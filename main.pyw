@@ -1,7 +1,7 @@
 from tkinter import *
 import math
 
-'''VERSION 1.0.2
+'''VERSION 1.1
 
 CONTRIBUTORS:
 - Vhou-Atroph
@@ -22,6 +22,7 @@ global sndUsed
 global trwUsed
 global sqtUsed
 global drpUsed
+global trpUsed
 global totDmg
 lured=IntVar()
 organic=0
@@ -29,6 +30,7 @@ sndUsed=list()
 trwUsed=list()
 sqtUsed=list()
 drpUsed=list()
+trpUsed=list()
 totDmg=0
 
 #Columns
@@ -43,7 +45,7 @@ clrBtn=Button(togBtns,text='Clear Inputs')
 clcBtn=Button(togBtns,text='Calculate',font=('Arial',10,'bold'))
 emptLbl=Label(togBtns)
 
-#The Gags (Trap may be added eventually, but it is not a priority.)
+#The Gags
 gagFrame=Frame(col1)
 #Sound
 sndFrame=Frame(gagFrame)
@@ -109,13 +111,30 @@ gPianoImg=PhotoImage(file='img/grand-piano.png')
 gPiano=Button(drpFrame,image=gPianoImg)
 tTanicImg=PhotoImage(file='img/toontanic.png')
 tTanic=Button(drpFrame,image=tTanicImg)
+#Trap!
+trpFrame=Frame(gagFrame)
+bPeelImg=PhotoImage(file='img/banana-peel.png')
+bPeel=Button(trpFrame,image=bPeelImg)
+rakeImg=PhotoImage(file='img/rake.png')
+rake=Button(trpFrame,image=rakeImg)
+marblesImg=PhotoImage(file='img/marbles.png')
+marbles=Button(trpFrame,image=marblesImg)
+qSandImg=PhotoImage(file='img/quicksand.png')
+qSand=Button(trpFrame,image=qSandImg)
+tDoorImg=PhotoImage(file='img/trapdoor.png')
+tDoor=Button(trpFrame,image=tDoorImg)
+tntImg=PhotoImage(file='img/tnt.png')
+tnt=Button(trpFrame,image=tntImg)
+rRoadImg=PhotoImage(file='img/railroad.png')
+rRoad=Button(trpFrame,image=rRoadImg)
+
 #Button list - used for mass configuring the gag buttons
-gagBtns=(bHorn,whistle,bugle,aoogah,eTrunk,fHorn,oSinger,cCake,fPSlice,cPSlice,wFPie,wCPie,bCake,wCake,sFlower,gWater,sGun,sBottle,fHose,sCloud,geyser,fPot,sBag,anvil,bWeight,safe,gPiano,tTanic)
+gagBtns=(bHorn,whistle,bugle,aoogah,eTrunk,fHorn,oSinger,cCake,fPSlice,cPSlice,wFPie,wCPie,bCake,wCake,sFlower,gWater,sGun,sBottle,fHose,sCloud,geyser,fPot,sBag,anvil,bWeight,safe,gPiano,tTanic,bPeel,rake,marbles,qSand,tDoor,tnt,rRoad)
 
 #Calculation history
 hist=Frame(col2)
 histLbl=Label(hist,text="History")
-histBox=Text(hist,width=25,height=15,state=DISABLED,font=('Arial',10,'normal'),wrap=WORD)
+histBox=Text(hist,width=25,height=20,state=DISABLED,font=('Arial',10,'normal'),wrap=WORD)
 clrHistBtn=Button(hist,text="Clear History")
 
 #Calculation results
@@ -148,11 +167,13 @@ def clearInputs():
   global trwUsed
   global sqtUsed
   global drpUsed
+  global trpUsed
   lured.set(0)
   sndUsed=list()
   trwUsed=list()
   sqtUsed=list()
   drpUsed=list()
+  trpUsed=list()
   togOrgOff()
 clrBtn.configure(command=clearInputs)
 
@@ -509,6 +530,92 @@ def tTanicPrs():
     histBox.configure(state=DISABLED)
 tTanic.configure(command=tTanicPrs)
 
+#Trap
+def bPeelPrs():
+  if organic==0:
+    trpUsed.append(12)
+    histBox.configure(state=NORMAL)
+    histBox.insert('1.0',"Gag used: Banana Peel (12)\n")
+    histBox.configure(state=DISABLED)
+  else:
+    trpUsed.append(13)
+    histBox.configure(state=NORMAL)
+    histBox.insert('1.0',"Gag used: Organic Banana Peel (13)\n")
+    histBox.configure(state=DISABLED)
+bPeel.configure(command=bPeelPrs)
+def rakePrs():
+  if organic==0:
+    trpUsed.append(20)
+    histBox.configure(state=NORMAL)
+    histBox.insert('1.0',"Gag used: Rake (20)\n")
+    histBox.configure(state=DISABLED)
+  else:
+    trpUsed.append(22)
+    histBox.configure(state=NORMAL)
+    histBox.insert('1.0',"Gag used: Organic Rake (22)\n")
+    histBox.configure(state=DISABLED)
+rake.configure(command=rakePrs)
+def marblesPrs():
+  if organic==0:
+    trpUsed.append(30)
+    histBox.configure(state=NORMAL)
+    histBox.insert('1.0',"Gag used: Marbles (30)\n")
+    histBox.configure(state=DISABLED)
+  else:
+    trpUsed.append(22)
+    histBox.configure(state=NORMAL)
+    histBox.insert('1.0',"Gag used: Organic Marbles (33)\n")
+    histBox.configure(state=DISABLED)
+marbles.configure(command=marblesPrs)
+def qSandPrs():
+  if organic==0:
+    trpUsed.append(50)
+    histBox.configure(state=NORMAL)
+    histBox.insert('1.0',"Gag used: Quicksand (50)\n")
+    histBox.configure(state=DISABLED)
+  else:
+    trpUsed.append(22)
+    histBox.configure(state=NORMAL)
+    histBox.insert('1.0',"Gag used: Organic Quicksand (55)\n")
+    histBox.configure(state=DISABLED)
+qSand.configure(command=qSandPrs)
+def tDoorPrs():
+  if organic==0:
+    trpUsed.append(70)
+    histBox.configure(state=NORMAL)
+    histBox.insert('1.0',"Gag used: Trapdoor (70)\n")
+    histBox.configure(state=DISABLED)
+  else:
+    trpUsed.append(77)
+    histBox.configure(state=NORMAL)
+    histBox.insert('1.0',"Gag used: Organic Trapdoor (77)\n")
+    histBox.configure(state=DISABLED)
+tDoor.configure(command=tDoorPrs)
+def tntPrs():
+  if organic==0:
+    trpUsed.append(180)
+    histBox.configure(state=NORMAL)
+    histBox.insert('1.0',"Gag used: TNT (180)\n")
+    histBox.configure(state=DISABLED)
+  else:
+    trpUsed.append(198)
+    histBox.configure(state=NORMAL)
+    histBox.insert('1.0',"Gag used: Organic TNT (198)\n")
+    histBox.configure(state=DISABLED)
+tnt.configure(command=tntPrs)
+def rRoadPrs():
+  if organic==0:
+    trpUsed.append(195)
+    histBox.configure(state=NORMAL)
+    histBox.insert('1.0',"Gag used: Railroad (195)\n")
+    histBox.configure(state=DISABLED)
+  else:
+    trpUsed.append(214)
+    histBox.configure(state=NORMAL)
+    histBox.insert('1.0',"Gag used: Organic Railroad (214)\n")
+    histBox.configure(state=DISABLED)
+rRoad.configure(command=rRoadPrs)
+
 #Sound damage calculation
 def sndDmgClc():
   print("Damage of each individual sound gag: "+str(sndUsed))
@@ -588,8 +695,28 @@ def drpDmgClc():
   global totDmg
   totDmg=totDmg+totDrpDmg
 
+#Trap damage calculation
+def trpDmgClc():
+  print("Damage of each individual trap gag:"+str(trpUsed))
+  global lured
+  if lured.get()==0:
+    print("You need to lure cogs if you want trap to work!")
+    totTrpDmg=0
+  else:
+    if len(trpUsed)>1:
+      print("The traps canceled out! Only one trap can be used on a cog at a time!")
+      totTrpDmg=0
+    else:
+      print("The trap worked! This can mean only one thing: You used lure AND only one trap on the cog! Amazing! It did "+str(trpUsed[0])+" damage!")
+      totTrpDmg=trpUsed[0]
+      lured.set(0)
+  global totDmg
+  totDmg=totDmg+totTrpDmg
+
 #Total damage calculation
 def clcDmg():
+  if len(trpUsed)>0:
+    trpDmgClc()
   if len(sndUsed)>0:
     sndDmgClc()
   if len(trwUsed)>0:
@@ -624,7 +751,7 @@ emptLbl.grid(column=3,row=0,padx=15)
 #Geometry - Gags
 gagFrame.grid(column=0,row=2,pady=10)
 #Sound
-sndFrame.grid(column=0,row=0,)
+sndFrame.grid(column=0,row=1,)
 bHorn.grid(column=0,row=0)
 whistle.grid(column=1,row=0)
 bugle.grid(column=2,row=0)
@@ -633,7 +760,7 @@ eTrunk.grid(column=4,row=0)
 fHorn.grid(column=5,row=0)
 oSinger.grid(column=6,row=0)
 #Throw
-thrwFrame.grid(column=0,row=1)
+thrwFrame.grid(column=0,row=2)
 cCake.grid(column=0,row=0)
 fPSlice.grid(column=1,row=0)
 cPSlice.grid(column=2,row=0)
@@ -642,7 +769,7 @@ wCPie.grid(column=4,row=0)
 bCake.grid(column=5,row=0)
 wCake.grid(column=6,row=0)
 #Squirt
-sqrtFrame.grid(column=0,row=2)
+sqrtFrame.grid(column=0,row=3)
 sFlower.grid(column=0,row=0)
 gWater.grid(column=1,row=0)
 sGun.grid(column=2,row=0)
@@ -651,7 +778,7 @@ fHose.grid(column=4,row=0)
 sCloud.grid(column=5,row=0)
 geyser.grid(column=6,row=0)
 #Drop
-drpFrame.grid(column=0,row=3)
+drpFrame.grid(column=0,row=4)
 fPot.grid(column=0,row=0)
 sBag.grid(column=1,row=0)
 anvil.grid(column=2,row=0)
@@ -659,6 +786,15 @@ bWeight.grid(column=3,row=0)
 safe.grid(column=4,row=0)
 gPiano.grid(column=5,row=0)
 tTanic.grid(column=6,row=0)
+#Trap
+trpFrame.grid(column=0,row=0)
+bPeel.grid(column=0,row=0)
+rake.grid(column=1,row=0)
+marbles.grid(column=2,row=0)
+qSand.grid(column=3,row=0)
+tDoor.grid(column=4,row=0)
+tnt.grid(column=5,row=0)
+rRoad.grid(column=6,row=0)
 
 #Geometry - Calculation History
 hist.grid(column=0,row=0)
