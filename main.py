@@ -249,6 +249,7 @@ def oSingerPrs():
     histBox.insert('1.0',"Gag used: Organic Opera Singer (99)\n")
     histBox.configure(state=DISABLED)
 oSinger.configure(command=oSingerPrs)
+
 #Throw
 def cCakePrs():
   if organic==0:
@@ -335,6 +336,92 @@ def wCakePrs():
     histBox.configure(state=DISABLED)
 wCake.configure(command=wCakePrs)
 
+#Squirt
+def sFlowerPrs():
+  if organic==0:
+    sqtUsed.append(4)
+    histBox.configure(state=NORMAL)
+    histBox.insert('1.0',"Gag used: Squirting Flower (4)\n")
+    histBox.configure(state=DISABLED)
+  else:
+    sqtUsed.append(5)
+    histBox.configure(state=NORMAL)
+    histBox.insert('1.0',"Gag used: Organic Squirting Flower (7)\n")
+    histBox.configure(state=DISABLED)
+sFlower.configure(command=sFlowerPrs)
+def gWaterPrs():
+  if organic==0:
+    sqtUsed.append(8)
+    histBox.configure(state=NORMAL)
+    histBox.insert('1.0',"Gag used: Glass of Water (8)\n")
+    histBox.configure(state=DISABLED)
+  else:
+    sqtUsed.append(9)
+    histBox.configure(state=NORMAL)
+    histBox.insert('1.0',"Gag used: Organic Glass of Water (9)\n")
+    histBox.configure(state=DISABLED)
+gWater.configure(command=gWaterPrs)
+def sGunPrs():
+  if organic==0:
+    sqtUsed.append(12)
+    histBox.configure(state=NORMAL)
+    histBox.insert('1.0',"Gag used: Squirt Gun (12)\n")
+    histBox.configure(state=DISABLED)
+  else:
+    sqtUsed.append(13)
+    histBox.configure(state=NORMAL)
+    histBox.insert('1.0',"Gag used: Organic Squirt Gun (13)\n")
+    histBox.configure(state=DISABLED)
+sGun.configure(command=sGunPrs)
+def sBottlePrs():
+  if organic==0:
+    sqtUsed.append(21)
+    histBox.configure(state=NORMAL)
+    histBox.insert('1.0',"Gag used: Seltzer Bottle (21)\n")
+    histBox.configure(state=DISABLED)
+  else:
+    sqtUsed.append(23)
+    histBox.configure(state=NORMAL)
+    histBox.insert('1.0',"Gag used: Organic Seltzer Bottle (23)\n")
+    histBox.configure(state=DISABLED)
+sBottle.configure(command=sBottlePrs)
+def fHosePrs():
+  if organic==0:
+    sqtUsed.append(30)
+    histBox.configure(state=NORMAL)
+    histBox.insert('1.0',"Gag used: Fire Hose (30)\n")
+    histBox.configure(state=DISABLED)
+  else:
+    sqtUsed.append(33)
+    histBox.configure(state=NORMAL)
+    histBox.insert('1.0',"Gag used: Organic Fire Hose (33)\n")
+    histBox.configure(state=DISABLED)
+fHose.configure(command=fHosePrs)
+def sCloudPrs():
+  if organic==0:
+    sqtUsed.append(80)
+    histBox.configure(state=NORMAL)
+    histBox.insert('1.0',"Gag used: Storm Cloud (80)\n")
+    histBox.configure(state=DISABLED)
+  else:
+    sqtUsed.append(88)
+    histBox.configure(state=NORMAL)
+    histBox.insert('1.0',"Gag used: Organic Storm Cloud (88)\n")
+    histBox.configure(state=DISABLED)
+sCloud.configure(command=sCloudPrs)
+def geyserPrs():
+  if organic==0:
+    sqtUsed.append(105)
+    histBox.configure(state=NORMAL)
+    histBox.insert('1.0',"Gag used: Geyser (105)\n")
+    histBox.configure(state=DISABLED)
+  else:
+    sqtUsed.append(115)
+    histBox.configure(state=NORMAL)
+    histBox.insert('1.0',"Gag used: Organic Geyser (115)\n")
+    histBox.configure(state=DISABLED)
+geyser.configure(command=geyserPrs)
+
 #Sound damage calculation
 def sndDmgClc():
   print("Damage of each individual sound gag: "+str(sndUsed))
@@ -343,13 +430,13 @@ def sndDmgClc():
   print("If cogs were lured, they aren't anymore! Don't use sound on lured cogs!")
   if len(sndUsed)>1:
     totSndDmg=sum(sndUsed,0)
-    totSndDmg=math.ceil(totSndDmg+(totSndDmg*0.2))
+    totSndDmg=math.ceil(totSndDmg+(totSndDmg*0.2)) #Group damage bonus always rounds up. See: 3 fogs and 1 aoogah getting rid of level 12 cogs. This does 199.2 damage, but still works.
   else:
     totSndDmg=sndUsed[0]
   print("Total sound damage: "+str(totSndDmg))
   global totDmg
   totDmg=totDmg+totSndDmg
-  
+
 #Throw damage calculation
 def trwDmgClc():
   print("Damage of each individual throw gag:"+str(trwUsed))
@@ -362,7 +449,7 @@ def trwDmgClc():
     else:
       totTrwDmg=trwUsed[0]
   else:
-    print("The cogs are lured, and there will be a 50% damage bonus.")
+    print("The cogs are lured, and there will be a 50% damage bonus.") #Lure bonus doesn't get rounded for some dumb reason.
     if len(trwUsed)>1:
       totTrwDmg=sum(trwUsed,0)
       totTrwDmg=totTrwDmg+(totTrwDmg/2)+(totTrwDmg*0.2)
@@ -373,12 +460,37 @@ def trwDmgClc():
   global totDmg
   totDmg=totDmg+totTrwDmg
 
+#Squirt damage calculation, luckily just throw 2. (Squirt is better than throw and I am tired of people pretending it isn't. It's the superior organic choice. Cowards.)
+def sqtDmgClc():
+  print("Damage of each individual squirt gag:"+str(sqtUsed))
+  global lured
+  if lured.get()==0:
+    print("The cogs are not lured, and there will be no 50% damage bonus.")
+    if len(sqtUsed)>1:
+      totSqtDmg=sum(sqtUsed,0)
+      totSqtDmg=math.ceil(totSqtDmg+(totSqtDmg*0.2))
+    else:
+      totSqtDmg=sqtUsed[0]
+  else:
+    print("The cogs are lured, and there will be a 50% damage bonus.")
+    if len(sqtUsed)>1:
+      totSqtDmg=sum(sqtUsed,0)
+      totSqtDmg=totSqtDmg+(totSqtDmg/2)+(totSqtDmg*0.2)
+    else:
+      totSqtDmg=sqtUsed[0]+(sqtUsed[0]/2)
+    lured.set(0)
+  print("Total squirt damage: "+str(totSqtDmg))
+  global totDmg
+  totDmg=totDmg+totSqtDmg
+
 #Total damage calculation
 def clcDmg():
   if len(sndUsed)>0:
     sndDmgClc()
   if len(trwUsed)>0:
     trwDmgClc()
+  if len(sqtUsed)>0:
+    sqtDmgClc()
   global totDmg
   print("Total damage this round: "+str(totDmg))
   theDmg.configure(text=str(totDmg))
