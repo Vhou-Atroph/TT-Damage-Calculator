@@ -1,7 +1,7 @@
 from tkinter import *
 import math
 
-'''VERSION 0
+'''VERSION 1
 
 CONTRIBUTORS:
 - Vhou-Atroph
@@ -422,6 +422,92 @@ def geyserPrs():
     histBox.configure(state=DISABLED)
 geyser.configure(command=geyserPrs)
 
+#Drop
+def fPotPrs():
+  if organic==0:
+    drpUsed.append(10)
+    histBox.configure(state=NORMAL)
+    histBox.insert('1.0',"Gag used: Flower Pot (10)\n")
+    histBox.configure(state=DISABLED)
+  else:
+    drpUsed.append(11)
+    histBox.configure(state=NORMAL)
+    histBox.insert('1.0',"Gag used: Organic Flower Pot (11)\n")
+    histBox.configure(state=DISABLED)
+fPot.configure(command=fPotPrs)
+def sBagPrs():
+  if organic==0:
+    drpUsed.append(18)
+    histBox.configure(state=NORMAL)
+    histBox.insert('1.0',"Gag used: Sandbag (18)\n")
+    histBox.configure(state=DISABLED)
+  else:
+    drpUsed.append(19)
+    histBox.configure(state=NORMAL)
+    histBox.insert('1.0',"Gag used: Organic Sandbag (19)\n")
+    histBox.configure(state=DISABLED)
+sBag.configure(command=sBagPrs)
+def anvilPrs():
+  if organic==0:
+    drpUsed.append(30)
+    histBox.configure(state=NORMAL)
+    histBox.insert('1.0',"Gag used: Anvil (30)\n")
+    histBox.configure(state=DISABLED)
+  else:
+    drpUsed.append(33)
+    histBox.configure(state=NORMAL)
+    histBox.insert('1.0',"Gag used: Organic Anvil (33)\n")
+    histBox.configure(state=DISABLED)
+anvil.configure(command=anvilPrs)
+def bWeightPrs():
+  if organic==0:
+    drpUsed.append(45)
+    histBox.configure(state=NORMAL)
+    histBox.insert('1.0',"Gag used: Big Weight (45)\n")
+    histBox.configure(state=DISABLED)
+  else:
+    drpUsed.append(49)
+    histBox.configure(state=NORMAL)
+    histBox.insert('1.0',"Gag used: Organic Big Weight (49)\n")
+    histBox.configure(state=DISABLED)
+bWeight.configure(command=bWeightPrs)
+def safePrs():
+  if organic==0:
+    drpUsed.append(60)
+    histBox.configure(state=NORMAL)
+    histBox.insert('1.0',"Gag used: Safe (60)\n")
+    histBox.configure(state=DISABLED)
+  else:
+    drpUsed.append(66)
+    histBox.configure(state=NORMAL)
+    histBox.insert('1.0',"Gag used: Organic Safe (66)\n")
+    histBox.configure(state=DISABLED)
+safe.configure(command=safePrs)
+def gPianoPrs():
+  if organic==0:
+    drpUsed.append(170)
+    histBox.configure(state=NORMAL)
+    histBox.insert('1.0',"Gag used: Grand Piano (170)\n")
+    histBox.configure(state=DISABLED)
+  else:
+    drpUsed.append(187)
+    histBox.configure(state=NORMAL)
+    histBox.insert('1.0',"Gag used: Organic Grand Piano (187)\n")
+    histBox.configure(state=DISABLED)
+gPiano.configure(command=gPianoPrs)
+def tTanicPrs():
+  if organic==0:
+    drpUsed.append(180)
+    histBox.configure(state=NORMAL)
+    histBox.insert('1.0',"Gag used: Toontanic (180)\n")
+    histBox.configure(state=DISABLED)
+  else:
+    drpUsed.append(198)
+    histBox.configure(state=NORMAL)
+    histBox.insert('1.0',"Gag used: Organic Toontanic (198)\n")
+    histBox.configure(state=DISABLED)
+tTanic.configure(command=tTanicPrs)
+
 #Sound damage calculation
 def sndDmgClc():
   print("Damage of each individual sound gag: "+str(sndUsed))
@@ -483,6 +569,23 @@ def sqtDmgClc():
   global totDmg
   totDmg=totDmg+totSqtDmg
 
+#Drop damage calculation
+def drpDmgClc():
+  print("Damage of each individual drop gag:"+str(drpUsed))
+  global lured
+  if lured.get()==0:
+    print("The cogs are not lured, so drop is able to hit!")
+    if len(drpUsed)>1:
+      totDrpDmg=sum(drpUsed,0)
+      totDrpDmg=totDrpDmg+(totDrpDmg*0.2)
+    else:
+      totDrpDmg=drpUsed[0]
+  else:
+    print("The cogs are lured, and drop does not work on lured cogs! https://www.youtube.com/watch?v=NV-p_-OvUnA&t=4s")
+    totDrpDmg=0
+  global totDmg
+  totDmg=totDmg+totDrpDmg
+
 #Total damage calculation
 def clcDmg():
   if len(sndUsed)>0:
@@ -491,6 +594,8 @@ def clcDmg():
     trwDmgClc()
   if len(sqtUsed)>0:
     sqtDmgClc()
+  if len(drpUsed)>0:
+    drpDmgClc()
   global totDmg
   print("Total damage this round: "+str(totDmg))
   theDmg.configure(text=str(totDmg))
