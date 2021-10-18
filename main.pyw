@@ -1,7 +1,7 @@
 from tkinter import *
 import math
 
-'''VERSION 1
+'''VERSION 1.0.1
 
 CONTRIBUTORS:
 - Vhou-Atroph
@@ -583,6 +583,7 @@ def drpDmgClc():
   else:
     print("The cogs are lured, and drop does not work on lured cogs! https://www.youtube.com/watch?v=NV-p_-OvUnA&t=4s")
     totDrpDmg=0
+  print("Total drop damage: "+str(totDrpDmg))
   global totDmg
   totDmg=totDmg+totDrpDmg
 
