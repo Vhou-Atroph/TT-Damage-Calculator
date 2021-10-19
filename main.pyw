@@ -1,7 +1,7 @@
 from tkinter import *
 import math
 
-'''VERSION 1.1
+'''VERSION 1.1.1
 
 CONTRIBUTORS:
 - Vhou-Atroph
@@ -624,7 +624,7 @@ def sndDmgClc():
   print("If cogs were lured, they aren't anymore! Don't use sound on lured cogs!")
   if len(sndUsed)>1:
     totSndDmg=sum(sndUsed,0)
-    totSndDmg=math.ceil(totSndDmg+(totSndDmg*0.2)) #Group damage bonus always rounds up. See: 3 fogs and 1 aoogah getting rid of level 12 cogs. This does 199.2 damage, but still works.
+    totSndDmg=totSndDmg+math.ceil((totSndDmg*0.2)) #Group damage bonus always rounds up. See: 3 fogs and 1 aoogah getting rid of level 12 cogs. This does 199.2 damage, but still works.
   else:
     totSndDmg=sndUsed[0]
   print("Total sound damage: "+str(totSndDmg))
@@ -639,14 +639,14 @@ def trwDmgClc():
     print("The cogs are not lured, and there will be no 50% damage bonus.")
     if len(trwUsed)>1:
       totTrwDmg=sum(trwUsed,0)
-      totTrwDmg=math.ceil(totTrwDmg+(totTrwDmg*0.2))
+      totTrwDmg=totTrwDmg+math.ceil((totTrwDmg*0.2))
     else:
       totTrwDmg=trwUsed[0]
   else:
     print("The cogs are lured, and there will be a 50% damage bonus.") #Lure bonus doesn't get rounded for some dumb reason.
     if len(trwUsed)>1:
       totTrwDmg=sum(trwUsed,0)
-      totTrwDmg=totTrwDmg+(totTrwDmg/2)+(totTrwDmg*0.2)
+      totTrwDmg=totTrwDmg+(totTrwDmg/2)+math.ceil((totTrwDmg*0.2))
     else:
       totTrwDmg=trwUsed[0]+(trwUsed[0]/2)
     lured.set(0)
@@ -662,14 +662,14 @@ def sqtDmgClc():
     print("The cogs are not lured, and there will be no 50% damage bonus.")
     if len(sqtUsed)>1:
       totSqtDmg=sum(sqtUsed,0)
-      totSqtDmg=math.ceil(totSqtDmg+(totSqtDmg*0.2))
+      totSqtDmg=totSqtDmg+math.ceil((totSqtDmg*0.2))
     else:
       totSqtDmg=sqtUsed[0]
   else:
     print("The cogs are lured, and there will be a 50% damage bonus.")
     if len(sqtUsed)>1:
       totSqtDmg=sum(sqtUsed,0)
-      totSqtDmg=totSqtDmg+(totSqtDmg/2)+(totSqtDmg*0.2)
+      totSqtDmg=totSqtDmg+(totSqtDmg/2)+math.ceil((totSqtDmg*0.2))
     else:
       totSqtDmg=sqtUsed[0]+(sqtUsed[0]/2)
     lured.set(0)
@@ -685,7 +685,7 @@ def drpDmgClc():
     print("The cogs are not lured, so drop is able to hit!")
     if len(drpUsed)>1:
       totDrpDmg=sum(drpUsed,0)
-      totDrpDmg=totDrpDmg+(totDrpDmg*0.2)
+      totDrpDmg=totDrpDmg+math.ceil((totDrpDmg*0.2))
     else:
       totDrpDmg=drpUsed[0]
   else:
