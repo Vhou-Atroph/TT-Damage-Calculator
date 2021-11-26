@@ -1,5 +1,6 @@
 from tkinter import *
 import math
+import os
 
 '''VERSION 1.1.1
 
@@ -134,8 +135,9 @@ gagBtns=(bHorn,whistle,bugle,aoogah,eTrunk,fHorn,oSinger,cCake,fPSlice,cPSlice,w
 #Calculation history
 hist=Frame(col2)
 histLbl=Label(hist,text="History")
-histBox=Text(hist,width=25,height=20,state=DISABLED,font=('Arial',10,'normal'),wrap=WORD)
+histBox=Text(hist,width=25,height=18,state=DISABLED,font=('Arial',10,'normal'),wrap=WORD)
 clrHistBtn=Button(hist,text="Clear History")
+cogClc=Button(hist,text="Cog Health Info")
 
 #Calculation results
 clcResults=Frame(col1)
@@ -801,11 +803,16 @@ hist.grid(column=0,row=0)
 histLbl.grid(column=0,row=0)
 histBox.grid(column=0,row=1)
 clrHistBtn.grid(column=0,row=2,pady=5)
+cogClc.grid(column=0,row=3)
 
 #Geometry - Calculation Results
 clcResults.grid(column=0,row=0)
 dmgThsRnd.grid(column=0,row=0)
 theDmg.grid(column=1,row=0)
 
+#Cog HP Calculator
+def cHPClc():
+  os.startfile(os.getcwd()+"/docs/coghp.html")
+cogClc.configure(command=cHPClc)
 #Run
 window.mainloop()
