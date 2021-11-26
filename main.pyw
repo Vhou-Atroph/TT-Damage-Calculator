@@ -2,7 +2,7 @@ from tkinter import *
 import math
 import os
 
-'''VERSION 1.1.1
+'''VERSION 1.2
 
 CONTRIBUTORS:
 - Vhou-Atroph
