@@ -2,7 +2,7 @@ from tkinter import *
 import math
 import os
 
-'''VERSION 1.2
+'''VERSION 1.3
 
 CONTRIBUTORS:
 - Vhou-Atroph
@@ -497,12 +497,12 @@ def bWeightPrs():
 bWeight.configure(command=bWeightPrs)
 def safePrs():
   if organic==0:
-    drpUsed.append(60)
+    drpUsed.append(70)
     histBox.configure(state=NORMAL)
     histBox.insert('1.0',"Gag used: Safe (60)\n")
     histBox.configure(state=DISABLED)
   else:
-    drpUsed.append(66)
+    drpUsed.append(77)
     histBox.configure(state=NORMAL)
     histBox.insert('1.0',"Gag used: Organic Safe (66)\n")
     histBox.configure(state=DISABLED)
@@ -583,12 +583,12 @@ def qSandPrs():
 qSand.configure(command=qSandPrs)
 def tDoorPrs():
   if organic==0:
-    trpUsed.append(70)
+    trpUsed.append(85)
     histBox.configure(state=NORMAL)
     histBox.insert('1.0',"Gag used: Trapdoor (70)\n")
     histBox.configure(state=DISABLED)
   else:
-    trpUsed.append(77)
+    trpUsed.append(93)
     histBox.configure(state=NORMAL)
     histBox.insert('1.0',"Gag used: Organic Trapdoor (77)\n")
     histBox.configure(state=DISABLED)
@@ -607,12 +607,12 @@ def tntPrs():
 tnt.configure(command=tntPrs)
 def rRoadPrs():
   if organic==0:
-    trpUsed.append(195)
+    trpUsed.append(200)
     histBox.configure(state=NORMAL)
     histBox.insert('1.0',"Gag used: Railroad (195)\n")
     histBox.configure(state=DISABLED)
   else:
-    trpUsed.append(214)
+    trpUsed.append(220)
     histBox.configure(state=NORMAL)
     histBox.insert('1.0',"Gag used: Organic Railroad (214)\n")
     histBox.configure(state=DISABLED)
