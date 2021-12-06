@@ -2,7 +2,7 @@ from tkinter import *
 import math
 import os
 
-'''VERSION 1.3.1
+'''VERSION 1.4.1
 
 CONTRIBUTORS:
 - Vhou-Atroph
@@ -45,7 +45,6 @@ lurChk=Checkbutton(togBtns,text='Cog lured',variable=lured,onvalue=1,offvalue=0)
 clrBtn=Button(togBtns,text='Clear Inputs')
 clcBtn=Button(togBtns,text='Calculate',font=('Arial',10,'bold'))
 emptLbl=Label(togBtns)
-orgOnOff=Label(togBtns,text="Organic = OFF",font=('Arial',10,'bold'))
 
 #The Gags
 gagFrame=Frame(col1)
@@ -144,6 +143,7 @@ cogClc=Button(hist,text="Cog Health Info")
 clcResults=Frame(col1)
 dmgThsRnd=Label(clcResults,text="Damage this round:",font=('Arial',16,'normal'))
 theDmg=Label(clcResults,text="0",font=('Arial',16,'bold'))
+orgOnOff=Label(clcResults,text="Organic = OFF",font=('Arial',10,'bold'))
 
 #Toggle organic functions
 def togOrgOff():
@@ -193,6 +193,7 @@ clrHistBtn.configure(command=clearHistory)
 #Clicking on the bike horn button - the first button to be configured, and the button that will be used as the guinea pig for most testing.
 def bHornPrs():
   if organic==0:
+    #bHorn.configure(bg='#104789',activebackground='#0D3A6D') #maybe a selection indicator?
     sndUsed.append(4)
     histBox.configure(state=NORMAL)
     histBox.insert('1.0',"Gag used: Bike Horn (4)\n")
@@ -752,7 +753,6 @@ orgBtn.grid(column=1,row=0,padx=5)
 clrBtn.grid(column=2,row=0,padx=5)
 clcBtn.grid(column=4,row=0,padx=5)
 emptLbl.grid(column=3,row=0,padx=15)
-orgOnOff.grid(column=1,row=1)
 
 #Geometry - Gags
 gagFrame.grid(column=0,row=2,pady=10)
@@ -813,6 +813,7 @@ cogClc.grid(column=0,row=3)
 clcResults.grid(column=0,row=0)
 dmgThsRnd.grid(column=0,row=0)
 theDmg.grid(column=1,row=0)
+orgOnOff.grid(column=0,row=1)
 
 #Cog HP Calculator
 def cHPClc():
