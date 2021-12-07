@@ -18,6 +18,7 @@ window.resizable(0,0)
 
 #Variables
 global lured
+global dmgDown
 global organic
 global sndUsed
 global trwUsed
@@ -26,6 +27,7 @@ global drpUsed
 global trpUsed
 global totDmg
 lured=IntVar()
+dmgDown=IntVar()
 organic=0
 sndUsed=list()
 trwUsed=list()
@@ -45,6 +47,7 @@ lurChk=Checkbutton(togBtns,text='Cog lured',variable=lured,onvalue=1,offvalue=0,
 clrBtn=Button(togBtns,text='Clear Inputs',font=('Arial',11,'normal'))
 clcBtn=Button(togBtns,text='Calculate',font=('Arial',11,'bold'))
 emptLbl=Label(togBtns)
+defBtn=Checkbutton(togBtns,text='Defense',variable=dmgDown,onvalue=1,offvalue=0,font=('Arial',11,'normal'))
 
 #The Gags
 gagFrame=Frame(col1)
@@ -747,12 +750,13 @@ col1.grid(column=0,row=0,padx=5) #In retrospect I should have used 0 for the col
 col2.grid(column=1,row=0,padx=10)
 
 #Geometry - Toggles
-togBtns.grid(column=0,row=1,pady=10)
+togBtns.grid(column=0,row=1,pady=5)
 lurChk.grid(column=0,row=0,padx=5)
 orgBtn.grid(column=1,row=0,padx=5)
 clrBtn.grid(column=2,row=0,padx=5)
 clcBtn.grid(column=4,row=0,padx=5)
 emptLbl.grid(column=3,row=0,padx=15)
+defBtn.grid(column=0,row=1,padx=5,sticky='w')
 
 #Geometry - Gags
 gagFrame.grid(column=0,row=2,pady=10)
