@@ -2,7 +2,7 @@ from tkinter import *
 import math
 import os
 
-'''VERSION 1.4.2
+'''VERSION 1.5
 
 CONTRIBUTORS:
 - Vhou-Atroph
@@ -171,12 +171,14 @@ orgBtn.configure(command=togOrgOn)
 def clearInputs():
   print("Clearing gag inputs!")
   global lured
+  global dmgDown
   global sndUsed
   global trwUsed
   global sqtUsed
   global drpUsed
   global trpUsed
   lured.set(0)
+  dmgDown.set(0)
   sndUsed=list()
   trwUsed=list()
   sqtUsed=list()
@@ -627,6 +629,9 @@ rRoad.configure(command=rRoadPrs)
 
 #Sound damage calculation
 def sndDmgClc():
+  if dmgDown.get()==1:
+      for i in range(len(sndUsed)):
+        sndUsed[i]=(sndUsed[i]-math.ceil(sndUsed[i]*.1)) #Defense buff ceils
   print("Damage of each individual sound gag: "+str(sndUsed))
   global lured
   lured.set(0)
@@ -642,6 +647,9 @@ def sndDmgClc():
 
 #Throw damage calculation
 def trwDmgClc():
+  if dmgDown.get()==1:
+        for i in range(len(trwUsed)):
+          trwUsed[i]=(trwUsed[i]-math.ceil(trwUsed[i]*.1))
   print("Damage of each individual throw gag:"+str(trwUsed))
   global lured
   if lured.get()==0:
@@ -665,6 +673,10 @@ def trwDmgClc():
 
 #Squirt damage calculation, luckily just throw 2. (Squirt is better than throw and I am tired of people pretending it isn't. It's the superior organic choice. Cowards.)
 def sqtDmgClc():
+  if dmgDown.get()==1:
+        for i in range(len(sqtUsed)):
+          print((sqtUsed[i]-(sqtUsed[i]*.1)))
+          sqtUsed[i]=(sqtUsed[i]-math.ceil(sqtUsed[i]*.1))
   print("Damage of each individual squirt gag:"+str(sqtUsed))
   global lured
   if lured.get()==0:
@@ -688,6 +700,9 @@ def sqtDmgClc():
 
 #Drop damage calculation
 def drpDmgClc():
+  if dmgDown.get()==1:
+      for i in range(len(drpUsed)):
+        drpUsed[i]=(drpUsed[i]-math.ceil(drpUsed[i]*.1))
   print("Damage of each individual drop gag:"+str(drpUsed))
   global lured
   if lured.get()==0:
@@ -706,6 +721,9 @@ def drpDmgClc():
 
 #Trap damage calculation
 def trpDmgClc():
+  if dmgDown.get()==1:
+      for i in range(len(trpUsed)):
+        trpUsed[i]=(trpUsed[i]-math.ceil(trpUsed[i]*.1))
   print("Damage of each individual trap gag:"+str(trpUsed))
   global lured
   if lured.get()==0:
