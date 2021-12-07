@@ -2,7 +2,7 @@ from tkinter import *
 import math
 import os
 
-'''VERSION 1.4.1
+'''VERSION 1.4.2
 
 CONTRIBUTORS:
 - Vhou-Atroph
@@ -40,10 +40,10 @@ col2=Frame(window) #Will be used for calculation history
 
 #Toggles
 togBtns=Frame(col1)
-orgBtn=Button(togBtns,text='Toggle Organic')
-lurChk=Checkbutton(togBtns,text='Cog lured',variable=lured,onvalue=1,offvalue=0)
-clrBtn=Button(togBtns,text='Clear Inputs')
-clcBtn=Button(togBtns,text='Calculate',font=('Arial',10,'bold'))
+orgBtn=Button(togBtns,text='Toggle Organic',font=('Arial',11,'normal'))
+lurChk=Checkbutton(togBtns,text='Cog lured',variable=lured,onvalue=1,offvalue=0,font=('Arial',11,'normal'))
+clrBtn=Button(togBtns,text='Clear Inputs',font=('Arial',11,'normal'))
+clcBtn=Button(togBtns,text='Calculate',font=('Arial',11,'bold'))
 emptLbl=Label(togBtns)
 
 #The Gags
@@ -260,7 +260,7 @@ def fHornPrs():
     histBox.insert('1.0',"Gag used: Foghorn (50)\n")
     histBox.configure(state=DISABLED)
   else:
-    sndUsed.append(5)
+    sndUsed.append(55)
     histBox.configure(state=NORMAL)
     histBox.insert('1.0',"Gag used: Organic Foghorn (55)\n")
     histBox.configure(state=DISABLED)
