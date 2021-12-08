@@ -140,13 +140,18 @@ hist=Frame(col2)
 histLbl=Label(hist,text="History")
 histBox=Text(hist,width=25,height=18,state=DISABLED,font=('Arial',10,'normal'),wrap=WORD)
 clrHistBtn=Button(hist,text="Clear History")
-cogClc=Button(hist,text="Cog Health Info")
+cogClc=Button(hist,text="Full Cog Health Info")
 
 #Calculation results
 clcResults=Frame(col1)
 dmgThsRnd=Label(clcResults,text="Damage this round:",font=('Arial',16,'normal'))
 theDmg=Label(clcResults,text="0",font=('Arial',16,'bold'))
 orgOnOff=Label(clcResults,text="Organic = OFF",font=('Arial',10,'bold'))
+
+#Cog HP
+cogHPSheet=Frame(window)
+cogHPImg=PhotoImage(file='img/coghp.png')
+cogHPLbl=Label(cogHPSheet,image=cogHPImg)
 
 #Toggle organic functions
 def togOrgOff():
@@ -836,6 +841,10 @@ clcResults.grid(column=0,row=0)
 dmgThsRnd.grid(column=0,row=0)
 theDmg.grid(column=1,row=0)
 orgOnOff.grid(column=0,row=1)
+
+#Geometry - Cog HP Cheatsheet
+cogHPSheet.grid(columnspan=2,row=2)
+cogHPLbl.grid(column=0,row=0)
 
 #Cog HP Calculator
 def cHPClc():
