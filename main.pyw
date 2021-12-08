@@ -2,7 +2,7 @@ from tkinter import *
 import math
 import os
 
-'''VERSION 1.5.1
+'''VERSION 1.5.2
 
 CONTRIBUTORS:
 - Vhou-Atroph
@@ -27,6 +27,7 @@ global drpUsed
 global trpUsed
 global totDmg
 lured=IntVar()
+defValues=[0,1,2,3]
 dmgDown=IntVar()
 organic=0
 sndUsed=list()
@@ -47,7 +48,8 @@ lurChk=Checkbutton(togBtns,text='Cog lured',variable=lured,onvalue=1,offvalue=0,
 clrBtn=Button(togBtns,text='Clear Inputs',font=('Arial',11,'normal'))
 clcBtn=Button(togBtns,text='Calculate',font=('Arial',11,'bold'))
 emptLbl=Label(togBtns)
-defBtn=Checkbutton(togBtns,text='Defense',variable=dmgDown,onvalue=1,offvalue=0,font=('Arial',11,'normal')) #Currently inactive - it proved unreliable in a 2*
+defLbl=Label(togBtns,text='Defense Level',font=('Arial',11,'normal'))
+defBtn=OptionMenu(togBtns,dmgDown,*defValues)
 
 #The Gags
 gagFrame=Frame(col1)
@@ -637,6 +639,12 @@ def sndDmgClc():
   if dmgDown.get()==1:
       for i in range(len(sndUsed)):
         sndUsed[i]=(sndUsed[i]-math.ceil(sndUsed[i]*.1)) #Defense buff ceils
+  if dmgDown.get()==2:
+      for i in range(len(sndUsed)):
+        sndUsed[i]=(sndUsed[i]-math.ceil(sndUsed[i]*.15))
+  if dmgDown.get()==3:
+      for i in range(len(sndUsed)):
+        sndUsed[i]=(sndUsed[i]-math.ceil(sndUsed[i]*.2))
   print("Damage of each individual sound gag: "+str(sndUsed))
   global lured
   lured.set(0)
@@ -655,6 +663,12 @@ def trwDmgClc():
   if dmgDown.get()==1:
         for i in range(len(trwUsed)):
           trwUsed[i]=(trwUsed[i]-math.ceil(trwUsed[i]*.1))
+  if dmgDown.get()==2:
+        for i in range(len(trwUsed)):
+          trwUsed[i]=(trwUsed[i]-math.ceil(trwUsed[i]*.15))
+  if dmgDown.get()==3:
+        for i in range(len(trwUsed)):
+          trwUsed[i]=(trwUsed[i]-math.ceil(trwUsed[i]*.2))
   print("Damage of each individual throw gag:"+str(trwUsed))
   global lured
   if lured.get()==0:
@@ -680,8 +694,14 @@ def trwDmgClc():
 def sqtDmgClc():
   if dmgDown.get()==1:
         for i in range(len(sqtUsed)):
-          print((sqtUsed[i]-(sqtUsed[i]*.1)))
           sqtUsed[i]=(sqtUsed[i]-math.ceil(sqtUsed[i]*.1))
+  if dmgDown.get()==2:
+        for i in range(len(sqtUsed)):
+          sqtUsed[i]=(sqtUsed[i]-math.ceil(sqtUsed[i]*.15))
+  if dmgDown.get()==3:
+        for i in range(len(sqtUsed)):
+          print((sqtUsed[i]-(sqtUsed[i]*.1)))
+          sqtUsed[i]=(sqtUsed[i]-math.ceil(sqtUsed[i]*.2))
   print("Damage of each individual squirt gag:"+str(sqtUsed))
   global lured
   if lured.get()==0:
@@ -708,6 +728,12 @@ def drpDmgClc():
   if dmgDown.get()==1:
       for i in range(len(drpUsed)):
         drpUsed[i]=(drpUsed[i]-math.ceil(drpUsed[i]*.1))
+  if dmgDown.get()==2:
+      for i in range(len(drpUsed)):
+        drpUsed[i]=(drpUsed[i]-math.ceil(drpUsed[i]*.15))
+  if dmgDown.get()==3:
+      for i in range(len(drpUsed)):
+        drpUsed[i]=(drpUsed[i]-math.ceil(drpUsed[i]*.2))
   print("Damage of each individual drop gag:"+str(drpUsed))
   global lured
   if lured.get()==0:
@@ -729,6 +755,12 @@ def trpDmgClc():
   if dmgDown.get()==1:
       for i in range(len(trpUsed)):
         trpUsed[i]=(trpUsed[i]-math.ceil(trpUsed[i]*.1))
+  if dmgDown.get()==2:
+      for i in range(len(trpUsed)):
+        trpUsed[i]=(trpUsed[i]-math.ceil(trpUsed[i]*.15))
+  if dmgDown.get()==3:
+      for i in range(len(trpUsed)):
+        trpUsed[i]=(trpUsed[i]-math.ceil(trpUsed[i]*.2))
   print("Damage of each individual trap gag:"+str(trpUsed))
   global lured
   if lured.get()==0:
@@ -779,7 +811,8 @@ orgBtn.grid(column=1,row=0,padx=5)
 clrBtn.grid(column=2,row=0,padx=5)
 clcBtn.grid(column=4,row=0,padx=5)
 emptLbl.grid(column=3,row=0,padx=15)
-#defBtn.grid(column=0,row=1,padx=5)
+defLbl.grid(column=0,row=1,padx=0)
+defBtn.grid(column=1,row=1,padx=4,sticky='w')
 
 #Geometry - Gags
 gagFrame.grid(column=0,row=2,pady=10)
