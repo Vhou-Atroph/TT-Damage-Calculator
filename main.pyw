@@ -2,7 +2,7 @@ from tkinter import *
 import math
 import os
 
-'''VERSION 1.5.2
+'''VERSION 1.5.3
 
 CONTRIBUTORS:
 - Vhou-Atroph
@@ -787,7 +787,7 @@ def trpDmgClc():
 #Total damage calculation
 def clcDmg():
   global lured
-  if lured.get()==1:
+  if lured.get()==1: #Find out if lure is enabled. If it is, save a local variable.
     localLure=1
   if len(trpUsed)>0:
     trpDmgClc()
@@ -807,7 +807,7 @@ def clcDmg():
   histBox.configure(state=DISABLED)
   totDmg=0
   clearInputs()
-  if localLure==1 and dlLock.get()=='Lock lure' or dlLock.get()=='Lock both':
+  if localLure==1 and dlLock.get()=='Lock lure' or dlLock.get()=='Lock both': #Use the local variable and dlLock to lock lure as active even after it is set to 0 by clearInputs()
     lured.set(1)
   
 clcBtn.configure(command=clcDmg)
