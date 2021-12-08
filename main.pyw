@@ -2,7 +2,7 @@ from tkinter import *
 import math
 import os
 
-'''VERSION 1.5.3
+'''VERSION 1.6
 
 CONTRIBUTORS:
 - Vhou-Atroph
@@ -28,8 +28,9 @@ global drpUsed
 global trpUsed
 global totDmg
 lured=IntVar()
-defValues=[0,1,2,3]
-dmgDown=IntVar()
+defValues=['0%','10%','15%','20%']
+dmgDown=StringVar()
+dmgDown.set('0%')
 dlOptions=['No lock','Lock lure','Lock defense','Lock both']
 dlLock=StringVar()
 dlLock.set('No lock')
@@ -52,7 +53,7 @@ lurChk=Checkbutton(togBtns,text='Cog lured',variable=lured,onvalue=1,offvalue=0,
 clrBtn=Button(togBtns,text='Clear Inputs',font=('Arial',11,'normal'))
 clcBtn=Button(togBtns,text='Calculate',font=('Arial',11,'bold'))
 emptLbl=Label(togBtns)
-defLbl=Label(togBtns,text='Defense Level',font=('Arial',11,'normal'))
+defLbl=Label(togBtns,text='Defense',font=('Arial',11,'normal'))
 defBtn=OptionMenu(togBtns,dmgDown,*defValues)
 lockDwn=OptionMenu(togBtns,dlLock,*dlOptions)
 
@@ -147,7 +148,7 @@ hist=Frame(col2)
 histLbl=Label(hist,text="History")
 histBox=Text(hist,width=25,height=20,state=DISABLED,font=('Arial',10,'normal'),wrap=WORD)
 clrHistBtn=Button(hist,text="Clear History")
-cogClc=Button(hist,text="Full Cog Health Info")
+cogClc=Button(hist,text="Show Health")
 
 #Calculation results
 clcResults=Frame(col1)
@@ -643,13 +644,13 @@ rRoad.configure(command=rRoadPrs)
 
 #Sound damage calculation
 def sndDmgClc():
-  if dmgDown.get()==1:
+  if dmgDown.get()=='10%':
       for i in range(len(sndUsed)):
         sndUsed[i]=(sndUsed[i]-math.ceil(sndUsed[i]*.1)) #Defense buff ceils
-  if dmgDown.get()==2:
+  if dmgDown.get()=='15%':
       for i in range(len(sndUsed)):
         sndUsed[i]=(sndUsed[i]-math.ceil(sndUsed[i]*.15))
-  if dmgDown.get()==3:
+  if dmgDown.get()=='20%':
       for i in range(len(sndUsed)):
         sndUsed[i]=(sndUsed[i]-math.ceil(sndUsed[i]*.2))
   print("Damage of each individual sound gag: "+str(sndUsed))
@@ -667,13 +668,13 @@ def sndDmgClc():
 
 #Throw damage calculation
 def trwDmgClc():
-  if dmgDown.get()==1:
+  if dmgDown.get()=='10%':
         for i in range(len(trwUsed)):
           trwUsed[i]=(trwUsed[i]-math.ceil(trwUsed[i]*.1))
-  if dmgDown.get()==2:
+  if dmgDown.get()=='15%':
         for i in range(len(trwUsed)):
           trwUsed[i]=(trwUsed[i]-math.ceil(trwUsed[i]*.15))
-  if dmgDown.get()==3:
+  if dmgDown.get()=='20%':
         for i in range(len(trwUsed)):
           trwUsed[i]=(trwUsed[i]-math.ceil(trwUsed[i]*.2))
   print("Damage of each individual throw gag:"+str(trwUsed))
@@ -699,13 +700,13 @@ def trwDmgClc():
 
 #Squirt damage calculation, luckily just throw 2. (Squirt is better than throw and I am tired of people pretending it isn't. It's the superior organic choice. Cowards.)
 def sqtDmgClc():
-  if dmgDown.get()==1:
+  if dmgDown.get()=='10%':
         for i in range(len(sqtUsed)):
           sqtUsed[i]=(sqtUsed[i]-math.ceil(sqtUsed[i]*.1))
-  if dmgDown.get()==2:
+  if dmgDown.get()=='15%':
         for i in range(len(sqtUsed)):
           sqtUsed[i]=(sqtUsed[i]-math.ceil(sqtUsed[i]*.15))
-  if dmgDown.get()==3:
+  if dmgDown.get()=='20%':
         for i in range(len(sqtUsed)):
           print((sqtUsed[i]-(sqtUsed[i]*.1)))
           sqtUsed[i]=(sqtUsed[i]-math.ceil(sqtUsed[i]*.2))
@@ -732,13 +733,13 @@ def sqtDmgClc():
 
 #Drop damage calculation
 def drpDmgClc():
-  if dmgDown.get()==1:
+  if dmgDown.get()=='10%':
       for i in range(len(drpUsed)):
         drpUsed[i]=(drpUsed[i]-math.ceil(drpUsed[i]*.1))
-  if dmgDown.get()==2:
+  if dmgDown.get()=='15%':
       for i in range(len(drpUsed)):
         drpUsed[i]=(drpUsed[i]-math.ceil(drpUsed[i]*.15))
-  if dmgDown.get()==3:
+  if dmgDown.get()=='20%':
       for i in range(len(drpUsed)):
         drpUsed[i]=(drpUsed[i]-math.ceil(drpUsed[i]*.2))
   print("Damage of each individual drop gag:"+str(drpUsed))
@@ -759,13 +760,13 @@ def drpDmgClc():
 
 #Trap damage calculation
 def trpDmgClc():
-  if dmgDown.get()==1:
+  if dmgDown.get()=='10%':
       for i in range(len(trpUsed)):
         trpUsed[i]=(trpUsed[i]-math.ceil(trpUsed[i]*.1))
-  if dmgDown.get()==2:
+  if dmgDown.get()=='15%':
       for i in range(len(trpUsed)):
         trpUsed[i]=(trpUsed[i]-math.ceil(trpUsed[i]*.15))
-  if dmgDown.get()==3:
+  if dmgDown.get()=='20%':
       for i in range(len(trpUsed)):
         trpUsed[i]=(trpUsed[i]-math.ceil(trpUsed[i]*.2))
   print("Damage of each individual trap gag:"+str(trpUsed))
@@ -812,6 +813,20 @@ def clcDmg():
   
 clcBtn.configure(command=clcDmg)
 
+#Cog HP Cheatsheet Function
+def cHPClcDlt():
+  cogHPSheet.grid_remove()
+  window.geometry('')
+  cogClc.configure(text='Show Health',command=cHPClc)
+  
+def cHPClc():
+  cogHPSheet.grid(column=0,row=2,columnspan=2)
+  cogHPLbl.grid(column=0,row=0)
+  cogClc.configure(text='Hide Health',command=cHPClcDlt)
+  window.geometry('')
+
+cogClc.configure(command=cHPClc)
+
 #Geometry - Main Columns
 col1.grid(column=0,row=0,padx=5) #In retrospect I should have used 0 for the column name too, but it doesn't matter *that* much.
 col2.grid(column=1,row=0,padx=10)
@@ -824,7 +839,7 @@ clrBtn.grid(column=2,row=0,padx=5)
 clcBtn.grid(column=4,row=0,rowspan=2,padx=5)
 emptLbl.grid(column=3,row=0,padx=15)
 defLbl.grid(column=0,row=1,padx=0)
-defBtn.grid(column=1,row=1,padx=4,sticky='w')
+defBtn.grid(column=0,columnspan=2,row=1,padx=4)
 lockDwn.grid(column=1,row=1,columnspan=2)
 
 #Geometry - Gags
@@ -888,13 +903,5 @@ dmgThsRnd.grid(column=0,row=0)
 theDmg.grid(column=1,row=0)
 orgOnOff.grid(column=0,row=1)
 
-#Geometry - Cog HP Cheatsheet
-cogHPSheet.grid(column=0,row=2,columnspan=2)
-cogHPLbl.grid(column=0,row=0)
-
-#Cog HP Calculator
-def cHPClc():
-  os.startfile(os.getcwd()+"/docs/coghp.html")
-cogClc.configure(command=cHPClc)
 #Run
 window.mainloop()
