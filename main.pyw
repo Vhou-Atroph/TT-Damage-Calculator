@@ -2,7 +2,7 @@ from tkinter import *
 import math
 import os
 
-'''VERSION 1.5
+'''VERSION 1.5.1
 
 CONTRIBUTORS:
 - Vhou-Atroph
@@ -47,7 +47,7 @@ lurChk=Checkbutton(togBtns,text='Cog lured',variable=lured,onvalue=1,offvalue=0,
 clrBtn=Button(togBtns,text='Clear Inputs',font=('Arial',11,'normal'))
 clcBtn=Button(togBtns,text='Calculate',font=('Arial',11,'bold'))
 emptLbl=Label(togBtns)
-defBtn=Checkbutton(togBtns,text='Defense',variable=dmgDown,onvalue=1,offvalue=0,font=('Arial',11,'normal'))
+defBtn=Checkbutton(togBtns,text='Defense',variable=dmgDown,onvalue=1,offvalue=0,font=('Arial',11,'normal')) #Currently inactive - it proved unreliable in a 2*
 
 #The Gags
 gagFrame=Frame(col1)
@@ -774,7 +774,7 @@ orgBtn.grid(column=1,row=0,padx=5)
 clrBtn.grid(column=2,row=0,padx=5)
 clcBtn.grid(column=4,row=0,padx=5)
 emptLbl.grid(column=3,row=0,padx=15)
-defBtn.grid(column=0,row=1,padx=5,sticky='w')
+#defBtn.grid(column=0,row=1,padx=5)
 
 #Geometry - Gags
 gagFrame.grid(column=0,row=2,pady=10)
