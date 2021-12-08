@@ -19,6 +19,7 @@ window.resizable(0,0)
 #Variables
 global lured
 global dmgDown
+global dlLock
 global organic
 global sndUsed
 global trwUsed
@@ -29,6 +30,9 @@ global totDmg
 lured=IntVar()
 defValues=[0,1,2,3]
 dmgDown=IntVar()
+dlOptions=['No lock','Lock lure','Lock defense','Lock both']
+dlLock=StringVar()
+dlLock.set('No lock')
 organic=0
 sndUsed=list()
 trwUsed=list()
@@ -50,6 +54,7 @@ clcBtn=Button(togBtns,text='Calculate',font=('Arial',11,'bold'))
 emptLbl=Label(togBtns)
 defLbl=Label(togBtns,text='Defense Level',font=('Arial',11,'normal'))
 defBtn=OptionMenu(togBtns,dmgDown,*defValues)
+lockDwn=OptionMenu(togBtns,dlLock,*dlOptions)
 
 #The Gags
 gagFrame=Frame(col1)
@@ -140,7 +145,7 @@ gagBtns=(bHorn,whistle,bugle,aoogah,eTrunk,fHorn,oSinger,cCake,fPSlice,cPSlice,w
 #Calculation history
 hist=Frame(col2)
 histLbl=Label(hist,text="History")
-histBox=Text(hist,width=25,height=18,state=DISABLED,font=('Arial',10,'normal'),wrap=WORD)
+histBox=Text(hist,width=25,height=20,state=DISABLED,font=('Arial',10,'normal'),wrap=WORD)
 clrHistBtn=Button(hist,text="Clear History")
 cogClc=Button(hist,text="Full Cog Health Info")
 
@@ -179,13 +184,15 @@ def clearInputs():
   print("Clearing gag inputs!")
   global lured
   global dmgDown
+  global dlLock
   global sndUsed
   global trwUsed
   global sqtUsed
   global drpUsed
   global trpUsed
+  if dlLock.get()=='No lock' or dlLock.get()=='Lock lure':
+    dmgDown.set(0)
   lured.set(0)
-  dmgDown.set(0)
   sndUsed=list()
   trwUsed=list()
   sqtUsed=list()
@@ -779,6 +786,9 @@ def trpDmgClc():
 
 #Total damage calculation
 def clcDmg():
+  global lured
+  if lured.get()==1:
+    localLure=1
   if len(trpUsed)>0:
     trpDmgClc()
   if len(sndUsed)>0:
@@ -797,6 +807,8 @@ def clcDmg():
   histBox.configure(state=DISABLED)
   totDmg=0
   clearInputs()
+  if localLure==1 and dlLock.get()=='Lock lure' or dlLock.get()=='Lock both':
+    lured.set(1)
   
 clcBtn.configure(command=clcDmg)
 
@@ -809,10 +821,11 @@ togBtns.grid(column=0,row=1,pady=5)
 lurChk.grid(column=0,row=0,padx=5)
 orgBtn.grid(column=1,row=0,padx=5)
 clrBtn.grid(column=2,row=0,padx=5)
-clcBtn.grid(column=4,row=0,padx=5)
+clcBtn.grid(column=4,row=0,rowspan=2,padx=5)
 emptLbl.grid(column=3,row=0,padx=15)
 defLbl.grid(column=0,row=1,padx=0)
 defBtn.grid(column=1,row=1,padx=4,sticky='w')
+lockDwn.grid(column=1,row=1,columnspan=2)
 
 #Geometry - Gags
 gagFrame.grid(column=0,row=2,pady=10)
@@ -876,7 +889,7 @@ theDmg.grid(column=1,row=0)
 orgOnOff.grid(column=0,row=1)
 
 #Geometry - Cog HP Cheatsheet
-cogHPSheet.grid(columnspan=2,row=2)
+cogHPSheet.grid(column=0,row=2,columnspan=2)
 cogHPLbl.grid(column=0,row=0)
 
 #Cog HP Calculator
