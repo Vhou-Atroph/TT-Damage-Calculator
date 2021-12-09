@@ -2,7 +2,7 @@ from tkinter import *
 import math
 import os
 
-'''VERSION 1.6
+'''VERSION 1.6.1
 
 CONTRIBUTORS:
 - Vhou-Atroph
@@ -146,7 +146,8 @@ gagBtns=(bHorn,whistle,bugle,aoogah,eTrunk,fHorn,oSinger,cCake,fPSlice,cPSlice,w
 #Calculation history
 hist=Frame(col2)
 histLbl=Label(hist,text="History")
-histBox=Text(hist,width=25,height=20,state=DISABLED,font=('Arial',10,'normal'),wrap=WORD)
+histBox=Text(hist,width=25,height=17,state=DISABLED,font=('Arial',10,'normal'),wrap=WORD)
+pinBtn=Button(hist,text="Pin to top")
 clrHistBtn=Button(hist,text="Clear History")
 cogClc=Button(hist,text="Show Health")
 
@@ -824,6 +825,14 @@ def cHPClc():
   cogHPLbl.grid(column=0,row=0)
   cogClc.configure(text='Hide Health',command=cHPClcDlt)
   window.geometry('')
+  
+def unpin():
+  window.attributes('-topmost',False)
+  pinBtn.configure(command=pin,text='Pin to top')
+def pin():
+  window.attributes('-topmost',True)
+  pinBtn.configure(command=unpin,text='Unpin from top')
+pinBtn.configure(command=pin)
 
 cogClc.configure(command=cHPClc)
 
@@ -894,8 +903,9 @@ rRoad.grid(column=6,row=0)
 hist.grid(column=0,row=0)
 histLbl.grid(column=0,row=0)
 histBox.grid(column=0,row=1)
-clrHistBtn.grid(column=0,row=2,pady=5)
-cogClc.grid(column=0,row=3)
+pinBtn.grid(column=0,row=2,pady=3)
+clrHistBtn.grid(column=0,row=3,pady=3)
+cogClc.grid(column=0,row=4,pady=3)
 
 #Geometry - Calculation Results
 clcResults.grid(column=0,row=0)
