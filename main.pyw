@@ -903,8 +903,8 @@ rRoad.grid(column=6,row=0)
 hist.grid(column=0,row=0)
 histLbl.grid(column=0,row=0)
 histBox.grid(column=0,row=1)
-pinBtn.grid(column=0,row=2,pady=3)
-clrHistBtn.grid(column=0,row=3,pady=3)
+clrHistBtn.grid(column=0,row=2,pady=3)
+pinBtn.grid(column=0,row=3,pady=3)
 cogClc.grid(column=0,row=4,pady=3)
 
 #Geometry - Calculation Results
