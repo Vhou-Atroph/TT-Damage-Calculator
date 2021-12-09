@@ -2,7 +2,7 @@ from tkinter import *
 import math
 import os
 
-'''VERSION 1.6.1
+'''VERSION 1.6.2
 
 CONTRIBUTORS:
 - Vhou-Atroph
@@ -811,7 +811,6 @@ def clcDmg():
   clearInputs()
   if localLure==1 and dlLock.get()=='Lock lure' or dlLock.get()=='Lock both': #Use the local variable and dlLock to lock lure as active even after it is set to 0 by clearInputs()
     lured.set(1)
-  
 clcBtn.configure(command=clcDmg)
 
 #Cog HP Cheatsheet Function
@@ -825,7 +824,9 @@ def cHPClc():
   cogHPLbl.grid(column=0,row=0)
   cogClc.configure(text='Hide Health',command=cHPClcDlt)
   window.geometry('')
-  
+cogClc.configure(command=cHPClc)
+
+#Pin commands
 def unpin():
   window.attributes('-topmost',False)
   pinBtn.configure(command=pin,text='Pin to top')
@@ -833,8 +834,6 @@ def pin():
   window.attributes('-topmost',True)
   pinBtn.configure(command=unpin,text='Unpin from top')
 pinBtn.configure(command=pin)
-
-cogClc.configure(command=cHPClc)
 
 #Geometry - Main Columns
 col1.grid(column=0,row=0,padx=5) #In retrospect I should have used 0 for the column name too, but it doesn't matter *that* much.
