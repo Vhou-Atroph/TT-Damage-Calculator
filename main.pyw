@@ -844,66 +844,69 @@ def cHPIndClc():
   if totDmg<6:
     print("Cannot kill a level one.")
     cHPInd.configure(text="(level 0)")
-  if 5<totDmg<12:
+  elif 5<totDmg<12:
     print("Can kill a level one.")
     cHPInd.configure(text="(level 1)")
-  if 11<totDmg<20:
+  elif 11<totDmg<20:
     print("Can kill a level two.")
     cHPInd.configure(text="(level 2)")
-  if 19<totDmg<30:
+  elif 19<totDmg<30:
     print("Can kill a level three.")
     cHPInd.configure(text="(level 3)")
-  if 29<totDmg<42:
+  elif 29<totDmg<42:
     print("Can kill a level four.")
     cHPInd.configure(text="(level 4)")
-  if 41<totDmg<56:
+  elif 41<totDmg<56:
     print("Can kill a level five.")
     cHPInd.configure(text="(level 5)")
-  if 55<totDmg<72:
+  elif 55<totDmg<72:
     print("Can kill a level six.")
     cHPInd.configure(text="(level 6)")
-  if 71<totDmg<90:
+  elif 71<totDmg<90:
     print("Can kill a level seven.")
     cHPInd.configure(text="(level 7)")
-  if 89<totDmg<110:
+  elif 89<totDmg<110:
     print("Can kill a level eight.")
     cHPInd.configure(text="(level 8)")
-  if 109<totDmg<132:
+  elif 109<totDmg<132:
     print("Can kill a level nine.")
     cHPInd.configure(text="(level 9)")
-  if 131<totDmg<156:
+  elif 131<totDmg<156:
     print("Can kill a level ten.")
     cHPInd.configure(text="(level 10)")
-  if 155<totDmg<196:
+  elif 155<totDmg<196:
     print("Can kill a level eleven.")
     cHPInd.configure(text="(level 11)")
-  if 195<totDmg<224:
+  elif 195<totDmg<224:
     print("Can kill a level twelve.")
     cHPInd.configure(text="(level 12)")
-  if 223<totDmg<254:
+  elif 223<totDmg<254:
     print("Can kill a level thirteen.")
     cHPInd.configure(text="(level 13)")
-  if 253<totDmg<286:
+  elif 253<totDmg<286:
     print("Can kill a level fourteen.")
     cHPInd.configure(text="(level 14)")
-  if 285<totDmg<320:
+  elif 285<totDmg<320:
     print("Can kill a level fifteen.")
     cHPInd.configure(text="(level 15)")
-  if 319<totDmg<356:
+  elif 319<totDmg<356:
     print("Can kill a level sixteen.")
     cHPInd.configure(text="(level 16)")
-  if 355<totDmg<394:
+  elif 355<totDmg<394:
     print("Can kill a level seventeen.")
     cHPInd.configure(text="(level 17)")
-  if 393<totDmg<434:
+  elif 393<totDmg<434:
     print("Can kill a level eighteen.")
     cHPInd.configure(text="(level 18)")
-  if 433<totDmg<476:
+  elif 433<totDmg<476:
     print("Can kill a level nineteen.")
     cHPInd.configure(text="(level 19)")
-  if 475<totDmg:
+  elif 475<totDmg:
     print("Can kill a level twenty.")
     cHPInd.configure(text="(level 20)")
+  else:
+    print("what the fuck")
+    cHPInd.configure(text="(???)")
 
 #Geometry - Main Columns
 col1.grid(column=0,row=0,padx=5) #In retrospect I should have used 0 for the column name too, but it doesn't matter *that* much.
