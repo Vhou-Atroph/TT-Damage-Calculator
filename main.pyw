@@ -192,10 +192,12 @@ def clearInputs():
   global drpUsed
   global trpUsed
   localLure=0
+  lurInfo='no'
   if lured.get()==1: #Find out if lure is enabled. If it is, save a local variable.
     localLure=1
+    lurInfo='yes'
   histBox.configure(state=NORMAL)
-  histBox.insert('1.0',"--------\nInputs have been cleared!\nDamage calculated was: "+theDmg.cget("text")+"\nDefense: "+dmgDown.get()+"\nLure: "+str(lured.get())+"\n--------\n")
+  histBox.insert('1.0',"--------\nInputs have been cleared!\nDamage calculated was: "+theDmg.cget("text")+"\nDefense: "+dmgDown.get()+"\nLure: "+lurInfo+"\n--------\n")
   histBox.configure(state=DISABLED)
   if dlLock.get()=='No lock' or dlLock.get()=='Lock lure':
     dmgDown.set('0%')
