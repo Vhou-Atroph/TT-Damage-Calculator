@@ -191,6 +191,12 @@ def clearInputs():
   global sqtUsed
   global drpUsed
   global trpUsed
+  localLure=0
+  if lured.get()==1: #Find out if lure is enabled. If it is, save a local variable.
+    localLure=1
+  histBox.configure(state=NORMAL)
+  histBox.insert('1.0',"--------\nInputs have been cleared!\nDamage calculated was: "+theDmg.cget("text")+"\nDefense: "+dmgDown.get()+"\nLure: "+str(lured.get())+"\n--------\n")
+  histBox.configure(state=DISABLED)
   if dlLock.get()=='No lock' or dlLock.get()=='Lock lure':
     dmgDown.set('0%')
   lured.set(0)
@@ -200,10 +206,9 @@ def clearInputs():
   drpUsed=list()
   trpUsed=list()
   togOrgOff()
-  histBox.configure(state=NORMAL)
-  histBox.insert('1.0',"--------\nInputs have been cleared!\nDamage calculated was: "+theDmg.cget("text")+"\n--------\n")
-  histBox.configure(state=DISABLED)
   clcDmg()
+  if localLure==1 and dlLock.get()=='Lock lure' or dlLock.get()=='Lock both': #Use the local variable and dlLock to lock lure as active even after it is set to 0 by clearInputs()
+    lured.set(1)
 clrBtn.configure(command=clearInputs)
 
 #Clear history function
@@ -813,7 +818,7 @@ def clcDmg():
   theDmg.configure(text=str(totDmg))
   cHPIndClc()
   totDmg=0
-  if localLure==1 and dlLock.get()=='Lock lure' or dlLock.get()=='Lock both': #Use the local variable and dlLock to lock lure as active even after it is set to 0 by clearInputs()
+  if localLure==1:
     lured.set(1)
 
 #Cog HP Cheatsheet Function
