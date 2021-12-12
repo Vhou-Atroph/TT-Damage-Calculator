@@ -2,7 +2,7 @@ from tkinter import *
 import math
 import os
 
-'''VERSION 1.6.3
+'''VERSION A-2.0.0 UNSTABLE
 
 CONTRIBUTORS:
 - Vhou-Atroph
@@ -51,9 +51,7 @@ togBtns=Frame(col1)
 orgBtn=Button(togBtns,text='Toggle Organic',font=('Arial',11,'normal'))
 lurChk=Checkbutton(togBtns,text='Cog lured',variable=lured,onvalue=1,offvalue=0,font=('Arial',11,'normal'))
 clrBtn=Button(togBtns,text='Clear Inputs',font=('Arial',11,'normal'))
-clcBtn=Button(togBtns,text='Calculate',font=('Arial',11,'bold'))
-emptLbl=Label(togBtns)
-defLbl=Label(togBtns,text='Defense',font=('Arial',11,'normal'))
+defLbl=Label(togBtns,text='Defense:',font=('Arial',11,'normal'))
 defBtn=OptionMenu(togBtns,dmgDown,*defValues)
 lockDwn=OptionMenu(togBtns,dlLock,*dlOptions)
 
@@ -194,7 +192,7 @@ def clearInputs():
   global drpUsed
   global trpUsed
   if dlLock.get()=='No lock' or dlLock.get()=='Lock lure':
-    dmgDown.set(0)
+    dmgDown.set('0%')
   lured.set(0)
   sndUsed=list()
   trwUsed=list()
@@ -202,6 +200,10 @@ def clearInputs():
   drpUsed=list()
   trpUsed=list()
   togOrgOff()
+  histBox.configure(state=NORMAL)
+  histBox.insert('1.0',"--------\nInputs have been cleared!\nDamage calculated was: "+theDmg.cget("text")+"\n--------\n")
+  histBox.configure(state=DISABLED)
+  clcDmg()
 clrBtn.configure(command=clearInputs)
 
 #Clear history function
@@ -225,6 +227,7 @@ def bHornPrs():
     histBox.configure(state=NORMAL)
     histBox.insert('1.0',"Gag used: Organic Bike Horn (5)\n")
     histBox.configure(state=DISABLED)
+  clcDmg()
 bHorn.configure(command=bHornPrs)
 #Other sound buttons, who gives a fuck
 def whistlePrs():
@@ -238,6 +241,7 @@ def whistlePrs():
     histBox.configure(state=NORMAL)
     histBox.insert('1.0',"Gag used: Organic Whistle (8)\n")
     histBox.configure(state=DISABLED)
+  clcDmg()
 whistle.configure(command=whistlePrs)
 def buglePrs():
   if organic==0:
@@ -250,6 +254,7 @@ def buglePrs():
     histBox.configure(state=NORMAL)
     histBox.insert('1.0',"Gag used: Organic Bugle (5)\n")
     histBox.configure(state=DISABLED)
+  clcDmg()
 bugle.configure(command=buglePrs)
 def aoogahPrs():
   if organic==0:
@@ -262,6 +267,7 @@ def aoogahPrs():
     histBox.configure(state=NORMAL)
     histBox.insert('1.0',"Gag used: Organic Aoogah (17)\n")
     histBox.configure(state=DISABLED)
+  clcDmg()
 aoogah.configure(command=aoogahPrs)
 def eTrunkPrs():
   if organic==0:
@@ -274,6 +280,7 @@ def eTrunkPrs():
     histBox.configure(state=NORMAL)
     histBox.insert('1.0',"Gag used: Organic Elephant Trunk (23)\n")
     histBox.configure(state=DISABLED)
+  clcDmg()
 eTrunk.configure(command=eTrunkPrs)
 def fHornPrs():
   if organic==0:
@@ -286,6 +293,7 @@ def fHornPrs():
     histBox.configure(state=NORMAL)
     histBox.insert('1.0',"Gag used: Organic Foghorn (55)\n")
     histBox.configure(state=DISABLED)
+  clcDmg()
 fHorn.configure(command=fHornPrs)
 def oSingerPrs():
   if organic==0:
@@ -298,6 +306,7 @@ def oSingerPrs():
     histBox.configure(state=NORMAL)
     histBox.insert('1.0',"Gag used: Organic Opera Singer (99)\n")
     histBox.configure(state=DISABLED)
+  clcDmg()
 oSinger.configure(command=oSingerPrs)
 
 #Throw
@@ -646,24 +655,28 @@ rRoad.configure(command=rRoadPrs)
 
 #Sound damage calculation
 def sndDmgClc():
+  localDmg=list()
   if dmgDown.get()=='10%':
       for i in range(len(sndUsed)):
-        sndUsed[i]=(sndUsed[i]-math.ceil(sndUsed[i]*.1)) #Defense buff ceils
-  if dmgDown.get()=='15%':
+        localDmg.append(sndUsed[i]-math.ceil(sndUsed[i]*.1)) #Defense buff ceils
+  elif dmgDown.get()=='15%':
       for i in range(len(sndUsed)):
-        sndUsed[i]=(sndUsed[i]-math.ceil(sndUsed[i]*.15))
-  if dmgDown.get()=='20%':
+        localDmg.append(sndUsed[i]-math.ceil(sndUsed[i]*.15))
+  elif dmgDown.get()=='20%':
       for i in range(len(sndUsed)):
-        sndUsed[i]=(sndUsed[i]-math.ceil(sndUsed[i]*.2))
-  print("Damage of each individual sound gag: "+str(sndUsed))
+        localDmg.append(sndUsed[i]-math.ceil(sndUsed[i]*.2))
+  else:
+    for i in range(len(sndUsed)):
+      localDmg.append(sndUsed[i])
+  print("Damage of each individual sound gag: "+str(localDmg))
   global lured
   lured.set(0)
   print("If cogs were lured, they aren't anymore! Don't use sound on lured cogs!")
   if len(sndUsed)>1:
-    totSndDmg=sum(sndUsed,0)
+    totSndDmg=sum(localDmg,0)
     totSndDmg=totSndDmg+math.ceil((totSndDmg*0.2)) #Group damage bonus always rounds up. See: 3 fogs and 1 aoogah getting rid of level 12 cogs. This does 199.2 damage, but still works.
   else:
-    totSndDmg=sndUsed[0]
+    totSndDmg=localDmg[0]
   print("Total sound damage: "+str(totSndDmg))
   global totDmg
   totDmg=totDmg+totSndDmg
@@ -793,28 +806,15 @@ def clcDmg():
   localLure=0
   if lured.get()==1: #Find out if lure is enabled. If it is, save a local variable.
     localLure=1
-  if len(trpUsed)>0:
-    trpDmgClc()
   if len(sndUsed)>0:
     sndDmgClc()
-  if len(trwUsed)>0:
-    trwDmgClc()
-  if len(sqtUsed)>0:
-    sqtDmgClc()
-  if len(drpUsed)>0:
-    drpDmgClc()
   global totDmg
   print("Total damage this round: "+str(totDmg))
   theDmg.configure(text=str(totDmg))
-  histBox.configure(state=NORMAL)
-  histBox.insert('1.0',"--------\nDamage calculated: "+str(totDmg)+"\n--------\n")
-  histBox.configure(state=DISABLED)
   cHPIndClc()
   totDmg=0
-  clearInputs()
   if localLure==1 and dlLock.get()=='Lock lure' or dlLock.get()=='Lock both': #Use the local variable and dlLock to lock lure as active even after it is set to 0 by clearInputs()
     lured.set(1)
-clcBtn.configure(command=clcDmg)
 
 #Cog HP Cheatsheet Function
 def cHPClcDlt():
@@ -843,7 +843,7 @@ def cHPIndClc():
   global totDmg
   if totDmg<6:
     print("Cannot kill a level one.")
-    cHPInd.configure(text="(level 0")
+    cHPInd.configure(text="(level 0)")
   if 5<totDmg<12:
     print("Can kill a level one.")
     cHPInd.configure(text="(level 1)")
@@ -913,12 +913,10 @@ col2.grid(column=1,row=0,padx=10)
 togBtns.grid(column=0,row=1,pady=5)
 lurChk.grid(column=0,row=0,padx=5)
 orgBtn.grid(column=1,row=0,padx=5)
-clrBtn.grid(column=2,row=0,padx=5)
-clcBtn.grid(column=4,row=0,rowspan=2,padx=5)
-emptLbl.grid(column=3,row=0,padx=15)
-defLbl.grid(column=0,row=1,padx=0)
-defBtn.grid(column=0,columnspan=2,row=1,padx=4)
-lockDwn.grid(column=1,row=1,columnspan=2)
+defLbl.grid(column=2,row=0,padx=0)
+defBtn.grid(column=3,row=0)
+lockDwn.grid(column=0,row=1)
+clrBtn.grid(column=2,row=1,columnspan=2,padx=5)
 
 #Geometry - Gags
 gagFrame.grid(column=0,row=2,pady=10)
