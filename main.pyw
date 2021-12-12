@@ -54,6 +54,8 @@ def clcDmg(opt=""):
     localLure=1
   if len(sndUsed)>0:
     sndDmgClc()
+  if len(trwUsed)>0:
+    trwDmgClc()
   global totDmg
   print("Total damage this round: "+str(totDmg))
   theDmg.configure(text=str(totDmg))
@@ -344,6 +346,7 @@ def cCakePrs():
     histBox.configure(state=NORMAL)
     histBox.insert('1.0',"Gag used: Organic Cupcake (7)\n")
     histBox.configure(state=DISABLED)
+  clcDmg()
 cCake.configure(command=cCakePrs)
 def fPSlicePrs():
   if organic==0:
@@ -356,6 +359,7 @@ def fPSlicePrs():
     histBox.configure(state=NORMAL)
     histBox.insert('1.0',"Gag used: Organic Fruit Pie Slice (11)\n")
     histBox.configure(state=DISABLED)
+  clcDmg()
 fPSlice.configure(command=fPSlicePrs)
 def cPSlicePrs():
   if organic==0:
@@ -368,6 +372,7 @@ def cPSlicePrs():
     histBox.configure(state=NORMAL)
     histBox.insert('1.0',"Gag used: Organic Cream Pie Slice (19)\n")
     histBox.configure(state=DISABLED)
+  clcDmg()
 cPSlice.configure(command=cPSlicePrs)
 def wFPiePrs():
   if organic==0:
@@ -380,6 +385,7 @@ def wFPiePrs():
     histBox.configure(state=NORMAL)
     histBox.insert('1.0',"Gag used: Organic Whole Fruit Pie (29)\n")
     histBox.configure(state=DISABLED)
+  clcDmg()
 wFPie.configure(command=wFPiePrs)
 def wCPiePrs():
   if organic==0:
@@ -392,6 +398,7 @@ def wCPiePrs():
     histBox.configure(state=NORMAL)
     histBox.insert('1.0',"Gag used: Organic Whole Cream Pie (44)\n")
     histBox.configure(state=DISABLED)
+  clcDmg()
 wCPie.configure(command=wCPiePrs)
 def bCakePrs():
   if organic==0:
@@ -404,6 +411,7 @@ def bCakePrs():
     histBox.configure(state=NORMAL)
     histBox.insert('1.0',"Gag used: Organic Birthday Cake (110)\n")
     histBox.configure(state=DISABLED)
+  clcDmg()
 bCake.configure(command=bCakePrs)
 def wCakePrs():
   if organic==0:
@@ -416,6 +424,7 @@ def wCakePrs():
     histBox.configure(state=NORMAL)
     histBox.insert('1.0',"Gag used: Organic Wedding Cake (132)\n")
     histBox.configure(state=DISABLED)
+  clcDmg()
 wCake.configure(command=wCakePrs)
 
 #Squirt
@@ -695,42 +704,41 @@ def sndDmgClc():
   global lured
   lured.set(0)
   print("If cogs were lured, they aren't anymore! Don't use sound on lured cogs!")
+  totSndDmg=sum(localDmg,0)
   if len(sndUsed)>1:
-    totSndDmg=sum(localDmg,0)
     totSndDmg=totSndDmg+math.ceil((totSndDmg*0.2)) #Group damage bonus always rounds up. See: 3 fogs and 1 aoogah getting rid of level 12 cogs. This does 199.2 damage, but still works.
-  else:
-    totSndDmg=localDmg[0]
   print("Total sound damage: "+str(totSndDmg))
   global totDmg
   totDmg=totDmg+totSndDmg
 
 #Throw damage calculation
 def trwDmgClc():
+  localDmg=list()
   if dmgDown.get()=='10%':
         for i in range(len(trwUsed)):
-          trwUsed[i]=(trwUsed[i]-math.ceil(trwUsed[i]*.1))
-  if dmgDown.get()=='15%':
+          localDmg.append(trwUsed[i]-math.ceil(trwUsed[i]*.1))
+  elif dmgDown.get()=='15%':
         for i in range(len(trwUsed)):
-          trwUsed[i]=(trwUsed[i]-math.ceil(trwUsed[i]*.15))
-  if dmgDown.get()=='20%':
+          localDmg.append(trwUsed[i]-math.ceil(trwUsed[i]*.15))
+  elif dmgDown.get()=='20%':
         for i in range(len(trwUsed)):
-          trwUsed[i]=(trwUsed[i]-math.ceil(trwUsed[i]*.2))
-  print("Damage of each individual throw gag:"+str(trwUsed))
+          localDmg.append(trwUsed[i]-math.ceil(trwUsed[i]*.2))
+  else:
+    for i in range(len(trwUsed)):
+      localDmg.append(trwUsed[i])
+  print("Damage of each individual throw gag:"+str(localDmg))
+  totTrwDmg=sum(localDmg,0)
   global lured
   if lured.get()==0:
     print("The cogs are not lured, and there will be no 50% damage bonus.")
     if len(trwUsed)>1:
-      totTrwDmg=sum(trwUsed,0)
       totTrwDmg=totTrwDmg+math.ceil((totTrwDmg*0.2))
-    else:
-      totTrwDmg=trwUsed[0]
   else:
     print("The cogs are lured, and there will be a 50% damage bonus.") #Lure bonus doesn't get rounded for some dumb reason.
     if len(trwUsed)>1:
-      totTrwDmg=sum(trwUsed,0)
       totTrwDmg=totTrwDmg+(totTrwDmg/2)+math.ceil((totTrwDmg*0.2))
     else:
-      totTrwDmg=trwUsed[0]+(trwUsed[0]/2)
+      totTrwDmg=totTrwDmg+(totTrwDmg/2)
     lured.set(0)
   print("Total throw damage: "+str(totTrwDmg))
   global totDmg
