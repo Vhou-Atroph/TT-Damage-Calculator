@@ -1,3 +1,6 @@
+# THIS IS AN UNSTABLE BRANCH!
+ This branch is unstable and not all features may work.
+
 # TT-Damage-Calculator
  Gag damage calculator for [Toontown Rewritten](https://toontownrewritten.com/).
 
