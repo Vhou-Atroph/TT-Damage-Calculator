@@ -2,7 +2,7 @@ from tkinter import *
 import math
 import os
 
-'''VERSION 1.6.2
+'''VERSION 1.6.2a
 
 CONTRIBUTORS:
 - Vhou-Atroph
@@ -789,6 +789,7 @@ def trpDmgClc():
 #Total damage calculation
 def clcDmg():
   global lured
+  localLure=0
   if lured.get()==1: #Find out if lure is enabled. If it is, save a local variable.
     localLure=1
   if len(trpUsed)>0:
