@@ -904,8 +904,6 @@ def cHPIndClc():
   if 475<totDmg:
     print("Can kill a level twenty.")
     cHPInd.configure(text="(level 20)")
-  else:
-    print("Else")
 
 #Geometry - Main Columns
 col1.grid(column=0,row=0,padx=5) #In retrospect I should have used 0 for the column name too, but it doesn't matter *that* much.
