@@ -46,14 +46,30 @@ totDmg=0
 col1=Frame(window) #Main content of the calculator
 col2=Frame(window) #Will be used for calculation history
 
+#Total damage calculation
+def clcDmg(opt=""):
+  global lured
+  localLure=0
+  if lured.get()==1: #Find out if lure is enabled. If it is, save a local variable.
+    localLure=1
+  if len(sndUsed)>0:
+    sndDmgClc()
+  global totDmg
+  print("Total damage this round: "+str(totDmg))
+  theDmg.configure(text=str(totDmg))
+  cHPIndClc()
+  totDmg=0
+  if localLure==1:
+    lured.set(1)
+
 #Toggles
 togBtns=Frame(col1)
 orgBtn=Button(togBtns,text='Toggle Organic',font=('Arial',11,'normal'))
-lurChk=Checkbutton(togBtns,text='Cog lured',variable=lured,onvalue=1,offvalue=0,font=('Arial',11,'normal'))
+lurChk=Checkbutton(togBtns,text='Cog lured',variable=lured,onvalue=1,offvalue=0,font=('Arial',11,'normal'),command=clcDmg)
 clrBtn=Button(togBtns,text='Clear Inputs',font=('Arial',11,'normal'))
 defLbl=Label(togBtns,text='Defense:',font=('Arial',11,'normal'))
-defBtn=OptionMenu(togBtns,dmgDown,*defValues)
-lockDwn=OptionMenu(togBtns,dlLock,*dlOptions)
+defBtn=OptionMenu(togBtns,dmgDown,*defValues,command=clcDmg)
+lockDwn=OptionMenu(togBtns,dlLock,*dlOptions,command=clcDmg)
 
 #The Gags
 gagFrame=Frame(col1)
@@ -806,22 +822,6 @@ def trpDmgClc():
       lured.set(0)
   global totDmg
   totDmg=totDmg+totTrpDmg
-
-#Total damage calculation
-def clcDmg():
-  global lured
-  localLure=0
-  if lured.get()==1: #Find out if lure is enabled. If it is, save a local variable.
-    localLure=1
-  if len(sndUsed)>0:
-    sndDmgClc()
-  global totDmg
-  print("Total damage this round: "+str(totDmg))
-  theDmg.configure(text=str(totDmg))
-  cHPIndClc()
-  totDmg=0
-  if localLure==1:
-    lured.set(1)
 
 #Cog HP Cheatsheet Function
 def cHPClcDlt():
