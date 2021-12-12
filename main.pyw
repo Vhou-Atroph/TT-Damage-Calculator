@@ -2,7 +2,7 @@ from tkinter import *
 import math
 import os
 
-'''VERSION 1.6.2a
+'''VERSION 1.6.3
 
 CONTRIBUTORS:
 - Vhou-Atroph
@@ -155,6 +155,7 @@ cogClc=Button(hist,text="Show Health")
 clcResults=Frame(col1)
 dmgThsRnd=Label(clcResults,text="Damage this round:",font=('Arial',16,'normal'))
 theDmg=Label(clcResults,text="0",font=('Arial',16,'bold'))
+cHPInd=Label(clcResults,text="(level 0)",font=('Arial',8,'normal'))
 orgOnOff=Label(clcResults,text="Organic = OFF",font=('Arial',10,'bold'))
 
 #Cog HP
@@ -808,6 +809,7 @@ def clcDmg():
   histBox.configure(state=NORMAL)
   histBox.insert('1.0',"--------\nDamage calculated: "+str(totDmg)+"\n--------\n")
   histBox.configure(state=DISABLED)
+  cHPIndClc()
   totDmg=0
   clearInputs()
   if localLure==1 and dlLock.get()=='Lock lure' or dlLock.get()=='Lock both': #Use the local variable and dlLock to lock lure as active even after it is set to 0 by clearInputs()
@@ -835,6 +837,75 @@ def pin():
   window.attributes('-topmost',True)
   pinBtn.configure(command=unpin,text='Unpin from top')
 pinBtn.configure(command=pin)
+
+#Cog HP Indicator Function
+def cHPIndClc():
+  global totDmg
+  if totDmg<6:
+    print("Cannot kill a level one.")
+    cHPInd.configure(text="(level 0")
+  if 5<totDmg<12:
+    print("Can kill a level one.")
+    cHPInd.configure(text="(level 1)")
+  if 11<totDmg<20:
+    print("Can kill a level two.")
+    cHPInd.configure(text="(level 2)")
+  if 19<totDmg<30:
+    print("Can kill a level three.")
+    cHPInd.configure(text="(level 3)")
+  if 29<totDmg<42:
+    print("Can kill a level four.")
+    cHPInd.configure(text="(level 4)")
+  if 41<totDmg<56:
+    print("Can kill a level five.")
+    cHPInd.configure(text="(level 5)")
+  if 55<totDmg<72:
+    print("Can kill a level six.")
+    cHPInd.configure(text="(level 6)")
+  if 71<totDmg<90:
+    print("Can kill a level seven.")
+    cHPInd.configure(text="(level 7)")
+  if 89<totDmg<110:
+    print("Can kill a level eight.")
+    cHPInd.configure(text="(level 8)")
+  if 109<totDmg<132:
+    print("Can kill a level nine.")
+    cHPInd.configure(text="(level 9)")
+  if 131<totDmg<156:
+    print("Can kill a level ten.")
+    cHPInd.configure(text="(level 10)")
+  if 155<totDmg<196:
+    print("Can kill a level eleven.")
+    cHPInd.configure(text="(level 11)")
+  if 195<totDmg<224:
+    print("Can kill a level twelve.")
+    cHPInd.configure(text="(level 12)")
+  if 223<totDmg<254:
+    print("Can kill a level thirteen.")
+    cHPInd.configure(text="(level 13)")
+  if 253<totDmg<286:
+    print("Can kill a level fourteen.")
+    cHPInd.configure(text="(level 14)")
+  if 285<totDmg<320:
+    print("Can kill a level fifteen.")
+    cHPInd.configure(text="(level 15)")
+  if 319<totDmg<356:
+    print("Can kill a level sixteen.")
+    cHPInd.configure(text="(level 16)")
+  if 355<totDmg<394:
+    print("Can kill a level seventeen.")
+    cHPInd.configure(text="(level 17)")
+  if 393<totDmg<434:
+    print("Can kill a level eighteen.")
+    cHPInd.configure(text="(level 18)")
+  if 433<totDmg<476:
+    print("Can kill a level nineteen.")
+    cHPInd.configure(text="(level 19)")
+  if 475<totDmg:
+    print("Can kill a level twenty.")
+    cHPInd.configure(text="(level 20)")
+  else:
+    print("Else")
 
 #Geometry - Main Columns
 col1.grid(column=0,row=0,padx=5) #In retrospect I should have used 0 for the column name too, but it doesn't matter *that* much.
@@ -911,7 +982,8 @@ cogClc.grid(column=0,row=4,pady=3)
 clcResults.grid(column=0,row=0)
 dmgThsRnd.grid(column=0,row=0)
 theDmg.grid(column=1,row=0)
-orgOnOff.grid(column=0,row=1)
+cHPInd.grid(column=2,row=0)
+orgOnOff.grid(column=0,row=1,columnspan=3)
 
 #Run
 window.mainloop()
