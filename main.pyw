@@ -75,7 +75,7 @@ def clcDmg(opt=""):
 togBtns=Frame(col1)
 orgBtn=Button(togBtns,text='Toggle Organic',font=('Arial',11,'normal'))
 lurChk=Checkbutton(togBtns,text='Cog lured',variable=lured,onvalue=1,offvalue=0,font=('Arial',11,'normal'),command=clcDmg)
-clrBtn=Button(togBtns,text='Clear gags',font=('Arial',11,'normal'))
+clrBtn=Button(togBtns,text='Reset damage',font=('Arial',11,'normal'))
 defLbl=Label(togBtns,text='Defense:',font=('Arial',11,'normal'))
 defBtn=OptionMenu(togBtns,dmgDown,*defValues,command=clcDmg)
 defBtn.configure(width=4,font=('Arial',11,'normal'))
@@ -764,7 +764,7 @@ def trwDmgClc():
     if len(trwUsed)>1:
       totTrwDmg=totTrwDmg+math.ceil((totTrwDmg*0.2))
   else:
-    print("The cogs are lured, and there will be a 50% damage bonus.") #Lure bonus doesn't get rounded for some dumb reason.
+    print("The cogs are lured, and there will be a 50% damage bonus.") #Lure bonus used to not ceil but does now apparently (TTR V3.0.8).
     if len(trwUsed)>1:
       totTrwDmg=totTrwDmg+math.ceil(totTrwDmg/2)+math.ceil((totTrwDmg*0.2))
     else:
