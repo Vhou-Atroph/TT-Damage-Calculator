@@ -4,7 +4,7 @@
 # TT-Damage-Calculator
  Gag damage calculator for [Toontown Rewritten](https://toontownrewritten.com/).
 
-![The Program](https://i.imgur.com/miyZ4qp.png)
+![The Program](https://github.com/Vhou-Atroph/TT-Damage-Calculator/blob/livecalc-dev/preview.png?raw=true)
 
 # Usage
 **Gag Selection**
