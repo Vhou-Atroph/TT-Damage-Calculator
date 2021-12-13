@@ -6,6 +6,7 @@ import os
 
 CONTRIBUTORS:
 - Vhou-Atroph
+- BoggoTV
 '''
 
 #Window
@@ -217,7 +218,7 @@ def clearInputs():
     localLure=1
     lurInfo='yes'
   histBox.configure(state=NORMAL)
-  histBox.insert('1.0',"--------\nCalculation finished!\nDamage calculated was: "+theDmg.cget("text")+"\nDefense: "+dmgDown.get()+"\nLure: "+lurInfo+"\n--------\n")
+  histBox.insert('1.0',"--------\nCalculation finished!\nDamage calculated was: "+theDmg.cget("text")+"\nDefense: "+dmgDown.get()+"\nLure: "+lurInfo+"\n")
   histBox.configure(state=DISABLED)
   if dlLock.get()=='No lock' or dlLock.get()=='Lock lure':
     dmgDown.set('0%')
@@ -279,7 +280,7 @@ def buglePrs():
   else:
     sndUsed.append(12)
     histBox.configure(state=NORMAL)
-    histBox.insert('1.0',"Gag used: Organic Bugle (5)\n")
+    histBox.insert('1.0',"Gag used: Organic Bugle (12)\n")
     histBox.configure(state=DISABLED)
   clcDmg()
 bugle.configure(command=buglePrs)
@@ -628,14 +629,14 @@ def rakePrs():
 rake.configure(command=rakePrs)
 def marblesPrs():
   if organic==0:
-    trpUsed.append(30)
+    trpUsed.append(35)
     histBox.configure(state=NORMAL)
-    histBox.insert('1.0',"Gag used: Marbles (30)\n")
+    histBox.insert('1.0',"Gag used: Marbles (35)\n")
     histBox.configure(state=DISABLED)
   else:
-    trpUsed.append(22)
+    trpUsed.append(38)
     histBox.configure(state=NORMAL)
-    histBox.insert('1.0',"Gag used: Organic Marbles (33)\n")
+    histBox.insert('1.0',"Gag used: Organic Marbles (38)\n")
     histBox.configure(state=DISABLED)
 marbles.configure(command=marblesPrs)
 def qSandPrs():
@@ -645,7 +646,7 @@ def qSandPrs():
     histBox.insert('1.0',"Gag used: Quicksand (50)\n")
     histBox.configure(state=DISABLED)
   else:
-    trpUsed.append(22)
+    trpUsed.append(55)
     histBox.configure(state=NORMAL)
     histBox.insert('1.0',"Gag used: Organic Quicksand (55)\n")
     histBox.configure(state=DISABLED)
