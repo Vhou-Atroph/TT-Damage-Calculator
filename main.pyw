@@ -57,6 +57,8 @@ def clcDmg(opt=""):
     sndDmgClc()
   if len(trwUsed)>0:
     trwDmgClc()
+  if len(sqtUsed)>0:
+    sqtDmgClc()
   global totDmg
   print("Total damage this round: "+str(totDmg))
   theDmg.configure(text=str(totDmg))
@@ -442,6 +444,7 @@ def sFlowerPrs():
     histBox.configure(state=NORMAL)
     histBox.insert('1.0',"Gag used: Organic Squirting Flower (7)\n")
     histBox.configure(state=DISABLED)
+  clcDmg()
 sFlower.configure(command=sFlowerPrs)
 def gWaterPrs():
   if organic==0:
@@ -454,6 +457,7 @@ def gWaterPrs():
     histBox.configure(state=NORMAL)
     histBox.insert('1.0',"Gag used: Organic Glass of Water (9)\n")
     histBox.configure(state=DISABLED)
+  clcDmg()
 gWater.configure(command=gWaterPrs)
 def sGunPrs():
   if organic==0:
@@ -466,6 +470,7 @@ def sGunPrs():
     histBox.configure(state=NORMAL)
     histBox.insert('1.0',"Gag used: Organic Squirt Gun (13)\n")
     histBox.configure(state=DISABLED)
+  clcDmg()
 sGun.configure(command=sGunPrs)
 def sBottlePrs():
   if organic==0:
@@ -478,6 +483,7 @@ def sBottlePrs():
     histBox.configure(state=NORMAL)
     histBox.insert('1.0',"Gag used: Organic Seltzer Bottle (23)\n")
     histBox.configure(state=DISABLED)
+  clcDmg()
 sBottle.configure(command=sBottlePrs)
 def fHosePrs():
   if organic==0:
@@ -490,6 +496,7 @@ def fHosePrs():
     histBox.configure(state=NORMAL)
     histBox.insert('1.0',"Gag used: Organic Fire Hose (33)\n")
     histBox.configure(state=DISABLED)
+  clcDmg()
 fHose.configure(command=fHosePrs)
 def sCloudPrs():
   if organic==0:
@@ -502,6 +509,7 @@ def sCloudPrs():
     histBox.configure(state=NORMAL)
     histBox.insert('1.0',"Gag used: Organic Storm Cloud (88)\n")
     histBox.configure(state=DISABLED)
+  clcDmg()
 sCloud.configure(command=sCloudPrs)
 def geyserPrs():
   if organic==0:
@@ -514,6 +522,7 @@ def geyserPrs():
     histBox.configure(state=NORMAL)
     histBox.insert('1.0',"Gag used: Organic Geyser (115)\n")
     histBox.configure(state=DISABLED)
+  clcDmg()
 geyser.configure(command=geyserPrs)
 
 #Drop
@@ -692,14 +701,14 @@ rRoad.configure(command=rRoadPrs)
 def sndDmgClc():
   localDmg=list()
   if dmgDown.get()=='10%':
-      for i in range(len(sndUsed)):
-        localDmg.append(sndUsed[i]-math.ceil(sndUsed[i]*.1)) #Defense buff ceils
+    for i in range(len(sndUsed)):
+      localDmg.append(sndUsed[i]-math.ceil(sndUsed[i]*.1)) #Defense buff ceils
   elif dmgDown.get()=='15%':
-      for i in range(len(sndUsed)):
-        localDmg.append(sndUsed[i]-math.ceil(sndUsed[i]*.15))
+    for i in range(len(sndUsed)):
+      localDmg.append(sndUsed[i]-math.ceil(sndUsed[i]*.15))
   elif dmgDown.get()=='20%':
-      for i in range(len(sndUsed)):
-        localDmg.append(sndUsed[i]-math.ceil(sndUsed[i]*.2))
+    for i in range(len(sndUsed)):
+      localDmg.append(sndUsed[i]-math.ceil(sndUsed[i]*.2))
   else:
     for i in range(len(sndUsed)):
       localDmg.append(sndUsed[i])
@@ -718,14 +727,14 @@ def sndDmgClc():
 def trwDmgClc():
   localDmg=list()
   if dmgDown.get()=='10%':
-        for i in range(len(trwUsed)):
-          localDmg.append(trwUsed[i]-math.ceil(trwUsed[i]*.1))
+    for i in range(len(trwUsed)):
+      localDmg.append(trwUsed[i]-math.ceil(trwUsed[i]*.1))
   elif dmgDown.get()=='15%':
-        for i in range(len(trwUsed)):
-          localDmg.append(trwUsed[i]-math.ceil(trwUsed[i]*.15))
+    for i in range(len(trwUsed)):
+      localDmg.append(trwUsed[i]-math.ceil(trwUsed[i]*.15))
   elif dmgDown.get()=='20%':
-        for i in range(len(trwUsed)):
-          localDmg.append(trwUsed[i]-math.ceil(trwUsed[i]*.2))
+    for i in range(len(trwUsed)):
+      localDmg.append(trwUsed[i]-math.ceil(trwUsed[i]*.2))
   else:
     for i in range(len(trwUsed)):
       localDmg.append(trwUsed[i])
@@ -739,9 +748,9 @@ def trwDmgClc():
   else:
     print("The cogs are lured, and there will be a 50% damage bonus.") #Lure bonus doesn't get rounded for some dumb reason.
     if len(trwUsed)>1:
-      totTrwDmg=totTrwDmg+(totTrwDmg/2)+math.ceil((totTrwDmg*0.2))
+      totTrwDmg=totTrwDmg+math.ceil(totTrwDmg/2)+math.ceil((totTrwDmg*0.2))
     else:
-      totTrwDmg=totTrwDmg+(totTrwDmg/2)
+      totTrwDmg=totTrwDmg+math.ceil(totTrwDmg/2)
     lured.set(0)
   print("Total throw damage: "+str(totTrwDmg))
   global totDmg
@@ -749,32 +758,32 @@ def trwDmgClc():
 
 #Squirt damage calculation, luckily just throw 2. (Squirt is better than throw and I am tired of people pretending it isn't. It's the superior organic choice. Cowards.)
 def sqtDmgClc():
+  localDmg=list()
   if dmgDown.get()=='10%':
-        for i in range(len(sqtUsed)):
-          sqtUsed[i]=(sqtUsed[i]-math.ceil(sqtUsed[i]*.1))
-  if dmgDown.get()=='15%':
-        for i in range(len(sqtUsed)):
-          sqtUsed[i]=(sqtUsed[i]-math.ceil(sqtUsed[i]*.15))
-  if dmgDown.get()=='20%':
-        for i in range(len(sqtUsed)):
-          print((sqtUsed[i]-(sqtUsed[i]*.1)))
-          sqtUsed[i]=(sqtUsed[i]-math.ceil(sqtUsed[i]*.2))
-  print("Damage of each individual squirt gag:"+str(sqtUsed))
+    for i in range(len(sqtUsed)):
+      localDmg.append(sqtUsed[i]-math.ceil(sqtUsed[i]*.1))
+  elif dmgDown.get()=='15%':
+    for i in range(len(sqtUsed)):
+      localDmg.append(sqtUsed[i]-math.ceil(sqtUsed[i]*.15))
+  elif dmgDown.get()=='20%':
+    for i in range(len(sqtUsed)):
+      localDmg.append(sqtUsed[i]-math.ceil(sqtUsed[i]*.2))
+  else:
+    for i in range(len(sqtUsed)):
+      localDmg.append(sqtUsed[i])
+  print("Damage of each individual squirt gag:"+str(localDmg))
+  totSqtDmg=sum(localDmg,0)
   global lured
   if lured.get()==0:
     print("The cogs are not lured, and there will be no 50% damage bonus.")
     if len(sqtUsed)>1:
-      totSqtDmg=sum(sqtUsed,0)
       totSqtDmg=totSqtDmg+math.ceil((totSqtDmg*0.2))
-    else:
-      totSqtDmg=sqtUsed[0]
   else:
-    print("The cogs are lured, and there will be a 50% damage bonus.")
+    print("The cogs are lured, and there will be a 50% damage bonus.") #Lure bonus doesn't get rounded for some dumb reason.
     if len(sqtUsed)>1:
-      totSqtDmg=sum(sqtUsed,0)
-      totSqtDmg=totSqtDmg+(totSqtDmg/2)+math.ceil((totSqtDmg*0.2))
+      totSqtDmg=totSqtDmg+math.ceil(totSqtDmg/2)+math.ceil((totSqtDmg*0.2))
     else:
-      totSqtDmg=sqtUsed[0]+(sqtUsed[0]/2)
+      totSqtDmg=totSqtDmg+math.ceil(totSqtDmg/2)
     lured.set(0)
   print("Total squirt damage: "+str(totSqtDmg))
   global totDmg
