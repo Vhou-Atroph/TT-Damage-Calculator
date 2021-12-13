@@ -71,7 +71,9 @@ lurChk=Checkbutton(togBtns,text='Cog lured',variable=lured,onvalue=1,offvalue=0,
 clrBtn=Button(togBtns,text='Clear Inputs',font=('Arial',11,'normal'))
 defLbl=Label(togBtns,text='Defense:',font=('Arial',11,'normal'))
 defBtn=OptionMenu(togBtns,dmgDown,*defValues,command=clcDmg)
+defBtn.configure(width=4)
 lockDwn=OptionMenu(togBtns,dlLock,*dlOptions,command=clcDmg)
+lockDwn.configure(width=12)
 
 #The Gags
 gagFrame=Frame(col1)
