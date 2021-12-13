@@ -68,12 +68,12 @@ def clcDmg(opt=""):
 togBtns=Frame(col1)
 orgBtn=Button(togBtns,text='Toggle Organic',font=('Arial',11,'normal'))
 lurChk=Checkbutton(togBtns,text='Cog lured',variable=lured,onvalue=1,offvalue=0,font=('Arial',11,'normal'),command=clcDmg)
-clrBtn=Button(togBtns,text='Clear Inputs',font=('Arial',11,'normal'))
+clrBtn=Button(togBtns,text='Clear gags',font=('Arial',11,'normal'))
 defLbl=Label(togBtns,text='Defense:',font=('Arial',11,'normal'))
 defBtn=OptionMenu(togBtns,dmgDown,*defValues,command=clcDmg)
-defBtn.configure(width=4)
-lockDwn=OptionMenu(togBtns,dlLock,*dlOptions,command=clcDmg)
-lockDwn.configure(width=12)
+defBtn.configure(width=4,font=('Arial',11,'normal'))
+lockDwn=OptionMenu(togBtns,dlLock,*dlOptions)
+lockDwn.configure(width=12,font=('Arial',11,'normal'))
 
 #The Gags
 gagFrame=Frame(col1)
@@ -217,7 +217,7 @@ def clearInputs():
     localLure=1
     lurInfo='yes'
   histBox.configure(state=NORMAL)
-  histBox.insert('1.0',"--------\nInputs have been cleared!\nDamage calculated was: "+theDmg.cget("text")+"\nDefense: "+dmgDown.get()+"\nLure: "+lurInfo+"\n--------\n")
+  histBox.insert('1.0',"--------\nCalculation finished!\nDamage calculated was: "+theDmg.cget("text")+"\nDefense: "+dmgDown.get()+"\nLure: "+lurInfo+"\n--------\n")
   histBox.configure(state=DISABLED)
   if dlLock.get()=='No lock' or dlLock.get()=='Lock lure':
     dmgDown.set('0%')
