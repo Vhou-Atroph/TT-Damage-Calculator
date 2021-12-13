@@ -53,6 +53,8 @@ def clcDmg(opt=""):
   localLure=0
   if lured.get()==1: #Find out if lure is enabled. If it is, save a local variable.
     localLure=1
+  if len(trpUsed)>0:
+    trpDmgClc()
   if len(sndUsed)>0:
     sndDmgClc()
   if len(trwUsed)>0:
@@ -632,6 +634,7 @@ def bPeelPrs():
     histBox.configure(state=NORMAL)
     histBox.insert('1.0',"Gag used: Organic Banana Peel (13)\n")
     histBox.configure(state=DISABLED)
+  clcDmg()
 bPeel.configure(command=bPeelPrs)
 def rakePrs():
   if organic==0:
@@ -644,6 +647,7 @@ def rakePrs():
     histBox.configure(state=NORMAL)
     histBox.insert('1.0',"Gag used: Organic Rake (22)\n")
     histBox.configure(state=DISABLED)
+  clcDmg()
 rake.configure(command=rakePrs)
 def marblesPrs():
   if organic==0:
@@ -656,6 +660,7 @@ def marblesPrs():
     histBox.configure(state=NORMAL)
     histBox.insert('1.0',"Gag used: Organic Marbles (38)\n")
     histBox.configure(state=DISABLED)
+  clcDmg()
 marbles.configure(command=marblesPrs)
 def qSandPrs():
   if organic==0:
@@ -668,6 +673,7 @@ def qSandPrs():
     histBox.configure(state=NORMAL)
     histBox.insert('1.0',"Gag used: Organic Quicksand (55)\n")
     histBox.configure(state=DISABLED)
+  clcDmg()
 qSand.configure(command=qSandPrs)
 def tDoorPrs():
   if organic==0:
@@ -680,6 +686,7 @@ def tDoorPrs():
     histBox.configure(state=NORMAL)
     histBox.insert('1.0',"Gag used: Organic Trapdoor (93)\n")
     histBox.configure(state=DISABLED)
+  clcDmg()
 tDoor.configure(command=tDoorPrs)
 def tntPrs():
   if organic==0:
@@ -692,6 +699,7 @@ def tntPrs():
     histBox.configure(state=NORMAL)
     histBox.insert('1.0',"Gag used: Organic TNT (198)\n")
     histBox.configure(state=DISABLED)
+  clcDmg()
 tnt.configure(command=tntPrs)
 def rRoadPrs():
   if organic==0:
@@ -704,6 +712,7 @@ def rRoadPrs():
     histBox.configure(state=NORMAL)
     histBox.insert('1.0',"Gag used: Organic Railroad (220)\n")
     histBox.configure(state=DISABLED)
+  clcDmg()
 rRoad.configure(command=rRoadPrs)
 
 #Sound damage calculation
@@ -829,16 +838,20 @@ def drpDmgClc():
 
 #Trap damage calculation
 def trpDmgClc():
+  localDmg=list()
   if dmgDown.get()=='10%':
-      for i in range(len(trpUsed)):
-        trpUsed[i]=(trpUsed[i]-math.ceil(trpUsed[i]*.1))
+    for i in range(len(trpUsed)):
+      localDmg.append(trpUsed[i]-math.ceil(trpUsed[i]*.1))
   if dmgDown.get()=='15%':
-      for i in range(len(trpUsed)):
-        trpUsed[i]=(trpUsed[i]-math.ceil(trpUsed[i]*.15))
+    for i in range(len(trpUsed)):
+      localDmg.append(trpUsed[i]-math.ceil(trpUsed[i]*.15))
   if dmgDown.get()=='20%':
-      for i in range(len(trpUsed)):
-        trpUsed[i]=(trpUsed[i]-math.ceil(trpUsed[i]*.2))
-  print("Damage of each individual trap gag:"+str(trpUsed))
+    for i in range(len(trpUsed)):
+      localDmg.append(trpUsed[i]-math.ceil(trpUsed[i]*.2))
+  else:
+    for i in range(len(trpUsed)):
+      localDmg.append(trpUsed[i])
+  print("Damage of each individual trap gag:"+str(localDmg))
   global lured
   if lured.get()==0:
     print("You need to lure cogs if you want trap to work!")
@@ -849,7 +862,7 @@ def trpDmgClc():
       totTrpDmg=0
     else:
       print("The trap worked! This can mean only one thing: You used lure AND only one trap on the cog! Amazing! It did "+str(trpUsed[0])+" damage!")
-      totTrpDmg=trpUsed[0]
+      totTrpDmg=localDmg[0]
       lured.set(0)
   global totDmg
   totDmg=totDmg+totTrpDmg
