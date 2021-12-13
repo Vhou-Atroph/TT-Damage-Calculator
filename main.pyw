@@ -59,6 +59,8 @@ def clcDmg(opt=""):
     trwDmgClc()
   if len(sqtUsed)>0:
     sqtDmgClc()
+  if len(drpUsed)>0:
+    drpDmgClc()
   global totDmg
   print("Total damage this round: "+str(totDmg))
   theDmg.configure(text=str(totDmg))
@@ -537,6 +539,7 @@ def fPotPrs():
     histBox.configure(state=NORMAL)
     histBox.insert('1.0',"Gag used: Organic Flower Pot (11)\n")
     histBox.configure(state=DISABLED)
+  clcDmg()
 fPot.configure(command=fPotPrs)
 def sBagPrs():
   if organic==0:
@@ -549,6 +552,7 @@ def sBagPrs():
     histBox.configure(state=NORMAL)
     histBox.insert('1.0',"Gag used: Organic Sandbag (19)\n")
     histBox.configure(state=DISABLED)
+  clcDmg()
 sBag.configure(command=sBagPrs)
 def anvilPrs():
   if organic==0:
@@ -561,6 +565,7 @@ def anvilPrs():
     histBox.configure(state=NORMAL)
     histBox.insert('1.0',"Gag used: Organic Anvil (33)\n")
     histBox.configure(state=DISABLED)
+  clcDmg()
 anvil.configure(command=anvilPrs)
 def bWeightPrs():
   if organic==0:
@@ -573,6 +578,7 @@ def bWeightPrs():
     histBox.configure(state=NORMAL)
     histBox.insert('1.0',"Gag used: Organic Big Weight (49)\n")
     histBox.configure(state=DISABLED)
+  clcDmg()
 bWeight.configure(command=bWeightPrs)
 def safePrs():
   if organic==0:
@@ -585,6 +591,7 @@ def safePrs():
     histBox.configure(state=NORMAL)
     histBox.insert('1.0',"Gag used: Organic Safe (77)\n")
     histBox.configure(state=DISABLED)
+  clcDmg()
 safe.configure(command=safePrs)
 def gPianoPrs():
   if organic==0:
@@ -597,6 +604,7 @@ def gPianoPrs():
     histBox.configure(state=NORMAL)
     histBox.insert('1.0',"Gag used: Organic Grand Piano (187)\n")
     histBox.configure(state=DISABLED)
+  clcDmg()
 gPiano.configure(command=gPianoPrs)
 def tTanicPrs():
   if organic==0:
@@ -609,6 +617,7 @@ def tTanicPrs():
     histBox.configure(state=NORMAL)
     histBox.insert('1.0',"Gag used: Organic Toontanic (198)\n")
     histBox.configure(state=DISABLED)
+  clcDmg()
 tTanic.configure(command=tTanicPrs)
 
 #Trap
@@ -791,24 +800,26 @@ def sqtDmgClc():
 
 #Drop damage calculation
 def drpDmgClc():
+  localDmg=list()
   if dmgDown.get()=='10%':
-      for i in range(len(drpUsed)):
-        drpUsed[i]=(drpUsed[i]-math.ceil(drpUsed[i]*.1))
-  if dmgDown.get()=='15%':
-      for i in range(len(drpUsed)):
-        drpUsed[i]=(drpUsed[i]-math.ceil(drpUsed[i]*.15))
-  if dmgDown.get()=='20%':
-      for i in range(len(drpUsed)):
-        drpUsed[i]=(drpUsed[i]-math.ceil(drpUsed[i]*.2))
-  print("Damage of each individual drop gag:"+str(drpUsed))
+    for i in range(len(drpUsed)):
+      localDmg.append(drpUsed[i]-math.ceil(drpUsed[i]*.1))
+  elif dmgDown.get()=='15%':
+    for i in range(len(drpUsed)):
+      localDmg.append(drpUsed[i]-math.ceil(drpUsed[i]*.15))
+  elif dmgDown.get()=='20%':
+    for i in range(len(drpUsed)):
+      localDmg.append(drpUsed[i]-math.ceil(drpUsed[i]*.2))
+  else:
+    for i in range(len(drpUsed)):
+      localDmg.append(drpUsed[i])
+  print("Damage of each individual drop gag:"+str(localDmg))
+  totDrpDmg=sum(localDmg,0)
   global lured
   if lured.get()==0:
     print("The cogs are not lured, so drop is able to hit!")
     if len(drpUsed)>1:
-      totDrpDmg=sum(drpUsed,0)
       totDrpDmg=totDrpDmg+math.ceil((totDrpDmg*0.2))
-    else:
-      totDrpDmg=drpUsed[0]
   else:
     print("The cogs are lured, and drop does not work on lured cogs! https://www.youtube.com/watch?v=NV-p_-OvUnA&t=4s")
     totDrpDmg=0
