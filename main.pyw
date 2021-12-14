@@ -2,7 +2,7 @@ from tkinter import *
 import math
 import os
 
-'''VERSION 2.0.0
+'''VERSION 2.0.0a
 
 CONTRIBUTORS:
 - Vhou-Atroph
@@ -372,14 +372,14 @@ def fPSlicePrs():
 fPSlice.configure(command=fPSlicePrs)
 def cPSlicePrs():
   if organic==0:
-    trwUsed.append(18)
+    trwUsed.append(17)
     histBox.configure(state=NORMAL)
-    histBox.insert('1.0',"Gag used: Cream Pie Slice (18)\n")
+    histBox.insert('1.0',"Gag used: Cream Pie Slice (17)\n")
     histBox.configure(state=DISABLED)
   else:
-    trwUsed.append(19)
+    trwUsed.append(18)
     histBox.configure(state=NORMAL)
-    histBox.insert('1.0',"Gag used: Organic Cream Pie Slice (19)\n")
+    histBox.insert('1.0',"Gag used: Organic Cream Pie Slice (18)\n")
     histBox.configure(state=DISABLED)
   clcDmg()
 cPSlice.configure(command=cPSlicePrs)
@@ -446,7 +446,7 @@ def sFlowerPrs():
   else:
     sqtUsed.append(5)
     histBox.configure(state=NORMAL)
-    histBox.insert('1.0',"Gag used: Organic Squirting Flower (7)\n")
+    histBox.insert('1.0',"Gag used: Organic Squirting Flower (5)\n")
     histBox.configure(state=DISABLED)
   clcDmg()
 sFlower.configure(command=sFlowerPrs)
