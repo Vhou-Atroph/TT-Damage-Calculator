@@ -2,7 +2,7 @@ from tkinter import *
 import math
 import os
 
-'''VERSION 2.0.0a
+'''VERSION 2.1
 
 CONTRIBUTORS:
 - Vhou-Atroph
@@ -87,83 +87,83 @@ gagFrame=Frame(col1)
 #Sound
 sndFrame=Frame(gagFrame)
 bHornImg=PhotoImage(file='img/bike-horn.png')
-bHorn=Button(sndFrame,image=bHornImg,bg='#1888D3',activebackground='#186AD3')
+bHorn=Button(sndFrame,image=bHornImg,bg='#1888D3',activebackground='#186AD3',text='0',font=('Impress BT',8,'bold'),compound='top',fg='white')
 whistleImg=PhotoImage(file='img/whistle.png')
-whistle=Button(sndFrame,image=whistleImg,bg='#1888D3',activebackground='#186AD3')
+whistle=Button(sndFrame,image=whistleImg,bg='#1888D3',activebackground='#186AD3',text='0',font=('Impress BT',8,'bold'),compound='top',fg='white')
 bugleImg=PhotoImage(file='img/bugle.png')
-bugle=Button(sndFrame,image=bugleImg,bg='#1888D3',activebackground='#186AD3')
+bugle=Button(sndFrame,image=bugleImg,bg='#1888D3',activebackground='#186AD3',text='0',font=('Impress BT',8,'bold'),compound='top',fg='white')
 aoogahImg=PhotoImage(file='img/aoogah.png')
-aoogah=Button(sndFrame,image=aoogahImg,bg='#1888D3',activebackground='#186AD3')
+aoogah=Button(sndFrame,image=aoogahImg,bg='#1888D3',activebackground='#186AD3',text='0',font=('Impress BT',8,'bold'),compound='top',fg='white')
 eTrunkImg=PhotoImage(file='img/elephant-trunk.png')
-eTrunk=Button(sndFrame,image=eTrunkImg,bg='#1888D3',activebackground='#186AD3')
+eTrunk=Button(sndFrame,image=eTrunkImg,bg='#1888D3',activebackground='#186AD3',text='0',font=('Impress BT',8,'bold'),compound='top',fg='white')
 fHornImg=PhotoImage(file='img/fog-horn.png')
-fHorn=Button(sndFrame,image=fHornImg,bg='#1888D3',activebackground='#186AD3')
+fHorn=Button(sndFrame,image=fHornImg,bg='#1888D3',activebackground='#186AD3',text='0',font=('Impress BT',8,'bold'),compound='top',fg='white')
 oSingerImg=PhotoImage(file='img/opera-singer.png')
-oSinger=Button(sndFrame,image=oSingerImg,bg='#1888D3',activebackground='#186AD3')
+oSinger=Button(sndFrame,image=oSingerImg,bg='#1888D3',activebackground='#186AD3',text='0',font=('Impress BT',8,'bold'),compound='top',fg='white')
 #Throw
 thrwFrame=Frame(gagFrame)
 cCakeImg=PhotoImage(file='img/cupcake.png')
-cCake=Button(thrwFrame,image=cCakeImg,bg='#1888D3',activebackground='#186AD3')
+cCake=Button(thrwFrame,image=cCakeImg,bg='#1888D3',activebackground='#186AD3',text='0',font=('Impress BT',8,'bold'),compound='top',fg='white')
 fPSliceImg=PhotoImage(file='img/fruit-pie-slice.png')
-fPSlice=Button(thrwFrame,image=fPSliceImg,bg='#1888D3',activebackground='#186AD3')
+fPSlice=Button(thrwFrame,image=fPSliceImg,bg='#1888D3',activebackground='#186AD3',text='0',font=('Impress BT',8,'bold'),compound='top',fg='white')
 cPSliceImg=PhotoImage(file='img/cream-pie-slice.png')
-cPSlice=Button(thrwFrame,image=cPSliceImg,bg='#1888D3',activebackground='#186AD3')
+cPSlice=Button(thrwFrame,image=cPSliceImg,bg='#1888D3',activebackground='#186AD3',text='0',font=('Impress BT',8,'bold'),compound='top',fg='white')
 wFPieImg=PhotoImage(file='img/whole-fruit-pie.png')
-wFPie=Button(thrwFrame,image=wFPieImg,bg='#1888D3',activebackground='#186AD3')
+wFPie=Button(thrwFrame,image=wFPieImg,bg='#1888D3',activebackground='#186AD3',text='0',font=('Impress BT',8,'bold'),compound='top',fg='white')
 wCPieImg=PhotoImage(file='img/whole-cream-pie.png')
-wCPie=Button(thrwFrame,image=wCPieImg,bg='#1888D3',activebackground='#186AD3')
+wCPie=Button(thrwFrame,image=wCPieImg,bg='#1888D3',activebackground='#186AD3',text='0',font=('Impress BT',8,'bold'),compound='top',fg='white')
 bCakeImg=PhotoImage(file='img/birthday-cake.png')
-bCake=Button(thrwFrame,image=bCakeImg,bg='#1888D3',activebackground='#186AD3')
+bCake=Button(thrwFrame,image=bCakeImg,bg='#1888D3',activebackground='#186AD3',text='0',font=('Impress BT',8,'bold'),compound='top',fg='white')
 wCakeImg=PhotoImage(file='img/wedding-cake.png')
-wCake=Button(thrwFrame,image=wCakeImg,bg='#1888D3',activebackground='#186AD3')
+wCake=Button(thrwFrame,image=wCakeImg,bg='#1888D3',activebackground='#186AD3',text='0',font=('Impress BT',8,'bold'),compound='top',fg='white')
 #Squirt
 sqrtFrame=Frame(gagFrame)
 sFlowerImg=PhotoImage(file='img/squirting-flower.png')
-sFlower=Button(sqrtFrame,image=sFlowerImg,bg='#1888D3',activebackground='#186AD3')
+sFlower=Button(sqrtFrame,image=sFlowerImg,bg='#1888D3',activebackground='#186AD3',text='0',font=('Impress BT',8,'bold'),compound='top',fg='white')
 gWaterImg=PhotoImage(file='img/glass-of-water.png')
-gWater=Button(sqrtFrame,image=gWaterImg,bg='#1888D3',activebackground='#186AD3')
+gWater=Button(sqrtFrame,image=gWaterImg,bg='#1888D3',activebackground='#186AD3',text='0',font=('Impress BT',8,'bold'),compound='top',fg='white')
 sGunImg=PhotoImage(file='img/squirt-gun.png')
-sGun=Button(sqrtFrame,image=sGunImg,bg='#1888D3',activebackground='#186AD3')
+sGun=Button(sqrtFrame,image=sGunImg,bg='#1888D3',activebackground='#186AD3',text='0',font=('Impress BT',8,'bold'),compound='top',fg='white')
 sBottleImg=PhotoImage(file='img/seltzer-bottle.png')
-sBottle=Button(sqrtFrame,image=sBottleImg,bg='#1888D3',activebackground='#186AD3')
+sBottle=Button(sqrtFrame,image=sBottleImg,bg='#1888D3',activebackground='#186AD3',text='0',font=('Impress BT',8,'bold'),compound='top',fg='white')
 fHoseImg=PhotoImage(file='img/fire-hose.png')
-fHose=Button(sqrtFrame,image=fHoseImg,bg='#1888D3',activebackground='#186AD3')
+fHose=Button(sqrtFrame,image=fHoseImg,bg='#1888D3',activebackground='#186AD3',text='0',font=('Impress BT',8,'bold'),compound='top',fg='white')
 sCloudImg=PhotoImage(file='img/storm-cloud.png')
-sCloud=Button(sqrtFrame,image=sCloudImg,bg='#1888D3',activebackground='#186AD3')
+sCloud=Button(sqrtFrame,image=sCloudImg,bg='#1888D3',activebackground='#186AD3',text='0',font=('Impress BT',8,'bold'),compound='top',fg='white')
 geyserImg=PhotoImage(file='img/geyser.png')
-geyser=Button(sqrtFrame,image=geyserImg,bg='#1888D3',activebackground='#186AD3')
+geyser=Button(sqrtFrame,image=geyserImg,bg='#1888D3',activebackground='#186AD3',text='0',font=('Impress BT',8,'bold'),compound='top',fg='white')
 #Drop
 drpFrame=Frame(gagFrame)
 fPotImg=PhotoImage(file='img/flower-pot.png')
-fPot=Button(drpFrame,image=fPotImg,bg='#1888D3',activebackground='#186AD3')
+fPot=Button(drpFrame,image=fPotImg,bg='#1888D3',activebackground='#186AD3',text='0',font=('Impress BT',8,'bold'),compound='top',fg='white')
 sBagImg=PhotoImage(file='img/sandbag.png')
-sBag=Button(drpFrame,image=sBagImg,bg='#1888D3',activebackground='#186AD3')
+sBag=Button(drpFrame,image=sBagImg,bg='#1888D3',activebackground='#186AD3',text='0',font=('Impress BT',8,'bold'),compound='top',fg='white')
 anvilImg=PhotoImage(file='img/anvil.png')
-anvil=Button(drpFrame,image=anvilImg,bg='#1888D3',activebackground='#186AD3')
+anvil=Button(drpFrame,image=anvilImg,bg='#1888D3',activebackground='#186AD3',text='0',font=('Impress BT',8,'bold'),compound='top',fg='white')
 bWeightImg=PhotoImage(file='img/big-weight.png')
-bWeight=Button(drpFrame,image=bWeightImg,bg='#1888D3',activebackground='#186AD3')
+bWeight=Button(drpFrame,image=bWeightImg,bg='#1888D3',activebackground='#186AD3',text='0',font=('Impress BT',8,'bold'),compound='top',fg='white')
 safeImg=PhotoImage(file='img/safe.png')
-safe=Button(drpFrame,image=safeImg,bg='#1888D3',activebackground='#186AD3')
+safe=Button(drpFrame,image=safeImg,bg='#1888D3',activebackground='#186AD3',text='0',font=('Impress BT',8,'bold'),compound='top',fg='white')
 gPianoImg=PhotoImage(file='img/grand-piano.png')
-gPiano=Button(drpFrame,image=gPianoImg,bg='#1888D3',activebackground='#186AD3')
+gPiano=Button(drpFrame,image=gPianoImg,bg='#1888D3',activebackground='#186AD3',text='0',font=('Impress BT',8,'bold'),compound='top',fg='white')
 tTanicImg=PhotoImage(file='img/toontanic.png')
-tTanic=Button(drpFrame,image=tTanicImg,bg='#1888D3',activebackground='#186AD3')
+tTanic=Button(drpFrame,image=tTanicImg,bg='#1888D3',activebackground='#186AD3',text='0',font=('Impress BT',8,'bold'),compound='top',fg='white')
 #Trap!
 trpFrame=Frame(gagFrame)
 bPeelImg=PhotoImage(file='img/banana-peel.png')
-bPeel=Button(trpFrame,image=bPeelImg,bg='#1888D3',activebackground='#186AD3')
+bPeel=Button(trpFrame,image=bPeelImg,bg='#1888D3',activebackground='#186AD3',text='0',font=('Impress BT',8,'bold'),compound='top',fg='white')
 rakeImg=PhotoImage(file='img/rake.png')
-rake=Button(trpFrame,image=rakeImg,bg='#1888D3',activebackground='#186AD3')
+rake=Button(trpFrame,image=rakeImg,bg='#1888D3',activebackground='#186AD3',text='0',font=('Impress BT',8,'bold'),compound='top',fg='white')
 marblesImg=PhotoImage(file='img/marbles.png')
-marbles=Button(trpFrame,image=marblesImg,bg='#1888D3',activebackground='#186AD3')
+marbles=Button(trpFrame,image=marblesImg,bg='#1888D3',activebackground='#186AD3',text='0',font=('Impress BT',8,'bold'),compound='top',fg='white')
 qSandImg=PhotoImage(file='img/quicksand.png')
-qSand=Button(trpFrame,image=qSandImg,bg='#1888D3',activebackground='#186AD3')
+qSand=Button(trpFrame,image=qSandImg,bg='#1888D3',activebackground='#186AD3',text='0',font=('Impress BT',8,'bold'),compound='top',fg='white')
 tDoorImg=PhotoImage(file='img/trapdoor.png')
-tDoor=Button(trpFrame,image=tDoorImg,bg='#1888D3',activebackground='#186AD3')
+tDoor=Button(trpFrame,image=tDoorImg,bg='#1888D3',activebackground='#186AD3',text='0',font=('Impress BT',8,'bold'),compound='top',fg='white')
 tntImg=PhotoImage(file='img/tnt.png')
-tnt=Button(trpFrame,image=tntImg,bg='#1888D3',activebackground='#186AD3')
+tnt=Button(trpFrame,image=tntImg,bg='#1888D3',activebackground='#186AD3',text='0',font=('Impress BT',8,'bold'),compound='top',fg='white')
 rRoadImg=PhotoImage(file='img/railroad.png')
-rRoad=Button(trpFrame,image=rRoadImg,bg='#1888D3',activebackground='#186AD3')
+rRoad=Button(trpFrame,image=rRoadImg,bg='#1888D3',activebackground='#186AD3',text='0',font=('Impress BT',8,'bold'),compound='top',fg='white')
 
 #Button list - used for mass configuring the gag buttons
 gagBtns=(bHorn,whistle,bugle,aoogah,eTrunk,fHorn,oSinger,cCake,fPSlice,cPSlice,wFPie,wCPie,bCake,wCake,sFlower,gWater,sGun,sBottle,fHose,sCloud,geyser,fPot,sBag,anvil,bWeight,safe,gPiano,tTanic,bPeel,rake,marbles,qSand,tDoor,tnt,rRoad)
@@ -224,7 +224,7 @@ def clearInputs():
     localLure=1
     lurInfo='yes'
   histBox.configure(state=NORMAL)
-  histBox.insert('1.0',"--------\nCalculation finished!\nDamage calculated was: "+theDmg.cget("text")+"\nDefense: "+dmgDown.get()+"\nLure: "+lurInfo+"\n")
+  histBox.insert('1.0',"--------\nCalculation finished!\nDamage calculated was: "+theDmg.cget("text")+"\nDefense: "+dmgDown.get()+"\nLure: "+lurInfo+"\n\n")
   histBox.configure(state=DISABLED)
   if dlLock.get()=='No lock' or dlLock.get()=='Lock lure':
     dmgDown.set('0%')
@@ -236,6 +236,8 @@ def clearInputs():
   trpUsed=list()
   togOrgOff()
   clcDmg()
+  for i in gagBtns:
+    i.configure(text='0')
   if localLure==1 and dlLock.get()=='Lock lure' or dlLock.get()=='Lock both': #Use the local variable and dlLock to lock lure as active even after it is set to 0 by clearInputs()
     lured.set(1)
 clrBtn.configure(command=clearInputs)
@@ -261,6 +263,7 @@ def bHornPrs():
     histBox.configure(state=NORMAL)
     histBox.insert('1.0',"Gag used: Organic Bike Horn (5)\n")
     histBox.configure(state=DISABLED)
+  bHorn.configure(text=int(bHorn.cget("text"))+1)
   clcDmg()
 bHorn.configure(command=bHornPrs)
 #Other sound buttons, who gives a fuck
@@ -275,6 +278,7 @@ def whistlePrs():
     histBox.configure(state=NORMAL)
     histBox.insert('1.0',"Gag used: Organic Whistle (8)\n")
     histBox.configure(state=DISABLED)
+  whistle.configure(text=int(whistle.cget("text"))+1)
   clcDmg()
 whistle.configure(command=whistlePrs)
 def buglePrs():
@@ -288,6 +292,7 @@ def buglePrs():
     histBox.configure(state=NORMAL)
     histBox.insert('1.0',"Gag used: Organic Bugle (12)\n")
     histBox.configure(state=DISABLED)
+  bugle.configure(text=int(bugle.cget("text"))+1)
   clcDmg()
 bugle.configure(command=buglePrs)
 def aoogahPrs():
@@ -301,6 +306,7 @@ def aoogahPrs():
     histBox.configure(state=NORMAL)
     histBox.insert('1.0',"Gag used: Organic Aoogah (17)\n")
     histBox.configure(state=DISABLED)
+  aoogah.configure(text=int(aoogah.cget("text"))+1)
   clcDmg()
 aoogah.configure(command=aoogahPrs)
 def eTrunkPrs():
@@ -314,6 +320,7 @@ def eTrunkPrs():
     histBox.configure(state=NORMAL)
     histBox.insert('1.0',"Gag used: Organic Elephant Trunk (23)\n")
     histBox.configure(state=DISABLED)
+  eTrunk.configure(text=int(eTrunk.cget("text"))+1)
   clcDmg()
 eTrunk.configure(command=eTrunkPrs)
 def fHornPrs():
@@ -327,6 +334,7 @@ def fHornPrs():
     histBox.configure(state=NORMAL)
     histBox.insert('1.0',"Gag used: Organic Foghorn (55)\n")
     histBox.configure(state=DISABLED)
+  fHorn.configure(text=int(fHorn.cget("text"))+1)
   clcDmg()
 fHorn.configure(command=fHornPrs)
 def oSingerPrs():
@@ -340,6 +348,7 @@ def oSingerPrs():
     histBox.configure(state=NORMAL)
     histBox.insert('1.0',"Gag used: Organic Opera Singer (99)\n")
     histBox.configure(state=DISABLED)
+  oSinger.configure(text=int(oSinger.cget("text"))+1)
   clcDmg()
 oSinger.configure(command=oSingerPrs)
 
@@ -355,6 +364,7 @@ def cCakePrs():
     histBox.configure(state=NORMAL)
     histBox.insert('1.0',"Gag used: Organic Cupcake (7)\n")
     histBox.configure(state=DISABLED)
+  cCake.configure(text=int(cCake.cget("text"))+1)
   clcDmg()
 cCake.configure(command=cCakePrs)
 def fPSlicePrs():
@@ -368,6 +378,7 @@ def fPSlicePrs():
     histBox.configure(state=NORMAL)
     histBox.insert('1.0',"Gag used: Organic Fruit Pie Slice (11)\n")
     histBox.configure(state=DISABLED)
+  fPSlice.configure(text=int(fPSlice.cget("text"))+1)
   clcDmg()
 fPSlice.configure(command=fPSlicePrs)
 def cPSlicePrs():
@@ -381,6 +392,7 @@ def cPSlicePrs():
     histBox.configure(state=NORMAL)
     histBox.insert('1.0',"Gag used: Organic Cream Pie Slice (18)\n")
     histBox.configure(state=DISABLED)
+  cPSlice.configure(text=int(cPSlice.cget("text"))+1)
   clcDmg()
 cPSlice.configure(command=cPSlicePrs)
 def wFPiePrs():
@@ -394,6 +406,7 @@ def wFPiePrs():
     histBox.configure(state=NORMAL)
     histBox.insert('1.0',"Gag used: Organic Whole Fruit Pie (29)\n")
     histBox.configure(state=DISABLED)
+  wFPie.configure(text=int(wFPie.cget("text"))+1)
   clcDmg()
 wFPie.configure(command=wFPiePrs)
 def wCPiePrs():
@@ -407,6 +420,7 @@ def wCPiePrs():
     histBox.configure(state=NORMAL)
     histBox.insert('1.0',"Gag used: Organic Whole Cream Pie (44)\n")
     histBox.configure(state=DISABLED)
+  wCPie.configure(text=int(wCPie.cget("text"))+1)
   clcDmg()
 wCPie.configure(command=wCPiePrs)
 def bCakePrs():
@@ -420,6 +434,7 @@ def bCakePrs():
     histBox.configure(state=NORMAL)
     histBox.insert('1.0',"Gag used: Organic Birthday Cake (110)\n")
     histBox.configure(state=DISABLED)
+  bCake.configure(text=int(bCake.cget("text"))+1)
   clcDmg()
 bCake.configure(command=bCakePrs)
 def wCakePrs():
@@ -433,6 +448,7 @@ def wCakePrs():
     histBox.configure(state=NORMAL)
     histBox.insert('1.0',"Gag used: Organic Wedding Cake (132)\n")
     histBox.configure(state=DISABLED)
+  wCake.configure(text=int(wCake.cget("text"))+1)
   clcDmg()
 wCake.configure(command=wCakePrs)
 
@@ -448,6 +464,7 @@ def sFlowerPrs():
     histBox.configure(state=NORMAL)
     histBox.insert('1.0',"Gag used: Organic Squirting Flower (5)\n")
     histBox.configure(state=DISABLED)
+  sFlower.configure(text=int(sFlower.cget("text"))+1)
   clcDmg()
 sFlower.configure(command=sFlowerPrs)
 def gWaterPrs():
@@ -461,6 +478,7 @@ def gWaterPrs():
     histBox.configure(state=NORMAL)
     histBox.insert('1.0',"Gag used: Organic Glass of Water (9)\n")
     histBox.configure(state=DISABLED)
+  gWater.configure(text=int(gWater.cget("text"))+1)
   clcDmg()
 gWater.configure(command=gWaterPrs)
 def sGunPrs():
@@ -474,6 +492,7 @@ def sGunPrs():
     histBox.configure(state=NORMAL)
     histBox.insert('1.0',"Gag used: Organic Squirt Gun (13)\n")
     histBox.configure(state=DISABLED)
+  sGun.configure(text=int(sGun.cget("text"))+1)
   clcDmg()
 sGun.configure(command=sGunPrs)
 def sBottlePrs():
@@ -487,6 +506,7 @@ def sBottlePrs():
     histBox.configure(state=NORMAL)
     histBox.insert('1.0',"Gag used: Organic Seltzer Bottle (23)\n")
     histBox.configure(state=DISABLED)
+  sBottle.configure(text=int(sBottle.cget("text"))+1)
   clcDmg()
 sBottle.configure(command=sBottlePrs)
 def fHosePrs():
@@ -500,6 +520,7 @@ def fHosePrs():
     histBox.configure(state=NORMAL)
     histBox.insert('1.0',"Gag used: Organic Fire Hose (33)\n")
     histBox.configure(state=DISABLED)
+  fHose.configure(text=int(fHose.cget("text"))+1)
   clcDmg()
 fHose.configure(command=fHosePrs)
 def sCloudPrs():
@@ -513,6 +534,8 @@ def sCloudPrs():
     histBox.configure(state=NORMAL)
     histBox.insert('1.0',"Gag used: Organic Storm Cloud (88)\n")
     histBox.configure(state=DISABLED)
+    print("Hey did you know an organic storm cloud can kill a lured level 10? Organic squirt is cooler than organic throw but most people keep lying to themselves about the true superior organic track.")
+  sCloud.configure(text=int(sCloud.cget("text"))+1)
   clcDmg()
 sCloud.configure(command=sCloudPrs)
 def geyserPrs():
@@ -526,6 +549,7 @@ def geyserPrs():
     histBox.configure(state=NORMAL)
     histBox.insert('1.0',"Gag used: Organic Geyser (115)\n")
     histBox.configure(state=DISABLED)
+  geyser.configure(text=int(geyser.cget("text"))+1)
   clcDmg()
 geyser.configure(command=geyserPrs)
 
@@ -541,6 +565,7 @@ def fPotPrs():
     histBox.configure(state=NORMAL)
     histBox.insert('1.0',"Gag used: Organic Flower Pot (11)\n")
     histBox.configure(state=DISABLED)
+  fPot.configure(text=int(fPot.cget("text"))+1)
   clcDmg()
 fPot.configure(command=fPotPrs)
 def sBagPrs():
@@ -554,6 +579,7 @@ def sBagPrs():
     histBox.configure(state=NORMAL)
     histBox.insert('1.0',"Gag used: Organic Sandbag (19)\n")
     histBox.configure(state=DISABLED)
+  sBag.configure(text=int(sBag.cget("text"))+1)
   clcDmg()
 sBag.configure(command=sBagPrs)
 def anvilPrs():
@@ -567,6 +593,7 @@ def anvilPrs():
     histBox.configure(state=NORMAL)
     histBox.insert('1.0',"Gag used: Organic Anvil (33)\n")
     histBox.configure(state=DISABLED)
+  anvil.configure(text=int(anvil.cget("text"))+1)
   clcDmg()
 anvil.configure(command=anvilPrs)
 def bWeightPrs():
@@ -580,6 +607,7 @@ def bWeightPrs():
     histBox.configure(state=NORMAL)
     histBox.insert('1.0',"Gag used: Organic Big Weight (49)\n")
     histBox.configure(state=DISABLED)
+  bWeight.configure(text=int(bWeight.cget("text"))+1)
   clcDmg()
 bWeight.configure(command=bWeightPrs)
 def safePrs():
@@ -593,6 +621,7 @@ def safePrs():
     histBox.configure(state=NORMAL)
     histBox.insert('1.0',"Gag used: Organic Safe (77)\n")
     histBox.configure(state=DISABLED)
+  safe.configure(text=int(safe.cget("text"))+1)
   clcDmg()
 safe.configure(command=safePrs)
 def gPianoPrs():
@@ -606,6 +635,7 @@ def gPianoPrs():
     histBox.configure(state=NORMAL)
     histBox.insert('1.0',"Gag used: Organic Grand Piano (187)\n")
     histBox.configure(state=DISABLED)
+  gPiano.configure(text=int(gPiano.cget("text"))+1)
   clcDmg()
 gPiano.configure(command=gPianoPrs)
 def tTanicPrs():
@@ -619,6 +649,7 @@ def tTanicPrs():
     histBox.configure(state=NORMAL)
     histBox.insert('1.0',"Gag used: Organic Toontanic (198)\n")
     histBox.configure(state=DISABLED)
+  tTanic.configure(text=int(tTanic.cget("text"))+1)
   clcDmg()
 tTanic.configure(command=tTanicPrs)
 
@@ -634,6 +665,7 @@ def bPeelPrs():
     histBox.configure(state=NORMAL)
     histBox.insert('1.0',"Gag used: Organic Banana Peel (13)\n")
     histBox.configure(state=DISABLED)
+  bPeel.configure(text=int(bPeel.cget("text"))+1)
   clcDmg()
 bPeel.configure(command=bPeelPrs)
 def rakePrs():
@@ -647,6 +679,7 @@ def rakePrs():
     histBox.configure(state=NORMAL)
     histBox.insert('1.0',"Gag used: Organic Rake (22)\n")
     histBox.configure(state=DISABLED)
+  rake.configure(text=int(rake.cget("text"))+1)
   clcDmg()
 rake.configure(command=rakePrs)
 def marblesPrs():
@@ -660,6 +693,7 @@ def marblesPrs():
     histBox.configure(state=NORMAL)
     histBox.insert('1.0',"Gag used: Organic Marbles (38)\n")
     histBox.configure(state=DISABLED)
+  marbles.configure(text=int(marbles.cget("text"))+1)
   clcDmg()
 marbles.configure(command=marblesPrs)
 def qSandPrs():
@@ -673,6 +707,7 @@ def qSandPrs():
     histBox.configure(state=NORMAL)
     histBox.insert('1.0',"Gag used: Organic Quicksand (55)\n")
     histBox.configure(state=DISABLED)
+  qSand.configure(text=int(qSand.cget("text"))+1)
   clcDmg()
 qSand.configure(command=qSandPrs)
 def tDoorPrs():
@@ -686,6 +721,7 @@ def tDoorPrs():
     histBox.configure(state=NORMAL)
     histBox.insert('1.0',"Gag used: Organic Trapdoor (93)\n")
     histBox.configure(state=DISABLED)
+  tDoor.configure(text=int(tDoor.cget("text"))+1)
   clcDmg()
 tDoor.configure(command=tDoorPrs)
 def tntPrs():
@@ -699,6 +735,7 @@ def tntPrs():
     histBox.configure(state=NORMAL)
     histBox.insert('1.0',"Gag used: Organic TNT (198)\n")
     histBox.configure(state=DISABLED)
+  tnt.configure(text=int(tnt.cget("text"))+1)
   clcDmg()
 tnt.configure(command=tntPrs)
 def rRoadPrs():
@@ -712,6 +749,7 @@ def rRoadPrs():
     histBox.configure(state=NORMAL)
     histBox.insert('1.0',"Gag used: Organic Railroad (220)\n")
     histBox.configure(state=DISABLED)
+  rRoad.configure(text=int(rRoad.cget("text"))+1)
   clcDmg()
 rRoad.configure(command=rRoadPrs)
 
