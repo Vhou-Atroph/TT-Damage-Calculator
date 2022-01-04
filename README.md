@@ -14,7 +14,11 @@ Buttons are available above the grid, allowing you to factor in things on calcul
 
 **Other Features**
 
-There are three buttons in the bottom right corner of the program. 'Clear History' will clear all text in the History panel, which logs previous calculations. 'Pin to Top' will ensure the program is always on top and visible. 'Show Health' brings up a grid of all cog health values from Level 7 to Level 20. Both 'Pin to Top' and 'Show Health' can be toggled off by pressing the button a second time.  
+There are three buttons in the bottom right corner of the program.  
+'Clear History' will clear all text in the History panel, which logs previous calculations.  
+'Pin to Top' will ensure the program is always on top and visible.  
+'Show Health and SOS Cards' brings up a grid of all cog health values from Level 7 to Level 20, as well as the major SOS cards for Trap, Sound, and Drop.  
+The latter two buttons can both be toggled off by pressing them a second time.
 
 # Final Notes
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/I2I65IWZG)
