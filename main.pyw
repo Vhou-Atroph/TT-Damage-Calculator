@@ -171,10 +171,10 @@ gagBtns=(bHorn,whistle,bugle,aoogah,eTrunk,fHorn,oSinger,cCake,fPSlice,cPSlice,w
 #Calculation history
 hist=Frame(col2)
 histLbl=Label(hist,text="History")
-histBox=Text(hist,width=25,height=17,state=DISABLED,font=('Arial',10,'normal'),wrap=WORD)
+histBox=Text(hist,width=25,height=22,state=DISABLED,font=('Arial',10,'normal'),wrap=WORD)
 pinBtn=Button(hist,text="Pin to top")
 clrHistBtn=Button(hist,text="Clear History")
-cogClc=Button(hist,text="Show Health")
+cogClc=Button(hist,text="Show Health and\n SOS Cards")
 
 #Calculation results
 clcResults=Frame(col1)
@@ -187,6 +187,30 @@ orgOnOff=Label(clcResults,text="Organic = OFF",font=('Arial',10,'bold'))
 cogHPSheet=Frame(window)
 cogHPImg=PhotoImage(file='img/coghp.png')
 cogHPLbl=Label(cogHPSheet,image=cogHPImg)
+
+#SOS Cards
+sosCards=Frame(window)
+sosTrp=Frame(sosCards)
+clrkWillImg=PhotoImage(file='img/clerkwill.png')
+clrkWill=Button(sosTrp,image=clrkWillImg)
+clrkPennyImg=PhotoImage(file='img/clerkpenny.png')
+clrkPenny=Button(sosTrp,image=clrkPennyImg)
+clrkClaraImg=PhotoImage(file='img/clerkclara.png')
+clrkClara=Button(sosTrp,image=clrkClaraImg)
+sosSnd=Frame(sosCards)
+barbImg=PhotoImage(file='img/barbaraseville.png')
+barb=Button(sosSnd,image=barbImg)
+sidImg=PhotoImage(file='img/sidsonata.png')
+sid=Button(sosSnd,image=sidImg)
+moeImg=PhotoImage(file='img/moezart.png')
+moe=Button(sosSnd,image=moeImg)
+sosDrp=Frame(sosCards)
+nedImg=PhotoImage(file='img/clumsyned.png')
+ned=Button(sosDrp,image=nedImg)
+franzImg=PhotoImage(file='img/franzneckvein.png')
+franz=Button(sosDrp,image=franzImg)
+bessImg=PhotoImage(file='img/barnaclebessie.png')
+bess=Button(sosDrp,image=bessImg)
 
 #Toggle organic functions
 def togOrgOff():
@@ -285,7 +309,7 @@ def buglePrs():
   if organic==0:
     sndUsed.append(11)
     histBox.configure(state=NORMAL)
-    histBox.insert('1.0',"Gag used: Bugle (4)\n")
+    histBox.insert('1.0',"Gag used: Bugle (11)\n")
     histBox.configure(state=DISABLED)
   else:
     sndUsed.append(12)
@@ -753,6 +777,71 @@ def rRoadPrs():
   clcDmg()
 rRoad.configure(command=rRoadPrs)
 
+#SOS Cards
+def claraPrs():
+  trpUsed.append(180)
+  histBox.configure(state=NORMAL)
+  histBox.insert('1.0',"Gag used: Clerk Clara (180)\n")
+  histBox.configure(state=DISABLED)
+  clcDmg()
+clrkClara.configure(command=claraPrs)
+def pennyPrs():
+  trpUsed.append(120)
+  histBox.configure(state=NORMAL)
+  histBox.insert('1.0',"Gag used: Clerk Penny (120)\n")
+  histBox.configure(state=DISABLED)
+  clcDmg()
+clrkPenny.configure(command=pennyPrs)
+def willPrs():
+  trpUsed.append(60)
+  histBox.configure(state=NORMAL)
+  histBox.insert('1.0',"Gag used: Clerk Will (60)\n")
+  histBox.configure(state=DISABLED)
+  clcDmg()
+clrkWill.configure(command=willPrs)
+def moePrs():
+  sndUsed.append(75)
+  histBox.configure(state=NORMAL)
+  histBox.insert('1.0',"Gag used: Moe Zart (75)\n")
+  histBox.configure(state=DISABLED)
+  clcDmg()
+moe.configure(command=moePrs)
+def sidPrs():
+  sndUsed.append(55)
+  histBox.configure(state=NORMAL)
+  histBox.insert('1.0',"Gag used: Sid Sonata (55)\n")
+  histBox.configure(state=DISABLED)
+  clcDmg()
+sid.configure(command=sidPrs)
+def barbPrs():
+  sndUsed.append(35)
+  histBox.configure(state=NORMAL)
+  histBox.insert('1.0',"Gag used: Barbara Seville (35)\n")
+  histBox.configure(state=DISABLED)
+  clcDmg()
+barb.configure(command=barbPrs)
+def bessPrs():
+  drpUsed.append(170)
+  histBox.configure(state=NORMAL)
+  histBox.insert('1.0',"Gag used: Barnacle Bessie (170)\n")
+  histBox.configure(state=DISABLED)
+  clcDmg()
+bess.configure(command=bessPrs)
+def franzPrs():
+  drpUsed.append(100)
+  histBox.configure(state=NORMAL)
+  histBox.insert('1.0',"Gag used: Franz Neckvein (100)\n")
+  histBox.configure(state=DISABLED)
+  clcDmg()
+franz.configure(command=franzPrs)
+def nedPrs():
+  drpUsed.append(60)
+  histBox.configure(state=NORMAL)
+  histBox.insert('1.0',"Gag used: Clumsy Ned (60)\n")
+  histBox.configure(state=DISABLED)
+  clcDmg()
+ned.configure(command=nedPrs)
+
 #Sound damage calculation
 def sndDmgClc():
   localDmg=list()
@@ -908,13 +997,27 @@ def trpDmgClc():
 #Cog HP Cheatsheet Function
 def cHPClcDlt():
   cogHPSheet.grid_remove()
+  sosCards.grid_remove()
   window.geometry('')
-  cogClc.configure(text='Show Health',command=cHPClc)
+  cogClc.configure(text='Show Health and\n SOS Cards',command=cHPClc)
   
 def cHPClc():
-  cogHPSheet.grid(column=0,row=2,columnspan=2)
+  cogHPSheet.grid(column=0,row=3)
   cogHPLbl.grid(column=0,row=0)
-  cogClc.configure(text='Hide Health',command=cHPClcDlt)
+  sosCards.grid(column=1,row=3)
+  sosTrp.grid(column=0,row=0)
+  clrkWill.grid(column=0,row=0)
+  clrkPenny.grid(column=1,row=0)
+  clrkClara.grid(column=2,row=0)
+  sosSnd.grid(column=0,row=1)
+  barb.grid(column=0,row=0)
+  sid.grid(column=1,row=0)
+  moe.grid(column=2,row=0)
+  sosDrp.grid(column=0,row=2)
+  ned.grid(column=0,row=0)
+  franz.grid(column=1,row=0)
+  bess.grid(column=2,row=0)
+  cogClc.configure(text='Hide Health and\n SOS Cards',command=cHPClcDlt)
   window.geometry('')
 cogClc.configure(command=cHPClc)
 
