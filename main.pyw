@@ -248,7 +248,7 @@ def clearInputs():
     localLure=1
     lurInfo='yes'
   histBox.configure(state=NORMAL)
-  histBox.insert('1.0',"--------\nCalculation finished!\nDamage calculated was: "+theDmg.cget("text")+"\nDefense: "+dmgDown.get()+"\nLure: "+lurInfo+"\n\n")
+  histBox.insert('1.0',"--------\nCalculation finished!\nDamage calculated was: "+theDmg.cget("text")+"\nDefense: "+dmgDown.get()+"\nLure: "+lurInfo+"\nWill kill: "+cHPInd.cget("text")+"\n\n")
   histBox.configure(state=DISABLED)
   if dlLock.get()=='No lock' or dlLock.get()=='Lock lure':
     dmgDown.set('0%')
