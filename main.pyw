@@ -2,7 +2,7 @@ from tkinter import *
 import math
 import os
 
-'''VERSION 2.2
+'''VERSION 2.2.1
 
 CONTRIBUTORS:
 - Vhou-Atroph
@@ -213,7 +213,7 @@ bessImg=PhotoImage(file='img/barnaclebessie.png')
 bess=Button(sosDrp,image=bessImg)
 
 #Toggle organic functions
-def togOrgOff():
+def togOrgOff(opt=""):
   global organic
   organic=0
   print("Gags in calculations will no longer be organic!")
@@ -221,7 +221,8 @@ def togOrgOff():
   orgOnOff.configure(text="Organic = OFF")
   for i in gagBtns:
     i.configure(bg='#1888D3',activebackground='#186AD3')
-def togOrgOn():
+  window.bind('<Shift_L>',togOrgOn)
+def togOrgOn(opt=""):
   global organic
   organic=1
   print("Gags in calculations will now be organic!")
@@ -229,7 +230,9 @@ def togOrgOn():
   orgOnOff.configure(text="Organic = ON")
   for i in gagBtns:
     i.configure(bg='darkorange',activebackground='orange')
+  window.bind('<Shift_L>',togOrgOff)
 orgBtn.configure(command=togOrgOn)
+window.bind('<Shift_L>',togOrgOn)
 
 #Clear inputs function
 def clearInputs():
@@ -1000,7 +1003,7 @@ def cHPClcDlt():
   sosCards.grid_remove()
   window.geometry('')
   cogClc.configure(text='Show Health and\n SOS Cards',command=cHPClc)
-  
+
 def cHPClc():
   cogHPSheet.grid(column=0,row=3)
   cogHPLbl.grid(column=0,row=0)
