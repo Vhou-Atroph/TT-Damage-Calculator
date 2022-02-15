@@ -234,8 +234,35 @@ def togOrgOn(opt=""):
 orgBtn.configure(command=togOrgOn)
 window.bind('<Shift_L>',togOrgOn)
 
+#Def Keybind
+def defSwap(opt=""):
+  global dmgDown
+  if dmgDown.get()=='0%':
+    dmgDown.set('10%')
+    clcDmg()
+  elif dmgDown.get()=='10%':
+    dmgDown.set('15%')
+    clcDmg()
+  elif dmgDown.get()=='15%':
+    dmgDown.set('20%')
+    clcDmg()
+  else:
+    dmgDown.set('0%')
+    clcDmg()
+window.bind('<Control-d>',defSwap)
+
+#Lure Keybind
+def lureSwap(opt=""):
+  if lured.get()==0:
+    lured.set(1)
+    clcDmg()
+  else:
+    lured.set(0)
+    clcDmg()
+window.bind('<Control-l>',lureSwap)
+
 #Clear inputs function
-def clearInputs():
+def clearInputs(opt=""):
   print("Clearing gag inputs!")
   global lured
   global dmgDown
@@ -268,6 +295,7 @@ def clearInputs():
   if localLure==1 and dlLock.get()=='Lock lure' or dlLock.get()=='Lock both': #Use the local variable and dlLock to lock lure as active even after it is set to 0 by clearInputs()
     lured.set(1)
 clrBtn.configure(command=clearInputs)
+window.bind('<Control-r>',clearInputs)
 
 #Clear history function
 def clearHistory():

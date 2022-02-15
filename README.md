@@ -21,9 +21,12 @@ There are three buttons in the bottom right corner of the program.
 The latter two buttons can both be toggled off by pressing them a second time.  
 
 The program has various keybinds to expedite calculation:
-| Keybind     | Description    |
-| ----------- | -----------    |
-| shift       | Toggle Organic |
+| Keybind     | Description       |
+| ----------- | ----------------- |
+| shift       | Toggle Organic    |
+| ctrl+d      | Toggle Defense    |
+| ctrl+l      | Toggle Lure       |
+| ctrl+r      | Reset Calculation |
 
 # Final Notes
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/I2I65IWZG)
