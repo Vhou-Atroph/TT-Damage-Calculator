@@ -2,7 +2,7 @@ from tkinter import *
 import math
 import os
 
-'''VERSION 2.2
+'''VERSION you figure it out, vhou
 
 CONTRIBUTORS:
 - Vhou-Atroph
@@ -61,7 +61,6 @@ isV2 = False
 lvlKilled=0
 v2Killed=0
 totDmg=0
-
 
 #Columns
 col1=Frame(window) #Main content of the calculator
@@ -146,8 +145,6 @@ def v2Clc(level):
   v2Dmg = 0
   clcDmg()
   isV2 = False
-    
-  
 
 #Toggles
 togBtns=Frame(col1)
@@ -296,7 +293,7 @@ bessImg=PhotoImage(file='img/barnaclebessie.png')
 bess=Button(sosDrp,image=bessImg)
 
 #Toggle organic functions
-def togOrgOff():
+def togOrgOff(opt=""):
   global organic
   organic=0
   print("Gags in calculations will no longer be organic!")
@@ -304,7 +301,8 @@ def togOrgOff():
   orgOnOff.configure(text="Organic = OFF")
   for i in gagBtns:
     i.configure(bg='#1888D3',activebackground='#186AD3')
-def togOrgOn():
+  window.bind('<Shift_L>',togOrgOn)
+def togOrgOn(opt=""):
   global organic
   organic=1
   print("Gags in calculations will now be organic!")
@@ -312,10 +310,39 @@ def togOrgOn():
   orgOnOff.configure(text="Organic = ON")
   for i in gagBtns:
     i.configure(bg='darkorange',activebackground='orange')
+  window.bind('<Shift_L>',togOrgOff)
 orgBtn.configure(command=togOrgOn)
+window.bind('<Shift_L>',togOrgOn)
+
+#Def Keybind
+def defSwap(opt=""):
+  global dmgDown
+  if dmgDown.get()=='0%':
+    dmgDown.set('10%')
+    clcDmg()
+  elif dmgDown.get()=='10%':
+    dmgDown.set('15%')
+    clcDmg()
+  elif dmgDown.get()=='15%':
+    dmgDown.set('20%')
+    clcDmg()
+  else:
+    dmgDown.set('0%')
+    clcDmg()
+window.bind('<Control-d>',defSwap)
+
+#Lure Keybind
+def lureSwap(opt=""):
+  if lured.get()==0:
+    lured.set(1)
+    clcDmg()
+  else:
+    lured.set(0)
+    clcDmg()
+window.bind('<Control-l>',lureSwap)
 
 #Clear inputs function
-def clearInputs():
+def clearInputs(opt=""):
   print("Clearing gag inputs!")
   global lured
   global dmgDown
@@ -362,6 +389,7 @@ def clearInputs():
   if localLure==1 and dlLock.get()=='Lock lure' or dlLock.get()=='Lock both': #Use the local variable and dlLock to lock lure as active even after it is set to 0 by clearInputs()
     lured.set(1)
 clrBtn.configure(command=clearInputs)
+window.bind('<Control-r>',clearInputs)
 
 #Clear history function
 def clearHistory():
@@ -1096,7 +1124,6 @@ def drpDmgClc():
     global totDmg
     totDmg=totDmg+totDrpDmg
 
-
 #Trap damage calculation
 def trpDmgClc():
   global isV2
@@ -1143,7 +1170,7 @@ def cHPClcDlt():
   sosCards.grid_remove()
   window.geometry('')
   cogClc.configure(text='Show Health and\n SOS Cards',command=cHPClc)
-  
+
 def cHPClc():
   cogHPSheet.grid(column=0,row=3)
   cogHPLbl.grid(column=0,row=0)
@@ -1249,7 +1276,7 @@ def cHPIndClc():
   #think it's fixed but who knows what lingering damage this caused
   if levelKilled == 0:
     cHPInd.configure(text="(level 0)")
-    v2CHPInd.configure(text="(level 0)")
+    v2Clc(levelKilled)
   elif levelKilled == -1:
     cHPInd.configure(text="(???)")
     v2CHPInd.configure(text="something went wrong! try getting gud later")
@@ -1417,7 +1444,7 @@ clcResults.grid(column=0,row=0)
 dmgThsRnd.grid(column=0,row=0)
 theDmg.grid(column=1,row=0)
 cHPInd.grid(column=2,row=0)
-orgOnOff.grid(column=0,row=2,columnspan=3)
+orgOnOff.grid(column=0,row=1,columnspan=3)
 #brb crying myself to sleep ,., please fix this vhou sorry thank you
 v2Results.grid(column=0,row=1)
 v2DmgThsRnd.grid(column=0,row=1)

@@ -18,7 +18,15 @@ There are three buttons in the bottom right corner of the program.
 'Clear History' will clear all text in the History panel, which logs previous calculations.  
 'Pin to Top' will ensure the program is always on top and visible.  
 'Show Health and SOS Cards' brings up a grid of all cog health values from Level 7 to Level 20, as well as the major SOS cards for Trap, Sound, and Drop.  
-The latter two buttons can both be toggled off by pressing them a second time.
+The latter two buttons can both be toggled off by pressing them a second time.  
+
+The program has various keybinds to expedite calculation:
+| Keybind     | Description       |
+| ----------- | ----------------- |
+| shift       | Toggle Organic    |
+| ctrl+d      | Toggle Defense    |
+| ctrl+l      | Toggle Lure       |
+| ctrl+r      | Reset Calculation |
 
 **NOTE: Version 2.0 Damage Mechanics**
 Toontown Rewritten has recently announced and playtested changes to how Version 2.0 Cogs take damage.
