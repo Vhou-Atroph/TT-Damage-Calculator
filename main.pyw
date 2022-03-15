@@ -2,11 +2,12 @@ from tkinter import *
 import math
 import os
 
-'''VERSION 2.2.1
+'''VERSION 2.2
 
 CONTRIBUTORS:
 - Vhou-Atroph
 - BoggoTV
+- SkylimeTime
 '''
 
 #Window
@@ -41,7 +42,26 @@ trwUsed=list()
 sqtUsed=list()
 drpUsed=list()
 trpUsed=list()
+#Virtually everything involving v2 Cogs was initially implemented by Sky, not Vhou!
+#If something goes wrong or looks really dumb, blame them instead please thank you .,. - Sky
+global v2Snd
+global v2Trw
+global v2Sqt
+global v2Drp
+global v2Trp
+global v2Dmg
+v2Snd=list()
+v2Trw=list()
+v2Sqt=list()
+v2Drp=list()
+v2Trp=list()
+v2Dmg=0
+global isV2
+isV2 = False
+lvlKilled=0
+v2Killed=0
 totDmg=0
+
 
 #Columns
 col1=Frame(window) #Main content of the calculator
@@ -64,12 +84,70 @@ def clcDmg(opt=""):
   if len(drpUsed)>0:
     drpDmgClc()
   global totDmg
-  print("Total damage this round: "+str(totDmg))
-  theDmg.configure(text=str(totDmg))
-  cHPIndClc()
-  totDmg=0
+  global v2Dmg
+  global isV2
   if localLure==1:
     lured.set(1)
+  if isV2:
+    print("V2: "+str(v2Dmg))
+    v2TheDmg.configure(text=str(v2Dmg))
+    v2CHPIndClc()
+    v2Dmg=0
+  else:
+    print("Total damage this round: "+str(totDmg))
+    theDmg.configure(text=str(totDmg))
+    cHPIndClc()
+    totDmg=0
+
+#Prepare damage calculation for V2.0 Cogs
+#This function loops itself several times, so that way you don't have to click a button to check individual 2.0 levels!
+#But in return this makes damage dealt to 2.0 Cogs display a little strangly at times. Sorry! The level it can beat can be trusted, though. I hope.
+#Currently built off of the in development BBHQ changes TTR had announced on 3/11/2022. This is subject to change at any time, and as of 3/14/2022 is unknown when it will release.
+def v2Clc(level):
+  global v2Dmg
+  global isV2
+  global v2Snd
+  global v2Trw
+  global v2Sqt
+  global v2Drp
+  global v2Trp
+  v2Snd = list()
+  v2Trw = list()
+  v2Sqt = list()
+  v2Drp = list()
+  v2Trp = list()
+  defense = level*2
+  for index in range(0, len(sndUsed)):
+    newDam = sndUsed[index] - defense
+    if newDam < 0:
+      newDam = 0
+    v2Snd.append(newDam)
+  for index in range(0, len(trwUsed)):
+    newDam = trwUsed[index] - defense
+    if newDam < 0:
+      newDam = 0
+    v2Trw.append(newDam)
+  for index in range(0, len(sqtUsed)):
+    newDam = sqtUsed[index] - defense
+    if newDam < 0:
+      newDam = 0
+    v2Sqt.append(newDam)
+  for index in range(0, len(drpUsed)):
+    newDam = drpUsed[index] - defense
+    if newDam < 0:
+      newDam = 0
+    v2Drp.append(newDam)
+  for index in range(0, len(trpUsed)):
+    newDam = trpUsed[index] - defense
+    if newDam < 0:
+      newDam = 0
+    v2Trp.append(newDam)
+  isV2 = True
+  v2Dmg = 0
+  clcDmg()
+  isV2 = False
+    
+  
 
 #Toggles
 togBtns=Frame(col1)
@@ -182,6 +260,11 @@ dmgThsRnd=Label(clcResults,text="Damage this round:",font=('Arial',16,'normal'))
 theDmg=Label(clcResults,text="0",font=('Arial',16,'bold'))
 cHPInd=Label(clcResults,text="(level 0)",font=('Arial',8,'normal'))
 orgOnOff=Label(clcResults,text="Organic = OFF",font=('Arial',10,'bold'))
+v2Results=Frame(col1) #hope i got this right!
+#if not, sorry vhou, this part's beyond me. please take it from here!
+v2DmgThsRnd=Label(v2Results,text="V2 damage*:",font=('Arial',16,'normal'))
+v2TheDmg=Label(v2Results,text="0",font=('Arial',16,'bold'))
+v2CHPInd=Label(v2Results,text="(level 0)",font=('Arial',8,'normal'))
 
 #Cog HP
 cogHPSheet=Frame(window)
@@ -213,7 +296,7 @@ bessImg=PhotoImage(file='img/barnaclebessie.png')
 bess=Button(sosDrp,image=bessImg)
 
 #Toggle organic functions
-def togOrgOff(opt=""):
+def togOrgOff():
   global organic
   organic=0
   print("Gags in calculations will no longer be organic!")
@@ -221,8 +304,7 @@ def togOrgOff(opt=""):
   orgOnOff.configure(text="Organic = OFF")
   for i in gagBtns:
     i.configure(bg='#1888D3',activebackground='#186AD3')
-  window.bind('<Shift_L>',togOrgOn)
-def togOrgOn(opt=""):
+def togOrgOn():
   global organic
   organic=1
   print("Gags in calculations will now be organic!")
@@ -230,39 +312,10 @@ def togOrgOn(opt=""):
   orgOnOff.configure(text="Organic = ON")
   for i in gagBtns:
     i.configure(bg='darkorange',activebackground='orange')
-  window.bind('<Shift_L>',togOrgOff)
 orgBtn.configure(command=togOrgOn)
-window.bind('<Shift_L>',togOrgOn)
-
-#Def Keybind
-def defSwap(opt=""):
-  global dmgDown
-  if dmgDown.get()=='0%':
-    dmgDown.set('10%')
-    clcDmg()
-  elif dmgDown.get()=='10%':
-    dmgDown.set('15%')
-    clcDmg()
-  elif dmgDown.get()=='15%':
-    dmgDown.set('20%')
-    clcDmg()
-  else:
-    dmgDown.set('0%')
-    clcDmg()
-window.bind('<Control-d>',defSwap)
-
-#Lure Keybind
-def lureSwap(opt=""):
-  if lured.get()==0:
-    lured.set(1)
-    clcDmg()
-  else:
-    lured.set(0)
-    clcDmg()
-window.bind('<Control-l>',lureSwap)
 
 #Clear inputs function
-def clearInputs(opt=""):
+def clearInputs():
   print("Clearing gag inputs!")
   global lured
   global dmgDown
@@ -272,13 +325,19 @@ def clearInputs(opt=""):
   global sqtUsed
   global drpUsed
   global trpUsed
+  global v2Snd
+  global v2Trw
+  global v2Sqt
+  global v2Drp
+  global v2Trp
+  global isV2
   localLure=0
   lurInfo='no'
   if lured.get()==1: #Find out if lure is enabled. If it is, save a local variable.
     localLure=1
     lurInfo='yes'
   histBox.configure(state=NORMAL)
-  histBox.insert('1.0',"--------\nCalculation finished!\nDamage calculated was: "+theDmg.cget("text")+"\nDefense: "+dmgDown.get()+"\nLure: "+lurInfo+"\nWill kill: "+cHPInd.cget("text")+"\n\n")
+  histBox.insert('1.0',"--------\nCalculation finished!\nDamage calculated was: "+theDmg.cget("text")+"\n2.0 "+ v2CHPInd.cget("text") +" damage*: "+v2TheDmg.cget("text")+"\nDefense: "+dmgDown.get()+"\nLure: "+lurInfo+"\n\n")
   histBox.configure(state=DISABLED)
   if dlLock.get()=='No lock' or dlLock.get()=='Lock lure':
     dmgDown.set('0%')
@@ -288,14 +347,21 @@ def clearInputs(opt=""):
   sqtUsed=list()
   drpUsed=list()
   trpUsed=list()
+  v2Snd=list()
+  v2Trw=list()
+  v2Sqt=list()
+  v2Drp=list()
+  v2Trp=list()
   togOrgOff()
   clcDmg()
+  isV2 = True
+  clcDmg() 
+  isV2 = False
   for i in gagBtns:
     i.configure(text='0')
   if localLure==1 and dlLock.get()=='Lock lure' or dlLock.get()=='Lock both': #Use the local variable and dlLock to lock lure as active even after it is set to 0 by clearInputs()
     lured.set(1)
 clrBtn.configure(command=clearInputs)
-window.bind('<Control-r>',clearInputs)
 
 #Clear history function
 def clearHistory():
@@ -875,155 +941,201 @@ ned.configure(command=nedPrs)
 
 #Sound damage calculation
 def sndDmgClc():
+  global isV2
   localDmg=list()
-  if dmgDown.get()=='10%':
-    for i in range(len(sndUsed)):
-      localDmg.append(sndUsed[i]-math.ceil(sndUsed[i]*.1)) #Defense buff ceils
-  elif dmgDown.get()=='15%':
-    for i in range(len(sndUsed)):
-      localDmg.append(sndUsed[i]-math.ceil(sndUsed[i]*.15))
-  elif dmgDown.get()=='20%':
-    for i in range(len(sndUsed)):
-      localDmg.append(sndUsed[i]-math.ceil(sndUsed[i]*.2))
+  if isV2:
+    localSndUsed=v2Snd
   else:
-    for i in range(len(sndUsed)):
-      localDmg.append(sndUsed[i])
+    localSndUsed=sndUsed
+  if dmgDown.get()=='10%':
+    for i in range(len(localSndUsed)):
+      localDmg.append(localSndUsed[i]-math.ceil(localSndUsed[i]*.1)) #Defense buff ceils
+  elif dmgDown.get()=='15%':
+    for i in range(len(localSndUsed)):
+      localDmg.append(localSndUsed[i]-math.ceil(localSndUsed[i]*.15))
+  elif dmgDown.get()=='20%':
+    for i in range(len(localSndUsed)):
+      localDmg.append(localSndUsed[i]-math.ceil(localSndUsed[i]*.2))
+  else:
+    for i in range(len(localSndUsed)):
+      localDmg.append(localSndUsed[i])
   print("Damage of each individual sound gag: "+str(localDmg))
   global lured
   lured.set(0)
   print("If cogs were lured, they aren't anymore! Don't use sound on lured cogs!")
   totSndDmg=sum(localDmg,0)
-  if len(sndUsed)>1:
+  if len(localSndUsed)>1:
     totSndDmg=totSndDmg+math.ceil((totSndDmg*0.2)) #Group damage bonus always rounds up. See: 3 fogs and 1 aoogah getting rid of level 12 cogs. This does 199.2 damage, but still works.
   print("Total sound damage: "+str(totSndDmg))
-  global totDmg
-  totDmg=totDmg+totSndDmg
+  if isV2:
+    global v2Dmg
+    v2Dmg=v2Dmg+totSndDmg
+  else:
+    global totDmg
+    totDmg=totDmg+totSndDmg
 
 #Throw damage calculation
 def trwDmgClc():
+  global isV2
   localDmg=list()
-  if dmgDown.get()=='10%':
-    for i in range(len(trwUsed)):
-      localDmg.append(trwUsed[i]-math.ceil(trwUsed[i]*.1))
-  elif dmgDown.get()=='15%':
-    for i in range(len(trwUsed)):
-      localDmg.append(trwUsed[i]-math.ceil(trwUsed[i]*.15))
-  elif dmgDown.get()=='20%':
-    for i in range(len(trwUsed)):
-      localDmg.append(trwUsed[i]-math.ceil(trwUsed[i]*.2))
+  if isV2:
+    localTrwUsed=v2Trw
   else:
-    for i in range(len(trwUsed)):
-      localDmg.append(trwUsed[i])
+    localTrwUsed=trwUsed
+  if dmgDown.get()=='10%':
+    for i in range(len(localTrwUsed)):
+      localDmg.append(localTrwUsed[i]-math.ceil(localTrwUsed[i]*.1))
+  elif dmgDown.get()=='15%':
+    for i in range(len(localTrwUsed)):
+      localDmg.append(localTrwUsed[i]-math.ceil(localTrwUsed[i]*.15))
+  elif dmgDown.get()=='20%':
+    for i in range(len(localTrwUsed)):
+      localDmg.append(localTrwUsed[i]-math.ceil(localTrwUsed[i]*.2))
+  else:
+    for i in range(len(localTrwUsed)):
+      localDmg.append(localTrwUsed[i])
   print("Damage of each individual throw gag:"+str(localDmg))
   totTrwDmg=sum(localDmg,0)
   global lured
   if lured.get()==0:
     print("The cogs are not lured, and there will be no 50% damage bonus.")
-    if len(trwUsed)>1:
+    if len(localTrwUsed)>1:
       totTrwDmg=totTrwDmg+math.ceil((totTrwDmg*0.2))
   else:
     print("The cogs are lured, and there will be a 50% damage bonus.") #Lure bonus used to not ceil but does now apparently (TTR V3.0.8).
-    if len(trwUsed)>1:
+    if len(localTrwUsed)>1:
       totTrwDmg=totTrwDmg+math.ceil(totTrwDmg/2)+math.ceil((totTrwDmg*0.2))
     else:
       totTrwDmg=totTrwDmg+math.ceil(totTrwDmg/2)
     lured.set(0)
   print("Total throw damage: "+str(totTrwDmg))
-  global totDmg
-  totDmg=totDmg+totTrwDmg
+  if isV2:
+    global v2Dmg
+    v2Dmg=v2Dmg+totTrwDmg
+  else:
+    global totDmg
+    totDmg=totDmg+totTrwDmg
 
 #Squirt damage calculation, luckily just throw 2. (Squirt is better than throw and I am tired of people pretending it isn't. It's the superior organic choice. Cowards.)
 def sqtDmgClc():
+  global isV2
   localDmg=list()
-  if dmgDown.get()=='10%':
-    for i in range(len(sqtUsed)):
-      localDmg.append(sqtUsed[i]-math.ceil(sqtUsed[i]*.1))
-  elif dmgDown.get()=='15%':
-    for i in range(len(sqtUsed)):
-      localDmg.append(sqtUsed[i]-math.ceil(sqtUsed[i]*.15))
-  elif dmgDown.get()=='20%':
-    for i in range(len(sqtUsed)):
-      localDmg.append(sqtUsed[i]-math.ceil(sqtUsed[i]*.2))
+  if isV2:
+    localSqtUsed=v2Sqt
   else:
-    for i in range(len(sqtUsed)):
-      localDmg.append(sqtUsed[i])
+    localSqtUsed=sqtUsed
+  if dmgDown.get()=='10%':
+    for i in range(len(localSqtUsed)):
+      localDmg.append(localSqtUsed[i]-math.ceil(localSqtUsed[i]*.1))
+  elif dmgDown.get()=='15%':
+    for i in range(len(localSqtUsed)):
+      localDmg.append(localSqtUsed[i]-math.ceil(localSqtUsed[i]*.15))
+  elif dmgDown.get()=='20%':
+    for i in range(len(localSqtUsed)):
+      localDmg.append(localSqtUsed[i]-math.ceil(localSqtUsed[i]*.2))
+  else:
+    for i in range(len(localSqtUsed)):
+      localDmg.append(localSqtUsed[i])
   print("Damage of each individual squirt gag:"+str(localDmg))
   totSqtDmg=sum(localDmg,0)
   global lured
   if lured.get()==0:
     print("The cogs are not lured, and there will be no 50% damage bonus.")
-    if len(sqtUsed)>1:
+    if len(localSqtUsed)>1:
       totSqtDmg=totSqtDmg+math.ceil((totSqtDmg*0.2))
   else:
     print("The cogs are lured, and there will be a 50% damage bonus.") #Lure bonus doesn't get rounded for some dumb reason.
-    if len(sqtUsed)>1:
+    if len(localSqtUsed)>1:
       totSqtDmg=totSqtDmg+math.ceil(totSqtDmg/2)+math.ceil((totSqtDmg*0.2))
     else:
       totSqtDmg=totSqtDmg+math.ceil(totSqtDmg/2)
     lured.set(0)
   print("Total squirt damage: "+str(totSqtDmg))
-  global totDmg
-  totDmg=totDmg+totSqtDmg
+  if isV2:
+    global v2Dmg
+    v2Dmg=v2Dmg+totSqtDmg
+  else:
+    global totDmg
+    totDmg=totDmg+totSqtDmg
 
 #Drop damage calculation
 def drpDmgClc():
+  global isV2
   localDmg=list()
-  if dmgDown.get()=='10%':
-    for i in range(len(drpUsed)):
-      localDmg.append(drpUsed[i]-math.ceil(drpUsed[i]*.1))
-  elif dmgDown.get()=='15%':
-    for i in range(len(drpUsed)):
-      localDmg.append(drpUsed[i]-math.ceil(drpUsed[i]*.15))
-  elif dmgDown.get()=='20%':
-    for i in range(len(drpUsed)):
-      localDmg.append(drpUsed[i]-math.ceil(drpUsed[i]*.2))
+  if isV2:
+    localDrpUsed=v2Drp
   else:
-    for i in range(len(drpUsed)):
-      localDmg.append(drpUsed[i])
+    localDrpUsed=drpUsed
+  if dmgDown.get()=='10%':
+    for i in range(len(localDrpUsed)):
+      localDmg.append(localDrpUsed[i]-math.ceil(localDrpUsed[i]*.1))
+  elif dmgDown.get()=='15%':
+    for i in range(len(localDrpUsed)):
+      localDmg.append(localDrpUsed[i]-math.ceil(localDrpUsed[i]*.15))
+  elif dmgDown.get()=='20%':
+    for i in range(len(localDrpUsed)):
+      localDmg.append(localDrpUsed[i]-math.ceil(localDrpUsed[i]*.2))
+  else:
+    for i in range(len(localDrpUsed)):
+      localDmg.append(localDrpUsed[i])
   print("Damage of each individual drop gag:"+str(localDmg))
   totDrpDmg=sum(localDmg,0)
   global lured
   if lured.get()==0:
     print("The cogs are not lured, so drop is able to hit!")
-    if len(drpUsed)>1:
+    if len(localDrpUsed)>1:
       totDrpDmg=totDrpDmg+math.ceil((totDrpDmg*0.2))
   else:
     print("The cogs are lured, and drop does not work on lured cogs! https://www.youtube.com/watch?v=NV-p_-OvUnA&t=4s")
     totDrpDmg=0
   print("Total drop damage: "+str(totDrpDmg))
-  global totDmg
-  totDmg=totDmg+totDrpDmg
+  if isV2:
+    global v2Dmg
+    v2Dmg=v2Dmg+totDrpDmg
+  else:
+    global totDmg
+    totDmg=totDmg+totDrpDmg
+
 
 #Trap damage calculation
 def trpDmgClc():
+  global isV2
   localDmg=list()
-  if dmgDown.get()=='10%':
-    for i in range(len(trpUsed)):
-      localDmg.append(trpUsed[i]-math.ceil(trpUsed[i]*.1))
-  if dmgDown.get()=='15%':
-    for i in range(len(trpUsed)):
-      localDmg.append(trpUsed[i]-math.ceil(trpUsed[i]*.15))
-  if dmgDown.get()=='20%':
-    for i in range(len(trpUsed)):
-      localDmg.append(trpUsed[i]-math.ceil(trpUsed[i]*.2))
+  if isV2:
+    localTrpUsed=v2Trp
   else:
-    for i in range(len(trpUsed)):
-      localDmg.append(trpUsed[i])
+    localTrpUsed=trpUsed
+  if dmgDown.get()=='10%':
+    for i in range(len(localTrpUsed)):
+      localDmg.append(localTrpUsed[i]-math.ceil(localTrpUsed[i]*.1))
+  if dmgDown.get()=='15%':
+    for i in range(len(localTrpUsed)):
+      localDmg.append(localTrpUsed[i]-math.ceil(localTrpUsed[i]*.15))
+  if dmgDown.get()=='20%':
+    for i in range(len(localTrpUsed)):
+      localDmg.append(localTrpUsed[i]-math.ceil(localTrpUsed[i]*.2))
+  else:
+    for i in range(len(localTrpUsed)):
+      localDmg.append(localTrpUsed[i])
   print("Damage of each individual trap gag:"+str(localDmg))
   global lured
   if lured.get()==0:
     print("You need to lure cogs if you want trap to work!")
     totTrpDmg=0
   else:
-    if len(trpUsed)>1:
+    if len(localTrpUsed)>1:
       print("The traps canceled out! Only one trap can be used on a cog at a time!")
       totTrpDmg=0
     else:
       print("The trap worked! This can mean only one thing: You used lure AND only one trap on the cog! Amazing! It did "+str(trpUsed[0])+" damage!")
       totTrpDmg=localDmg[0]
       lured.set(0)
-  global totDmg
-  totDmg=totDmg+totTrpDmg
+  if isV2:
+    global v2Dmg
+    v2Dmg=v2Dmg+totTrpDmg
+  else:
+    global totDmg
+    totDmg=totDmg+totTrpDmg
 
 #Cog HP Cheatsheet Function
 def cHPClcDlt():
@@ -1031,7 +1143,7 @@ def cHPClcDlt():
   sosCards.grid_remove()
   window.geometry('')
   cogClc.configure(text='Show Health and\n SOS Cards',command=cHPClc)
-
+  
 def cHPClc():
   cogHPSheet.grid(column=0,row=3)
   cogHPLbl.grid(column=0,row=0)
@@ -1064,72 +1176,172 @@ pinBtn.configure(command=pin)
 #Cog HP Indicator Function
 def cHPIndClc():
   global totDmg
+  global levelKilled
   if totDmg<6:
     print("Cannot kill a level one.")
-    cHPInd.configure(text="(level 0)")
+    levelKilled=0
   elif 5<totDmg<12:
     print("Can kill a level one.")
-    cHPInd.configure(text="(level 1)")
+    levelKilled=1
   elif 11<totDmg<20:
     print("Can kill a level two.")
-    cHPInd.configure(text="(level 2)")
+    levelKilled=2
   elif 19<totDmg<30:
     print("Can kill a level three.")
-    cHPInd.configure(text="(level 3)")
+    levelKilled=3
   elif 29<totDmg<42:
     print("Can kill a level four.")
-    cHPInd.configure(text="(level 4)")
+    levelKilled=4
   elif 41<totDmg<56:
     print("Can kill a level five.")
-    cHPInd.configure(text="(level 5)")
+    levelKilled=5
   elif 55<totDmg<72:
     print("Can kill a level six.")
-    cHPInd.configure(text="(level 6)")
+    levelKilled=6
   elif 71<totDmg<90:
     print("Can kill a level seven.")
-    cHPInd.configure(text="(level 7)")
+    levelKilled=7
   elif 89<totDmg<110:
     print("Can kill a level eight.")
-    cHPInd.configure(text="(level 8)")
+    levelKilled=8
   elif 109<totDmg<132:
     print("Can kill a level nine.")
-    cHPInd.configure(text="(level 9)")
+    levelKilled=9
   elif 131<totDmg<156:
     print("Can kill a level ten.")
-    cHPInd.configure(text="(level 10)")
+    levelKilled=10
   elif 155<totDmg<196:
     print("Can kill a level eleven.")
-    cHPInd.configure(text="(level 11)")
+    levelKilled=11
   elif 195<totDmg<224:
     print("Can kill a level twelve.")
-    cHPInd.configure(text="(level 12)")
+    levelKilled=12
   elif 223<totDmg<254:
     print("Can kill a level thirteen.")
-    cHPInd.configure(text="(level 13)")
+    levelKilled=13
   elif 253<totDmg<286:
     print("Can kill a level fourteen.")
-    cHPInd.configure(text="(level 14)")
+    levelKilled=14
   elif 285<totDmg<320:
     print("Can kill a level fifteen.")
-    cHPInd.configure(text="(level 15)")
+    levelKilled=15
   elif 319<totDmg<356:
     print("Can kill a level sixteen.")
-    cHPInd.configure(text="(level 16)")
+    levelKilled=16
   elif 355<totDmg<394:
     print("Can kill a level seventeen.")
-    cHPInd.configure(text="(level 17)")
+    levelKilled=17
   elif 393<totDmg<434:
     print("Can kill a level eighteen.")
-    cHPInd.configure(text="(level 18)")
+    levelKilled=18
   elif 433<totDmg<476:
     print("Can kill a level nineteen.")
-    cHPInd.configure(text="(level 19)")
+    levelKilled=19
   elif 475<totDmg:
     print("Can kill a level twenty.")
-    cHPInd.configure(text="(level 20)")
+    levelKilled=20
   else:
     print("what the fuck")
+    levelKilled=-1
+  #needed to make a new variable, and it introduced the chance to optimize
+  #hoping I didn't break the code
+  #shit i broke the code im sorry
+  #think it's fixed but who knows what lingering damage this caused
+  if levelKilled == 0:
+    cHPInd.configure(text="(level 0)")
+    v2CHPInd.configure(text="(level 0)")
+  elif levelKilled == -1:
     cHPInd.configure(text="(???)")
+    v2CHPInd.configure(text="something went wrong! try getting gud later")
+  else:
+    cHPInd.configure(text="(level " + str(levelKilled) + ")")
+    v2Clc(levelKilled)
+
+#V2 HP Indicator Function
+def v2CHPIndClc():
+  global v2Dmg
+  global levelKilled
+  global v2Killed
+  if v2Dmg<6:
+    print("Cannot kill a v2 level one.")
+    v2Killed = 0
+  elif 5<v2Dmg<12:
+    print("Can kill a v2 level one.")
+    v2Killed = 1
+  elif 11<v2Dmg<20:
+    print("Can kill a v2 level two.")
+    v2Killed = 2
+  elif 19<v2Dmg<30:
+    print("Can kill a v2 level three.")
+    v2Killed = 3
+  elif 29<v2Dmg<42:
+    print("Can kill a v2 level four.")
+    v2Killed = 4
+  elif 41<v2Dmg<56:
+    print("Can kill a v2 level five.")
+    v2Killed = 5
+  elif 55<v2Dmg<72:
+    print("Can kill a v2 level six.")
+    v2Killed = 6
+  elif 71<v2Dmg<90:
+    print("Can kill a v2 level seven.")
+    v2Killed = 7
+  elif 89<v2Dmg<110:
+    print("Can kill a v2 level eight.")
+    v2Killed = 8
+  elif 109<v2Dmg<132:
+    print("Can kill a v2 level nine.")
+    v2Killed = 9
+  elif 131<v2Dmg<156:
+    print("Can kill a v2 level ten.")
+    v2Killed = 10
+  elif 155<v2Dmg<196:
+    print("Can kill a v2 level eleven.")
+    v2Killed = 11
+  elif 195<v2Dmg<224:
+    print("Can kill a v2 level twelve.")
+    v2Killed = 12
+  elif 223<v2Dmg<254:
+    print("Can kill a v2 level thirteen.")
+    v2Killed = 13
+  elif 253<v2Dmg<286:
+    print("Can kill a v2 level fourteen.")
+    v2Killed = 14
+  elif 285<v2Dmg<320:
+    print("Can kill a v2 level fifteen.")
+    v2Killed = 15
+  elif 319<v2Dmg<356:
+    print("Can kill a v2 level sixteen.")
+    v2Killed = 16
+  elif 355<v2Dmg<394:
+    print("Can kill a v2 level seventeen.")
+    v2Killed = 17
+  elif 393<v2Dmg<434:
+    print("Can kill a v2 level eighteen.")
+    v2Killed = 18
+  elif 433<v2Dmg<476:
+    print("Can kill a v2 level nineteen.")
+    v2Killed = 19
+  elif 475<v2Dmg:
+    print("Can kill a v2 level twenty.")
+    v2Killed = 20
+  else:
+    print("what the fuck")
+    v2Killed = -1
+  if v2Killed == 0 and levelKilled <= 1:
+    v2CHPInd.configure(text="(level 0)")
+  elif v2Killed == -1:
+    v2CHPInd.configure(text="i probably negative'd 2.0s wrong LMAO")
+  elif v2Killed == levelKilled or v2Killed == levelKilled - 1:
+    #This may not be the most user friendly way of displaying the levels used for calculation, but it helps reduce processing time by trimming how many loops are needed to find a level that can be beaten
+    v2CHPInd.configure(text="(level " + str(v2Killed) + ", calc based on level " +str(levelKilled) + ")")
+  elif v2Killed > levelKilled:
+    #this doesn't happen often but when it does, hoo boy
+    v2CHPInd.configure(text="(level " + str(levelKilled) + ", calc based on level " +str(levelKilled) + ")")
+  else:
+    levelKilled -= 1
+    v2Clc(levelKilled)
+    levelKilled += 1
 
 #Geometry - Main Columns
 col1.grid(column=0,row=0,padx=5) #In retrospect I should have used 0 for the column name too, but it doesn't matter *that* much.
@@ -1205,7 +1417,12 @@ clcResults.grid(column=0,row=0)
 dmgThsRnd.grid(column=0,row=0)
 theDmg.grid(column=1,row=0)
 cHPInd.grid(column=2,row=0)
-orgOnOff.grid(column=0,row=1,columnspan=3)
+orgOnOff.grid(column=0,row=2,columnspan=3)
+#brb crying myself to sleep ,., please fix this vhou sorry thank you
+v2Results.grid(column=0,row=1)
+v2DmgThsRnd.grid(column=0,row=1)
+v2TheDmg.grid(column=1,row=1)
+v2CHPInd.grid(column=2,row=1)
 
 #Run
 window.mainloop()
