@@ -88,12 +88,12 @@ def clcDmg(opt=""):
   if localLure==1:
     lured.set(1)
   if isV2:
-    print("V2: "+str(v2Dmg))
+    #print("V2: "+str(v2Dmg))
     v2TheDmg.configure(text=str(v2Dmg))
     v2CHPIndClc()
     v2Dmg=0
   else:
-    print("Total damage this round: "+str(totDmg))
+    #print("Total damage this round: "+str(totDmg))
     theDmg.configure(text=str(totDmg))
     cHPIndClc()
     totDmg=0
@@ -296,7 +296,7 @@ bess=Button(sosDrp,image=bessImg)
 def togOrgOff(opt=""):
   global organic
   organic=0
-  print("Gags in calculations will no longer be organic!")
+  #print("Gags in calculations will no longer be organic!")
   orgBtn.configure(command=togOrgOn)
   orgOnOff.configure(text="Organic = OFF")
   for i in gagBtns:
@@ -305,7 +305,7 @@ def togOrgOff(opt=""):
 def togOrgOn(opt=""):
   global organic
   organic=1
-  print("Gags in calculations will now be organic!")
+  #print("Gags in calculations will now be organic!")
   orgBtn.configure(command=togOrgOff)
   orgOnOff.configure(text="Organic = ON")
   for i in gagBtns:
@@ -343,7 +343,7 @@ window.bind('<Control-l>',lureSwap)
 
 #Clear inputs function
 def clearInputs(opt=""):
-  print("Clearing gag inputs!")
+  #print("Clearing gag inputs!")
   global lured
   global dmgDown
   global dlLock
@@ -393,7 +393,7 @@ window.bind('<Control-r>',clearInputs)
 
 #Clear history function
 def clearHistory():
-  print("Clearing calculcation history!")
+  #print("Clearing calculcation history!")
   histBox.configure(state=NORMAL)
   histBox.delete('1.0', END)
   histBox.configure(state=DISABLED)
@@ -683,7 +683,7 @@ def sCloudPrs():
     histBox.configure(state=NORMAL)
     histBox.insert('1.0',"Gag used: Organic Storm Cloud (88)\n")
     histBox.configure(state=DISABLED)
-    print("Hey did you know an organic storm cloud can kill a lured level 10? Organic squirt is cooler than organic throw but most people keep lying to themselves about the true superior organic track.")
+    #print("Hey did you know an organic storm cloud can kill a lured level 10? Organic squirt is cooler than organic throw but most people keep lying to themselves about the true superior organic track.")
   sCloud.configure(text=int(sCloud.cget("text"))+1)
   clcDmg()
 sCloud.configure(command=sCloudPrs)
@@ -987,14 +987,14 @@ def sndDmgClc():
   else:
     for i in range(len(localSndUsed)):
       localDmg.append(localSndUsed[i])
-  print("Damage of each individual sound gag: "+str(localDmg))
+  #print("Damage of each individual sound gag: "+str(localDmg))
   global lured
   lured.set(0)
-  print("If cogs were lured, they aren't anymore! Don't use sound on lured cogs!")
+  #print("If cogs were lured, they aren't anymore! Don't use sound on lured cogs!")
   totSndDmg=sum(localDmg,0)
   if len(localSndUsed)>1:
     totSndDmg=totSndDmg+math.ceil((totSndDmg*0.2)) #Group damage bonus always rounds up. See: 3 fogs and 1 aoogah getting rid of level 12 cogs. This does 199.2 damage, but still works.
-  print("Total sound damage: "+str(totSndDmg))
+  #print("Total sound damage: "+str(totSndDmg))
   if isV2:
     global v2Dmg
     v2Dmg=v2Dmg+totSndDmg
@@ -1022,21 +1022,21 @@ def trwDmgClc():
   else:
     for i in range(len(localTrwUsed)):
       localDmg.append(localTrwUsed[i])
-  print("Damage of each individual throw gag:"+str(localDmg))
+  #print("Damage of each individual throw gag:"+str(localDmg))
   totTrwDmg=sum(localDmg,0)
   global lured
   if lured.get()==0:
-    print("The cogs are not lured, and there will be no 50% damage bonus.")
+    #print("The cogs are not lured, and there will be no 50% damage bonus.")
     if len(localTrwUsed)>1:
       totTrwDmg=totTrwDmg+math.ceil((totTrwDmg*0.2))
   else:
-    print("The cogs are lured, and there will be a 50% damage bonus.") #Lure bonus used to not ceil but does now apparently (TTR V3.0.8).
+    #print("The cogs are lured, and there will be a 50% damage bonus.") #Lure bonus used to not ceil but does now apparently (TTR V3.0.8).
     if len(localTrwUsed)>1:
       totTrwDmg=totTrwDmg+math.ceil(totTrwDmg/2)+math.ceil((totTrwDmg*0.2))
     else:
       totTrwDmg=totTrwDmg+math.ceil(totTrwDmg/2)
     lured.set(0)
-  print("Total throw damage: "+str(totTrwDmg))
+  #print("Total throw damage: "+str(totTrwDmg))
   if isV2:
     global v2Dmg
     v2Dmg=v2Dmg+totTrwDmg
@@ -1064,21 +1064,21 @@ def sqtDmgClc():
   else:
     for i in range(len(localSqtUsed)):
       localDmg.append(localSqtUsed[i])
-  print("Damage of each individual squirt gag:"+str(localDmg))
+  #print("Damage of each individual squirt gag:"+str(localDmg))
   totSqtDmg=sum(localDmg,0)
   global lured
   if lured.get()==0:
-    print("The cogs are not lured, and there will be no 50% damage bonus.")
+    #print("The cogs are not lured, and there will be no 50% damage bonus.")
     if len(localSqtUsed)>1:
       totSqtDmg=totSqtDmg+math.ceil((totSqtDmg*0.2))
   else:
-    print("The cogs are lured, and there will be a 50% damage bonus.") #Lure bonus doesn't get rounded for some dumb reason.
+    #print("The cogs are lured, and there will be a 50% damage bonus.") #Lure bonus doesn't get rounded for some dumb reason.
     if len(localSqtUsed)>1:
       totSqtDmg=totSqtDmg+math.ceil(totSqtDmg/2)+math.ceil((totSqtDmg*0.2))
     else:
       totSqtDmg=totSqtDmg+math.ceil(totSqtDmg/2)
     lured.set(0)
-  print("Total squirt damage: "+str(totSqtDmg))
+  #print("Total squirt damage: "+str(totSqtDmg))
   if isV2:
     global v2Dmg
     v2Dmg=v2Dmg+totSqtDmg
@@ -1106,17 +1106,17 @@ def drpDmgClc():
   else:
     for i in range(len(localDrpUsed)):
       localDmg.append(localDrpUsed[i])
-  print("Damage of each individual drop gag:"+str(localDmg))
+  #print("Damage of each individual drop gag:"+str(localDmg))
   totDrpDmg=sum(localDmg,0)
   global lured
   if lured.get()==0:
-    print("The cogs are not lured, so drop is able to hit!")
+    #print("The cogs are not lured, so drop is able to hit!")
     if len(localDrpUsed)>1:
       totDrpDmg=totDrpDmg+math.ceil((totDrpDmg*0.2))
   else:
-    print("The cogs are lured, and drop does not work on lured cogs! https://www.youtube.com/watch?v=NV-p_-OvUnA&t=4s")
+    #print("The cogs are lured, and drop does not work on lured cogs! https://www.youtube.com/watch?v=NV-p_-OvUnA&t=4s")
     totDrpDmg=0
-  print("Total drop damage: "+str(totDrpDmg))
+  #print("Total drop damage: "+str(totDrpDmg))
   if isV2:
     global v2Dmg
     v2Dmg=v2Dmg+totDrpDmg
@@ -1144,17 +1144,17 @@ def trpDmgClc():
   else:
     for i in range(len(localTrpUsed)):
       localDmg.append(localTrpUsed[i])
-  print("Damage of each individual trap gag:"+str(localDmg))
+  #print("Damage of each individual trap gag:"+str(localDmg))
   global lured
   if lured.get()==0:
-    print("You need to lure cogs if you want trap to work!")
+    #print("You need to lure cogs if you want trap to work!")
     totTrpDmg=0
   else:
     if len(localTrpUsed)>1:
-      print("The traps canceled out! Only one trap can be used on a cog at a time!")
+      #print("The traps canceled out! Only one trap can be used on a cog at a time!")
       totTrpDmg=0
     else:
-      print("The trap worked! This can mean only one thing: You used lure AND only one trap on the cog! Amazing! It did "+str(trpUsed[0])+" damage!")
+      #print("The trap worked! This can mean only one thing: You used lure AND only one trap on the cog! Amazing! It did "+str(trpUsed[0])+" damage!")
       totTrpDmg=localDmg[0]
       lured.set(0)
   if isV2:
@@ -1205,70 +1205,70 @@ def cHPIndClc():
   global totDmg
   global levelKilled
   if totDmg<6:
-    print("Cannot kill a level one.")
+    #print("Cannot kill a level one.")
     levelKilled=0
   elif 5<totDmg<12:
-    print("Can kill a level one.")
+    #print("Can kill a level one.")
     levelKilled=1
   elif 11<totDmg<20:
-    print("Can kill a level two.")
+    #print("Can kill a level two.")
     levelKilled=2
   elif 19<totDmg<30:
-    print("Can kill a level three.")
+    #print("Can kill a level three.")
     levelKilled=3
   elif 29<totDmg<42:
-    print("Can kill a level four.")
+    #print("Can kill a level four.")
     levelKilled=4
   elif 41<totDmg<56:
-    print("Can kill a level five.")
+    #print("Can kill a level five.")
     levelKilled=5
   elif 55<totDmg<72:
-    print("Can kill a level six.")
+    #print("Can kill a level six.")
     levelKilled=6
   elif 71<totDmg<90:
-    print("Can kill a level seven.")
+    #print("Can kill a level seven.")
     levelKilled=7
   elif 89<totDmg<110:
-    print("Can kill a level eight.")
+    #print("Can kill a level eight.")
     levelKilled=8
   elif 109<totDmg<132:
-    print("Can kill a level nine.")
+    #print("Can kill a level nine.")
     levelKilled=9
   elif 131<totDmg<156:
-    print("Can kill a level ten.")
+    #print("Can kill a level ten.")
     levelKilled=10
   elif 155<totDmg<196:
-    print("Can kill a level eleven.")
+    #print("Can kill a level eleven.")
     levelKilled=11
   elif 195<totDmg<224:
-    print("Can kill a level twelve.")
+    #print("Can kill a level twelve.")
     levelKilled=12
   elif 223<totDmg<254:
-    print("Can kill a level thirteen.")
+    #print("Can kill a level thirteen.")
     levelKilled=13
   elif 253<totDmg<286:
-    print("Can kill a level fourteen.")
+    #print("Can kill a level fourteen.")
     levelKilled=14
   elif 285<totDmg<320:
-    print("Can kill a level fifteen.")
+    #print("Can kill a level fifteen.")
     levelKilled=15
   elif 319<totDmg<356:
-    print("Can kill a level sixteen.")
+    #print("Can kill a level sixteen.")
     levelKilled=16
   elif 355<totDmg<394:
-    print("Can kill a level seventeen.")
+    #print("Can kill a level seventeen.")
     levelKilled=17
   elif 393<totDmg<434:
-    print("Can kill a level eighteen.")
+    #print("Can kill a level eighteen.")
     levelKilled=18
   elif 433<totDmg<476:
-    print("Can kill a level nineteen.")
+    #print("Can kill a level nineteen.")
     levelKilled=19
   elif 475<totDmg:
-    print("Can kill a level twenty.")
+    #print("Can kill a level twenty.")
     levelKilled=20
   else:
-    print("what the fuck")
+    #print("what the fuck")
     levelKilled=-1
   #needed to make a new variable, and it introduced the chance to optimize
   #hoping I didn't break the code
@@ -1290,70 +1290,70 @@ def v2CHPIndClc():
   global levelKilled
   global v2Killed
   if v2Dmg<6:
-    print("Cannot kill a v2 level one.")
+    #print("Cannot kill a v2 level one.")
     v2Killed = 0
   elif 5<v2Dmg<12:
-    print("Can kill a v2 level one.")
+    #print("Can kill a v2 level one.")
     v2Killed = 1
   elif 11<v2Dmg<20:
-    print("Can kill a v2 level two.")
+    #print("Can kill a v2 level two.")
     v2Killed = 2
   elif 19<v2Dmg<30:
-    print("Can kill a v2 level three.")
+    #print("Can kill a v2 level three.")
     v2Killed = 3
   elif 29<v2Dmg<42:
-    print("Can kill a v2 level four.")
+    #print("Can kill a v2 level four.")
     v2Killed = 4
   elif 41<v2Dmg<56:
-    print("Can kill a v2 level five.")
+    #print("Can kill a v2 level five.")
     v2Killed = 5
   elif 55<v2Dmg<72:
-    print("Can kill a v2 level six.")
+    #print("Can kill a v2 level six.")
     v2Killed = 6
   elif 71<v2Dmg<90:
-    print("Can kill a v2 level seven.")
+    #print("Can kill a v2 level seven.")
     v2Killed = 7
   elif 89<v2Dmg<110:
-    print("Can kill a v2 level eight.")
+    #print("Can kill a v2 level eight.")
     v2Killed = 8
   elif 109<v2Dmg<132:
-    print("Can kill a v2 level nine.")
+    #print("Can kill a v2 level nine.")
     v2Killed = 9
   elif 131<v2Dmg<156:
-    print("Can kill a v2 level ten.")
+    #print("Can kill a v2 level ten.")
     v2Killed = 10
   elif 155<v2Dmg<196:
-    print("Can kill a v2 level eleven.")
+    #print("Can kill a v2 level eleven.")
     v2Killed = 11
   elif 195<v2Dmg<224:
-    print("Can kill a v2 level twelve.")
+    #print("Can kill a v2 level twelve.")
     v2Killed = 12
   elif 223<v2Dmg<254:
-    print("Can kill a v2 level thirteen.")
+    #print("Can kill a v2 level thirteen.")
     v2Killed = 13
   elif 253<v2Dmg<286:
-    print("Can kill a v2 level fourteen.")
+    #print("Can kill a v2 level fourteen.")
     v2Killed = 14
   elif 285<v2Dmg<320:
-    print("Can kill a v2 level fifteen.")
+    #print("Can kill a v2 level fifteen.")
     v2Killed = 15
   elif 319<v2Dmg<356:
-    print("Can kill a v2 level sixteen.")
+    #print("Can kill a v2 level sixteen.")
     v2Killed = 16
   elif 355<v2Dmg<394:
-    print("Can kill a v2 level seventeen.")
+    #print("Can kill a v2 level seventeen.")
     v2Killed = 17
   elif 393<v2Dmg<434:
-    print("Can kill a v2 level eighteen.")
+    #print("Can kill a v2 level eighteen.")
     v2Killed = 18
   elif 433<v2Dmg<476:
-    print("Can kill a v2 level nineteen.")
+    #print("Can kill a v2 level nineteen.")
     v2Killed = 19
   elif 475<v2Dmg:
-    print("Can kill a v2 level twenty.")
+    #print("Can kill a v2 level twenty.")
     v2Killed = 20
   else:
-    print("what the fuck")
+    #print("what the fuck")
     v2Killed = -1
   if v2Killed == 0 and levelKilled <= 1:
     v2CHPInd.configure(text="(level 0)")
