@@ -101,7 +101,7 @@ def clcDmg(opt=""):
 #Prepare damage calculation for V2.0 Cogs
 #This function loops itself several times, so that way you don't have to click a button to check individual 2.0 levels!
 #But in return this makes damage dealt to 2.0 Cogs display a little strangly at times. Sorry! The level it can beat can be trusted, though. I hope.
-#Currently built off of the in development BBHQ changes TTR had announced on 3/11/2022. This is subject to change at any time, and as of 3/14/2022 is unknown when it will release.
+#Currently built off of the adjustments to the in development BBHQ changes TTR had announced on 3/19/2022. This is subject to change at any time, and as of 3/20/2022 is unknown when it will release.
 def v2Clc(level):
   global v2Dmg
   global isV2
@@ -115,7 +115,11 @@ def v2Clc(level):
   v2Sqt = list()
   v2Drp = list()
   v2Trp = list()
-  defense = level*2
+  #3/11/22 - original Reinforced Plating formula; Defense = 2 x Cog level
+  #defense = level*2
+  #3/19/22 - adjusted Reinforced Plating formula; Defense = 1.5 x Cog level, rounded down
+  defense = math.floor(level*1.5)
+  #you know, I never thought I'd see toontown actually using floor instead of ceil
   for index in range(0, len(sndUsed)):
     newDam = sndUsed[index] - defense
     if newDam < 0:

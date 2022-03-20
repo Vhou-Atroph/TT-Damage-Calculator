@@ -29,7 +29,8 @@
 --V I'll let Vhou decide--
 - Against everyone's better judgement, let Sky take care of implementing Version 2.0 Cog calculation behavior! They are very sorry.
  - V2.0 Cogs will, in a future update, take reduced damage from each gag used by a factor of 2*level.
-  - At least, probably. This is still in a development phase and is subject to change at any time.
+  - UPDATE: 3/20/22 adjusted the formula to 1.5*level, rounded down, to match changes announced on 3/19/22
+  - This is still in a development phase and is subject to change at any time.
  - As of right now, this calculation functionality is useless for practical gameplay. Go ahead and find some new combos to use ahead of time, however!
 - Accidentally deleted keybinds in the process of doing this.
 - Added back keybinds and a heartfelt apology. 
