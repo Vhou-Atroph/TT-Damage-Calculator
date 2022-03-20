@@ -28,7 +28,7 @@ The program has various keybinds to expedite calculation:
 | ctrl+l      | Toggle Lure       |
 | ctrl+r      | Reset Calculation |
 
-**NOTE: Version 2.0 Damage Mechanics**
+**NOTE: Version 2.0 Damage Mechanics**  
 Toontown Rewritten has recently announced and playtested changes to how Version 2.0 Cogs take damage.  
 As of writing this and adding their functionality to the calculator, they have yet to be added to the game and are still subject to change before release.  
 Currently, Version 2.0 Cogs take less damage from each separate gag used, reducing the damage values by 1.5 times the Cog's level, rounded down, and is presumably subtracted before all other calculations.  
