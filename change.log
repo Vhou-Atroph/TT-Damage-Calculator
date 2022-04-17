@@ -25,3 +25,7 @@
 - Keybind for def toggle
 - Keybind for calculation reset
 - Keybind for lure toggle
+
+--V2.3--
+- V2 Calculation - might not work as intended, please test it out in cog golf courses and let me know if there's any issues.
+- Reworked how the level indicator works to make it easier to add higher level cogs in the future.
