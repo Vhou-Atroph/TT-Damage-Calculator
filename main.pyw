@@ -1,8 +1,8 @@
 from tkinter import *
-import math
-import os
 
-'''VERSION 2.3
+from mod import calculators
+
+'''VERSION 3
 
 CONTRIBUTORS:
 - Vhou-Atroph
@@ -43,7 +43,6 @@ sqtUsed=list()
 drpUsed=list()
 trpUsed=list()
 totDmg=0
-lvlHP={1:6,2:12,3:20,4:30,5:42,6:56,7:72,8:90,9:110,10:132,11:156,12:196,13:224,14:254,15:286,16:320,17:356,18:394,19:434,20:476}
 v2=IntVar()
 
 #Columns
@@ -52,23 +51,27 @@ col2=Frame(window) #Will be used for calculation history
 
 #Total damage calculation
 def clcDmg(opt=""):
+  global totDmg
   global lured
   localLure=0
   if lured.get()==1: #Find out if lure is enabled. If it is, save a local variable.
     localLure=1
   global v2
   if v2.get()==0:
-    if len(trpUsed)>0:
-      trpDmgClc()
+    if len(trpUsed)==1 and lured.get()==1:
+      totDmg=totDmg+calculators.gag_calculator(trpUsed,defense=trans_def(dmgDown.get()))
+      lured.set(0)
     if len(sndUsed)>0:
-      sndDmgClc()
+      totDmg=totDmg+calculators.gag_calculator(sndUsed,defense=trans_def(dmgDown.get()))
+      lured.set(0)
     if len(trwUsed)>0:
-      trwDmgClc()
+      totDmg=totDmg+calculators.gag_calculator(trwUsed,lured=lured.get(),defense=trans_def(dmgDown.get()))
+      lured.set(0)
     if len(sqtUsed)>0:
-      sqtDmgClc()
-    if len(drpUsed)>0:
-      drpDmgClc()
-    global totDmg
+      totDmg=totDmg+calculators.gag_calculator(sqtUsed,lured=lured.get(),defense=trans_def(dmgDown.get()))
+      lured.set(0)
+    if len(drpUsed)>0 and lured.get()==0:
+      totDmg=totDmg+calculators.gag_calculator(drpUsed,defense=trans_def(dmgDown.get()))
     #print("Total damage this round: "+str(totDmg))
     theDmg.configure(text=str(totDmg))
     cHPIndClc()
@@ -79,6 +82,17 @@ def clcDmg(opt=""):
     defBtn.configure(state="disabled")
   if localLure==1:
     lured.set(1)
+
+#Defense str -> int
+def trans_def(mod):
+  if mod=="0%":
+    return None
+  if mod=="10%":
+    return 0.1
+  if mod=="15%":
+    return 0.15
+  if mod=="20%":
+    return 0.2
 
 #Toggles
 togBtns=Frame(col1)
@@ -898,158 +912,6 @@ def nedPrs():
   clcDmg()
 ned.configure(command=nedPrs)
 
-#Sound damage calculation
-def sndDmgClc():
-  localDmg=list()
-  if dmgDown.get()=='10%':
-    for i in range(len(sndUsed)):
-      localDmg.append(sndUsed[i]-math.ceil(sndUsed[i]*.1)) #Defense buff ceils
-  elif dmgDown.get()=='15%':
-    for i in range(len(sndUsed)):
-      localDmg.append(sndUsed[i]-math.ceil(sndUsed[i]*.15))
-  elif dmgDown.get()=='20%':
-    for i in range(len(sndUsed)):
-      localDmg.append(sndUsed[i]-math.ceil(sndUsed[i]*.2))
-  else:
-    for i in range(len(sndUsed)):
-      localDmg.append(sndUsed[i])
-  #print("Damage of each individual sound gag: "+str(localDmg))
-  global lured
-  lured.set(0)
-  #print("If cogs were lured, they aren't anymore! Don't use sound on lured cogs!")
-  totSndDmg=sum(localDmg,0)
-  if len(sndUsed)>1:
-    totSndDmg=totSndDmg+math.ceil((totSndDmg*0.2)) #Group damage bonus always rounds up. See: 3 fogs and 1 aoogah getting rid of level 12 cogs. This does 199.2 damage, but still works. (This was important prior to TTR V3.0.0, when level 12 health was 200 instead of 196.)
-  #print("Total sound damage: "+str(totSndDmg))
-  global totDmg
-  totDmg=totDmg+totSndDmg
-
-#Throw damage calculation
-def trwDmgClc():
-  localDmg=list()
-  if dmgDown.get()=='10%':
-    for i in range(len(trwUsed)):
-      localDmg.append(trwUsed[i]-math.ceil(trwUsed[i]*.1))
-  elif dmgDown.get()=='15%':
-    for i in range(len(trwUsed)):
-      localDmg.append(trwUsed[i]-math.ceil(trwUsed[i]*.15))
-  elif dmgDown.get()=='20%':
-    for i in range(len(trwUsed)):
-      localDmg.append(trwUsed[i]-math.ceil(trwUsed[i]*.2))
-  else:
-    for i in range(len(trwUsed)):
-      localDmg.append(trwUsed[i])
-  #print("Damage of each individual throw gag:"+str(localDmg))
-  totTrwDmg=sum(localDmg,0)
-  global lured
-  if lured.get()==0:
-    #print("The cogs are not lured, and there will be no 50% damage bonus.")
-    if len(trwUsed)>1:
-      totTrwDmg=totTrwDmg+math.ceil((totTrwDmg*0.2))
-  else:
-    #print("The cogs are lured, and there will be a 50% damage bonus.") #Lure bonus used to not ceil but does now apparently (TTR V3.0.8).
-    if len(trwUsed)>1:
-      totTrwDmg=totTrwDmg+math.ceil(totTrwDmg/2)+math.ceil((totTrwDmg*0.2))
-    else:
-      totTrwDmg=totTrwDmg+math.ceil(totTrwDmg/2)
-    lured.set(0)
-  #print("Total throw damage: "+str(totTrwDmg))
-  global totDmg
-  totDmg=totDmg+totTrwDmg
-
-#Squirt damage calculation, luckily just throw 2. (Squirt is better than throw and I am tired of people pretending it isn't. It's the superior organic choice. Cowards.)
-def sqtDmgClc():
-  localDmg=list()
-  if dmgDown.get()=='10%':
-    for i in range(len(sqtUsed)):
-      localDmg.append(sqtUsed[i]-math.ceil(sqtUsed[i]*.1))
-  elif dmgDown.get()=='15%':
-    for i in range(len(sqtUsed)):
-      localDmg.append(sqtUsed[i]-math.ceil(sqtUsed[i]*.15))
-  elif dmgDown.get()=='20%':
-    for i in range(len(sqtUsed)):
-      localDmg.append(sqtUsed[i]-math.ceil(sqtUsed[i]*.2))
-  else:
-    for i in range(len(sqtUsed)):
-      localDmg.append(sqtUsed[i])
-  #print("Damage of each individual squirt gag:"+str(localDmg))
-  totSqtDmg=sum(localDmg,0)
-  global lured
-  if lured.get()==0:
-    #print("The cogs are not lured, and there will be no 50% damage bonus.")
-    if len(sqtUsed)>1:
-      totSqtDmg=totSqtDmg+math.ceil((totSqtDmg*0.2))
-  else:
-    #print("The cogs are lured, and there will be a 50% damage bonus.") #Lure bonus doesn't get rounded for some dumb reason.
-    if len(sqtUsed)>1:
-      totSqtDmg=totSqtDmg+math.ceil(totSqtDmg/2)+math.ceil((totSqtDmg*0.2))
-    else:
-      totSqtDmg=totSqtDmg+math.ceil(totSqtDmg/2)
-    lured.set(0)
-  #print("Total squirt damage: "+str(totSqtDmg))
-  global totDmg
-  totDmg=totDmg+totSqtDmg
-
-#Drop damage calculation
-def drpDmgClc():
-  localDmg=list()
-  if dmgDown.get()=='10%':
-    for i in range(len(drpUsed)):
-      localDmg.append(drpUsed[i]-math.ceil(drpUsed[i]*.1))
-  elif dmgDown.get()=='15%':
-    for i in range(len(drpUsed)):
-      localDmg.append(drpUsed[i]-math.ceil(drpUsed[i]*.15))
-  elif dmgDown.get()=='20%':
-    for i in range(len(drpUsed)):
-      localDmg.append(drpUsed[i]-math.ceil(drpUsed[i]*.2))
-  else:
-    for i in range(len(drpUsed)):
-      localDmg.append(drpUsed[i])
-  #print("Damage of each individual drop gag:"+str(localDmg))
-  totDrpDmg=sum(localDmg,0)
-  global lured
-  if lured.get()==0:
-    #print("The cogs are not lured, so drop is able to hit!")
-    if len(drpUsed)>1:
-      totDrpDmg=totDrpDmg+math.ceil((totDrpDmg*0.2))
-  else:
-    #print("The cogs are lured, and drop does not work on lured cogs! https://www.youtube.com/watch?v=NV-p_-OvUnA&t=4s")
-    totDrpDmg=0
-  #print("Total drop damage: "+str(totDrpDmg))
-  global totDmg
-  totDmg=totDmg+totDrpDmg
-
-#Trap damage calculation
-def trpDmgClc():
-  localDmg=list()
-  if dmgDown.get()=='10%':
-    for i in range(len(trpUsed)):
-      localDmg.append(trpUsed[i]-math.ceil(trpUsed[i]*.1))
-  if dmgDown.get()=='15%':
-    for i in range(len(trpUsed)):
-      localDmg.append(trpUsed[i]-math.ceil(trpUsed[i]*.15))
-  if dmgDown.get()=='20%':
-    for i in range(len(trpUsed)):
-      localDmg.append(trpUsed[i]-math.ceil(trpUsed[i]*.2))
-  else:
-    for i in range(len(trpUsed)):
-      localDmg.append(trpUsed[i])
-  #print("Damage of each individual trap gag:"+str(localDmg))
-  global lured
-  if lured.get()==0:
-    #print("You need to lure cogs if you want trap to work!")
-    totTrpDmg=0
-  else:
-    if len(trpUsed)>1:
-      #print("The traps canceled out! Only one trap can be used on a cog at a time!")
-      totTrpDmg=0
-    else:
-      #print("The trap worked! This can mean only one thing: You used lure AND only one trap on the cog! Amazing! It did "+str(trpUsed[0])+" damage!")
-      totTrpDmg=localDmg[0]
-      lured.set(0)
-  global totDmg
-  totDmg=totDmg+totTrpDmg
-
 #Cog HP Cheatsheet Function
 def cHPClcDlt():
   cogHPSheet.grid_remove()
@@ -1089,23 +951,23 @@ pinBtn.configure(command=pin)
 #Cog HP Indicator Function
 def cHPIndClc():
   lvl=0
-  for key,value in lvlHP.items():
+  while lvl<20:
     lvl=lvl+1
     #print("Evaluating level: "+str(lvl))
     global totDmg
     #print("The current total damage is "+str(totDmg))
-    if totDmg==value:
+    if totDmg==calculators.cog_health(lvl):
       #print("Wow! We found the level!")
       #print("The level is: "+str(lvl))
       cHPInd.configure(text="(level "+str(lvl)+")")
       break
-    elif totDmg<value:
+    elif totDmg<calculators.cog_health(lvl):
       #print("Wow! We found the level!")
       lvl=lvl-1
       #print("The level is: "+str(lvl))
       cHPInd.configure(text="(level "+str(lvl)+")")
       break
-    elif key==20 and totDmg>value:
+    elif lvl==20 and totDmg>calculators.cog_health(lvl):
       #print("Wow! We found the level!")
       #print("The level is: "+str(lvl))
       cHPInd.configure(text="(level "+str(lvl)+")")
@@ -1114,145 +976,65 @@ def cHPIndClc():
 global v2Dmg
 v2Dmg=0
 
-def v2SndClc(level):
-  v2SndUsed=list()
-  for i in range(len(sndUsed)):
-    newDmg=(sndUsed[i]-math.floor(level*1.5))
-    if newDmg>0:
-      v2SndUsed.append(newDmg)
-  global lured
-  lured.set(0)
-  totSndDmg=sum(v2SndUsed,0)
-  if len(v2SndUsed)>1:
-    totSndDmg=totSndDmg+math.ceil((totSndDmg*0.2))
-  global v2Dmg
-  v2Dmg=v2Dmg+totSndDmg
-    
-def v2TrwClc(level):
-  v2TrwUsed=list()
-  for i in range(len(trwUsed)):
-    newDmg=(trwUsed[i]-math.floor(level*1.5))
-    if newDmg>0:
-      v2TrwUsed.append(newDmg)
-  totTrwDmg=sum(v2TrwUsed,0)
-  global lured
-  if lured.get()==0:
-    if len(v2TrwUsed)>1:
-      totTrwDmg=totTrwDmg+math.ceil((totTrwDmg*0.2))
-  else:
-    if len(v2TrwUsed)>1:
-      totTrwDmg=totTrwDmg+math.ceil(totTrwDmg/2)+math.ceil((totTrwDmg*0.2))
-    else:
-      totTrwDmg=totTrwDmg+math.ceil(totTrwDmg/2)
-    lured.set(0)
-  global v2Dmg
-  v2Dmg=v2Dmg+totTrwDmg
-    
-def v2SqtClc(level):
-  v2SqtUsed=list()
-  for i in range(len(sqtUsed)):
-    newDmg=(sqtUsed[i]-math.floor(level*1.5))
-    if newDmg>0:
-      v2SqtUsed.append(newDmg)
-  totSqtDmg=sum(v2SqtUsed,0)
-  global lured
-  if lured.get()==0:
-    if len(v2SqtUsed)>1:
-      totSqtDmg=totSqtDmg+math.ceil((totSqtDmg*0.2))
-  else:
-    if len(v2SqtUsed)>1:
-      totSqtDmg=totSqtDmg+math.ceil(totSqtDmg/2)+math.ceil((totSqtDmg*0.2))
-    else:
-      totSqtDmg=totSqtDmg+math.ceil(totSqtDmg/2)
-    lured.set(0)
-  global v2Dmg
-  v2Dmg=v2Dmg+totSqtDmg
-
-def v2DrpClc(level):
-  v2DrpUsed=list()
-  for i in range(len(drpUsed)):
-    newDmg=(drpUsed[i]-math.floor(level*1.5))
-    if newDmg>0:
-      v2DrpUsed.append(newDmg)
-  totDrpDmg=sum(v2DrpUsed,0)
-  global lured
-  if lured.get()==0:
-    if len(drpUsed)>1:
-      totDrpDmg=totDrpDmg+math.ceil((totDrpDmg*0.2))
-  else:
-    totDrpDmg=0
-  global v2Dmg
-  v2Dmg=v2Dmg+totDrpDmg
-
-def v2TrpClc(level):
-  v2TrpUsed=list()
-  for i in range(len(trpUsed)):
-    newDmg=(trpUsed[i]-math.floor(level*1.5))
-    if newDmg>0:
-      v2TrpUsed.append(newDmg)
-  global lured
-  if lured.get()==0:
-    totTrpDmg=0
-  else:
-    if len(v2TrpUsed)>1:
-      totTrpDmg=0
-    else:
-      totTrpDmg=v2TrpUsed[0]
-      lured.set(0)
-  global v2Dmg
-  v2Dmg=v2Dmg+totTrpDmg
-
 def v2Calc():
   lvl=0
-  for key,value in lvlHP.items():
+  while lvl<20:
     global lured
     localLure=0
     if lured.get()==1:
       localLure=1
-    lvl=key
+    lvl=lvl+1
     global v2Dmg
     v2Dmg=0
     #print("Evaluating lvl: "+str(lvl))
     
-    if len(trpUsed)==1:
-      v2TrpClc(key)
+    if len(trpUsed)==1 and lured.get()==1:
+      v2Dmg=v2Dmg+calculators.gag_calculator(trpUsed,plating=lvl)
+      lured.set(0)
     if len(sndUsed)>0:
-      v2SndClc(key)
+      v2Dmg=v2Dmg+calculators.gag_calculator(sndUsed,plating=lvl)
+      lured.set(0)
     if len(trwUsed)>0:
-      v2TrwClc(key)
+      v2Dmg=v2Dmg+calculators.gag_calculator(trwUsed,lured=lured.get(),plating=lvl)
+      lured.set(0)
     if len(sqtUsed)>0:
-      v2SqtClc(key)
-    if len(drpUsed)>0:
-      v2DrpClc(key)
+      v2Dmg=v2Dmg+calculators.gag_calculator(sqtUsed,lured=lured.get(),plating=lvl)
+      lured.set(0)
+    if len(drpUsed)>0 and lured.get()==0:
+      v2Dmg=v2Dmg+calculators.gag_calculator(drpUsed,plating=lvl)
     
     if localLure==1:
       lured.set(1)
     
-    if v2Dmg==value:
+    if v2Dmg==calculators.cog_health(lvl):
       #print("Wow! We found the level!")
       #print("The level is: "+str(lvl))
       cHPInd.configure(text="(v2.0 level "+str(lvl)+")")
       theDmg.configure(text=str(v2Dmg))
       break
-    elif v2Dmg<value:
+    elif v2Dmg<calculators.cog_health(lvl):
       #print("Wow! We found the level!")
       lvl=lvl-1
       #print("The level is: "+str(lvl))
       v2Dmg=0
-      if len(trpUsed)==1:
-        v2TrpClc(lvl)
+      if len(trpUsed)==1 and lured.get()==1:
+        v2Dmg=v2Dmg+calculators.gag_calculator(trpUsed,plating=lvl)
+        lured.set(0)
       if len(sndUsed)>0:
-        v2SndClc(lvl)
+        v2Dmg=v2Dmg+calculators.gag_calculator(sndUsed,plating=lvl)
+        lured.set(0)
       if len(trwUsed)>0:
-        v2TrwClc(lvl)
+        v2Dmg=v2Dmg+calculators.gag_calculator(trwUsed,lured=lured.get(),plating=lvl)
+        lured.set(0)
       if len(sqtUsed)>0:
-        v2SqtClc(lvl)
-      if len(drpUsed)>0:
-        v2DrpClc(lvl)
+        v2Dmg=v2Dmg+calculators.gag_calculator(sqtUsed,lured=lured.get(),plating=lvl)
+        lured.set(0)
+      if len(drpUsed)>0 and lured.get()==0:
+        v2Dmg=v2Dmg+calculators.gag_calculator(drpUsed,plating=lvl)
       cHPInd.configure(text="(v2.0 level "+str(lvl)+")")
       theDmg.configure(text=str(v2Dmg))
       break
-    elif key==20 and v2Dmg>value:
+    elif lvl==20 and v2Dmg>calculators.cog_health(lvl):
       #print("Wow! We found the level!")
       #print("The level is: "+str(lvl))
       cHPInd.configure(text="(v2.0 level "+str(lvl)+")")
