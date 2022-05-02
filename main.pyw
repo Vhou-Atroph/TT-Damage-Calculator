@@ -1,9 +1,9 @@
 from tkinter import *
 
 from mod import calculators
+from mod import update_checker
 
-'''VERSION 3
-
+'''
 CONTRIBUTORS:
 - Vhou-Atroph
 - BoggoTV
@@ -1041,6 +1041,14 @@ def v2Calc():
       theDmg.configure(text=str(v2Dmg))
     if localLure==1:
       lured.set(1)
+
+#Toolbar
+toolbar=Menu(window)
+#Program
+program_menu=Menu(toolbar,tearoff=0)
+program_menu.add_command(label="Update Checker",command=lambda:update_checker.compare_versions(local_file="mod/version.txt",git_file="https://raw.githubusercontent.com/Vhou-Atroph/TT-Damage-Calculator/main/mod/version.txt"))
+toolbar.add_cascade(label="Program",menu=program_menu)
+window.configure(menu=toolbar)
 
 #Geometry - Main Columns
 col1.grid(column=0,row=0,padx=5) #In retrospect I should have used 0 for the column name too, but it doesn't matter *that* much.

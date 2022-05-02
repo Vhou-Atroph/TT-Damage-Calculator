@@ -33,3 +33,6 @@
 --V3--
 - Moved math funcitons to mod/calculators.py
 - Added version.txt for future update checking, maybe?
+
+--V3.1.0--
+- Added the update checker. It is accessed through the new menu bar under "Program."
