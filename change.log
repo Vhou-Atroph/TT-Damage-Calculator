@@ -36,3 +36,7 @@
 
 --V3.1.0--
 - Added the update checker. It is accessed through the new menu bar under "Program."
+
+--V3.1.1--
+- Changed the naming system of variables and functions to snake_case for more readability
+- Added "Exit" menu option under Program menu bar.
