@@ -259,7 +259,7 @@ org_btn.configure(command=tog_org_on)
 window.bind('<Shift_L>',tog_org_on)
 
 #Def Keybind
-def defSwap(opt=""):
+def def_swap(opt=""):
   global dmg_down
   if dmg_down.get()=='0%':
     dmg_down.set('10%')
@@ -273,27 +273,27 @@ def defSwap(opt=""):
   else:
     dmg_down.set('0%')
     calc_dmg()
-window.bind('<Control-d>',defSwap)
+window.bind('<Control-d>',def_swap)
 
 #Lure Keybind
-def lureSwap(opt=""):
+def lur_swap(opt=""):
   if lured.get()==0:
     lured.set(1)
     calc_dmg()
   else:
     lured.set(0)
     calc_dmg()
-window.bind('<Control-l>',lureSwap)
+window.bind('<Control-l>',lur_swap)
 
 #V2 Keybind
-def v2Swap(opt=""):
+def v2_swap(opt=""):
   if v2.get()==0:
     v2.set(1)
     calc_dmg()
   else:
     v2.set(0)
     calc_dmg()
-window.bind('<Control-v>',v2Swap)
+window.bind('<Control-v>',v2_swap)
 
 #Clear inputs function
 def clear_inputs(opt=""):
