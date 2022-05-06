@@ -1,7 +1,5 @@
 from tkinter import *
 
-from numpy import var
-
 from mod import calculators
 from mod import gags
 from mod import update_checker
