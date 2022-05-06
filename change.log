@@ -40,3 +40,8 @@
 --V3.1.1--
 - Changed the naming system of variables and functions to snake_case for more readability
 - Added "Exit" menu option under Program menu bar.
+
+--V3.2.0--
+- Created gags.py, which stores gag objects. Gag objects have type, name, track, and dmg. They also have method .makeorg(), which will evaluate the organic damage of the gag object.
+- Made gag buttons more efficient by removing individual functions and making a single that applies to every button.
+- With these changes, there's probably some kind of new (or old, unnoticed) issue out there. Please submit any such issue you find.
