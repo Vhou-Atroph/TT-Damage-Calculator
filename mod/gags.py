@@ -12,9 +12,6 @@ class Gag:
     if self.dmg*.1<1: return self.dmg+1 
     else: return self.dmg+math.floor(self.dmg*.1)
 
-def gag_dmg(gag):
-  print(gag.name+" does "+str(gag.dmg)+" damage.")
-
 #Sound gags and SOS cards
 bike_horn=Gag(type="Gag",name="Bike Horn",track="Sound",dmg=4)
 whistle=Gag(type="Gag",name="Whistle",track="Sound",dmg=7)
