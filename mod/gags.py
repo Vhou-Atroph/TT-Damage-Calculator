@@ -8,7 +8,6 @@ class Gag:
     self.track=track #Track of the gag
     self.dmg=dmg #Base damage of the gag
   def make_org(self): #Make the gag organic
-    self.name="Organic "+self.name
     if self.dmg*.1<1: return self.dmg+1 
     else: return self.dmg+math.floor(self.dmg*.1)
 

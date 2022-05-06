@@ -45,3 +45,8 @@
 - Created gags.py, which stores gag objects. Gag objects have type, name, track, and dmg. They also have method .makeorg(), which will evaluate the organic damage of the gag object.
 - Made gag buttons more efficient by removing individual functions and making a single that applies to every button.
 - With these changes, there's probably some kind of new (or old, unnoticed) issue out there. Please submit any such issue you find.
+
+--V3.2.1--
+- Bugfix: Fixed gag history displaying incorrectly if a gag was organic or not after using it as organic once.
+- Moved "Pin Window" button to the Program menu. More things will probably be moved into the menu bar at some point.
+- Pin window has also been given a keybind- alt+up

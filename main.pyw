@@ -1,5 +1,7 @@
 from tkinter import *
 
+from numpy import var
+
 from mod import calculators
 from mod import gags
 from mod import update_checker
@@ -19,9 +21,6 @@ window.iconphoto(True, icon)
 window.resizable(0,0)
 
 #Variables
-global lured
-global dmg_down
-global def_lur_lock
 global organic
 global snd_used
 global trw_used
@@ -45,6 +44,7 @@ drp_used=list()
 trp_used=list()
 tot_dmg=0
 v2=IntVar()
+pin_val=IntVar()
 
 #Columns
 col0=Frame(window) #Main content of the calculator
@@ -98,16 +98,24 @@ def trans_def(mod):
 #Gag Buttons
 def gag_btn(gag,list,btn=None):
   if organic==1 and gag.type=="Gag":
+    name="Organic "+gag.name
     dmg=gag.make_org()
   else:
     dmg=gag.dmg
+    name=gag.name
   if btn:
     btn.configure(text=int(btn.cget("text"))+1)
   list.append(dmg)
   hist_box.configure(state=NORMAL)
-  hist_box.insert('1.0',"Gag used: "+gag.name+" ("+str(dmg)+")\n")
+  hist_box.insert('1.0',"Gag used: "+name+" ("+str(dmg)+")\n")
   hist_box.configure(state=DISABLED)
   calc_dmg()
+
+#Pin window to top
+def pin():
+  if pin_val.get()==1:
+    return window.attributes('-topmost',True)
+  window.attributes('-topmost',False)
 
 #Toggles
 tog_btns=Frame(col0)
@@ -245,8 +253,7 @@ gag_btns=(bike_horn,whistle,bugle,aoogah,elephant_trunk,fog_horn,opera_singer,cu
 #Calculation history
 hist=Frame(col1)
 hist_lbl=Label(hist,text="History")
-hist_box=Text(hist,width=25,height=22,state=DISABLED,font=('Arial',10,'normal'),wrap=WORD)
-pin_btn=Button(hist,text="Pin to top")
+hist_box=Text(hist,width=25,height=25,state=DISABLED,font=('Arial',10,'normal'),wrap=WORD)
 clear_hist_btn=Button(hist,text="Clear History")
 cog_calc=Button(hist,text="Show Health and\n SOS Cards")
 
@@ -317,6 +324,8 @@ def tog_org_on(opt=""):
 org_btn.configure(command=tog_org_on)
 window.bind('<Shift_L>',tog_org_on)
 
+###Keybinds
+
 #Def Keybind
 def def_swap(opt=""):
   global dmg_down
@@ -334,25 +343,17 @@ def def_swap(opt=""):
     calc_dmg()
 window.bind('<Control-d>',def_swap)
 
-#Lure Keybind
-def lur_swap(opt=""):
-  if lured.get()==0:
-    lured.set(1)
-    calc_dmg()
+#Swap a toggle
+def tog_swap(par,tog):
+  if tog.get()==0:
+    tog.set(1)
   else:
-    lured.set(0)
-    calc_dmg()
-window.bind('<Control-l>',lur_swap)
-
-#V2 Keybind
-def v2_swap(opt=""):
-  if v2.get()==0:
-    v2.set(1)
-    calc_dmg()
-  else:
-    v2.set(0)
-    calc_dmg()
-window.bind('<Control-v>',v2_swap)
+    tog.set(0)
+  calc_dmg()
+  pin()
+window.bind('<Alt-Up>',lambda par: tog_swap(par,pin_val))
+window.bind('<Control-l>',lambda par: tog_swap(par,lured))
+window.bind('<Control-v>',lambda par: tog_swap(par,v2))
 
 #Clear inputs function
 def clear_inputs(opt=""):
@@ -429,15 +430,6 @@ def cog_health_calc_show():
   cog_calc.configure(text='Hide Health and\n SOS Cards',command=cog_health_calc_hide)
   window.geometry('')
 cog_calc.configure(command=cog_health_calc_show)
-
-#Pin commands
-def unpin():
-  window.attributes('-topmost',False)
-  pin_btn.configure(command=pin,text='Pin to top')
-def pin():
-  window.attributes('-topmost',True)
-  pin_btn.configure(command=unpin,text='Unpin from top')
-pin_btn.configure(command=pin)
 
 #Cog HP Indicator Function
 def cog_health_ind_calc():
@@ -537,8 +529,9 @@ def v2_calc():
 toolbar=Menu(window)
 #Program
 program_menu=Menu(toolbar,tearoff=0)
-program_menu.add_command(label="Update Checker",command=lambda:update_checker.compare_versions(local_file="mod/version.txt",git_file="https://raw.githubusercontent.com/Vhou-Atroph/TT-Damage-Calculator/main/mod/version.txt"))
+program_menu.add_checkbutton(label="Pin window",command=pin,variable=pin_val,onvalue=1,offvalue=0)
 program_menu.add_separator()
+program_menu.add_command(label="Check for update",command=lambda:update_checker.compare_versions(local_file="mod/version.txt",git_file="https://raw.githubusercontent.com/Vhou-Atroph/TT-Damage-Calculator/main/mod/version.txt"))
 program_menu.add_command(label="Exit",command=lambda:window.destroy())
 toolbar.add_cascade(label="Program",menu=program_menu)
 window.configure(menu=toolbar)
@@ -610,7 +603,6 @@ hist.grid(column=0,row=0)
 hist_lbl.grid(column=0,row=0)
 hist_box.grid(column=0,row=1)
 clear_hist_btn.grid(column=0,row=2,pady=3)
-pin_btn.grid(column=0,row=3,pady=3)
 cog_calc.grid(column=0,row=4,pady=3)
 
 #Geometry - Calculation Results

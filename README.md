@@ -33,6 +33,7 @@ The program has various keybinds to expedite calculation:
 | ctrl+l      | Toggle Lure         |
 | ctrl+v      | Toggle v2 Calculator|
 | ctrl+r      | Reset Calculation   |
+| alt+up      | Toggle Pinned Window|
 
 # Final Notes
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/I2I65IWZG)
