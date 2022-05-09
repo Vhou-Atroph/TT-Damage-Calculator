@@ -1,9 +1,9 @@
-import toml
+import tomli
 
 class Bind:
   def __init__(self,key_id):
     self.key_id=key_id
-    settingsfile=toml.loads(open("mod/settings.toml","r").read())
+    settingsfile=tomli.loads(open("mod/settings.toml","r").read())
     self.key=settingsfile['keybinds'][key_id]
 
 organic=Bind('organic')
