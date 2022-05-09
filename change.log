@@ -50,3 +50,8 @@
 - Bugfix: Fixed gag history displaying incorrectly if a gag was organic or not after using it as organic once.
 - Moved "Pin Window" button to the Program menu. More things will probably be moved into the menu bar at some point.
 - Pin window has also been given a keybind- alt+up
+
+--V3.3.0--
+- settings.toml! This will store personal settings for the gag calculator!
+- Keybinds are stored here- it's now possible to edit keybinds by changing this file instead of having to use the ones I created. Note that keybinds are currently only editable through settings.toml and are configured at launch. If a keybind is not possible, the program will crash immediately with an error that looks like: '_tkinter.TclError: bad event type or keysym "Shfit_L".'
+- The program now requires an external library: toml.

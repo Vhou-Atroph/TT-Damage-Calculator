@@ -2,6 +2,7 @@ from tkinter import *
 
 from mod import calculators
 from mod import gags
+from mod import keybinds
 from mod import update_checker
 
 '''
@@ -297,6 +298,8 @@ ned.configure(command=lambda:gag_btn(gags.ned,drp_used))
 franz.configure(command=lambda:gag_btn(gags.franz,drp_used))
 bess.configure(command=lambda:gag_btn(gags.bess,drp_used))
 
+###Keybinds
+
 #Toggle organic functions
 def tog_org_off(opt=""):
   organic.set(0)
@@ -305,7 +308,7 @@ def tog_org_off(opt=""):
   org_indicator.configure(text="Organic = OFF")
   for i in gag_btns:
     i.configure(bg='#1888D3',activebackground='#186AD3')
-  window.bind('<Shift_L>',tog_org_on)
+  window.bind('<'+keybinds.organic.key+'>',tog_org_on)
 def tog_org_on(opt=""):
   organic.set(1)
   #print("Gags in calculations will now be organic!")
@@ -313,11 +316,9 @@ def tog_org_on(opt=""):
   org_indicator.configure(text="Organic = ON")
   for i in gag_btns:
     i.configure(bg='darkorange',activebackground='orange')
-  window.bind('<Shift_L>',tog_org_off)
+  window.bind('<'+keybinds.organic.key+'>',tog_org_off)
 org_btn.configure(command=tog_org_on)
-window.bind('<Shift_L>',tog_org_on)
-
-###Keybinds
+window.bind('<'+keybinds.organic.key+'>',tog_org_on)
 
 #Def Keybind
 def def_swap(opt=""):
@@ -334,7 +335,7 @@ def def_swap(opt=""):
   else:
     dmg_down.set('0%')
     calc_dmg()
-window.bind('<Control-d>',def_swap)
+window.bind('<'+keybinds.defense.key+'>',def_swap)
 
 #Swap a toggle
 def tog_swap(par,tog):
@@ -344,9 +345,9 @@ def tog_swap(par,tog):
     tog.set(0)
   calc_dmg()
   pin()
-window.bind('<Alt-Up>',lambda par: tog_swap(par,pin_val))
-window.bind('<Control-l>',lambda par: tog_swap(par,lured))
-window.bind('<Control-v>',lambda par: tog_swap(par,v2))
+window.bind('<'+keybinds.lure.key+'>',lambda par: tog_swap(par,lured))
+window.bind('<'+keybinds.v2.key+'>',lambda par: tog_swap(par,v2))
+window.bind('<'+keybinds.pin.key+'>',lambda par: tog_swap(par,pin_val))
 
 #Clear inputs function
 def clear_inputs(opt=""):
