@@ -19,30 +19,29 @@ window.iconphoto(True, icon)
 window.resizable(0,0)
 
 #Variables
-global organic
 global snd_used
 global trw_used
 global sqt_used
 global drp_used
 global trp_used
 global tot_dmg
-global v2
-lured=IntVar()
-def_values=['0%','10%','15%','20%']
-dmg_down=StringVar()
-dmg_down.set('0%')
-def_lur_options=['No lock','Lock lure','Lock defense','Lock both']
-def_lur_lock=StringVar()
-def_lur_lock.set('No lock')
-organic=0
 snd_used=list()
 trw_used=list()
 sqt_used=list()
 drp_used=list()
 trp_used=list()
 tot_dmg=0
+
+organic=IntVar()
+lured=IntVar()
 v2=IntVar()
 pin_val=IntVar()
+dmg_down=StringVar()
+dmg_down.set('0%')
+def_values=['0%','10%','15%','20%']
+def_lur_lock=StringVar()
+def_lur_lock.set('No lock')
+def_lur_options=['No lock','Lock lure','Lock defense','Lock both']
 
 #Columns
 col0=Frame(window) #Main content of the calculator
@@ -51,11 +50,9 @@ col1=Frame(window) #Will be used for calculation history
 #Total damage calculation
 def calc_dmg(opt=""):
   global tot_dmg
-  global lured
   local_lure=0
   if lured.get()==1: #Find out if lure is enabled. If it is, save a local variable.
     local_lure=1
-  global v2
   if v2.get()==0:
     if len(trp_used)==1 and lured.get()==1:
       tot_dmg=tot_dmg+calculators.gag_calculator(trp_used,defense=trans_def(dmg_down.get()))
@@ -95,7 +92,7 @@ def trans_def(mod):
 
 #Gag Buttons
 def gag_btn(gag,list,btn=None):
-  if organic==1 and gag.type=="Gag":
+  if organic.get()==1 and gag.type=="Gag":
     name="Organic "+gag.name
     dmg=gag.make_org()
   else:
@@ -302,8 +299,7 @@ bess.configure(command=lambda:gag_btn(gags.bess,drp_used))
 
 #Toggle organic functions
 def tog_org_off(opt=""):
-  global organic
-  organic=0
+  organic.set(0)
   #print("Gags in calculations will no longer be organic!")
   org_btn.configure(command=tog_org_on)
   org_indicator.configure(text="Organic = OFF")
@@ -311,8 +307,7 @@ def tog_org_off(opt=""):
     i.configure(bg='#1888D3',activebackground='#186AD3')
   window.bind('<Shift_L>',tog_org_on)
 def tog_org_on(opt=""):
-  global organic
-  organic=1
+  organic.set(1)
   #print("Gags in calculations will now be organic!")
   org_btn.configure(command=tog_org_off)
   org_indicator.configure(text="Organic = ON")
@@ -356,15 +351,12 @@ window.bind('<Control-v>',lambda par: tog_swap(par,v2))
 #Clear inputs function
 def clear_inputs(opt=""):
   #print("Clearing gag inputs!")
-  global lured
-  global dmg_down
   global def_lur_lock
   global snd_used
   global trw_used
   global sqt_used
   global drp_used
   global trp_used
-  global v2
   local_lure=0
   lur_info='no'
   if lured.get()==1: #Find out if lure is enabled. If it is, save a local variable.
@@ -460,7 +452,6 @@ v2_dmg=0
 def v2_calc():
   lvl=0
   while lvl<20:
-    global lured
     local_lure=0
     if lured.get()==1:
       local_lure=1
@@ -527,10 +518,10 @@ def v2_calc():
 toolbar=Menu(window)
 #Program
 program_menu=Menu(toolbar,tearoff=0)
-program_menu.add_checkbutton(label="Pin window",command=pin,variable=pin_val,onvalue=1,offvalue=0)
+program_menu.add_checkbutton(label="Pin window",command=pin,variable=pin_val,onvalue=1,offvalue=0,accelerator="Alt+Up")
 program_menu.add_separator()
 program_menu.add_command(label="Check for update",command=lambda:update_checker.compare_versions(local_file="mod/version.txt",git_file="https://raw.githubusercontent.com/Vhou-Atroph/TT-Damage-Calculator/main/mod/version.txt"))
-program_menu.add_command(label="Exit",command=lambda:window.destroy())
+program_menu.add_command(label="Exit",command=lambda:window.destroy(),accelerator="Alt+F4")
 toolbar.add_cascade(label="Program",menu=program_menu)
 window.configure(menu=toolbar)
 
