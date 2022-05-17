@@ -385,7 +385,7 @@ def clear_inputs(opt=""):
   if local_lure==1 and def_lur_lock.get()=='Lock lure' or def_lur_lock.get()=='Lock both': #Use the local variable and def_lur_lock to lock lure as active even after it is set to 0 by clear_inputs()
     lured.set(1)
 clear_btn.configure(command=clear_inputs)
-window.bind('<Control-r>',clear_inputs)
+window.bind('<'+keybinds.reset.key+'>',clear_inputs)
 
 #Clear history function
 def clear_history():
