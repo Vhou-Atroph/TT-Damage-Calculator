@@ -39,7 +39,7 @@ v2=IntVar()
 pin_val=IntVar()
 dmg_down=StringVar()
 dmg_down.set('0%')
-def_values=['0%','10%','15%','20%']
+def_values=['0%','10%','15%','20%','25%']
 def_lur_lock=StringVar()
 def_lur_lock.set('No lock')
 def_lur_options=['No lock','Lock lure','Lock defense','Lock both']
@@ -84,12 +84,14 @@ def calc_dmg(opt=""):
 def trans_def(mod):
   if mod=="0%":
     return None
-  if mod=="10%":
+  elif mod=="10%":
     return 0.1
-  if mod=="15%":
+  elif mod=="15%":
     return 0.15
-  if mod=="20%":
+  elif mod=="20%":
     return 0.2
+  elif mod=="25%":
+    return 0.25
 
 #Gag Buttons
 def gag_btn(gag,list,btn=None):
