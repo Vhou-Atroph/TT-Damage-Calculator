@@ -334,6 +334,9 @@ def def_swap(opt=""):
   elif dmg_down.get()=='15%':
     dmg_down.set('20%')
     calc_dmg()
+  elif dmg_down.get()=='20%':
+    dmg_down.set('25%')
+    calc_dmg()
   else:
     dmg_down.set('0%')
     calc_dmg()
