@@ -30,8 +30,8 @@ cream_pie_slice=Gag(type="Gag",name="Cream Pie Slice",track="Throw",dmg=17)
 whole_fruit_pie=Gag(type="Gag",name="Whole Fruit Pie",track="Throw",dmg=27)
 whole_cream_pie=Gag(type="Gag",name="Whole Cream Pie",track="Throw",dmg=40)
 birthday_cake=Gag(type="Gag",name="Birthday Cake",track="Throw",dmg=100)
-wedding_cake=Gag(type="Gag",name="Wedding Cake",track="Throw",dmg=132)
-rocky=Gag(type="SOS",name="Rocky",track="Throw",dmg=120)
+wedding_cake=Gag(type="Gag",name="Wedding Cake",track="Throw",dmg=120)
+rocky=Gag(type="SOS",name="Rocky",track="Throw",dmg=132)
 
 #Squirt gags and SOS cards
 squirting_flower=Gag(type="Gag",name="Squirting Flower",track="Squirt",dmg=4)
