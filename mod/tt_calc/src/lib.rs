@@ -44,7 +44,7 @@ fn cog_hp(_:Python,lvl:u64) -> PyResult<u64> {
 fn cog_defense(_:Python,gags:Vec<u64>,strength:f64) -> Vec<u64> {
     let mut newvec: Vec<u64> = Vec::new();
     for i in gags.iter() {newvec.push(i - (*i as f64 * strength).ceil() as u64);}
-    Ok(newvec)
+    newvec
 }
 
 /// Evaluates cog plating buff applicable in a round.
