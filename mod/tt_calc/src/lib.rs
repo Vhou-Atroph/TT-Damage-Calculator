@@ -19,7 +19,7 @@ py_module_initializer!(tt_calc, |py, m| {
 
 /// Basic function to evaluate health of any cog levels 1 through 20.
 /// ```
-/// use math::*;
+/// use tt_calc::*;
 /// 
 /// fn lvl12s() {
 ///     println!("Level 12 cogs have {} health!",cog_hp(12).expect("An error has occured"));
@@ -35,7 +35,7 @@ fn cog_hp(_:Python,lvl:u64) -> PyResult<u64> {
 
 /// Evaluates cog defense buff applicable in a round.
 /// ```
-/// use math::*;
+/// use tt_calc::*;
 /// 
 /// fn round_w_def() {
 ///     let dmg = damage_lureless(cog_defense(vec![50,21,21,21],0.20));
@@ -50,7 +50,7 @@ fn cog_defense(gags:Vec<u64>,strength:f64) -> Vec<u64> {
 
 /// Evaluates cog plating buff applicable in a round.
 /// ```
-/// use math::*;
+/// use tt_calc::*;
 /// 
 /// fn round_w_plating() {
 ///     let dmg = damage_lureless(cog_plating(vec![50,21,21,21],10));
@@ -65,7 +65,7 @@ fn cog_plating(gags:Vec<u64>,lvl:u64) -> Vec<u64> {
 
 /// Evaluates the total damage of a group of gags used during a given round without lure.
 /// ```
-/// use math::*;
+/// use tt_calc::*;
 /// 
 /// fn avg_snd_users() {
 ///     let kills_10s = vec![50,21,21,21];
@@ -85,7 +85,7 @@ fn damage_lureless(gags:Vec<u64>) -> u64 {
 
 /// Evaluates the total damage of a group of gags used during a given round with lure.
 /// ```
-/// use math::*;
+/// use tt_calc::*;
 /// 
 /// fn avg_thrw_users() {
 ///     let kills_14s = vec![132,27];
@@ -103,6 +103,7 @@ fn damage_lured(gags:Vec<u64>) -> u64 {
     gags[0] + (gags[0] as f64 * 0.5).ceil() as u64
 }
 
+/// Evaluates which functions to perform for a particular gag usage round.
 fn gag_calculator(_:Python,gags:Vec<u64>,lured:u8,defense:Option<f64>,plating:Option<u64>) -> PyResult<u64> {
     let mut modlist: Vec<u64> = gags.clone();
     let gagdmg: u64;
