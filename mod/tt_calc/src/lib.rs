@@ -13,6 +13,7 @@ use cpython::{Python,PyResult};
 py_module_initializer!(tt_calc, |py, m| {
     m.add(py, "__doc__", "This module is implemented in Rust.")?;
     m.add(py, "cog_hp", py_fn!(py, cog_hp(lvl:u64)))?;
+    m.add(py, "gag_calculator", py_fn!(py, gag_calculator(gags:Vec<u64>,lured:u8,defense:Option<f64>,plating:Option<u64>)))?;
     Ok(())
 });
 
@@ -100,4 +101,20 @@ fn damage_lured(gags:Vec<u64>) -> u64 {
         return gagdmg
     }
     gags[0] + (gags[0] as f64 * 0.5).ceil() as u64
+}
+
+fn gag_calculator(_:Python,gags:Vec<u64>,lured:u8,defense:Option<f64>,plating:Option<u64>) -> PyResult<u64> {
+    let mut modlist: Vec<u64> = gags.clone();
+    let gagdmg: u64;
+    match defense {
+        Some(def) => modlist = cog_defense(modlist,def),
+        None => {}
+    }
+    match plating {
+        Some(plat) => modlist = cog_plating(modlist,plat),
+        None => {}
+    }
+    if lured == 1 {gagdmg = damage_lured(modlist);}
+    else {gagdmg = damage_lureless(modlist);}
+    Ok(gagdmg)
 }
