@@ -17,10 +17,47 @@ py_module_initializer!(tt_calc, |py, m| {
 });
 
 /// Basic function to evaluate health of any cog levels 1 through 20.
+/// ```
+/// use math::*;
+/// 
+/// fn lvl12s() {
+///     println!("Level 12 cogs have {} health!",cog_hp(12).expect("An error has occured"));
+/// }
+/// ```
 fn cog_hp(_:Python,lvl:u64) -> PyResult<u64> {
     match lvl {
         1..=11 => return Ok((lvl+1) * (lvl+2)),
         12..=20 => return Ok((lvl+1) * (lvl+2) + 14),
         _ => panic!("Cog levels cannot exceed 20 or be lower than 1.")
     }
+}
+
+/// Evaluates cog defense buff applicable in a round.
+/// ```
+/// use math::*;
+/// 
+/// fn round_w_def() {
+///     let dmg = damage_lureless(cog_defense(vec![50,21,21,21],0.20));
+///     println!("The damage dealt this round was: {}",dmg);
+/// }
+/// ```
+fn cog_defense(_:Python,gags:Vec<u64>,strength:f64) -> Vec<u64> {
+    let mut newvec: Vec<u64> = Vec::new();
+    for i in gags.iter() {newvec.push(i - (*i as f64 * strength).ceil() as u64);}
+    Ok(newvec)
+}
+
+/// Evaluates cog plating buff applicable in a round.
+/// ```
+/// use math::*;
+/// 
+/// fn round_w_plating() {
+///     let dmg = damage_lureless(cog_plating(vec![50,21,21,21],10));
+///     println!("The damage dealt this round was: {}",dmg);
+/// }
+/// ```
+fn cog_plating(_:Python,gags:Vec<u64>,lvl:u64) -> Vec<u64> {
+    let mut newvec: Vec<u64> = Vec::new();
+    for i in gags.iter() {newvec.push(i - (lvl as f64 * 1.5).floor() as u64);}
+    newvec
 }
