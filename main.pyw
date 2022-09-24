@@ -1,6 +1,5 @@
 from tkinter import *
 
-from mod import calculators
 from mod import tt_calc
 from mod import gags
 from mod import keybinds
