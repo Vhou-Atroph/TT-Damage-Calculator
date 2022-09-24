@@ -92,7 +92,7 @@ fn damage_lureless(gags:Vec<u64>) -> u64 {
 ///     println!("{} is more than enough damage to kill level 14 cogs.",dmg);
 /// }
 /// ```
-pub fn damage_lured(gags:Vec<u64>) -> u64 {
+fn damage_lured(gags:Vec<u64>) -> u64 {
     if gags.len() > 1 {
         let mut gagdmg: u64 = 0;
         for i in gags.iter() {gagdmg+=i;}
