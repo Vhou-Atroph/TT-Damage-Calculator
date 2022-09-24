@@ -10,7 +10,6 @@ extern crate cpython;
 
 use cpython::{Python,PyResult};
 
-/// Initialize the py module
 py_module_initializer!(tt_calc, |py, m| {
     m.add(py, "__doc__", "This module is implemented in Rust.")?;
     m.add(py, "cog_hp", py_fn!(py, cog_hp(lvl:u16)))?;
