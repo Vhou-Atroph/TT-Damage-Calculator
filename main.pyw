@@ -82,16 +82,17 @@ def calc_dmg(opt=""):
 
 #Defense str -> int
 def trans_def(mod):
-  if mod=="0%":
-    return None
-  elif mod=="10%":
-    return 0.1
-  elif mod=="15%":
-    return 0.15
-  elif mod=="20%":
-    return 0.2
-  elif mod=="25%":
-    return 0.25
+  match mod:
+    case "0%":
+      return None
+    case "10%":
+      return 0.1
+    case "15%":
+      return 0.15
+    case "20%":
+      return 0.2
+    case "25%":
+      return 0.25
 
 #Gag Buttons
 def gag_btn(gag,list,btn=None):
