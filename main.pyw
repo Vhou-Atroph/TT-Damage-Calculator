@@ -1,6 +1,7 @@
 from tkinter import *
 
 from mod import calculators
+from mod import tt_calc
 from mod import gags
 from mod import keybinds
 from mod import update_checker
@@ -436,18 +437,18 @@ def cog_health_ind_calc():
     #print("Evaluating level: "+str(lvl))
     global tot_dmg
     #print("The current total damage is "+str(tot_dmg))
-    if tot_dmg==calculators.cog_health(lvl):
+    if tot_dmg==tt_calc.cog_hp(lvl):
       #print("Wow! We found the level!")
       #print("The level is: "+str(lvl))
       cog_level_indicator.configure(text="(level "+str(lvl)+")")
       break
-    elif tot_dmg<calculators.cog_health(lvl):
+    elif tot_dmg<tt_calc.cog_hp(lvl):
       #print("Wow! We found the level!")
       lvl=lvl-1
       #print("The level is: "+str(lvl))
       cog_level_indicator.configure(text="(level "+str(lvl)+")")
       break
-    elif lvl==20 and tot_dmg>calculators.cog_health(lvl):
+    elif lvl==20 and tot_dmg>tt_calc.cog_hp(lvl):
       #print("Wow! We found the level!")
       #print("The level is: "+str(lvl))
       cog_level_indicator.configure(text="(level "+str(lvl)+")")
@@ -485,13 +486,13 @@ def v2_calc():
     if local_lure==1:
       lured.set(1)
     
-    if v2_dmg==calculators.cog_health(lvl):
+    if v2_dmg==tt_calc.cog_hp(lvl):
       #print("Wow! We found the level!")
       #print("The level is: "+str(lvl))
       cog_level_indicator.configure(text="(v2.0 level "+str(lvl)+")")
       dmg_indicator.configure(text=str(v2_dmg))
       break
-    elif v2_dmg<calculators.cog_health(lvl):
+    elif v2_dmg<tt_calc.cog_hp(lvl):
       #print("Wow! We found the level!")
       lvl=lvl-1
       #print("The level is: "+str(lvl))
@@ -513,7 +514,7 @@ def v2_calc():
       cog_level_indicator.configure(text="(v2.0 level "+str(lvl)+")")
       dmg_indicator.configure(text=str(v2_dmg))
       break
-    elif lvl==20 and v2_dmg>calculators.cog_health(lvl):
+    elif lvl==20 and v2_dmg>tt_calc.cog_hp(lvl):
       #print("Wow! We found the level!")
       #print("The level is: "+str(lvl))
       cog_level_indicator.configure(text="(v2.0 level "+str(lvl)+")")

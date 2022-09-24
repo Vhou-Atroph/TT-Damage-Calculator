@@ -1,2 +1,4 @@
 
 *.pyc
+Cargo.lock
+mod/*/target
