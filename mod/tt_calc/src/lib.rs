@@ -41,7 +41,7 @@ fn cog_hp(_:Python,lvl:u64) -> PyResult<u64> {
 ///     println!("The damage dealt this round was: {}",dmg);
 /// }
 /// ```
-fn cog_defense(_:Python,gags:Vec<u64>,strength:f64) -> Vec<u64> {
+fn cog_defense(gags:Vec<u64>,strength:f64) -> Vec<u64> {
     let mut newvec: Vec<u64> = Vec::new();
     for i in gags.iter() {newvec.push(i - (*i as f64 * strength).ceil() as u64);}
     newvec
@@ -56,8 +56,48 @@ fn cog_defense(_:Python,gags:Vec<u64>,strength:f64) -> Vec<u64> {
 ///     println!("The damage dealt this round was: {}",dmg);
 /// }
 /// ```
-fn cog_plating(_:Python,gags:Vec<u64>,lvl:u64) -> Vec<u64> {
+fn cog_plating(gags:Vec<u64>,lvl:u64) -> Vec<u64> {
     let mut newvec: Vec<u64> = Vec::new();
     for i in gags.iter() {newvec.push(i - (lvl as f64 * 1.5).floor() as u64);}
     newvec
+}
+
+/// Evaluates the total damage of a group of gags used during a given round without lure.
+/// ```
+/// use math::*;
+/// 
+/// fn avg_snd_users() {
+///     let kills_10s = vec![50,21,21,21];
+///     let dmg = damage_lureless(kills_10s);
+///     println!("{} is more than enough damage to kill level 10 cogs.",dmg);
+/// }
+/// ```
+fn damage_lureless(gags:Vec<u64>) -> u64 {
+    if gags.len() > 1 {
+        let mut gagdmg: u64 = 0;
+        for i in gags.iter() {gagdmg+=i;}
+        gagdmg+=(gagdmg as f64 * 0.2).ceil() as u64;
+        return gagdmg
+    }
+    gags[0]
+}
+
+/// Evaluates the total damage of a group of gags used during a given round with lure.
+/// ```
+/// use math::*;
+/// 
+/// fn avg_thrw_users() {
+///     let kills_14s = vec![132,27];
+///     let dmg = damage_lured(kills_14s);
+///     println!("{} is more than enough damage to kill level 14 cogs.",dmg);
+/// }
+/// ```
+pub fn damage_lured(gags:Vec<u64>) -> u64 {
+    if gags.len() > 1 {
+        let mut gagdmg: u64 = 0;
+        for i in gags.iter() {gagdmg+=i;}
+        gagdmg+=(gagdmg as f64 * 0.5).ceil() as u64 + (gagdmg as f64 * 0.2).ceil() as u64;
+        return gagdmg
+    }
+    gags[0] + (gags[0] as f64 * 0.5).ceil() as u64
 }
