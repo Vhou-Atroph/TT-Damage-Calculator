@@ -12,12 +12,12 @@ use cpython::{Python,PyResult};
 
 py_module_initializer!(tt_calc, |py, m| {
     m.add(py, "__doc__", "This module is implemented in Rust.")?;
-    m.add(py, "cog_hp", py_fn!(py, cog_hp(lvl:u16)))?;
+    m.add(py, "cog_hp", py_fn!(py, cog_hp(lvl:u64)))?;
     Ok(())
 });
 
 /// Basic function to evaluate health of any cog levels 1 through 20.
-fn cog_hp(_:Python,lvl:u16) -> PyResult<u16> {
+fn cog_hp(_:Python,lvl:u64) -> PyResult<u64> {
     match lvl {
         1..=11 => return Ok((lvl+1) * (lvl+2)),
         12..=20 => return Ok((lvl+1) * (lvl+2) + 14),
