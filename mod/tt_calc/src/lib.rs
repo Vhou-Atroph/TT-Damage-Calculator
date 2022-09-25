@@ -5,17 +5,15 @@
 //! Once you have Rust installed, you need to navigate to the tt_calc file and run `cargo build --release` in your favorite terminal. Following this, navigate to target/releases and rename the generated tt_calc.dll file to tt_calc.pyd and place it in the "mod" folder of the main damage calculator.
 //! Make sure the program runs with any changes you have made!
 
-#[macro_use]
-extern crate cpython;
 
-use cpython::{Python,PyResult};
+use pyo3::prelude::*;
 
-py_module_initializer!(tt_calc, |py, m| {
-    m.add(py, "__doc__", "This module is implemented in Rust.")?;
-    m.add(py, "cog_hp", py_fn!(py, cog_hp(lvl:u64)))?;
-    m.add(py, "gag_calculator", py_fn!(py, gag_calculator(gags:Vec<u64>,lured:u8,defense:Option<f64>,plating:Option<u64>)))?;
+#[pymodule]
+fn tt_calc(py: Python<'_>, m: &PyModule) -> PyResult<()> {
+    m.add_function(wrap_pyfunction!(cog_hp, m)?)?;
+    m.add_function(wrap_pyfunction!(gag_calculator, m)?)?;
     Ok(())
-});
+}
 
 /// Basic function to evaluate health of any cog levels 1 through 20.
 /// ```
@@ -25,10 +23,11 @@ py_module_initializer!(tt_calc, |py, m| {
 ///     println!("Level 12 cogs have {} health!",cog_hp(12).expect("An error has occured"));
 /// }
 /// ```
-fn cog_hp(_:Python,lvl:u64) -> PyResult<u64> {
+#[pyfunction]
+fn cog_hp(lvl:u64) -> u64 {
     match lvl {
-        1..=11 => return Ok((lvl+1) * (lvl+2)),
-        12..=20 => return Ok((lvl+1) * (lvl+2) + 14),
+        1..=11 => return (lvl+1) * (lvl+2),
+        12..=20 => return (lvl+1) * (lvl+2) + 14,
         _ => panic!("Cog levels cannot exceed 20 or be lower than 1.")
     }
 }
@@ -104,7 +103,8 @@ fn damage_lured(gags:Vec<u64>) -> u64 {
 }
 
 /// Evaluates which functions to perform for a particular gag usage round.
-fn gag_calculator(_:Python,gags:Vec<u64>,lured:u8,defense:Option<f64>,plating:Option<u64>) -> PyResult<u64> {
+#[pyfunction]
+fn gag_calculator(gags:Vec<u64>,lured:u8,defense:Option<f64>,plating:Option<u64>) -> u64 {
     let mut modlist: Vec<u64> = gags.clone();
     let gagdmg: u64;
     match defense {
@@ -117,5 +117,5 @@ fn gag_calculator(_:Python,gags:Vec<u64>,lured:u8,defense:Option<f64>,plating:Op
     }
     if lured == 1 {gagdmg = damage_lured(modlist);}
     else {gagdmg = damage_lureless(modlist);}
-    Ok(gagdmg)
+    gagdmg
 }
