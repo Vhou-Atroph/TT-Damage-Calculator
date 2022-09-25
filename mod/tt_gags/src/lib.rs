@@ -12,5 +12,25 @@ use cpython::{Python,PyResult};
 
 py_module_initializer!(tt_calc, |py, m| {
     m.add(py, "__doc__", "This module is implemented in Rust.")?;
+    m.add_class::<Gag>(py)?;
     Ok(())
 });
+
+py_class!(class Gag |py| {
+    data gtype: String;
+    data name: String;
+    data track: String;
+    data dmg: u64;
+    data org_dmg: u64;
+    def __new__(_cls,gtype:String,name:String,track:String,dmg:u64) -> PyResult<Gag> {
+        Gag::create_instance(py,gtype,name,track,dmg,org(dmg))
+    }
+});
+
+/// Evaluates the amount of damage a gag will do when organic.
+fn org(n:u64) -> u64 {
+    let org_boost_f = n as f64 * 0.1;
+    if org_boost_f < 1.0 {return n+1 as u64}
+    n + org_boost_f.floor() as u64
+
+}
