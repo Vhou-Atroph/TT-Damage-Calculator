@@ -10,7 +10,7 @@ extern crate cpython;
 
 use cpython::{Python,PyResult};
 
-py_module_initializer!(tt_calc, |py, m| {
+py_module_initializer!(tt_gags, |py, m| {
     m.add(py, "__doc__", "This module is implemented in Rust.")?;
     m.add_class::<Gag>(py)?;
     Ok(())
