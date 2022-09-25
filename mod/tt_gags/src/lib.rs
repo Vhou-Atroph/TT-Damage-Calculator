@@ -16,14 +16,19 @@ py_module_initializer!(tt_calc, |py, m| {
     Ok(())
 });
 
+// Creates Gag Class/Struct.
 py_class!(class Gag |py| {
     data gtype: String;
     data name: String;
     data track: String;
     data dmg: u64;
-    data org_dmg: u64;
+
     def __new__(_cls,gtype:String,name:String,track:String,dmg:u64) -> PyResult<Gag> {
-        Gag::create_instance(py,gtype,name,track,dmg,org(dmg))
+        Gag::create_instance(py,gtype,name,track,dmg)
+    }
+
+    def organic(&self) -> PyResult<u64> {
+        Ok(org(*self.dmg(py)))
     }
 });
 
