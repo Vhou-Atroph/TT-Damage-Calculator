@@ -1,6 +1,6 @@
 [package]
 name = "tt_calc"
-author = "Vhou-Atroph"
+authors = ["Vhou-Atroph"]
 version = "0.1.0"
 edition = "2021"
 
