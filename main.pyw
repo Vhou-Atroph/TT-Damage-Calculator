@@ -49,6 +49,7 @@ col0=Frame(window) #Main content of the calculator
 col1=Frame(window) #Will be used for calculation history
 
 #Total damage calculation
+#TODO: Throw this into tt_calc
 def calc_dmg(opt=""):
   global tot_dmg
   local_lure=0
@@ -81,6 +82,7 @@ def calc_dmg(opt=""):
     lured.set(1)
 
 #Defense str -> int
+#TODO: New rust module for functions like this
 def trans_def(mod):
   match mod:
     case "0%":
