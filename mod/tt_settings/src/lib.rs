@@ -1,24 +1,48 @@
+use std::fs;
+
 use pyo3::prelude::*;
+use serde::{Serialize, Deserialize};
 
 #[pymodule]
 fn tt_settings(_: Python<'_>, m: &PyModule) -> PyResult<()> {
-    m.add_class::<Keybind>()?;
+    m.add_class::<Settings>()?;
     Ok(())
 }
 
-/// Struct for a Keybind
+/// Struct for the Settings file
 #[pyclass]
-struct Keybind {
+#[derive(Serialize,Deserialize)]
+struct Settings {
     #[pyo3(get, set)]
-    key_id: String
+    keybinds: Keybinds
+}
+
+/// Struct for the Keybinds portion of the Settings file
+#[pyclass]
+#[derive(Serialize,Deserialize,Clone)]
+struct Keybinds {
+    #[pyo3(get, set)]
+    organic: String,
+    #[pyo3(get, set)]
+    reset: String,
+    #[pyo3(get, set)]
+    lure: String,
+    #[pyo3(get, set)]
+    defense: String,
+    #[pyo3(get, set)]
+    v2: String,
+    #[pyo3(get, set)]
+    pin: String,
 }
 
 #[pymethods]
-impl Keybind {
+impl Settings {
 
-    /// Create a new Keybind
+    /// Opens the Settings file.
     #[new]
-    fn new(key_id:String) -> Self {
-        Self {key_id}
+    fn new(file:&str) -> Self {
+        let data =  fs::read_to_string(file).unwrap();
+        let settings: Settings = toml::from_str(data.as_str()).unwrap();
+        settings
     }
 }
