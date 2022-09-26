@@ -1,14 +1,12 @@
-pub fn add(left: usize, right: usize) -> usize {
-    left + right
+use pyo3::prelude::*;
+
+#[pymodule]
+fn tt_settings(_: Python<'_>, m: &PyModule) -> PyResult<()> {
+    Ok(())
 }
 
-#[cfg(test)]
-mod tests {
-    use super::*;
+/// Struct for a Keybind
+#[pyclass]
+struct Keybind {
 
-    #[test]
-    fn it_works() {
-        let result = add(2, 2);
-        assert_eq!(result, 4);
-    }
 }

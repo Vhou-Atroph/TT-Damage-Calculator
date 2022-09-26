@@ -8,7 +8,7 @@
 use pyo3::prelude::*;
 
 #[pymodule]
-fn tt_gags(py: Python<'_>, m: &PyModule) -> PyResult<()> {
+fn tt_gags(_: Python<'_>, m: &PyModule) -> PyResult<()> {
     m.add_class::<Gag>()?;
     Ok(())
 }

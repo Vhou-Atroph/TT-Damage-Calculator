@@ -9,7 +9,7 @@
 use pyo3::prelude::*;
 
 #[pymodule]
-fn tt_calc(py: Python<'_>, m: &PyModule) -> PyResult<()> {
+fn tt_calc(_: Python<'_>, m: &PyModule) -> PyResult<()> {
     m.add_function(wrap_pyfunction!(cog_hp, m)?)?;
     m.add_function(wrap_pyfunction!(gag_calculator, m)?)?;
     Ok(())
