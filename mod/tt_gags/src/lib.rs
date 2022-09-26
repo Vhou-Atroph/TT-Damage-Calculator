@@ -32,7 +32,7 @@ impl Gag {
     /// Creates a new Gag struct.
     #[new]
     fn new(gtype:String,name:String,track:String,dmg:u64) -> Self {
-        Self { gtype, name, track, dmg}
+        Self { gtype, name, track, dmg }
     }
 
     /// Returns the damage an organic gag of a certain type does.
