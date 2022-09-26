@@ -2,7 +2,7 @@ from tkinter import *
 
 from mod import tt_calc
 from mod import tt_gags
-from mod import keybinds
+from mod import tt_settings
 from mod import update_checker
 
 '''
@@ -43,6 +43,8 @@ def_values=['0%','10%','15%','20%','25%']
 def_lur_lock=StringVar()
 def_lur_lock.set('No lock')
 def_lur_options=['No lock','Lock lure','Lock defense','Lock both']
+
+settings = tt_settings.Settings("mod/settings.toml")
 
 #Columns
 col0=Frame(window) #Main content of the calculator
@@ -313,7 +315,7 @@ def tog_org_off(opt=""):
   org_indicator.configure(text="Organic = OFF")
   for i in gag_btns:
     i.configure(bg='#1888D3',activebackground='#186AD3')
-  window.bind('<'+keybinds.organic.key+'>',tog_org_on)
+  window.bind('<'+settings.keybinds.organic+'>',tog_org_on)
 def tog_org_on(opt=""):
   organic.set(1)
   #print("Gags in calculations will now be organic!")
@@ -321,9 +323,9 @@ def tog_org_on(opt=""):
   org_indicator.configure(text="Organic = ON")
   for i in gag_btns:
     i.configure(bg='darkorange',activebackground='orange')
-  window.bind('<'+keybinds.organic.key+'>',tog_org_off)
+  window.bind('<'+settings.keybinds.organic+'>',tog_org_off)
 org_btn.configure(command=tog_org_on)
-window.bind('<'+keybinds.organic.key+'>',tog_org_on)
+window.bind('<'+settings.keybinds.organic+'>',tog_org_on)
 
 #Def Keybind
 def def_swap(opt=""):
@@ -343,7 +345,7 @@ def def_swap(opt=""):
   else:
     dmg_down.set('0%')
     calc_dmg()
-window.bind('<'+keybinds.defense.key+'>',def_swap)
+window.bind('<'+settings.keybinds.defense+'>',def_swap)
 
 #Swap a toggle
 def tog_swap(par,tog):
@@ -353,9 +355,9 @@ def tog_swap(par,tog):
     tog.set(0)
   calc_dmg()
   pin()
-window.bind('<'+keybinds.lure.key+'>',lambda par: tog_swap(par,lured))
-window.bind('<'+keybinds.v2.key+'>',lambda par: tog_swap(par,v2))
-window.bind('<'+keybinds.pin.key+'>',lambda par: tog_swap(par,pin_val))
+window.bind('<'+settings.keybinds.lure+'>',lambda par: tog_swap(par,lured))
+window.bind('<'+settings.keybinds.v2+'>',lambda par: tog_swap(par,v2))
+window.bind('<'+settings.keybinds.pin+'>',lambda par: tog_swap(par,pin_val))
 
 #Clear inputs function
 def clear_inputs(opt=""):
@@ -393,7 +395,7 @@ def clear_inputs(opt=""):
   if local_lure==1 and def_lur_lock.get()=='Lock lure' or def_lur_lock.get()=='Lock both': #Use the local variable and def_lur_lock to lock lure as active even after it is set to 0 by clear_inputs()
     lured.set(1)
 clear_btn.configure(command=clear_inputs)
-window.bind('<'+keybinds.reset.key+'>',clear_inputs)
+window.bind('<'+settings.keybinds.reset+'>',clear_inputs)
 
 #Clear history function
 def clear_history():
