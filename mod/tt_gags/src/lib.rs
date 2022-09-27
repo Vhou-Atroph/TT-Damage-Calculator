@@ -21,7 +21,7 @@ struct Gag {
     #[pyo3(get, set)]
     name: String,
     #[pyo3(get, set)]
-    track: Vec<u64>,
+    track: String,
     #[pyo3(get, set)]
     level: u8,
     #[pyo3(get, set)]
@@ -33,7 +33,7 @@ impl Gag {
 
     /// Creates a new Gag struct.
     #[new]
-    fn new(gtype:String,name:String,track:Vec<u64>,level:u8,dmg:u64) -> Self {
+    fn new(gtype:String,name:String,track:String,level:u8,dmg:u64) -> Self {
         Self { gtype, name, track, level, dmg }
     }
 
