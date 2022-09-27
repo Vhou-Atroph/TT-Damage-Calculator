@@ -456,10 +456,10 @@ def v2_calc():
     #print("Evaluating lvl: "+str(lvl))
     
     if len(trp_used)==1 and lured.get()==True:
-      v2_dmg=v2_dmg+tt_calc.gag_calculator(trp_used,lured=0,plating=lvl,defense=None)
+      v2_dmg=v2_dmg+tt_calc.gag_calculator(trp_used,lured=False,plating=lvl,defense=None)
       lured.set(False)
     if len(snd_used)>0:
-      v2_dmg=v2_dmg+tt_calc.gag_calculator(snd_used,lured=0,plating=lvl,defense=None)
+      v2_dmg=v2_dmg+tt_calc.gag_calculator(snd_used,lured=False,plating=lvl,defense=None)
       lured.set(False)
     if len(trw_used)>0:
       v2_dmg=v2_dmg+tt_calc.gag_calculator(trw_used,lured=lured.get(),plating=lvl,defense=None)
@@ -468,7 +468,7 @@ def v2_calc():
       v2_dmg=v2_dmg+tt_calc.gag_calculator(sqt_used,lured=lured.get(),plating=lvl,defense=None)
       lured.set(False)
     if len(drp_used)>0 and lured.get()==False:
-      v2_dmg=v2_dmg+tt_calc.gag_calculator(drp_used,lured=0,plating=lvl,defense=None)
+      v2_dmg=v2_dmg+tt_calc.gag_calculator(drp_used,lured=False,plating=lvl,defense=None)
     
     if local_lure==True:
       lured.set(True)
@@ -485,10 +485,10 @@ def v2_calc():
       #print("The level is: "+str(lvl))
       v2_dmg=0
       if len(trp_used)==1 and lured.get()==True:
-        v2_dmg=v2_dmg+tt_calc.gag_calculator(trp_used,lured=0,plating=lvl,defense=None)
+        v2_dmg=v2_dmg+tt_calc.gag_calculator(trp_used,lured=False,plating=lvl,defense=None)
         lured.set(False)
       if len(snd_used)>0:
-        v2_dmg=v2_dmg+tt_calc.gag_calculator(snd_used,lured=0,plating=lvl,defense=None)
+        v2_dmg=v2_dmg+tt_calc.gag_calculator(snd_used,lured=False,plating=lvl,defense=None)
         lured.set(False)
       if len(trw_used)>0:
         v2_dmg=v2_dmg+tt_calc.gag_calculator(trw_used,lured=lured.get(),plating=lvl,defense=None)
@@ -497,7 +497,7 @@ def v2_calc():
         v2_dmg=v2_dmg+tt_calc.gag_calculator(sqt_used,lured=lured.get(),plating=lvl,defense=None)
         lured.set(False)
       if len(drp_used)>0 and lured.get()==False:
-        v2_dmg=v2_dmg+tt_calc.gag_calculator(drp_used,lured=0,plating=lvl,defense=None)
+        v2_dmg=v2_dmg+tt_calc.gag_calculator(drp_used,lured=False,plating=lvl,defense=None)
       cog_level_indicator.configure(text="(v2.0 level "+str(lvl)+")")
       dmg_indicator.configure(text=str(v2_dmg))
       break
