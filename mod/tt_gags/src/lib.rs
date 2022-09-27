@@ -44,6 +44,6 @@ impl Gag {
 /// Evaluates the amount of damage a gag will do when organic.
 fn org(n:u64) -> u64 {
     let org_boost_f = n as f64 * 0.1;
-    if org_boost_f < 1.0 {return n+1 as u64}
+    if org_boost_f < 1.0 {return n+1_u64}
     n + org_boost_f.floor() as u64
 }
