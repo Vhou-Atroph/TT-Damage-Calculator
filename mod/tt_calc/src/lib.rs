@@ -121,6 +121,7 @@ fn gag_calculator(gags:Vec<u64>,lured:u8,defense:Option<f64>,plating:Option<u64>
     gagdmg
 }
 
+/// Full damage calculation for a given round in a cog battle.
 #[pyfunction]
 fn full_calc(trap:Vec<u64>,sound:Vec<u64>,throw:Vec<u64>,squirt:Vec<u64>,drop:Vec<u64>,lured:u8,defense:Option<f64>,plating:Option<u64>) -> u64 {
     let mut gagdmg: u64 = 0;
