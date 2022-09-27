@@ -1,15 +1,17 @@
+"""
+TT-Damage-Calculator is a gag damage calculator for Toontown Rewritten. It has an interface built with Python's tkinter library, and is supplemented with modules written in Rust.
+
+CONTRIBUTORS:
+- Vhou-Atroph
+- BoggoTV
+"""
+
 from tkinter import *
 
 from mod import tt_calc
 from mod import tt_gags
 from mod import tt_settings
 from mod import update_checker
-
-'''
-CONTRIBUTORS:
-- Vhou-Atroph
-- BoggoTV
-'''
 
 #Window
 global window
