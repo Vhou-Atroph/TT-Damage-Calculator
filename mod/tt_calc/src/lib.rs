@@ -27,8 +27,8 @@ fn tt_calc(_: Python<'_>, m: &PyModule) -> PyResult<()> {
 #[pyfunction]
 fn cog_hp(lvl:u64) -> u64 {
     match lvl {
-        1..=11 => return (lvl+1) * (lvl+2),
-        12..=20 => return (lvl+1) * (lvl+2) + 14,
+        1..=11 => (lvl+1) * (lvl+2),
+        12..=20 => (lvl+1) * (lvl+2) + 14,
         _ => panic!("Cog levels cannot exceed 20 or be lower than 1.")
     }
 }
@@ -106,17 +106,11 @@ fn damage_lured(gags:Vec<u64>) -> u64 {
 /// Evaluates which functions to perform for a particular gag usage round.
 #[pyfunction]
 fn gag_calculator(gags:Vec<u64>,lured:bool,defense:Option<f64>,plating:Option<u64>) -> u64 {
-    let mut modlist: Vec<u64> = gags.clone();
+    let mut modlist: Vec<u64> = gags;
     let gagdmg: u64;
-    match defense {
-        Some(def) => modlist = cog_defense(modlist,def),
-        None => {}
-    }
-    match plating {
-        Some(plat) => modlist = cog_plating(modlist,plat),
-        None => {}
-    }
-    if lured == true {gagdmg = damage_lured(modlist);}
+    if let Some(def) = defense { modlist = cog_defense(modlist,def) }
+    if let Some(plate) = plating { modlist = cog_plating(modlist,plate) }
+    if lured {gagdmg = damage_lured(modlist);}
     else {gagdmg = damage_lureless(modlist);}
     gagdmg
 }
@@ -126,23 +120,23 @@ fn gag_calculator(gags:Vec<u64>,lured:bool,defense:Option<f64>,plating:Option<u6
 fn full_calc(trap:Vec<u64>,sound:Vec<u64>,throw:Vec<u64>,squirt:Vec<u64>,drop:Vec<u64>,lured:bool,defense:Option<f64>,plating:Option<u64>) -> u64 {
     let mut gagdmg: u64 = 0;
     let mut lured_loc = lured;
-    if trap.len() > 0 && lured_loc == true {
+    if !trap.is_empty() && lured_loc {
         gagdmg+=gag_calculator(trap,false,defense,plating);
         lured_loc = false;
     }
-    if sound.len() > 0 {
+    if !sound.is_empty() {
         gagdmg+=gag_calculator(sound,false,defense,plating);
         lured_loc = false;
     }
-    if throw.len() > 0 {
+    if !throw.is_empty() {
         gagdmg+=gag_calculator(throw,lured_loc,defense,plating);
         lured_loc = false;
     }
-    if squirt.len() > 0 {
+    if !squirt.is_empty() {
         gagdmg+=gag_calculator(squirt,lured_loc,defense,plating);
         lured_loc = false;
     }
-    if drop.len() > 1 && lured_loc == false {
+    if !drop.is_empty() && !lured_loc {
         gagdmg+=gag_calculator(drop,false,defense,plating);
     }
     gagdmg
