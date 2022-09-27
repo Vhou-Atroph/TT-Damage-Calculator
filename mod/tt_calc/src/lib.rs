@@ -12,6 +12,7 @@ use pyo3::prelude::*;
 fn tt_calc(_: Python<'_>, m: &PyModule) -> PyResult<()> {
     m.add_function(wrap_pyfunction!(cog_hp, m)?)?;
     m.add_function(wrap_pyfunction!(gag_calculator, m)?)?;
+    m.add_function(wrap_pyfunction!(full_calc, m)?)?;
     Ok(())
 }
 
@@ -117,5 +118,31 @@ fn gag_calculator(gags:Vec<u64>,lured:u8,defense:Option<f64>,plating:Option<u64>
     }
     if lured == 1 {gagdmg = damage_lured(modlist);}
     else {gagdmg = damage_lureless(modlist);}
+    gagdmg
+}
+
+#[pyfunction]
+fn full_calc(trap:Vec<u64>,sound:Vec<u64>,throw:Vec<u64>,squirt:Vec<u64>,drop:Vec<u64>,lured:u8,defense:Option<f64>,plating:Option<u64>) -> u64 {
+    let mut gagdmg: u64 = 0;
+    let mut lured_loc = lured;
+    if trap.len() > 0 && lured_loc == 1 {
+        gagdmg+=gag_calculator(trap,0,defense,plating);
+        lured_loc = 0;
+    }
+    if sound.len() > 0 {
+        gagdmg+=gag_calculator(sound,0,defense,plating);
+        lured_loc = 0;
+    }
+    if throw.len() > 0 {
+        gagdmg+=gag_calculator(throw,lured_loc,defense,plating);
+        lured_loc = 0;
+    }
+    if squirt.len() > 0 {
+        gagdmg+=gag_calculator(squirt,lured_loc,defense,plating);
+        lured_loc = 0;
+    }
+    if drop.len() > 1 && lured_loc == 0 {
+        gagdmg+=gag_calculator(drop,0,defense,plating);
+    }
     gagdmg
 }
