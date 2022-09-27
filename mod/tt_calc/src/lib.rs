@@ -120,7 +120,7 @@ fn gag_calculator(gags:Vec<u64>,lured:bool,defense:Option<f64>,plating:Option<u6
 fn full_calc(trap:Vec<u64>,sound:Vec<u64>,throw:Vec<u64>,squirt:Vec<u64>,drop:Vec<u64>,lured:bool,defense:Option<f64>,plating:Option<u64>) -> u64 {
     let mut gagdmg: u64 = 0;
     let mut lured_loc = lured;
-    if !trap.is_empty() && lured_loc {
+    if trap.len() == 1 && lured_loc {
         gagdmg+=gag_calculator(trap,false,defense,plating);
         lured_loc = false;
     }
