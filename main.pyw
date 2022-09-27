@@ -51,27 +51,13 @@ col0=Frame(window) #Main content of the calculator
 col1=Frame(window) #Will be used for calculation history
 
 #Total damage calculation
-#TODO: Throw this into tt_calc
 def calc_dmg(opt=""):
   global tot_dmg
   local_lure=0
   if lured.get()==1: #Find out if lure is enabled. If it is, save a local variable.
     local_lure=1
   if v2.get()==0:
-    if len(trp_used)==1 and lured.get()==1:
-      tot_dmg=tot_dmg+tt_calc.gag_calculator(trp_used,lured=0,defense=trans_def(dmg_down.get()),plating=None)
-      lured.set(0)
-    if len(snd_used)>0:
-      tot_dmg=tot_dmg+tt_calc.gag_calculator(snd_used,lured=0,defense=trans_def(dmg_down.get()),plating=None)
-      lured.set(0)
-    if len(trw_used)>0:
-      tot_dmg=tot_dmg+tt_calc.gag_calculator(trw_used,lured=lured.get(),defense=trans_def(dmg_down.get()),plating=None)
-      lured.set(0)
-    if len(sqt_used)>0:
-      tot_dmg=tot_dmg+tt_calc.gag_calculator(sqt_used,lured=lured.get(),defense=trans_def(dmg_down.get()),plating=None)
-      lured.set(0)
-    if len(drp_used)>0 and lured.get()==0:
-      tot_dmg=tot_dmg+tt_calc.gag_calculator(drp_used,lured=0,defense=trans_def(dmg_down.get()),plating=None)
+    tot_dmg=tt_calc.full_calc(trp_used,snd_used,trw_used,sqt_used,drp_used,lured.get(),trans_def(dmg_down.get()),None)
     #print("Total damage this round: "+str(tot_dmg))
     dmg_indicator.configure(text=str(tot_dmg))
     cog_health_ind_calc()
