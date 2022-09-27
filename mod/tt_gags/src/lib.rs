@@ -21,7 +21,9 @@ struct Gag {
     #[pyo3(get, set)]
     name: String,
     #[pyo3(get, set)]
-    track: String,
+    track: Vec<u64>,
+    #[pyo3(get, set)]
+    level: u8,
     #[pyo3(get, set)]
     dmg: u64,
 }
@@ -31,8 +33,8 @@ impl Gag {
 
     /// Creates a new Gag struct.
     #[new]
-    fn new(gtype:String,name:String,track:String,dmg:u64) -> Self {
-        Self { gtype, name, track, dmg }
+    fn new(gtype:String,name:String,track:Vec<u64>,level:u8,dmg:u64) -> Self {
+        Self { gtype, name, track, level, dmg }
     }
 
     /// Returns the damage an organic gag of a certain type does.
