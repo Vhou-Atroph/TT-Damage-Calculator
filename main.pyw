@@ -133,7 +133,7 @@ class GagButton(Button):
     self['font'] = ('Impress BT',8,'bold')
     self['compound'] = 'top'
     self['fg'] = 'white'
-    self.configure(command=lambda:gag_btn(self.gag,self.list(),self))
+    self['command'] = lambda:gag_btn(self.gag,self.list(),self)
     self.grid(row=0,column=self.gag.level)
   def list(self):
     global trp_used
