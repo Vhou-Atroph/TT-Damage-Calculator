@@ -33,10 +33,10 @@ drp_used=list()
 trp_used=list()
 tot_dmg=0
 
-organic=IntVar()
-lured=IntVar()
+organic=BooleanVar()
+lured=BooleanVar()
 v2=IntVar()
-pin_val=IntVar()
+pin_val=BooleanVar()
 dmg_down=StringVar()
 dmg_down.set('0%')
 def_values=['0%','10%','15%','20%','25%']
@@ -53,9 +53,9 @@ col1=Frame(window) #Will be used for calculation history
 #Total damage calculation
 def calc_dmg(opt=""):
   global tot_dmg
-  local_lure=0
-  if lured.get()==1: #Find out if lure is enabled. If it is, save a local variable.
-    local_lure=1
+  local_lure=False
+  if lured.get()==True: #Find out if lure is enabled. If it is, save a local variable.
+    local_lure=True
   if v2.get()==0:
     tot_dmg=tt_calc.full_calc(trp_used,snd_used,trw_used,sqt_used,drp_used,lured.get(),trans_def(dmg_down.get()),None)
     #print("Total damage this round: "+str(tot_dmg))
@@ -66,8 +66,8 @@ def calc_dmg(opt=""):
   else:
     v2_calc()
     def_btn.configure(state="disabled")
-  if local_lure==1:
-    lured.set(1)
+  if local_lure==True:
+    lured.set(True)
 
 #Defense str -> int
 #TODO: New rust module for functions like this
@@ -86,7 +86,7 @@ def trans_def(mod):
 
 #Gag Buttons
 def gag_btn(gag,list,btn=None):
-  if organic.get()==1 and gag.gtype=="Gag":
+  if organic.get()==True and gag.gtype=="Gag":
     name="Organic "+gag.name
     dmg=gag.organic()
   else:
@@ -102,7 +102,7 @@ def gag_btn(gag,list,btn=None):
 
 #Pin window to top
 def pin():
-  if pin_val.get()==1:
+  if pin_val.get()==True:
     return window.attributes('-topmost',True)
   window.attributes('-topmost',False)
 
@@ -295,7 +295,7 @@ bess.configure(command=lambda:gag_btn(tt_gags.Gag("Sos","Barnacle Bessie","Drop"
 
 #Toggle organic functions
 def tog_org_off(opt=""):
-  organic.set(0)
+  organic.set(False)
   #print("Gags in calculations will no longer be organic!")
   org_btn.configure(command=tog_org_on)
   org_indicator.configure(text="Organic = OFF")
@@ -303,7 +303,7 @@ def tog_org_off(opt=""):
     i.configure(bg='#1888D3',activebackground='#186AD3')
   window.bind('<'+settings.keybinds.organic+'>',tog_org_on)
 def tog_org_on(opt=""):
-  organic.set(1)
+  organic.set(True)
   #print("Gags in calculations will now be organic!")
   org_btn.configure(command=tog_org_off)
   org_indicator.configure(text="Organic = ON")
@@ -335,10 +335,10 @@ window.bind('<'+settings.keybinds.defense+'>',def_swap)
 
 #Swap a toggle
 def tog_swap(par,tog):
-  if tog.get()==0:
-    tog.set(1)
+  if tog.get()==False:
+    tog.set(True)
   else:
-    tog.set(0)
+    tog.set(False)
   calc_dmg()
   pin()
 window.bind('<'+settings.keybinds.lure+'>',lambda par: tog_swap(par,lured))
@@ -354,10 +354,10 @@ def clear_inputs(opt=""):
   global sqt_used
   global drp_used
   global trp_used
-  local_lure=0
+  local_lure=False
   lur_info='no'
-  if lured.get()==1: #Find out if lure is enabled. If it is, save a local variable.
-    local_lure=1
+  if lured.get()==True: #Find out if lure is enabled. If it is, save a local variable.
+    local_lure=True
     lur_info='yes'
   hist_box.configure(state=NORMAL)
   if v2.get()==1:
@@ -367,7 +367,7 @@ def clear_inputs(opt=""):
   hist_box.configure(state=DISABLED)
   if def_lur_lock.get()=='No lock' or def_lur_lock.get()=='Lock lure':
     dmg_down.set('0%')
-  lured.set(0)
+  lured.set(False)
   v2.set(0)
   snd_used=list()
   trw_used=list()
@@ -378,8 +378,8 @@ def clear_inputs(opt=""):
   calc_dmg()
   for i in gag_btns:
     i.configure(text='0')
-  if local_lure==1 and def_lur_lock.get()=='Lock lure' or def_lur_lock.get()=='Lock both': #Use the local variable and def_lur_lock to lock lure as active even after it is set to 0 by clear_inputs()
-    lured.set(1)
+  if local_lure==True and def_lur_lock.get()=='Lock lure' or def_lur_lock.get()=='Lock both': #Use the local variable and def_lur_lock to lock lure as active even after it is set to 0 by clear_inputs()
+    lured.set(True)
 clear_btn.configure(command=clear_inputs)
 window.bind('<'+settings.keybinds.reset+'>',clear_inputs)
 
@@ -449,31 +449,31 @@ v2_dmg=0
 def v2_calc():
   lvl=0
   while lvl<20:
-    local_lure=0
-    if lured.get()==1:
-      local_lure=1
+    local_lure=False
+    if lured.get()==True:
+      local_lure=True
     lvl=lvl+1
     global v2_dmg
     v2_dmg=0
     #print("Evaluating lvl: "+str(lvl))
     
-    if len(trp_used)==1 and lured.get()==1:
+    if len(trp_used)==1 and lured.get()==True:
       v2_dmg=v2_dmg+tt_calc.gag_calculator(trp_used,lured=0,plating=lvl,defense=None)
-      lured.set(0)
+      lured.set(False)
     if len(snd_used)>0:
       v2_dmg=v2_dmg+tt_calc.gag_calculator(snd_used,lured=0,plating=lvl,defense=None)
-      lured.set(0)
+      lured.set(False)
     if len(trw_used)>0:
       v2_dmg=v2_dmg+tt_calc.gag_calculator(trw_used,lured=lured.get(),plating=lvl,defense=None)
-      lured.set(0)
+      lured.set(False)
     if len(sqt_used)>0:
       v2_dmg=v2_dmg+tt_calc.gag_calculator(sqt_used,lured=lured.get(),plating=lvl,defense=None)
-      lured.set(0)
-    if len(drp_used)>0 and lured.get()==0:
+      lured.set(False)
+    if len(drp_used)>0 and lured.get()==False:
       v2_dmg=v2_dmg+tt_calc.gag_calculator(drp_used,lured=0,plating=lvl,defense=None)
     
-    if local_lure==1:
-      lured.set(1)
+    if local_lure==True:
+      lured.set(True)
     
     if v2_dmg==tt_calc.cog_hp(lvl):
       #print("Wow! We found the level!")
@@ -486,19 +486,19 @@ def v2_calc():
       lvl=lvl-1
       #print("The level is: "+str(lvl))
       v2_dmg=0
-      if len(trp_used)==1 and lured.get()==1:
+      if len(trp_used)==1 and lured.get()==True:
         v2_dmg=v2_dmg+tt_calc.gag_calculator(trp_used,lured=0,plating=lvl,defense=None)
-        lured.set(0)
+        lured.set(False)
       if len(snd_used)>0:
         v2_dmg=v2_dmg+tt_calc.gag_calculator(snd_used,lured=0,plating=lvl,defense=None)
-        lured.set(0)
+        lured.set(False)
       if len(trw_used)>0:
         v2_dmg=v2_dmg+tt_calc.gag_calculator(trw_used,lured=lured.get(),plating=lvl,defense=None)
-        lured.set(0)
+        lured.set(False)
       if len(sqt_used)>0:
         v2_dmg=v2_dmg+tt_calc.gag_calculator(sqt_used,lured=lured.get(),plating=lvl,defense=None)
-        lured.set(0)
-      if len(drp_used)>0 and lured.get()==0:
+        lured.set(False)
+      if len(drp_used)>0 and lured.get()==False:
         v2_dmg=v2_dmg+tt_calc.gag_calculator(drp_used,lured=0,plating=lvl,defense=None)
       cog_level_indicator.configure(text="(v2.0 level "+str(lvl)+")")
       dmg_indicator.configure(text=str(v2_dmg))
@@ -508,8 +508,8 @@ def v2_calc():
       #print("The level is: "+str(lvl))
       cog_level_indicator.configure(text="(v2.0 level "+str(lvl)+")")
       dmg_indicator.configure(text=str(v2_dmg))
-    if local_lure==1:
-      lured.set(1)
+    if local_lure==True:
+      lured.set(True)
 
 #Toolbar
 toolbar=Menu(window)
