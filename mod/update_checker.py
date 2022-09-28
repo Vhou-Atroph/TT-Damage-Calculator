@@ -1,3 +1,8 @@
+"""
+TT-Damage-Calculator
+Copyright (C) 2022 Vhou-Atroph
+"""
+
 from tkinter import *
 from tkinter import messagebox
 import urllib.request
