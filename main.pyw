@@ -59,7 +59,7 @@ def calc_dmg(opt=""):
   if lured.get()==True: #Find out if lure is enabled. If it is, save a local variable.
     local_lure=True
   if v2.get()==0:
-    tot_dmg=tt_calc.full_calc(trp_used,snd_used,trw_used,sqt_used,drp_used,lured.get(),trans_def(dmg_down.get()),None)
+    tot_dmg=tt_calc.full_calc(trp_used,snd_used,trw_used,sqt_used,drp_used,lured.get(),tt_calc.def_parse(dmg_down.get()),None)
     #print("Total damage this round: "+str(tot_dmg))
     dmg_indicator.configure(text=str(tot_dmg))
     cog_health_ind_calc()
@@ -70,21 +70,6 @@ def calc_dmg(opt=""):
     def_btn.configure(state="disabled")
   if local_lure==True:
     lured.set(True)
-
-#Defense str -> int
-#TODO: New rust module for functions like this
-def trans_def(mod):
-  match mod:
-    case "0%":
-      return None
-    case "10%":
-      return 0.1
-    case "15%":
-      return 0.15
-    case "20%":
-      return 0.2
-    case "25%":
-      return 0.25
 
 #Gag Buttons
 def gag_btn(gag,list,btn=None):
