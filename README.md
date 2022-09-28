@@ -1,6 +1,6 @@
 # TT-Damage-Calculator
 
-![Downloads: 105](https://img.shields.io/github/downloads/Vhou-Atroph/TT-Damage-Calculator/total?style=plastic) ![Latest Release: V3.3.2c](https://img.shields.io/github/v/release/Vhou-Atroph/TT-Damage-Calculator) ![License: GPL-3.0](https://img.shields.io/github/license/Vhou-Atroph/TT-Damage-Calculator)
+![Badge showing the license of the Toontown Damage Calculator.](https://img.shields.io/github/license/Vhou-Atroph/TT-Damage-Calculator) [![Badge showing the latest release of the Toontown Damage Calculator.](https://img.shields.io/github/v/release/Vhou-Atroph/TT-Damage-Calculator)](https://github.com/Vhou-Atroph/TT-Damage-Calculator/releases/latest) ![Badge showing the number of downloads the Toontown Damage Calculator has received.](https://img.shields.io/github/downloads/Vhou-Atroph/TT-Damage-Calculator/total?style=plastic)
 
  Gag damage calculator for [Toontown Rewritten](https://toontownrewritten.com/).
 
