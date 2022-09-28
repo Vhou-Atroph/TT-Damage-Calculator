@@ -1,5 +1,7 @@
 # TT-Damage-Calculator
 
+![Downloads: 105](https://img.shields.io/github/downloads/Vhou-Atroph/TT-Damage-Calculator/total?style=plastic) ![Latest Release: V3.3.2c](https://img.shields.io/github/v/release/Vhou-Atroph/TT-Damage-Calculator)
+
  Gag damage calculator for [Toontown Rewritten](https://toontownrewritten.com/).
 
 ![The Program](https://github.com/Vhou-Atroph/TT-Damage-Calculator/blob/main/preview.png?raw=true)
@@ -37,11 +39,9 @@ The v2 toggle is not compatible with cog defense. This is because I do not know 
 
 ### Other Features
 
-There are three buttons in the bottom right corner of the program.  
+There are two buttons in the bottom right corner of the program.  
 'Clear History' will clear all text in the History panel, which logs previous calculations.  
-'Pin to Top' will ensure the program is always on top and visible.  
-'Show Health and SOS Cards' brings up a grid of all cog health values from Level 7 to Level 20, as well as the major SOS cards for Trap, Sound, and Drop.  
-The latter two buttons can both be toggled off by pressing them a second time.  
+'Show Health and SOS Cards' brings up a grid of all cog health values from Level 7 to Level 20, as well as the major SOS cards for Trap, Sound, and Drop. This can be toggled by clicking on it a second time.
 
 The program has various keybinds to expedite calculation:
 | Keybind     | Description         |
@@ -52,6 +52,10 @@ The program has various keybinds to expedite calculation:
 | ctrl+v      | Toggle v2 Calculator|
 | ctrl+r      | Reset Calculation   |
 | alt+up      | Toggle Pinned Window|
+
+## License
+
+Code in TT-Damage-Calculator is licensed under the [GNU General Public License v3.0](/LICENSE).
 
 ## Final Notes
 
