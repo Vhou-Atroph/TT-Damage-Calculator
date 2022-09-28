@@ -1,22 +1,27 @@
-from tkinter import *
+"""
+TT-Damage-Calculator
+Copyright (C) 2022 Vhou-Atroph
 
-from mod import calculators
-from mod import gags
-from mod import keybinds
-from mod import update_checker
+TT-Damage-Calculator is a gag damage calculator for Toontown Rewritten. It has an interface built with Python's tkinter library, and is supplemented with modules written in Rust.
 
-'''
 CONTRIBUTORS:
 - Vhou-Atroph
 - BoggoTV
-'''
+"""
+
+from tkinter import *
+
+from mod import tt_calc
+from mod import tt_gags
+from mod import tt_settings
+from mod import update_checker
 
 #Window
 global window
 window=Tk()
 window.title("Toontown Damage Calculator")
-icon=PhotoImage(file="img/whole-cream-pie.png")
-window.iconphoto(True, icon)
+whole_cream_pie_img=PhotoImage(file="img/whole-cream-pie.png")
+window.iconphoto(True, whole_cream_pie_img)
 window.resizable(0,0)
 
 #Variables
@@ -33,16 +38,18 @@ drp_used=list()
 trp_used=list()
 tot_dmg=0
 
-organic=IntVar()
-lured=IntVar()
+organic=BooleanVar()
+lured=BooleanVar()
 v2=IntVar()
-pin_val=IntVar()
+pin_val=BooleanVar()
 dmg_down=StringVar()
 dmg_down.set('0%')
 def_values=['0%','10%','15%','20%','25%']
 def_lur_lock=StringVar()
 def_lur_lock.set('No lock')
 def_lur_options=['No lock','Lock lure','Lock defense','Lock both']
+
+settings = tt_settings.Settings("mod/settings.toml")
 
 #Columns
 col0=Frame(window) #Main content of the calculator
@@ -51,24 +58,11 @@ col1=Frame(window) #Will be used for calculation history
 #Total damage calculation
 def calc_dmg(opt=""):
   global tot_dmg
-  local_lure=0
-  if lured.get()==1: #Find out if lure is enabled. If it is, save a local variable.
-    local_lure=1
+  local_lure=False
+  if lured.get()==True: #Find out if lure is enabled. If it is, save a local variable.
+    local_lure=True
   if v2.get()==0:
-    if len(trp_used)==1 and lured.get()==1:
-      tot_dmg=tot_dmg+calculators.gag_calculator(trp_used,defense=trans_def(dmg_down.get()))
-      lured.set(0)
-    if len(snd_used)>0:
-      tot_dmg=tot_dmg+calculators.gag_calculator(snd_used,defense=trans_def(dmg_down.get()))
-      lured.set(0)
-    if len(trw_used)>0:
-      tot_dmg=tot_dmg+calculators.gag_calculator(trw_used,lured=lured.get(),defense=trans_def(dmg_down.get()))
-      lured.set(0)
-    if len(sqt_used)>0:
-      tot_dmg=tot_dmg+calculators.gag_calculator(sqt_used,lured=lured.get(),defense=trans_def(dmg_down.get()))
-      lured.set(0)
-    if len(drp_used)>0 and lured.get()==0:
-      tot_dmg=tot_dmg+calculators.gag_calculator(drp_used,defense=trans_def(dmg_down.get()))
+    tot_dmg=tt_calc.full_calc(trp_used,snd_used,trw_used,sqt_used,drp_used,lured.get(),tt_calc.def_parse(dmg_down.get()),None)
     #print("Total damage this round: "+str(tot_dmg))
     dmg_indicator.configure(text=str(tot_dmg))
     cog_health_ind_calc()
@@ -77,28 +71,14 @@ def calc_dmg(opt=""):
   else:
     v2_calc()
     def_btn.configure(state="disabled")
-  if local_lure==1:
-    lured.set(1)
-
-#Defense str -> int
-def trans_def(mod):
-  match mod:
-    case "0%":
-      return None
-    case "10%":
-      return 0.1
-    case "15%":
-      return 0.15
-    case "20%":
-      return 0.2
-    case "25%":
-      return 0.25
+  if local_lure==True:
+    lured.set(True)
 
 #Gag Buttons
 def gag_btn(gag,list,btn=None):
-  if organic.get()==1 and gag.type=="Gag":
+  if organic.get()==True and gag.gtype=="Gag":
     name="Organic "+gag.name
-    dmg=gag.make_org()
+    dmg=gag.organic()
   else:
     dmg=gag.dmg
     name=gag.name
@@ -112,7 +92,7 @@ def gag_btn(gag,list,btn=None):
 
 #Pin window to top
 def pin():
-  if pin_val.get()==1:
+  if pin_val.get()==True:
     return window.attributes('-topmost',True)
   window.attributes('-topmost',False)
 
@@ -129,122 +109,118 @@ def_lur_dropdown.configure(width=12,font=('Arial',11,'normal'))
 v2_check=Checkbutton(tog_btns,text='V2 Cog',variable=v2,onvalue=1,offvalue=0,font=('Arial',11,'normal'),command=calc_dmg)
 
 #The Gags
+
+class GagButton(Button):
+  def __init__(self,parent,image,gag):
+    self.gag = gag
+    Button.__init__(self,parent)
+    self['image'] = image
+    self['bg'] = '#1888D3'
+    self['activebackground'] = '#186AD3'
+    self['text'] = '0'
+    self['font'] = ('Impress BT',8,'bold')
+    self['compound'] = 'top'
+    self['fg'] = 'white'
+    self['command'] = lambda:gag_btn(self.gag,self.list(),self)
+    self.grid(row=0,column=self.gag.level)
+  def list(self):
+    global trp_used
+    global snd_used
+    global trw_used
+    global sqt_used
+    global drp_used
+    match self.gag.track:
+      case "Trap":
+        return trp_used
+      case "Sound":
+        return snd_used
+      case "Throw":
+        return trw_used
+      case "Squirt":
+        return sqt_used
+      case "Drop":
+        return drp_used
+
 gag_frame=Frame(col0)
 #Sound
 snd_frame=Frame(gag_frame)
 bike_horn_img=PhotoImage(file='img/bike-horn.png')
-bike_horn=Button(snd_frame,image=bike_horn_img,bg='#1888D3',activebackground='#186AD3',text='0',font=('Impress BT',8,'bold'),compound='top',fg='white')
+bike_horn=GagButton(snd_frame,image=bike_horn_img,gag=tt_gags.Gag("Gag","Bike Horn","Sound",0,4))
 whistle_img=PhotoImage(file='img/whistle.png')
-whistle=Button(snd_frame,image=whistle_img,bg='#1888D3',activebackground='#186AD3',text='0',font=('Impress BT',8,'bold'),compound='top',fg='white')
+whistle=GagButton(snd_frame,image=whistle_img,gag=tt_gags.Gag("Gag","Whistle","Sound",1,7))
 bugle_img=PhotoImage(file='img/bugle.png')
-bugle=Button(snd_frame,image=bugle_img,bg='#1888D3',activebackground='#186AD3',text='0',font=('Impress BT',8,'bold'),compound='top',fg='white')
+bugle=GagButton(snd_frame,image=bugle_img,gag=tt_gags.Gag("Gag","Bugle","Sound",2,11))
 aoogah_img=PhotoImage(file='img/aoogah.png')
-aoogah=Button(snd_frame,image=aoogah_img,bg='#1888D3',activebackground='#186AD3',text='0',font=('Impress BT',8,'bold'),compound='top',fg='white')
+aoogah=GagButton(snd_frame,image=aoogah_img,gag=tt_gags.Gag("Gag","Aoogah","Sound",3,16))
 elephant_trunk_img=PhotoImage(file='img/elephant-trunk.png')
-elephant_trunk=Button(snd_frame,image=elephant_trunk_img,bg='#1888D3',activebackground='#186AD3',text='0',font=('Impress BT',8,'bold'),compound='top',fg='white')
+elephant_trunk=GagButton(snd_frame,image=elephant_trunk_img,gag=tt_gags.Gag("Gag","Elephant Trunk","Sound",4,21))
 fog_horn_img=PhotoImage(file='img/fog-horn.png')
-fog_horn=Button(snd_frame,image=fog_horn_img,bg='#1888D3',activebackground='#186AD3',text='0',font=('Impress BT',8,'bold'),compound='top',fg='white')
+fog_horn=GagButton(snd_frame,image=fog_horn_img,gag=tt_gags.Gag("Gag","Fog Horn","Sound",5,50))
 opera_singer_img=PhotoImage(file='img/opera-singer.png')
-opera_singer=Button(snd_frame,image=opera_singer_img,bg='#1888D3',activebackground='#186AD3',text='0',font=('Impress BT',8,'bold'),compound='top',fg='white')
-bike_horn.configure(command=lambda:gag_btn(gags.bike_horn,snd_used,bike_horn))
-whistle.configure(command=lambda:gag_btn(gags.whistle,snd_used,whistle))
-bugle.configure(command=lambda:gag_btn(gags.bugle,snd_used,bugle))
-aoogah.configure(command=lambda:gag_btn(gags.aoogah,snd_used,aoogah))
-elephant_trunk.configure(command=lambda:gag_btn(gags.elephant_trunk,snd_used,elephant_trunk))
-fog_horn.configure(command=lambda:gag_btn(gags.foghorn,snd_used,fog_horn))
-opera_singer.configure(command=lambda:gag_btn(gags.opera_singer,snd_used,opera_singer))
+opera_singer=GagButton(snd_frame,image=opera_singer_img,gag=tt_gags.Gag("Gag","Opera Singer","Sound",6,90))
 #Throw
 trw_frame=Frame(gag_frame)
 cupcake_img=PhotoImage(file='img/cupcake.png')
-cupcake=Button(trw_frame,image=cupcake_img,bg='#1888D3',activebackground='#186AD3',text='0',font=('Impress BT',8,'bold'),compound='top',fg='white')
+cupcake=GagButton(trw_frame,image=cupcake_img,gag=tt_gags.Gag("Gag","Cupcake","Throw",0,6))
 fruit_pie_slice_img=PhotoImage(file='img/fruit-pie-slice.png')
-fruit_pie_slice=Button(trw_frame,image=fruit_pie_slice_img,bg='#1888D3',activebackground='#186AD3',text='0',font=('Impress BT',8,'bold'),compound='top',fg='white')
+fruit_pie_slice=GagButton(trw_frame,image=fruit_pie_slice_img,gag=tt_gags.Gag("Gag","Fruit Pie Slice","Throw",1,10))
 cream_pie_slice_img=PhotoImage(file='img/cream-pie-slice.png')
-cream_pie_slice=Button(trw_frame,image=cream_pie_slice_img,bg='#1888D3',activebackground='#186AD3',text='0',font=('Impress BT',8,'bold'),compound='top',fg='white')
+cream_pie_slice=GagButton(trw_frame,image=cream_pie_slice_img,gag=tt_gags.Gag("Gag","Cream Pie Slice","Throw",2,17))
 whole_fruit_pie_img=PhotoImage(file='img/whole-fruit-pie.png')
-whole_fruit_pie=Button(trw_frame,image=whole_fruit_pie_img,bg='#1888D3',activebackground='#186AD3',text='0',font=('Impress BT',8,'bold'),compound='top',fg='white')
-whole_cream_pie_img=PhotoImage(file='img/whole-cream-pie.png')
-whole_cream_pie=Button(trw_frame,image=whole_cream_pie_img,bg='#1888D3',activebackground='#186AD3',text='0',font=('Impress BT',8,'bold'),compound='top',fg='white')
+whole_fruit_pie=GagButton(trw_frame,image=whole_fruit_pie_img,gag=tt_gags.Gag("Gag","Whole Fruit Pie","Throw",3,27))
+whole_cream_pie=GagButton(trw_frame,image=whole_cream_pie_img,gag=tt_gags.Gag("Gag","Whole Cream Pie","Throw",4,40))
 birthday_cake_img=PhotoImage(file='img/birthday-cake.png')
-birthday_cake=Button(trw_frame,image=birthday_cake_img,bg='#1888D3',activebackground='#186AD3',text='0',font=('Impress BT',8,'bold'),compound='top',fg='white')
+birthday_cake=GagButton(trw_frame,image=birthday_cake_img,gag=tt_gags.Gag("Gag","Birthday Cake","Throw",5,100))
 wedding_cake_img=PhotoImage(file='img/wedding-cake.png')
-wedding_cake=Button(trw_frame,image=wedding_cake_img,bg='#1888D3',activebackground='#186AD3',text='0',font=('Impress BT',8,'bold'),compound='top',fg='white')
-cupcake.configure(command=lambda:gag_btn(gags.cupcake,trw_used,cupcake))
-fruit_pie_slice.configure(command=lambda:gag_btn(gags.fruit_pie_slice,trw_used,fruit_pie_slice))
-cream_pie_slice.configure(command=lambda:gag_btn(gags.cream_pie_slice,trw_used,cream_pie_slice))
-whole_fruit_pie.configure(command=lambda:gag_btn(gags.whole_fruit_pie,trw_used,whole_fruit_pie))
-whole_cream_pie.configure(command=lambda:gag_btn(gags.whole_cream_pie,trw_used,whole_cream_pie))
-birthday_cake.configure(command=lambda:gag_btn(gags.birthday_cake,trw_used,birthday_cake))
-wedding_cake.configure(command=lambda:gag_btn(gags.wedding_cake,trw_used,wedding_cake))
+wedding_cake=GagButton(trw_frame,image=wedding_cake_img,gag=tt_gags.Gag("Gag","Wedding Cake","Throw",6,120))
 #Squirt
 sqt_frame=Frame(gag_frame)
 squirting_flower_img=PhotoImage(file='img/squirting-flower.png')
-squirting_flower=Button(sqt_frame,image=squirting_flower_img,bg='#1888D3',activebackground='#186AD3',text='0',font=('Impress BT',8,'bold'),compound='top',fg='white')
+squirting_flower=GagButton(sqt_frame,image=squirting_flower_img,gag=tt_gags.Gag("Gag","Squirting Flower","Squirt",0,4))
 water_glass_img=PhotoImage(file='img/glass-of-water.png')
-water_glass=Button(sqt_frame,image=water_glass_img,bg='#1888D3',activebackground='#186AD3',text='0',font=('Impress BT',8,'bold'),compound='top',fg='white')
+water_glass=GagButton(sqt_frame,image=water_glass_img,gag=tt_gags.Gag("Gag","Glass of Water","Squirt",1,8))
 squirt_gun_img=PhotoImage(file='img/squirt-gun.png')
-squirt_gun=Button(sqt_frame,image=squirt_gun_img,bg='#1888D3',activebackground='#186AD3',text='0',font=('Impress BT',8,'bold'),compound='top',fg='white')
+squirt_gun=GagButton(sqt_frame,image=squirt_gun_img,gag=tt_gags.Gag("Gag","Squirt Gun","Squirt",2,12))
 seltzer_bottle_img=PhotoImage(file='img/seltzer-bottle.png')
-seltzer_bottle=Button(sqt_frame,image=seltzer_bottle_img,bg='#1888D3',activebackground='#186AD3',text='0',font=('Impress BT',8,'bold'),compound='top',fg='white')
+seltzer_bottle=GagButton(sqt_frame,image=seltzer_bottle_img,gag=tt_gags.Gag("Gag","Seltzer Bottle","Squirt",3,21))
 fire_hose_img=PhotoImage(file='img/fire-hose.png')
-fire_hose=Button(sqt_frame,image=fire_hose_img,bg='#1888D3',activebackground='#186AD3',text='0',font=('Impress BT',8,'bold'),compound='top',fg='white')
+fire_hose=GagButton(sqt_frame,image=fire_hose_img,gag=tt_gags.Gag("Gag","Fire Hose","Squirt",4,30))
 storm_cloud_img=PhotoImage(file='img/storm-cloud.png')
-storm_cloud=Button(sqt_frame,image=storm_cloud_img,bg='#1888D3',activebackground='#186AD3',text='0',font=('Impress BT',8,'bold'),compound='top',fg='white')
+storm_cloud=GagButton(sqt_frame,image=storm_cloud_img,gag=tt_gags.Gag("Gag","Storm Cloud","Squirt",5,80))
 geyser_img=PhotoImage(file='img/geyser.png')
-geyser=Button(sqt_frame,image=geyser_img,bg='#1888D3',activebackground='#186AD3',text='0',font=('Impress BT',8,'bold'),compound='top',fg='white')
-squirting_flower.configure(command=lambda:gag_btn(gags.squirting_flower,sqt_used,squirting_flower))
-water_glass.configure(command=lambda:gag_btn(gags.water_glass,sqt_used,water_glass))
-squirt_gun.configure(command=lambda:gag_btn(gags.squirt_gun,sqt_used,squirt_gun))
-seltzer_bottle.configure(command=lambda:gag_btn(gags.seltzer_bottle,sqt_used,seltzer_bottle))
-fire_hose.configure(command=lambda:gag_btn(gags.fire_hose,sqt_used,fire_hose))
-storm_cloud.configure(command=lambda:gag_btn(gags.storm_cloud,sqt_used,storm_cloud))
-geyser.configure(command=lambda:gag_btn(gags.geyser,sqt_used,geyser))
+geyser=GagButton(sqt_frame,image=geyser_img,gag=tt_gags.Gag("Gag","Geyser","Squirt",6,105))
 #Drop
 drp_frame=Frame(gag_frame)
 flower_pot_img=PhotoImage(file='img/flower-pot.png')
-flower_pot=Button(drp_frame,image=flower_pot_img,bg='#1888D3',activebackground='#186AD3',text='0',font=('Impress BT',8,'bold'),compound='top',fg='white')
+flower_pot=GagButton(drp_frame,image=flower_pot_img,gag=tt_gags.Gag("Gag","Flower Pot","Drop",0,10))
 sandbag_img=PhotoImage(file='img/sandbag.png')
-sandbag=Button(drp_frame,image=sandbag_img,bg='#1888D3',activebackground='#186AD3',text='0',font=('Impress BT',8,'bold'),compound='top',fg='white')
+sandbag=GagButton(drp_frame,image=sandbag_img,gag=tt_gags.Gag("Gag","Sandbag","Drop",1,18))
 anvil_img=PhotoImage(file='img/anvil.png')
-anvil=Button(drp_frame,image=anvil_img,bg='#1888D3',activebackground='#186AD3',text='0',font=('Impress BT',8,'bold'),compound='top',fg='white')
+anvil=GagButton(drp_frame,image=anvil_img,gag=tt_gags.Gag("Gag","Anvil","Drop",2,30))
 big_weight_img=PhotoImage(file='img/big-weight.png')
-big_weight=Button(drp_frame,image=big_weight_img,bg='#1888D3',activebackground='#186AD3',text='0',font=('Impress BT',8,'bold'),compound='top',fg='white')
+big_weight=GagButton(drp_frame,image=big_weight_img,gag=tt_gags.Gag("Gag","Big Weight","Drop",3,45))
 safe_img=PhotoImage(file='img/safe.png')
-safe=Button(drp_frame,image=safe_img,bg='#1888D3',activebackground='#186AD3',text='0',font=('Impress BT',8,'bold'),compound='top',fg='white')
+safe=GagButton(drp_frame,image=safe_img,gag=tt_gags.Gag("Gag","Safe","Drop",4,70))
 grand_piano_img=PhotoImage(file='img/grand-piano.png')
-grand_piano=Button(drp_frame,image=grand_piano_img,bg='#1888D3',activebackground='#186AD3',text='0',font=('Impress BT',8,'bold'),compound='top',fg='white')
+grand_piano=GagButton(drp_frame,image=grand_piano_img,gag=tt_gags.Gag("Gag","Grand Piano","Drop",5,170))
 toontanic_img=PhotoImage(file='img/toontanic.png')
-toontanic=Button(drp_frame,image=toontanic_img,bg='#1888D3',activebackground='#186AD3',text='0',font=('Impress BT',8,'bold'),compound='top',fg='white')
-flower_pot.configure(command=lambda:gag_btn(gags.flower_pot,drp_used,flower_pot))
-sandbag.configure(command=lambda:gag_btn(gags.sandbag,drp_used,sandbag))
-anvil.configure(command=lambda:gag_btn(gags.anvil,drp_used,anvil))
-big_weight.configure(command=lambda:gag_btn(gags.big_weight,drp_used,big_weight))
-safe.configure(command=lambda:gag_btn(gags.safe,drp_used,safe))
-grand_piano.configure(command=lambda:gag_btn(gags.piano,drp_used,grand_piano))
-toontanic.configure(command=lambda:gag_btn(gags.oceanliner,drp_used,toontanic))
+toontanic=GagButton(drp_frame,image=toontanic_img,gag=tt_gags.Gag("Gag","Toontanic","Drop",6,180))
 #Trap!
 trpFrame=Frame(gag_frame)
 banana_peel_img=PhotoImage(file='img/banana-peel.png')
-banana_peel=Button(trpFrame,image=banana_peel_img,bg='#1888D3',activebackground='#186AD3',text='0',font=('Impress BT',8,'bold'),compound='top',fg='white')
+banana_peel=GagButton(trpFrame,image=banana_peel_img,gag=tt_gags.Gag("Gag","Banana Peel","Trap",0,12))
 rake_img=PhotoImage(file='img/rake.png')
-rake=Button(trpFrame,image=rake_img,bg='#1888D3',activebackground='#186AD3',text='0',font=('Impress BT',8,'bold'),compound='top',fg='white')
+rake=GagButton(trpFrame,image=rake_img,gag=tt_gags.Gag("Gag","Rake","Trap",1,18))
 marbles_img=PhotoImage(file='img/marbles.png')
-marbles=Button(trpFrame,image=marbles_img,bg='#1888D3',activebackground='#186AD3',text='0',font=('Impress BT',8,'bold'),compound='top',fg='white')
+marbles=GagButton(trpFrame,image=marbles_img,gag=tt_gags.Gag("Gag","Marbles","Trap",2,35))
 quicksand_img=PhotoImage(file='img/quicksand.png')
-quicksand=Button(trpFrame,image=quicksand_img,bg='#1888D3',activebackground='#186AD3',text='0',font=('Impress BT',8,'bold'),compound='top',fg='white')
+quicksand=GagButton(trpFrame,image=quicksand_img,gag=tt_gags.Gag("Gag","Quicksand","Trap",3,50))
 trapdoor_img=PhotoImage(file='img/trapdoor.png')
-trapdoor=Button(trpFrame,image=trapdoor_img,bg='#1888D3',activebackground='#186AD3',text='0',font=('Impress BT',8,'bold'),compound='top',fg='white')
+trapdoor=GagButton(trpFrame,image=trapdoor_img,gag=tt_gags.Gag("Gag","Trapdoor","Trap",4,85))
 tnt_img=PhotoImage(file='img/tnt.png')
-tnt=Button(trpFrame,image=tnt_img,bg='#1888D3',activebackground='#186AD3',text='0',font=('Impress BT',8,'bold'),compound='top',fg='white')
+tnt=GagButton(trpFrame,image=tnt_img,gag=tt_gags.Gag("Gag","TNT","Trap",5,180))
 railroad_img=PhotoImage(file='img/railroad.png')
-railroad=Button(trpFrame,image=railroad_img,bg='#1888D3',activebackground='#186AD3',text='0',font=('Impress BT',8,'bold'),compound='top',fg='white')
-banana_peel.configure(command=lambda:gag_btn(gags.banana_peel,trp_used,banana_peel))
-rake.configure(command=lambda:gag_btn(gags.rake,trp_used,rake))
-marbles.configure(command=lambda:gag_btn(gags.marbles,trp_used,marbles))
-quicksand.configure(command=lambda:gag_btn(gags.quicksand,trp_used,quicksand))
-trapdoor.configure(command=lambda:gag_btn(gags.trapdoor,trp_used,trapdoor))
-tnt.configure(command=lambda:gag_btn(gags.tnt,trp_used,tnt))
-railroad.configure(command=lambda:gag_btn(gags.railroad,trp_used,railroad))
+railroad=GagButton(trpFrame,image=railroad_img,gag=tt_gags.Gag("Gag","Railroad","Trap",6,200))
 
 #Button list - used for mass configuring the gag buttons
 gag_btns=(bike_horn,whistle,bugle,aoogah,elephant_trunk,fog_horn,opera_singer,cupcake,fruit_pie_slice,cream_pie_slice,whole_fruit_pie,whole_cream_pie,birthday_cake,wedding_cake,squirting_flower,water_glass,squirt_gun,seltzer_bottle,fire_hose,storm_cloud,geyser,flower_pot,sandbag,anvil,big_weight,safe,grand_piano,toontanic,banana_peel,rake,marbles,quicksand,trapdoor,tnt,railroad)
@@ -277,9 +253,9 @@ clerk_penny_img=PhotoImage(file='img/clerkpenny.png')
 clerk_penny=Button(sos_trp,image=clerk_penny_img)
 clerk_clara_img=PhotoImage(file='img/clerkclara.png')
 clerk_clara=Button(sos_trp,image=clerk_clara_img)
-clerk_will.configure(command=lambda:gag_btn(gags.will,trp_used))
-clerk_penny.configure(command=lambda:gag_btn(gags.penny,trp_used))
-clerk_clara.configure(command=lambda:gag_btn(gags.clara,trp_used))
+clerk_will.configure(command=lambda:gag_btn(tt_gags.Gag("Sos","Clerk Will","Trap",0,60),trp_used))
+clerk_penny.configure(command=lambda:gag_btn(tt_gags.Gag("Sos","Clerk Penny","Trap",1,120),trp_used))
+clerk_clara.configure(command=lambda:gag_btn(tt_gags.Gag("Sos","Clerk Clara","Trap",2,180),trp_used))
 sos_snd=Frame(sos_cards)
 barb_img=PhotoImage(file='img/barbaraseville.png')
 barb=Button(sos_snd,image=barb_img)
@@ -287,9 +263,9 @@ sid_img=PhotoImage(file='img/sidsonata.png')
 sid=Button(sos_snd,image=sid_img)
 moe_img=PhotoImage(file='img/moezart.png')
 moe=Button(sos_snd,image=moe_img)
-barb.configure(command=lambda:gag_btn(gags.barb,snd_used))
-sid.configure(command=lambda:gag_btn(gags.sid,snd_used))
-moe.configure(command=lambda:gag_btn(gags.moe,snd_used))
+barb.configure(command=lambda:gag_btn(tt_gags.Gag("Sos","Barbara Seville","Sound",0,35),snd_used))
+sid.configure(command=lambda:gag_btn(tt_gags.Gag("Sos","Sid Sonata","Sound",1,55),snd_used))
+moe.configure(command=lambda:gag_btn(tt_gags.Gag("Sos","Moe Zart","Sound",2,75),snd_used))
 sos_drp=Frame(sos_cards)
 ned_img=PhotoImage(file='img/clumsyned.png')
 ned=Button(sos_drp,image=ned_img)
@@ -297,31 +273,31 @@ franz_img=PhotoImage(file='img/franzneckvein.png')
 franz=Button(sos_drp,image=franz_img)
 bess_img=PhotoImage(file='img/barnaclebessie.png')
 bess=Button(sos_drp,image=bess_img)
-ned.configure(command=lambda:gag_btn(gags.ned,drp_used))
-franz.configure(command=lambda:gag_btn(gags.franz,drp_used))
-bess.configure(command=lambda:gag_btn(gags.bess,drp_used))
+ned.configure(command=lambda:gag_btn(tt_gags.Gag("Sos","Clumsy Ned","Drop",0,60),drp_used))
+franz.configure(command=lambda:gag_btn(tt_gags.Gag("Sos","Franz Neckvein","Drop",1,100),drp_used))
+bess.configure(command=lambda:gag_btn(tt_gags.Gag("Sos","Barnacle Bessie","Drop",2,170),drp_used))
 
 ###Keybinds
 
 #Toggle organic functions
 def tog_org_off(opt=""):
-  organic.set(0)
+  organic.set(False)
   #print("Gags in calculations will no longer be organic!")
   org_btn.configure(command=tog_org_on)
   org_indicator.configure(text="Organic = OFF")
   for i in gag_btns:
     i.configure(bg='#1888D3',activebackground='#186AD3')
-  window.bind('<'+keybinds.organic.key+'>',tog_org_on)
+  window.bind('<'+settings.keybinds.organic+'>',tog_org_on)
 def tog_org_on(opt=""):
-  organic.set(1)
+  organic.set(True)
   #print("Gags in calculations will now be organic!")
   org_btn.configure(command=tog_org_off)
   org_indicator.configure(text="Organic = ON")
   for i in gag_btns:
     i.configure(bg='darkorange',activebackground='orange')
-  window.bind('<'+keybinds.organic.key+'>',tog_org_off)
+  window.bind('<'+settings.keybinds.organic+'>',tog_org_off)
 org_btn.configure(command=tog_org_on)
-window.bind('<'+keybinds.organic.key+'>',tog_org_on)
+window.bind('<'+settings.keybinds.organic+'>',tog_org_on)
 
 #Def Keybind
 def def_swap(opt=""):
@@ -341,19 +317,19 @@ def def_swap(opt=""):
   else:
     dmg_down.set('0%')
     calc_dmg()
-window.bind('<'+keybinds.defense.key+'>',def_swap)
+window.bind('<'+settings.keybinds.defense+'>',def_swap)
 
 #Swap a toggle
 def tog_swap(par,tog):
-  if tog.get()==0:
-    tog.set(1)
+  if tog.get()==False:
+    tog.set(True)
   else:
-    tog.set(0)
+    tog.set(False)
   calc_dmg()
   pin()
-window.bind('<'+keybinds.lure.key+'>',lambda par: tog_swap(par,lured))
-window.bind('<'+keybinds.v2.key+'>',lambda par: tog_swap(par,v2))
-window.bind('<'+keybinds.pin.key+'>',lambda par: tog_swap(par,pin_val))
+window.bind('<'+settings.keybinds.lure+'>',lambda par: tog_swap(par,lured))
+window.bind('<'+settings.keybinds.v2+'>',lambda par: tog_swap(par,v2))
+window.bind('<'+settings.keybinds.pin+'>',lambda par: tog_swap(par,pin_val))
 
 #Clear inputs function
 def clear_inputs(opt=""):
@@ -364,10 +340,10 @@ def clear_inputs(opt=""):
   global sqt_used
   global drp_used
   global trp_used
-  local_lure=0
+  local_lure=False
   lur_info='no'
-  if lured.get()==1: #Find out if lure is enabled. If it is, save a local variable.
-    local_lure=1
+  if lured.get()==True: #Find out if lure is enabled. If it is, save a local variable.
+    local_lure=True
     lur_info='yes'
   hist_box.configure(state=NORMAL)
   if v2.get()==1:
@@ -377,7 +353,7 @@ def clear_inputs(opt=""):
   hist_box.configure(state=DISABLED)
   if def_lur_lock.get()=='No lock' or def_lur_lock.get()=='Lock lure':
     dmg_down.set('0%')
-  lured.set(0)
+  lured.set(False)
   v2.set(0)
   snd_used=list()
   trw_used=list()
@@ -388,10 +364,10 @@ def clear_inputs(opt=""):
   calc_dmg()
   for i in gag_btns:
     i.configure(text='0')
-  if local_lure==1 and def_lur_lock.get()=='Lock lure' or def_lur_lock.get()=='Lock both': #Use the local variable and def_lur_lock to lock lure as active even after it is set to 0 by clear_inputs()
-    lured.set(1)
+  if local_lure==True and def_lur_lock.get()=='Lock lure' or def_lur_lock.get()=='Lock both': #Use the local variable and def_lur_lock to lock lure as active even after it is set to 0 by clear_inputs()
+    lured.set(True)
 clear_btn.configure(command=clear_inputs)
-window.bind('<'+keybinds.reset.key+'>',clear_inputs)
+window.bind('<'+settings.keybinds.reset+'>',clear_inputs)
 
 #Clear history function
 def clear_history():
@@ -436,18 +412,18 @@ def cog_health_ind_calc():
     #print("Evaluating level: "+str(lvl))
     global tot_dmg
     #print("The current total damage is "+str(tot_dmg))
-    if tot_dmg==calculators.cog_health(lvl):
+    if tot_dmg==tt_calc.cog_hp(lvl):
       #print("Wow! We found the level!")
       #print("The level is: "+str(lvl))
       cog_level_indicator.configure(text="(level "+str(lvl)+")")
       break
-    elif tot_dmg<calculators.cog_health(lvl):
+    elif tot_dmg<tt_calc.cog_hp(lvl):
       #print("Wow! We found the level!")
       lvl=lvl-1
       #print("The level is: "+str(lvl))
       cog_level_indicator.configure(text="(level "+str(lvl)+")")
       break
-    elif lvl==20 and tot_dmg>calculators.cog_health(lvl):
+    elif lvl==20 and tot_dmg>tt_calc.cog_hp(lvl):
       #print("Wow! We found the level!")
       #print("The level is: "+str(lvl))
       cog_level_indicator.configure(text="(level "+str(lvl)+")")
@@ -459,67 +435,67 @@ v2_dmg=0
 def v2_calc():
   lvl=0
   while lvl<20:
-    local_lure=0
-    if lured.get()==1:
-      local_lure=1
+    local_lure=False
+    if lured.get()==True:
+      local_lure=True
     lvl=lvl+1
     global v2_dmg
     v2_dmg=0
     #print("Evaluating lvl: "+str(lvl))
     
-    if len(trp_used)==1 and lured.get()==1:
-      v2_dmg=v2_dmg+calculators.gag_calculator(trp_used,plating=lvl)
-      lured.set(0)
+    if len(trp_used)==1 and lured.get()==True:
+      v2_dmg=v2_dmg+tt_calc.gag_calculator(trp_used,lured=False,plating=lvl,defense=None)
+      lured.set(False)
     if len(snd_used)>0:
-      v2_dmg=v2_dmg+calculators.gag_calculator(snd_used,plating=lvl)
-      lured.set(0)
+      v2_dmg=v2_dmg+tt_calc.gag_calculator(snd_used,lured=False,plating=lvl,defense=None)
+      lured.set(False)
     if len(trw_used)>0:
-      v2_dmg=v2_dmg+calculators.gag_calculator(trw_used,lured=lured.get(),plating=lvl)
-      lured.set(0)
+      v2_dmg=v2_dmg+tt_calc.gag_calculator(trw_used,lured=lured.get(),plating=lvl,defense=None)
+      lured.set(False)
     if len(sqt_used)>0:
-      v2_dmg=v2_dmg+calculators.gag_calculator(sqt_used,lured=lured.get(),plating=lvl)
-      lured.set(0)
-    if len(drp_used)>0 and lured.get()==0:
-      v2_dmg=v2_dmg+calculators.gag_calculator(drp_used,plating=lvl)
+      v2_dmg=v2_dmg+tt_calc.gag_calculator(sqt_used,lured=lured.get(),plating=lvl,defense=None)
+      lured.set(False)
+    if len(drp_used)>0 and lured.get()==False:
+      v2_dmg=v2_dmg+tt_calc.gag_calculator(drp_used,lured=False,plating=lvl,defense=None)
     
-    if local_lure==1:
-      lured.set(1)
+    if local_lure==True:
+      lured.set(True)
     
-    if v2_dmg==calculators.cog_health(lvl):
+    if v2_dmg==tt_calc.cog_hp(lvl):
       #print("Wow! We found the level!")
       #print("The level is: "+str(lvl))
       cog_level_indicator.configure(text="(v2.0 level "+str(lvl)+")")
       dmg_indicator.configure(text=str(v2_dmg))
       break
-    elif v2_dmg<calculators.cog_health(lvl):
+    elif v2_dmg<tt_calc.cog_hp(lvl):
       #print("Wow! We found the level!")
       lvl=lvl-1
       #print("The level is: "+str(lvl))
       v2_dmg=0
-      if len(trp_used)==1 and lured.get()==1:
-        v2_dmg=v2_dmg+calculators.gag_calculator(trp_used,plating=lvl)
-        lured.set(0)
+      if len(trp_used)==1 and lured.get()==True:
+        v2_dmg=v2_dmg+tt_calc.gag_calculator(trp_used,lured=False,plating=lvl,defense=None)
+        lured.set(False)
       if len(snd_used)>0:
-        v2_dmg=v2_dmg+calculators.gag_calculator(snd_used,plating=lvl)
-        lured.set(0)
+        v2_dmg=v2_dmg+tt_calc.gag_calculator(snd_used,lured=False,plating=lvl,defense=None)
+        lured.set(False)
       if len(trw_used)>0:
-        v2_dmg=v2_dmg+calculators.gag_calculator(trw_used,lured=lured.get(),plating=lvl)
-        lured.set(0)
+        v2_dmg=v2_dmg+tt_calc.gag_calculator(trw_used,lured=lured.get(),plating=lvl,defense=None)
+        lured.set(False)
       if len(sqt_used)>0:
-        v2_dmg=v2_dmg+calculators.gag_calculator(sqt_used,lured=lured.get(),plating=lvl)
-        lured.set(0)
-      if len(drp_used)>0 and lured.get()==0:
-        v2_dmg=v2_dmg+calculators.gag_calculator(drp_used,plating=lvl)
+        v2_dmg=v2_dmg+tt_calc.gag_calculator(sqt_used,lured=lured.get(),plating=lvl,defense=None)
+        lured.set(False)
+      if len(drp_used)>0 and lured.get()==False:
+        v2_dmg=v2_dmg+tt_calc.gag_calculator(drp_used,lured=False,plating=lvl,defense=None)
       cog_level_indicator.configure(text="(v2.0 level "+str(lvl)+")")
       dmg_indicator.configure(text=str(v2_dmg))
       break
-    elif lvl==20 and v2_dmg>calculators.cog_health(lvl):
+    elif lvl==20 and v2_dmg>tt_calc.cog_hp(lvl):
       #print("Wow! We found the level!")
       #print("The level is: "+str(lvl))
       cog_level_indicator.configure(text="(v2.0 level "+str(lvl)+")")
       dmg_indicator.configure(text=str(v2_dmg))
-    if local_lure==1:
-      lured.set(1)
+    if local_lure==True:
+      lured.set(True)
 
 #Toolbar
 toolbar=Menu(window)
@@ -550,49 +526,14 @@ v2_check.grid(column=0,row=1)
 gag_frame.grid(column=0,row=2,pady=10)
 #Sound
 snd_frame.grid(column=0,row=1,)
-bike_horn.grid(column=0,row=0)
-whistle.grid(column=1,row=0)
-bugle.grid(column=2,row=0)
-aoogah.grid(column=3,row=0)
-elephant_trunk.grid(column=4,row=0)
-fog_horn.grid(column=5,row=0)
-opera_singer.grid(column=6,row=0)
 #Throw
 trw_frame.grid(column=0,row=2)
-cupcake.grid(column=0,row=0)
-fruit_pie_slice.grid(column=1,row=0)
-cream_pie_slice.grid(column=2,row=0)
-whole_fruit_pie.grid(column=3,row=0)
-whole_cream_pie.grid(column=4,row=0)
-birthday_cake.grid(column=5,row=0)
-wedding_cake.grid(column=6,row=0)
 #Squirt
 sqt_frame.grid(column=0,row=3)
-squirting_flower.grid(column=0,row=0)
-water_glass.grid(column=1,row=0)
-squirt_gun.grid(column=2,row=0)
-seltzer_bottle.grid(column=3,row=0)
-fire_hose.grid(column=4,row=0)
-storm_cloud.grid(column=5,row=0)
-geyser.grid(column=6,row=0)
 #Drop
 drp_frame.grid(column=0,row=4)
-flower_pot.grid(column=0,row=0)
-sandbag.grid(column=1,row=0)
-anvil.grid(column=2,row=0)
-big_weight.grid(column=3,row=0)
-safe.grid(column=4,row=0)
-grand_piano.grid(column=5,row=0)
-toontanic.grid(column=6,row=0)
 #Trap
 trpFrame.grid(column=0,row=0)
-banana_peel.grid(column=0,row=0)
-rake.grid(column=1,row=0)
-marbles.grid(column=2,row=0)
-quicksand.grid(column=3,row=0)
-trapdoor.grid(column=4,row=0)
-tnt.grid(column=5,row=0)
-railroad.grid(column=6,row=0)
 
 #Geometry - Calculation History
 hist.grid(column=0,row=0)
