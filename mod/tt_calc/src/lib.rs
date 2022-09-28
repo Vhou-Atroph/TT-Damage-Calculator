@@ -13,6 +13,7 @@ fn tt_calc(_: Python<'_>, m: &PyModule) -> PyResult<()> {
     m.add_function(wrap_pyfunction!(cog_hp, m)?)?;
     m.add_function(wrap_pyfunction!(gag_calculator, m)?)?;
     m.add_function(wrap_pyfunction!(full_calc, m)?)?;
+    m.add_function(wrap_pyfunction!(def_parse, m)?)?;
     Ok(())
 }
 
@@ -30,6 +31,17 @@ fn cog_hp(lvl:u64) -> u64 {
         1..=11 => (lvl+1) * (lvl+2),
         12..=20 => (lvl+1) * (lvl+2) + 14,
         _ => panic!("Cog levels cannot exceed 20 or be lower than 1.")
+    }
+}
+
+#[pyfunction]
+fn def_parse(val:&str) -> f64 {
+    match val {
+        "10%" => return 0.1,
+        "15%" => return 0.15,
+        "20%" => return 0.2,
+        "25%" => return 0.25,
+        _ => 0.0
     }
 }
 
