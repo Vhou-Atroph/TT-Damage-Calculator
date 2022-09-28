@@ -58,3 +58,7 @@
 
 --V3.3.2--
 - Added a new level of defense.
+
+--Pre-release V4.0.0-dev.1--
+- Converted several modules to Rust.
+- Removed tomli dependency
