@@ -22,6 +22,14 @@ Once the file is compiled, the file `mod/[module]/target/release/[module].dll` s
 To run the program on Linux, you must compile the Rust libraries into .so files. To do this, you must first navigate to the main project file (for tt_calc this would be `mod/tt_calc`) and run the command `cargo build --release` in your favorite terminal. The library should then compile.  
 Once the file is compiled, the file `mod/[module]/target/release/lib[module].so` should have been created. Change the file's name to `[module].so` and it in `mod/`. This should be done for each Rust library.
 
+### Running
+
+Once all dependencies are compiled and in their proper place, you can open the Calculator like any other Python script- double click main.pyw or run it in your favorite terminal with `py main.pyw`. If you have Python 2 installed as well, you may have to use `py3 main.pyw`.
+
+### What if I don't want to build the program?
+
+For some versions of the calculator, I will compile it completely and release a standalone executable for users who either do not want to or are unable to compile the dependencies themselves. You can find the latest release at <https://github.com/Vhou-Atroph/TT-Damage-Calculator/releases/latest>.
+
 ## Usage
 
 ### Gag Selection
