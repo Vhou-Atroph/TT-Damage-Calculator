@@ -20,7 +20,7 @@ Once the file is compiled, the file `mod/[module]/target/release/[module].dll` s
 ### Linux
 
 To run the program on Linux, you must compile the Rust libraries into .so files. To do this, you must first navigate to the main project file (for tt_calc this would be `mod/tt_calc`) and run the command `cargo build --release` in your favorite terminal. The library should then compile.  
-Once the file is compiled, the file `mod/[module]/target/release/lib[module].so` should have been created. Change the file's name to `[module].so` and it in `mod/`. This should be done for each Rust library.
+Once the file is compiled, the file `mod/[module]/target/release/lib[module].so` should have been created. Change the file's name to `[module].so` and drop it in `mod/`. This should be done for each Rust library.
 
 ### Running
 
