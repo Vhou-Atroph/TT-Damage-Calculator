@@ -57,12 +57,14 @@ col1=Frame(window) #Will be used for calculation history
 def calc_dmg(*args):
   if v2.get()==0:
     tot_dmg=tt_calc.full_calc(trp_used,snd_used,trw_used,sqt_used,drp_used,lured.get(),tt_calc.def_parse(dmg_down.get()),None)
-    dmg_indicator.configure(text=str(tot_dmg))
     cog_level_indicator.configure(text="(level "+str(tt_calc.lvl_ind(tot_dmg))+")")
     def_btn.configure(state="normal")
   else:
-    v2_calc()
+    data = tt_calc.v2_loop(trp_used,snd_used,trw_used,sqt_used,drp_used,lured.get())
+    tot_dmg = data[1]
+    cog_level_indicator.configure(text="(v2.0 level "+str(tt_calc.lvl_ind(tot_dmg))+")")
     def_btn.configure(state="disabled")
+  dmg_indicator.configure(text=str(tot_dmg))
 
 #Pin window to top
 def pin():
@@ -378,75 +380,6 @@ def cog_health_calc_show():
   cog_calc.configure(text='Hide Health and\n SOS Cards',command=cog_health_calc_hide)
   window.geometry('')
 cog_calc.configure(command=cog_health_calc_show)
-
-#Cog V2 Calculation
-global v2_dmg
-v2_dmg=0
-
-def v2_calc():
-  lvl=0
-  while lvl<20:
-    local_lure=False
-    if lured.get()==True:
-      local_lure=True
-    lvl=lvl+1
-    global v2_dmg
-    v2_dmg=0
-    #print("Evaluating lvl: "+str(lvl))
-    
-    if len(trp_used)==1 and lured.get()==True:
-      v2_dmg=v2_dmg+tt_calc.gag_calculator(trp_used,lured=False,plating=lvl,defense=None)
-      lured.set(False)
-    if len(snd_used)>0:
-      v2_dmg=v2_dmg+tt_calc.gag_calculator(snd_used,lured=False,plating=lvl,defense=None)
-      lured.set(False)
-    if len(trw_used)>0:
-      v2_dmg=v2_dmg+tt_calc.gag_calculator(trw_used,lured=lured.get(),plating=lvl,defense=None)
-      lured.set(False)
-    if len(sqt_used)>0:
-      v2_dmg=v2_dmg+tt_calc.gag_calculator(sqt_used,lured=lured.get(),plating=lvl,defense=None)
-      lured.set(False)
-    if len(drp_used)>0 and lured.get()==False:
-      v2_dmg=v2_dmg+tt_calc.gag_calculator(drp_used,lured=False,plating=lvl,defense=None)
-    
-    if local_lure==True:
-      lured.set(True)
-    
-    if v2_dmg==tt_calc.cog_hp(lvl):
-      #print("Wow! We found the level!")
-      #print("The level is: "+str(lvl))
-      cog_level_indicator.configure(text="(v2.0 level "+str(lvl)+")")
-      dmg_indicator.configure(text=str(v2_dmg))
-      break
-    elif v2_dmg<tt_calc.cog_hp(lvl):
-      #print("Wow! We found the level!")
-      lvl=lvl-1
-      #print("The level is: "+str(lvl))
-      v2_dmg=0
-      if len(trp_used)==1 and lured.get()==True:
-        v2_dmg=v2_dmg+tt_calc.gag_calculator(trp_used,lured=False,plating=lvl,defense=None)
-        lured.set(False)
-      if len(snd_used)>0:
-        v2_dmg=v2_dmg+tt_calc.gag_calculator(snd_used,lured=False,plating=lvl,defense=None)
-        lured.set(False)
-      if len(trw_used)>0:
-        v2_dmg=v2_dmg+tt_calc.gag_calculator(trw_used,lured=lured.get(),plating=lvl,defense=None)
-        lured.set(False)
-      if len(sqt_used)>0:
-        v2_dmg=v2_dmg+tt_calc.gag_calculator(sqt_used,lured=lured.get(),plating=lvl,defense=None)
-        lured.set(False)
-      if len(drp_used)>0 and lured.get()==False:
-        v2_dmg=v2_dmg+tt_calc.gag_calculator(drp_used,lured=False,plating=lvl,defense=None)
-      cog_level_indicator.configure(text="(v2.0 level "+str(lvl)+")")
-      dmg_indicator.configure(text=str(v2_dmg))
-      break
-    elif lvl==20 and v2_dmg>tt_calc.cog_hp(lvl):
-      #print("Wow! We found the level!")
-      #print("The level is: "+str(lvl))
-      cog_level_indicator.configure(text="(v2.0 level "+str(lvl)+")")
-      dmg_indicator.configure(text=str(v2_dmg))
-    if local_lure==True:
-      lured.set(True)
 
 #Toolbar
 toolbar=Menu(window)
