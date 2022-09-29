@@ -54,7 +54,7 @@ col0=Frame(window) #Main content of the calculator
 col1=Frame(window) #Will be used for calculation history
 
 #Total damage calculation
-def calc_dmg(opt=""):
+def calc_dmg(*args):
   if v2.get()==0:
     tot_dmg=tt_calc.full_calc(trp_used,snd_used,trw_used,sqt_used,drp_used,lured.get(),tt_calc.def_parse(dmg_down.get()),None)
     dmg_indicator.configure(text=str(tot_dmg))
