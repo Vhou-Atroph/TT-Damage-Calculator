@@ -2,14 +2,18 @@
 //! Copyright (C) 2022 Vhou-Atroph
 
 
+use std::cmp::Ordering;
+
 use pyo3::prelude::*;
 
+/// Calculation function module for TT-Damage-Calculator. This module is implemented in Rust.
 #[pymodule]
 fn tt_calc(_: Python<'_>, m: &PyModule) -> PyResult<()> {
     m.add_function(wrap_pyfunction!(cog_hp, m)?)?;
     m.add_function(wrap_pyfunction!(gag_calculator, m)?)?;
     m.add_function(wrap_pyfunction!(full_calc, m)?)?;
     m.add_function(wrap_pyfunction!(def_parse, m)?)?;
+    m.add_function(wrap_pyfunction!(lvl_ind, m)?)?;
     Ok(())
 }
 
@@ -148,4 +152,19 @@ fn full_calc(trap:Vec<u64>,sound:Vec<u64>,throw:Vec<u64>,squirt:Vec<u64>,drop:Ve
         gagdmg+=gag_calculator(drop,false,defense,plating);
     }
     gagdmg
+}
+
+/// Calculates the level of cog a particular amount of damage would destroy.
+#[pyfunction]
+fn lvl_ind(dmg:u64) -> u64 {
+    let mut lvl: u64 = 0;
+    while lvl < 20 {
+        lvl+=1;
+        match cog_hp(lvl).cmp(&dmg) {
+            Ordering::Less => continue,
+            Ordering::Equal => return lvl,
+            Ordering::Greater => return lvl-1,
+        }
+    }
+    20
 }
