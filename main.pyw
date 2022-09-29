@@ -38,7 +38,7 @@ trp_used=list()
 
 organic=BooleanVar()
 lured=BooleanVar()
-v2=IntVar()
+v2=BooleanVar()
 pin_val=BooleanVar()
 dmg_down=StringVar()
 dmg_down.set('0%')
@@ -55,7 +55,7 @@ col1=Frame(window) #Will be used for calculation history
 
 #Total damage calculation
 def calc_dmg(*args):
-  if v2.get()==0:
+  if v2.get() == False:
     tot_dmg=tt_calc.full_calc(trp_used,snd_used,trw_used,sqt_used,drp_used,lured.get(),tt_calc.def_parse(dmg_down.get()),None)
     cog_level_indicator.configure(text="(level "+str(tt_calc.lvl_ind(tot_dmg))+")")
     def_btn.configure(state="normal")
@@ -82,7 +82,7 @@ def_btn=OptionMenu(tog_btns,dmg_down,*def_values,command=calc_dmg)
 def_btn.configure(width=4,font=('Arial',11,'normal'))
 def_lur_dropdown=OptionMenu(tog_btns,def_lur_lock,*def_lur_options)
 def_lur_dropdown.configure(width=12,font=('Arial',11,'normal'))
-v2_check=Checkbutton(tog_btns,text='V2 Cog',variable=v2,onvalue=1,offvalue=0,font=('Arial',11,'normal'),command=calc_dmg)
+v2_check=Checkbutton(tog_btns,text='V2 Cog',variable=v2,onvalue=True,offvalue=False,font=('Arial',11,'normal'),command=calc_dmg)
 
 #The Gags
 
@@ -331,7 +331,7 @@ def clear_inputs(opt=""):
   if def_lur_lock.get()=='No lock' or def_lur_lock.get()=='Lock lure':
     dmg_down.set('0%')
   lured.set(False)
-  v2.set(0)
+  v2.set(False)
   snd_used=list()
   trw_used=list()
   sqt_used=list()
