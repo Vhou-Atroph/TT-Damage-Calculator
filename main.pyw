@@ -281,16 +281,16 @@ def def_swap(*arg):
 window.bind('<'+settings.keybinds.defense+'>',def_swap)
 
 #Swap a toggle
-def tog_swap(par,tog):
-  if tog.get()==False:
-    tog.set(True)
-  else:
+def tog_swap(tog):
+  if tog.get():
     tog.set(False)
+  else:
+    tog.set(True)
   calc_dmg()
   pin()
-window.bind('<'+settings.keybinds.lure+'>',lambda par: tog_swap(par,lured))
-window.bind('<'+settings.keybinds.v2+'>',lambda par: tog_swap(par,v2))
-window.bind('<'+settings.keybinds.pin+'>',lambda par: tog_swap(par,pin_val))
+window.bind('<'+settings.keybinds.lure+'>',lambda par: tog_swap(lured))
+window.bind('<'+settings.keybinds.v2+'>',lambda par: tog_swap(v2))
+window.bind('<'+settings.keybinds.pin+'>',lambda par: tog_swap(pin_val))
 
 #Clear inputs function
 def clear_inputs(opt=""):
