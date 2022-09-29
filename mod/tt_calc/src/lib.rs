@@ -35,14 +35,9 @@ fn cog_hp(lvl:u64) -> u64 {
 }
 
 #[pyfunction]
-fn def_parse(val:&str) -> f64 {
-    match val {
-        "10%" => return 0.1,
-        "15%" => return 0.15,
-        "20%" => return 0.2,
-        "25%" => return 0.25,
-        _ => 0.0
-    }
+fn def_parse(mut val:String) -> f64 {
+    val.pop();
+    val.parse::<f64>().unwrap() / 100.0
 }
 
 /// Evaluates cog defense buff applicable in a round.
