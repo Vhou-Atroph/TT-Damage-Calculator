@@ -74,22 +74,6 @@ def calc_dmg(opt=""):
   if local_lure==True:
     lured.set(True)
 
-#Gag Buttons
-def gag_btn(gag,list,btn=None):
-  if organic.get()==True and gag.gtype=="Gag":
-    name="Organic "+gag.name
-    dmg=gag.organic()
-  else:
-    dmg=gag.dmg
-    name=gag.name
-  if gag.gtype=="Gag":
-    btn.configure(text=int(btn.cget("text"))+1)
-  list.append(dmg)
-  hist_box.configure(state=NORMAL)
-  hist_box.insert('1.0',"Gag used: "+name+" ("+str(dmg)+")\n")
-  hist_box.configure(state=DISABLED)
-  calc_dmg()
-
 #Pin window to top
 def pin():
   if pin_val.get()==True:
@@ -122,7 +106,7 @@ class GagButton(Button):
       self['font'] = ('Impress BT',8,'bold')
       self['compound'] = 'top'
       self['fg'] = 'white'
-    self['command'] = lambda:gag_btn(self.gag,self.list(),self)
+    self['command'] = lambda:self.press(self.list())
     self.grid(row=0,column=self.gag.level)
   def list(self):
     global trp_used
@@ -141,6 +125,15 @@ class GagButton(Button):
         return sqt_used
       case "Drop":
         return drp_used
+  def press(self,list):
+    data = self.gag.button_press(organic.get())
+    list.append(data[0])
+    hist_box.configure(state=NORMAL)
+    hist_box.insert('1.0',"Gag used: "+data[1]+" ("+str(data[0])+")\n")
+    hist_box.configure(state=DISABLED)
+    if self.gag.gtype == "Gag":
+      self.configure(text=int(self.cget("text"))+1)
+    calc_dmg()
 
 gag_frame=Frame(col0)
 #Sound
