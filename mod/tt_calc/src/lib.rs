@@ -72,7 +72,6 @@ fn cog_plating(gags:Vec<i64>,lvl:i64) -> Vec<i64> {
         let dmg = i - plating;
         if dmg > 0 {newvec.push(dmg);} else {newvec.push(0);}
     }
-    println!("{:?}",newvec);
     newvec
 }
 
