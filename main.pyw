@@ -319,11 +319,11 @@ def clear_inputs(opt=""):
   global trp_used
   local_lure=False
   lur_info='no'
-  if lured.get()==True: #Find out if lure is enabled. If it is, save a local variable.
+  if lured.get(): #Find out if lure is enabled. If it is, save a local variable.
     local_lure=True
     lur_info='yes'
   hist_box.configure(state=NORMAL)
-  if v2.get()==1:
+  if v2.get():
     hist_box.insert('1.0',"--------\nCalculation finished!\nDamage calculated was: "+dmg_indicator.cget("text")+"\nDefense: V2.0"+"\nLure: "+lur_info+"\nWill kill: "+cog_level_indicator.cget("text")+"\n\n")
   else:
     hist_box.insert('1.0',"--------\nCalculation finished!\nDamage calculated was: "+dmg_indicator.cget("text")+"\nDefense: "+dmg_down.get()+"\nLure: "+lur_info+"\nWill kill: "+cog_level_indicator.cget("text")+"\n\n")
