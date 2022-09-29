@@ -34,9 +34,8 @@ impl Gag {
     }
 
     /// Returns the damage an organic gag of a certain type does.
-    fn button(&self,org_val:bool) -> PyResult<u64> {
-        if self.gtype == "Gag" && org_val {return Ok(org(self.dmg))}
-        Ok(self.dmg)
+    fn organic(&self) -> PyResult<u64> {
+        Ok(org(self.dmg))
     }
 }
 
