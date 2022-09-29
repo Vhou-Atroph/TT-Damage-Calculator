@@ -65,7 +65,7 @@ def calc_dmg(opt=""):
     tot_dmg=tt_calc.full_calc(trp_used,snd_used,trw_used,sqt_used,drp_used,lured.get(),tt_calc.def_parse(dmg_down.get()),None)
     #print("Total damage this round: "+str(tot_dmg))
     dmg_indicator.configure(text=str(tot_dmg))
-    cog_health_ind_calc()
+    cog_level_indicator.configure(text="(level "+str(tt_calc.lvl_ind(tot_dmg))+")")
     tot_dmg=0
     def_btn.configure(state="normal")
   else:
@@ -395,30 +395,6 @@ def cog_health_calc_show():
   cog_calc.configure(text='Hide Health and\n SOS Cards',command=cog_health_calc_hide)
   window.geometry('')
 cog_calc.configure(command=cog_health_calc_show)
-
-#Cog HP Indicator Function
-def cog_health_ind_calc():
-  lvl=0
-  while lvl<20:
-    lvl=lvl+1
-    #print("Evaluating level: "+str(lvl))
-    global tot_dmg
-    #print("The current total damage is "+str(tot_dmg))
-    if tot_dmg==tt_calc.cog_hp(lvl):
-      #print("Wow! We found the level!")
-      #print("The level is: "+str(lvl))
-      cog_level_indicator.configure(text="(level "+str(lvl)+")")
-      break
-    elif tot_dmg<tt_calc.cog_hp(lvl):
-      #print("Wow! We found the level!")
-      lvl=lvl-1
-      #print("The level is: "+str(lvl))
-      cog_level_indicator.configure(text="(level "+str(lvl)+")")
-      break
-    elif lvl==20 and tot_dmg>tt_calc.cog_hp(lvl):
-      #print("Wow! We found the level!")
-      #print("The level is: "+str(lvl))
-      cog_level_indicator.configure(text="(level "+str(lvl)+")")
 
 #Cog V2 Calculation
 global v2_dmg
