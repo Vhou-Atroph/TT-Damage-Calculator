@@ -82,7 +82,7 @@ def gag_btn(gag,list,btn=None):
   else:
     dmg=gag.dmg
     name=gag.name
-  if btn:
+  if gag.gtype=="Gag":
     btn.configure(text=int(btn.cget("text"))+1)
   list.append(dmg)
   hist_box.configure(state=NORMAL)
@@ -115,12 +115,13 @@ class GagButton(Button):
     self.gag = gag
     Button.__init__(self,parent)
     self['image'] = image
-    self['bg'] = '#1888D3'
-    self['activebackground'] = '#186AD3'
-    self['text'] = '0'
-    self['font'] = ('Impress BT',8,'bold')
-    self['compound'] = 'top'
-    self['fg'] = 'white'
+    if self.gag.gtype == "Gag":
+      self['bg'] = '#1888D3'
+      self['activebackground'] = '#186AD3'
+      self['text'] = '0'
+      self['font'] = ('Impress BT',8,'bold')
+      self['compound'] = 'top'
+      self['fg'] = 'white'
     self['command'] = lambda:gag_btn(self.gag,self.list(),self)
     self.grid(row=0,column=self.gag.level)
   def list(self):
@@ -248,34 +249,25 @@ cog_health_lbl=Label(cog_health_sheet,image=cog_health_img)
 sos_cards=Frame(window)
 sos_trp=Frame(sos_cards)
 clerk_will_img=PhotoImage(file='img/clerkwill.png')
-clerk_will=Button(sos_trp,image=clerk_will_img)
+clerk_will=GagButton(sos_trp,image=clerk_will_img,gag=tt_gags.Gag("Sos","Clerk Will","Trap",0,60))
 clerk_penny_img=PhotoImage(file='img/clerkpenny.png')
-clerk_penny=Button(sos_trp,image=clerk_penny_img)
+clerk_penny=GagButton(sos_trp,image=clerk_penny_img,gag=tt_gags.Gag("Sos","Clerk Penny","Trap",1,120))
 clerk_clara_img=PhotoImage(file='img/clerkclara.png')
-clerk_clara=Button(sos_trp,image=clerk_clara_img)
-clerk_will.configure(command=lambda:gag_btn(tt_gags.Gag("Sos","Clerk Will","Trap",0,60),trp_used))
-clerk_penny.configure(command=lambda:gag_btn(tt_gags.Gag("Sos","Clerk Penny","Trap",1,120),trp_used))
-clerk_clara.configure(command=lambda:gag_btn(tt_gags.Gag("Sos","Clerk Clara","Trap",2,180),trp_used))
+clerk_clara=GagButton(sos_trp,image=clerk_clara_img,gag=tt_gags.Gag("Sos","Clerk Clara","Trap",2,180))
 sos_snd=Frame(sos_cards)
 barb_img=PhotoImage(file='img/barbaraseville.png')
-barb=Button(sos_snd,image=barb_img)
+barb=GagButton(sos_snd,image=barb_img,gag=tt_gags.Gag("Sos","Barbara Seville","Sound",0,35))
 sid_img=PhotoImage(file='img/sidsonata.png')
-sid=Button(sos_snd,image=sid_img)
+sid=GagButton(sos_snd,image=sid_img,gag=tt_gags.Gag("Sos","Sid Sonata","Sound",1,55))
 moe_img=PhotoImage(file='img/moezart.png')
-moe=Button(sos_snd,image=moe_img)
-barb.configure(command=lambda:gag_btn(tt_gags.Gag("Sos","Barbara Seville","Sound",0,35),snd_used))
-sid.configure(command=lambda:gag_btn(tt_gags.Gag("Sos","Sid Sonata","Sound",1,55),snd_used))
-moe.configure(command=lambda:gag_btn(tt_gags.Gag("Sos","Moe Zart","Sound",2,75),snd_used))
+moe=GagButton(sos_snd,image=moe_img,gag=tt_gags.Gag("Sos","Moe Zart","Sound",2,75))
 sos_drp=Frame(sos_cards)
 ned_img=PhotoImage(file='img/clumsyned.png')
-ned=Button(sos_drp,image=ned_img)
+ned=GagButton(sos_drp,image=ned_img,gag=tt_gags.Gag("Sos","Clumsy Ned","Drop",0,60))
 franz_img=PhotoImage(file='img/franzneckvein.png')
-franz=Button(sos_drp,image=franz_img)
+franz=GagButton(sos_drp,image=franz_img,gag=tt_gags.Gag("Sos","Franz Neckvein","Drop",1,100))
 bess_img=PhotoImage(file='img/barnaclebessie.png')
-bess=Button(sos_drp,image=bess_img)
-ned.configure(command=lambda:gag_btn(tt_gags.Gag("Sos","Clumsy Ned","Drop",0,60),drp_used))
-franz.configure(command=lambda:gag_btn(tt_gags.Gag("Sos","Franz Neckvein","Drop",1,100),drp_used))
-bess.configure(command=lambda:gag_btn(tt_gags.Gag("Sos","Barnacle Bessie","Drop",2,170),drp_used))
+bess=GagButton(sos_drp,image=bess_img,gag=tt_gags.Gag("Sos","Barnacle Bessie","Drop",2,170))
 
 ###Keybinds
 
