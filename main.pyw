@@ -30,11 +30,11 @@ global trw_used
 global sqt_used
 global drp_used
 global trp_used
-snd_used=list()
-trw_used=list()
-sqt_used=list()
-drp_used=list()
-trp_used=list()
+snd_used=[]
+trw_used=[]
+sqt_used=[]
+drp_used=[]
+trp_used=[]
 
 organic=BooleanVar()
 lured=BooleanVar()
@@ -209,7 +209,7 @@ railroad_img=PhotoImage(file='img/railroad.png')
 railroad=GagButton(trpFrame,image=railroad_img,gag=tt_gags.Gag("Gag","Railroad","Trap",6,200))
 
 #Button list - used for mass configuring the gag buttons
-gag_btns=(bike_horn,whistle,bugle,aoogah,elephant_trunk,fog_horn,opera_singer,cupcake,fruit_pie_slice,cream_pie_slice,whole_fruit_pie,whole_cream_pie,birthday_cake,wedding_cake,squirting_flower,water_glass,squirt_gun,seltzer_bottle,fire_hose,storm_cloud,geyser,flower_pot,sandbag,anvil,big_weight,safe,grand_piano,toontanic,banana_peel,rake,marbles,quicksand,trapdoor,tnt,railroad)
+gag_btns=[bike_horn,whistle,bugle,aoogah,elephant_trunk,fog_horn,opera_singer,cupcake,fruit_pie_slice,cream_pie_slice,whole_fruit_pie,whole_cream_pie,birthday_cake,wedding_cake,squirting_flower,water_glass,squirt_gun,seltzer_bottle,fire_hose,storm_cloud,geyser,flower_pot,sandbag,anvil,big_weight,safe,grand_piano,toontanic,banana_peel,rake,marbles,quicksand,trapdoor,tnt,railroad]
 
 #Calculation history
 hist=Frame(col1)
@@ -256,25 +256,20 @@ bess=GagButton(sos_drp,image=bess_img,gag=tt_gags.Gag("Sos","Barnacle Bessie","D
 
 ###Keybinds
 
-#Toggle organic functions
-def tog_org_off(opt=""):
-  organic.set(False)
-  #print("Gags in calculations will no longer be organic!")
-  org_btn.configure(command=tog_org_on)
-  org_indicator.configure(text="Organic = OFF")
-  for i in gag_btns:
-    i.configure(bg='#1888D3',activebackground='#186AD3')
-  window.bind('<'+settings.keybinds.organic+'>',tog_org_on)
-def tog_org_on(opt=""):
-  organic.set(True)
-  #print("Gags in calculations will now be organic!")
-  org_btn.configure(command=tog_org_off)
-  org_indicator.configure(text="Organic = ON")
-  for i in gag_btns:
-    i.configure(bg='darkorange',activebackground='orange')
-  window.bind('<'+settings.keybinds.organic+'>',tog_org_off)
-org_btn.configure(command=tog_org_on)
-window.bind('<'+settings.keybinds.organic+'>',tog_org_on)
+#Organic gag toggle
+def organic_toggle(*arg):
+  if organic.get():
+    organic.set(False)
+    org_indicator.configure(text="Organic = OFF")
+    for i in gag_btns:
+      i.configure(bg='#1888D3',activebackground='#186AD3')
+  else:
+    organic.set(True)
+    org_indicator.configure(text="Organic = ON")
+    for i in gag_btns:
+      i.configure(bg='darkorange',activebackground='orange')
+org_btn.configure(command=organic_toggle)
+window.bind('<'+settings.keybinds.organic+'>',organic_toggle)
 
 #Def Keybind
 def def_swap(opt=""):
@@ -332,12 +327,13 @@ def clear_inputs(opt=""):
     dmg_down.set('0%')
   lured.set(False)
   v2.set(False)
-  snd_used=list()
-  trw_used=list()
-  sqt_used=list()
-  drp_used=list()
-  trp_used=list()
-  tog_org_off()
+  if organic.get():
+    organic_toggle()
+  snd_used=[]
+  trw_used=[]
+  sqt_used=[]
+  drp_used=[]
+  trp_used=[]
   calc_dmg()
   for i in gag_btns:
     i.configure(text='0')
