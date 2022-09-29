@@ -14,6 +14,7 @@ fn tt_calc(_: Python<'_>, m: &PyModule) -> PyResult<()> {
     m.add_function(wrap_pyfunction!(full_calc, m)?)?;
     m.add_function(wrap_pyfunction!(def_parse, m)?)?;
     m.add_function(wrap_pyfunction!(lvl_ind, m)?)?;
+    m.add_function(wrap_pyfunction!(v2_loop, m)?)?;
     Ok(())
 }
 
@@ -162,4 +163,20 @@ fn lvl_ind(dmg:u64) -> u64 {
         }
     }
     20
+}
+
+/// Calculates what level of v2 cog a certain combination of gags would kill along with damage done.
+#[pyfunction]
+fn v2_loop(trap:Vec<u64>,sound:Vec<u64>,throw:Vec<u64>,squirt:Vec<u64>,drop:Vec<u64>,lured:bool) -> PyResult<(u64,u64)> {
+    let mut lvl: u64 = 0;
+    while lvl < 20 {
+        lvl+=1;
+        let dmg = full_calc(trap.clone(),sound.clone(),throw.clone(),squirt.clone(),drop.clone(),lured,None,Some(lvl));
+        match cog_hp(lvl).cmp(&dmg) {
+            Ordering::Less => continue,
+            Ordering::Equal => return Ok((lvl,dmg)),
+            Ordering::Greater => return Ok((lvl-1,full_calc(trap,sound,throw,squirt,drop,lured,None,Some(lvl-1))))
+        }
+    }
+    Ok((20,full_calc(trap,sound,throw,squirt,drop,lured,None,Some(20))))
 }
