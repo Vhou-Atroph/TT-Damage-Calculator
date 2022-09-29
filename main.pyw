@@ -272,23 +272,12 @@ org_btn.configure(command=organic_toggle)
 window.bind('<'+settings.keybinds.organic+'>',organic_toggle)
 
 #Def Keybind
-def def_swap(opt=""):
-  global dmg_down
-  if dmg_down.get()=='0%':
-    dmg_down.set('10%')
-    calc_dmg()
-  elif dmg_down.get()=='10%':
-    dmg_down.set('15%')
-    calc_dmg()
-  elif dmg_down.get()=='15%':
-    dmg_down.set('20%')
-    calc_dmg()
-  elif dmg_down.get()=='20%':
-    dmg_down.set('25%')
-    calc_dmg()
-  else:
-    dmg_down.set('0%')
-    calc_dmg()
+def def_swap(*arg):
+  try:
+    dmg_down.set(def_values[def_values.index(dmg_down.get())+1])
+  except:
+    dmg_down.set("0%")
+  calc_dmg()
 window.bind('<'+settings.keybinds.defense+'>',def_swap)
 
 #Swap a toggle
