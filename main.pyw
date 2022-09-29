@@ -293,29 +293,21 @@ window.bind('<'+settings.keybinds.v2+'>',lambda par: tog_swap(v2))
 window.bind('<'+settings.keybinds.pin+'>',lambda par: tog_swap(pin_val))
 
 #Clear inputs function
-def clear_inputs(opt=""):
-  #print("Clearing gag inputs!")
-  global def_lur_lock
+def clear_inputs(*arg):
   global snd_used
   global trw_used
   global sqt_used
   global drp_used
   global trp_used
-  local_lure=False
-  lur_info='no'
-  if lured.get(): #Find out if lure is enabled. If it is, save a local variable.
-    local_lure=True
-    lur_info='yes'
   hist_box.configure(state=NORMAL)
   if v2.get():
-    hist_box.insert('1.0',"--------\nCalculation finished!\nDamage calculated was: "+dmg_indicator.cget("text")+"\nDefense: V2.0"+"\nLure: "+lur_info+"\nWill kill: "+cog_level_indicator.cget("text")+"\n\n")
+    hist_box.insert('1.0',"--------\nCalculation finished!\nDamage calculated was: "+dmg_indicator.cget("text")+"\nDefense: V2.0"+"\nLure: "+str(lured.get())+"\nWill kill: "+cog_level_indicator.cget("text")+"\n\n")
   else:
-    hist_box.insert('1.0',"--------\nCalculation finished!\nDamage calculated was: "+dmg_indicator.cget("text")+"\nDefense: "+dmg_down.get()+"\nLure: "+lur_info+"\nWill kill: "+cog_level_indicator.cget("text")+"\n\n")
+    hist_box.insert('1.0',"--------\nCalculation finished!\nDamage calculated was: "+dmg_indicator.cget("text")+"\nDefense: "+dmg_down.get()+"\nLure: "+str(lured.get())+"\nWill kill: "+cog_level_indicator.cget("text")+"\n\n")
   hist_box.configure(state=DISABLED)
   if def_lur_lock.get()=='No lock' or def_lur_lock.get()=='Lock lure':
     dmg_down.set('0%')
-  lured.set(False)
-  v2.set(False)
+    v2.set(False)
   if organic.get():
     organic_toggle()
   snd_used=[]
@@ -326,8 +318,10 @@ def clear_inputs(opt=""):
   calc_dmg()
   for i in gag_btns:
     i.configure(text='0')
-  if local_lure==True and def_lur_lock.get()=='Lock lure' or def_lur_lock.get()=='Lock both': #Use the local variable and def_lur_lock to lock lure as active even after it is set to 0 by clear_inputs()
+  if lured.get() and def_lur_lock.get()=='Lock lure' or lured.get() and def_lur_lock.get()=='Lock both':
     lured.set(True)
+  else:
+    lured.set(False)
 clear_btn.configure(command=clear_inputs)
 window.bind('<'+settings.keybinds.reset+'>',clear_inputs)
 
