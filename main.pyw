@@ -30,13 +30,11 @@ global trw_used
 global sqt_used
 global drp_used
 global trp_used
-global tot_dmg
 snd_used=list()
 trw_used=list()
 sqt_used=list()
 drp_used=list()
 trp_used=list()
-tot_dmg=0
 
 organic=BooleanVar()
 lured=BooleanVar()
@@ -57,22 +55,14 @@ col1=Frame(window) #Will be used for calculation history
 
 #Total damage calculation
 def calc_dmg(opt=""):
-  global tot_dmg
-  local_lure=False
-  if lured.get()==True: #Find out if lure is enabled. If it is, save a local variable.
-    local_lure=True
   if v2.get()==0:
     tot_dmg=tt_calc.full_calc(trp_used,snd_used,trw_used,sqt_used,drp_used,lured.get(),tt_calc.def_parse(dmg_down.get()),None)
-    #print("Total damage this round: "+str(tot_dmg))
     dmg_indicator.configure(text=str(tot_dmg))
     cog_level_indicator.configure(text="(level "+str(tt_calc.lvl_ind(tot_dmg))+")")
-    tot_dmg=0
     def_btn.configure(state="normal")
   else:
     v2_calc()
     def_btn.configure(state="disabled")
-  if local_lure==True:
-    lured.set(True)
 
 #Pin window to top
 def pin():
