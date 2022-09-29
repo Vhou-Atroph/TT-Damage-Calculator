@@ -27,7 +27,7 @@ fn tt_calc(_: Python<'_>, m: &PyModule) -> PyResult<()> {
 /// }
 /// ```
 #[pyfunction]
-fn cog_hp(lvl:u64) -> u64 {
+fn cog_hp(lvl:i64) -> i64 {
     match lvl {
         1..=11 => (lvl+1) * (lvl+2),
         12..=20 => (lvl+1) * (lvl+2) + 14,
@@ -50,9 +50,9 @@ fn def_parse(mut val:String) -> f64 {
 ///     println!("The damage dealt this round was: {}",dmg);
 /// }
 /// ```
-fn cog_defense(gags:Vec<u64>,strength:f64) -> Vec<u64> {
-    let mut newvec: Vec<u64> = Vec::new();
-    for i in gags.iter() {newvec.push(i - (*i as f64 * strength).ceil() as u64);}
+fn cog_defense(gags:Vec<i64>,strength:f64) -> Vec<i64> {
+    let mut newvec: Vec<i64> = Vec::new();
+    for i in gags.iter() {newvec.push(i - (*i as f64 * strength).ceil() as i64);}
     newvec
 }
 
@@ -65,9 +65,14 @@ fn cog_defense(gags:Vec<u64>,strength:f64) -> Vec<u64> {
 ///     println!("The damage dealt this round was: {}",dmg);
 /// }
 /// ```
-fn cog_plating(gags:Vec<u64>,lvl:u64) -> Vec<u64> {
-    let mut newvec: Vec<u64> = Vec::new();
-    for i in gags.iter() {newvec.push(i - (lvl as f64 * 1.5).floor() as u64);}
+fn cog_plating(gags:Vec<i64>,lvl:i64) -> Vec<i64> {
+    let mut newvec: Vec<i64> = Vec::new();
+    for i in gags.iter() {
+        let plating = (lvl as f64 * 1.5).floor() as i64;
+        let dmg = i - plating;
+        if dmg > 0 {newvec.push(dmg);} else {newvec.push(0);}
+    }
+    println!("{:?}",newvec);
     newvec
 }
 
@@ -81,11 +86,11 @@ fn cog_plating(gags:Vec<u64>,lvl:u64) -> Vec<u64> {
 ///     println!("{} is more than enough damage to kill level 10 cogs.",dmg);
 /// }
 /// ```
-fn damage_lureless(gags:Vec<u64>) -> u64 {
+fn damage_lureless(gags:Vec<i64>) -> i64 {
     if gags.len() > 1 {
-        let mut gagdmg: u64 = 0;
+        let mut gagdmg: i64 = 0;
         for i in gags.iter() {gagdmg+=i;}
-        gagdmg+=(gagdmg as f64 * 0.2).ceil() as u64;
+        gagdmg+=(gagdmg as f64 * 0.2).ceil() as i64;
         return gagdmg
     }
     gags[0]
@@ -101,21 +106,21 @@ fn damage_lureless(gags:Vec<u64>) -> u64 {
 ///     println!("{} is more than enough damage to kill level 14 cogs.",dmg);
 /// }
 /// ```
-fn damage_lured(gags:Vec<u64>) -> u64 {
+fn damage_lured(gags:Vec<i64>) -> i64 {
     if gags.len() > 1 {
-        let mut gagdmg: u64 = 0;
+        let mut gagdmg: i64 = 0;
         for i in gags.iter() {gagdmg+=i;}
-        gagdmg+=(gagdmg as f64 * 0.5).ceil() as u64 + (gagdmg as f64 * 0.2).ceil() as u64;
+        gagdmg+=(gagdmg as f64 * 0.5).ceil() as i64 + (gagdmg as f64 * 0.2).ceil() as i64;
         return gagdmg
     }
-    gags[0] + (gags[0] as f64 * 0.5).ceil() as u64
+    gags[0] + (gags[0] as f64 * 0.5).ceil() as i64
 }
 
 /// Evaluates which functions to perform for a particular gag usage round.
 #[pyfunction]
-fn gag_calculator(gags:Vec<u64>,lured:bool,defense:Option<f64>,plating:Option<u64>) -> u64 {
-    let mut modlist: Vec<u64> = gags;
-    let gagdmg: u64;
+fn gag_calculator(gags:Vec<i64>,lured:bool,defense:Option<f64>,plating:Option<i64>) -> i64 {
+    let mut modlist: Vec<i64> = gags;
+    let gagdmg: i64;
     if let Some(def) = defense { modlist = cog_defense(modlist,def) }
     if let Some(plate) = plating { modlist = cog_plating(modlist,plate) }
     if lured {gagdmg = damage_lured(modlist);}
@@ -125,8 +130,8 @@ fn gag_calculator(gags:Vec<u64>,lured:bool,defense:Option<f64>,plating:Option<u6
 
 /// Full damage calculation for a given round in a cog battle.
 #[pyfunction]
-fn full_calc(trap:Vec<u64>,sound:Vec<u64>,throw:Vec<u64>,squirt:Vec<u64>,drop:Vec<u64>,lured:bool,defense:Option<f64>,plating:Option<u64>) -> u64 {
-    let mut gagdmg: u64 = 0;
+fn full_calc(trap:Vec<i64>,sound:Vec<i64>,throw:Vec<i64>,squirt:Vec<i64>,drop:Vec<i64>,lured:bool,defense:Option<f64>,plating:Option<i64>) -> i64 {
+    let mut gagdmg: i64 = 0;
     let mut lured_loc = lured;
     if trap.len() == 1 && lured_loc {
         gagdmg+=gag_calculator(trap,false,defense,plating);
@@ -152,8 +157,8 @@ fn full_calc(trap:Vec<u64>,sound:Vec<u64>,throw:Vec<u64>,squirt:Vec<u64>,drop:Ve
 
 /// Calculates the level of cog a particular amount of damage would destroy.
 #[pyfunction]
-fn lvl_ind(dmg:u64) -> u64 {
-    let mut lvl: u64 = 0;
+fn lvl_ind(dmg:i64) -> i64 {
+    let mut lvl: i64 = 0;
     while lvl < 20 {
         lvl+=1;
         match cog_hp(lvl).cmp(&dmg) {
@@ -167,8 +172,8 @@ fn lvl_ind(dmg:u64) -> u64 {
 
 /// Calculates what level of v2 cog a certain combination of gags would kill along with damage done.
 #[pyfunction]
-fn v2_loop(trap:Vec<u64>,sound:Vec<u64>,throw:Vec<u64>,squirt:Vec<u64>,drop:Vec<u64>,lured:bool) -> PyResult<(u64,u64)> {
-    let mut lvl: u64 = 0;
+fn v2_loop(trap:Vec<i64>,sound:Vec<i64>,throw:Vec<i64>,squirt:Vec<i64>,drop:Vec<i64>,lured:bool) -> PyResult<(i64,i64)> {
+    let mut lvl: i64 = 0;
     while lvl < 20 {
         lvl+=1;
         let dmg = full_calc(trap.clone(),sound.clone(),throw.clone(),squirt.clone(),drop.clone(),lured,None,Some(lvl));
