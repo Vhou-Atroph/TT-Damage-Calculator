@@ -38,7 +38,6 @@ trp_used=[]
 
 organic=BooleanVar()
 lured=BooleanVar()
-v2=BooleanVar()
 pin_val=BooleanVar()
 dmg_down=StringVar()
 plating_lvl=IntVar()
@@ -57,15 +56,9 @@ col1=Frame(window) #Will be used for calculation history
 
 #Total damage calculation
 def calc_dmg(*args):
-  if v2.get() == False:
-    tot_dmg=tt_calc.full_calc(trp_used,snd_used,trw_used,sqt_used,drp_used,lured.get(),tt_calc.def_parse(dmg_down.get()),plating_lvl.get())
-    cog_level_indicator.configure(text="(level "+str(tt_calc.lvl_ind(tot_dmg))+")")
-    def_btn.configure(state="normal")
-  else:
-    data = tt_calc.v2_loop(trp_used,snd_used,trw_used,sqt_used,drp_used,lured.get())
-    tot_dmg = data[1]
-    cog_level_indicator.configure(text="(v2.0 level "+str(tt_calc.lvl_ind(tot_dmg))+")")
-    def_btn.configure(state="disabled")
+  tot_dmg=tt_calc.full_calc(trp_used,snd_used,trw_used,sqt_used,drp_used,lured.get(),tt_calc.def_parse(dmg_down.get()),plating_lvl.get())
+  cog_level_indicator.configure(text="(level "+str(tt_calc.lvl_ind(tot_dmg))+")")
+  def_btn.configure(state="normal")
   if plating_lvl.get():
     cog_level_indicator.configure(text="vs. v2.0 level "+str(plating_lvl.get()))
   dmg_indicator.configure(text=str(tot_dmg))
@@ -86,7 +79,6 @@ def_btn=OptionMenu(tog_btns,dmg_down,*def_values,command=calc_dmg)
 def_btn.configure(width=4,font=('Arial',11,'normal'))
 def_lur_dropdown=OptionMenu(tog_btns,def_lur_lock,*def_lur_options)
 def_lur_dropdown.configure(width=12,font=('Arial',11,'normal'))
-v2_check=Checkbutton(tog_btns,text='V2 Cog',variable=v2,onvalue=True,offvalue=False,font=('Arial',11,'normal'),command=calc_dmg)
 
 #The Gags
 class GagButton(Button):
@@ -291,7 +283,7 @@ def tog_swap(tog):
   calc_dmg()
   pin()
 window.bind('<'+settings.keybinds.lure+'>',lambda par: tog_swap(lured))
-window.bind('<'+settings.keybinds.v2+'>',lambda par: tog_swap(v2))
+#window.bind('<'+settings.keybinds.v2+'>',lambda par: tog_swap(v2))
 window.bind('<'+settings.keybinds.pin+'>',lambda par: tog_swap(pin_val))
 
 #Clear inputs function
@@ -302,14 +294,10 @@ def clear_inputs(*arg):
   global drp_used
   global trp_used
   hist_box.configure(state=NORMAL)
-  if v2.get():
-    hist_box.insert('1.0',"--------\nCalculation finished!\nDamage calculated was: "+dmg_indicator.cget("text")+"\nDefense: V2.0"+"\nLure: "+str(lured.get())+"\nWill kill: "+cog_level_indicator.cget("text")+"\n\n")
-  else:
-    hist_box.insert('1.0',"--------\nCalculation finished!\nDamage calculated was: "+dmg_indicator.cget("text")+"\nDefense: "+dmg_down.get()+"\nLure: "+str(lured.get())+"\nWill kill: "+cog_level_indicator.cget("text")+"\n\n")
+  hist_box.insert('1.0',"--------\nCalculation finished!\nDamage calculated was: "+dmg_indicator.cget("text")+"\nDefense: "+dmg_down.get()+"\nLure: "+str(lured.get())+"\nWill kill: "+cog_level_indicator.cget("text")+"\n\n")
   hist_box.configure(state=DISABLED)
   if def_lur_lock.get()=='No lock' or def_lur_lock.get()=='Lock lure':
     dmg_down.set('0%')
-    v2.set(False)
   if organic.get():
     organic_toggle()
   snd_used=[]
@@ -381,7 +369,6 @@ def_lbl.grid(column=2,row=0,padx=0)
 def_btn.grid(column=3,row=0)
 def_lur_dropdown.grid(column=1,row=1)
 clear_btn.grid(column=2,row=1,columnspan=2,padx=5)
-v2_check.grid(column=0,row=1)
 
 #Geometry - Gags
 gag_frame.grid(column=0,row=2,pady=10)
