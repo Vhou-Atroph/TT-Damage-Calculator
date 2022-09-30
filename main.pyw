@@ -41,11 +41,10 @@ lured=BooleanVar()
 pin_val=BooleanVar()
 dmg_down=DoubleVar()
 plating_lvl=IntVar()
+status_lock=BooleanVar()
 dmg_down.set(0.0)
 plating_lvl.set(0)
-def_lur_lock=StringVar()
-def_lur_lock.set('No lock')
-def_lur_options=['No lock','Lock lure','Lock defense','Lock both']
+status_lock.set(False)
 
 settings = tt_settings.Settings("mod/settings.toml")
 
@@ -63,7 +62,7 @@ def calc_dmg(*args):
 
 #Pin window to top
 def pin():
-  if pin_val.get()==True:
+  if pin_val.get():
     return window.attributes('-topmost',True)
   window.attributes('-topmost',False)
 
@@ -72,8 +71,6 @@ tog_btns=Frame(col0)
 org_btn=Button(tog_btns,text='Toggle Organic',font=('Arial',11,'normal'))
 lur_check=Checkbutton(tog_btns,text='Cog lured',variable=lured,onvalue=1,offvalue=0,font=('Arial',11,'normal'),command=calc_dmg)
 clear_btn=Button(tog_btns,text='Reset damage',font=('Arial',11,'normal'))
-def_lur_dropdown=OptionMenu(tog_btns,def_lur_lock,*def_lur_options)
-def_lur_dropdown.configure(width=12,font=('Arial',11,'normal'))
 
 #The Gags
 class GagButton(Button):
@@ -291,13 +288,13 @@ def clear_inputs(*arg):
   sqt_used=[]
   drp_used=[]
   trp_used=[]
-  calc_dmg()
   for i in gag_btns:
     i.configure(text='0')
-  if lured.get() and def_lur_lock.get()=='Lock lure' or lured.get() and def_lur_lock.get()=='Lock both':
-    lured.set(True)
-  else:
-    lured.set(False)
+  if not status_lock.get():
+    plating_lvl.set(0)
+    dmg_down.set(0.0)
+    lured.set(0)
+  calc_dmg()
 clear_btn.configure(command=clear_inputs)
 window.bind('<'+settings.keybinds.reset+'>',clear_inputs)
 
@@ -327,7 +324,7 @@ cog_calc.configure(command=cog_health_calc_show)
 toolbar=Menu(window)
 #Program
 program_menu=Menu(toolbar,tearoff=0)
-program_menu.add_checkbutton(label="Pin window",command=pin,variable=pin_val,onvalue=1,offvalue=0,accelerator="Alt+Up")
+program_menu.add_checkbutton(label="Pin window",command=pin,variable=pin_val,onvalue=True,offvalue=False,accelerator="Alt+Up")
 program_menu.add_separator()
 program_menu.add_command(label="Check for update",command=lambda:update_checker.compare_versions(local_file="mod/version.txt",git_file="https://raw.githubusercontent.com/Vhou-Atroph/TT-Damage-Calculator/main/mod/version.txt"))
 program_menu.add_command(label="Exit",command=lambda:window.destroy(),accelerator="Alt+F4")
@@ -347,6 +344,8 @@ v2_menu.add_radiobutton(label="Level 10",value=10,variable=plating_lvl,command=c
 v2_menu.add_radiobutton(label="Level 11",value=11,variable=plating_lvl,command=calc_dmg)
 v2_menu.add_radiobutton(label="Level 12",value=12,variable=plating_lvl,command=calc_dmg)
 calculations_menu.add_cascade(label="V2.0 Cogs",menu=v2_menu)
+calculations_menu.add_separator()
+calculations_menu.add_checkbutton(label="Lock Status",variable=status_lock,onvalue=True,offvalue=False)
 toolbar.add_cascade(label="Calculations",menu=calculations_menu)
 window.configure(menu=toolbar)
 
@@ -358,8 +357,7 @@ col1.grid(column=1,row=0,padx=10)
 tog_btns.grid(column=0,row=1,pady=5)
 lur_check.grid(column=0,row=0,padx=5)
 org_btn.grid(column=1,row=0,padx=5)
-def_lur_dropdown.grid(column=1,row=1)
-clear_btn.grid(column=2,row=1,columnspan=2,padx=5)
+clear_btn.grid(column=2,row=0,columnspan=2,padx=5)
 
 #Geometry - Gags
 gag_frame.grid(column=0,row=2,pady=10)
