@@ -85,7 +85,6 @@ def_lur_dropdown.configure(width=12,font=('Arial',11,'normal'))
 v2_check=Checkbutton(tog_btns,text='V2 Cog',variable=v2,onvalue=True,offvalue=False,font=('Arial',11,'normal'),command=calc_dmg)
 
 #The Gags
-
 class GagButton(Button):
   def __init__(self,parent,image,gag):
     self.gag = gag
@@ -98,7 +97,7 @@ class GagButton(Button):
       self['font'] = ('Impress BT',8,'bold')
       self['compound'] = 'top'
       self['fg'] = 'white'
-    self['command'] = lambda:self.press(self.list())
+    self['command'] = self.press
     self.grid(row=0,column=self.gag.level)
   def list(self):
     global trp_used
@@ -117,9 +116,9 @@ class GagButton(Button):
         return sqt_used
       case "Drop":
         return drp_used
-  def press(self,list):
+  def press(self):
     data = self.gag.button_press(organic.get())
-    list.append(data[0])
+    self.list().append(data[0])
     hist_box.configure(state=NORMAL)
     hist_box.insert('1.0',"Gag used: "+data[1]+" ("+str(data[0])+")\n")
     hist_box.configure(state=DISABLED)
@@ -208,7 +207,6 @@ tnt=GagButton(trpFrame,image=tnt_img,gag=tt_gags.Gag("Gag","TNT","Trap",5,180))
 railroad_img=PhotoImage(file='img/railroad.png')
 railroad=GagButton(trpFrame,image=railroad_img,gag=tt_gags.Gag("Gag","Railroad","Trap",6,200))
 
-#Button list - used for mass configuring the gag buttons
 gag_btns=[bike_horn,whistle,bugle,aoogah,elephant_trunk,fog_horn,opera_singer,cupcake,fruit_pie_slice,cream_pie_slice,whole_fruit_pie,whole_cream_pie,birthday_cake,wedding_cake,squirting_flower,water_glass,squirt_gun,seltzer_bottle,fire_hose,storm_cloud,geyser,flower_pot,sandbag,anvil,big_weight,safe,grand_piano,toontanic,banana_peel,rake,marbles,quicksand,trapdoor,tnt,railroad]
 
 #Calculation history
@@ -327,7 +325,6 @@ window.bind('<'+settings.keybinds.reset+'>',clear_inputs)
 
 #Clear history function
 def clear_history():
-  #print("Clearing calculcation history!")
   hist_box.configure(state=NORMAL)
   hist_box.delete('1.0', END)
   hist_box.configure(state=DISABLED)
@@ -344,18 +341,6 @@ def cog_health_calc_show():
   cog_health_sheet.grid(column=0,row=3)
   cog_health_lbl.grid(column=0,row=0)
   sos_cards.grid(column=1,row=3)
-  sos_trp.grid(column=0,row=0)
-  clerk_will.grid(column=0,row=0)
-  clerk_penny.grid(column=1,row=0)
-  clerk_clara.grid(column=2,row=0)
-  sos_snd.grid(column=0,row=1)
-  barb.grid(column=0,row=0)
-  sid.grid(column=1,row=0)
-  moe.grid(column=2,row=0)
-  sos_drp.grid(column=0,row=2)
-  ned.grid(column=0,row=0)
-  franz.grid(column=1,row=0)
-  bess.grid(column=2,row=0)
   cog_calc.configure(text='Hide Health and\n SOS Cards',command=cog_health_calc_hide)
   window.geometry('')
 cog_calc.configure(command=cog_health_calc_show)
@@ -387,16 +372,14 @@ v2_check.grid(column=0,row=1)
 
 #Geometry - Gags
 gag_frame.grid(column=0,row=2,pady=10)
-#Sound
 snd_frame.grid(column=0,row=1,)
-#Throw
 trw_frame.grid(column=0,row=2)
-#Squirt
 sqt_frame.grid(column=0,row=3)
-#Drop
 drp_frame.grid(column=0,row=4)
-#Trap
 trpFrame.grid(column=0,row=0)
+sos_trp.grid(column=0,row=0)
+sos_snd.grid(column=0,row=1)
+sos_drp.grid(column=0,row=2)
 
 #Geometry - Calculation History
 hist.grid(column=0,row=0)
