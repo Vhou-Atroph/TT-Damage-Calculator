@@ -52,8 +52,8 @@ The program has various keybinds to expedite calculation:
 | shift       | Toggle Organic      |
 | ctrl+l      | Toggle Lure         |
 | ctrl+r      | Finish Calculation  |
-| ctrl+d      | Toggle Defense      |
-| ctrl+v      | Toggle v2 Calculator|
+| ctrl+d      | Cycle  Defense      |
+| ctrl+v      | Cycle v2 levels     |
 | ctrl+x      | Lock/Unlock statuses|
 | alt+up      | Toggle Pinned Window|
 
