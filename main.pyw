@@ -200,7 +200,7 @@ gag_btns=[bike_horn,whistle,bugle,aoogah,elephant_trunk,fog_horn,opera_singer,cu
 #Calculation history
 hist=Frame(col1)
 hist_lbl=Label(hist,text="History")
-hist_box=Text(hist,width=25,height=25,state=DISABLED,font=('Arial',10,'normal'),wrap=WORD)
+hist_box=Text(hist,width=25,height=22,state=DISABLED,font=('Arial',10,'normal'),wrap=WORD)
 clear_hist_btn=Button(hist,text="Clear History")
 cog_calc=Button(hist,text="Show Health and\n SOS Cards")
 
