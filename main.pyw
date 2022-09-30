@@ -240,6 +240,9 @@ bess_img=PhotoImage(file='img/barnaclebessie.png')
 bess=GagButton(sos_drp,image=bess_img,gag=tt_gags.Gag("Sos","Barnacle Bessie","Drop",2,170))
 
 ###Keybinds
+window.bind('<'+settings.keybinds.v2+'>',lambda par: [plating_lvl.set(tt_calc.advance_int([0,9,10,11,12],plating_lvl.get())),calc_dmg()])
+window.bind('<'+settings.keybinds.defense+'>',lambda par: [dmg_down.set(tt_calc.advance_float([0.0,0.1,0.15,0.2,0.25],dmg_down.get())),calc_dmg()])
+
 
 #Organic gag toggle
 def organic_toggle(*arg):
@@ -255,8 +258,6 @@ def organic_toggle(*arg):
       i.configure(bg='darkorange',activebackground='orange')
 org_btn.configure(command=organic_toggle)
 window.bind('<'+settings.keybinds.organic+'>',organic_toggle)
-
-#window.bind('<'+settings.keybinds.defense+'>',def_swap)
 
 #Swap a toggle
 def tog_swap(tog):
