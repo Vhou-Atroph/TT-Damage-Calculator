@@ -41,7 +41,9 @@ lured=BooleanVar()
 v2=BooleanVar()
 pin_val=BooleanVar()
 dmg_down=StringVar()
+plating_lvl=IntVar()
 dmg_down.set('0%')
+plating_lvl.set(0)
 def_values=['0%','10%','15%','20%','25%']
 def_lur_lock=StringVar()
 def_lur_lock.set('No lock')
@@ -56,7 +58,7 @@ col1=Frame(window) #Will be used for calculation history
 #Total damage calculation
 def calc_dmg(*args):
   if v2.get() == False:
-    tot_dmg=tt_calc.full_calc(trp_used,snd_used,trw_used,sqt_used,drp_used,lured.get(),tt_calc.def_parse(dmg_down.get()),None)
+    tot_dmg=tt_calc.full_calc(trp_used,snd_used,trw_used,sqt_used,drp_used,lured.get(),tt_calc.def_parse(dmg_down.get()),plating_lvl.get())
     cog_level_indicator.configure(text="(level "+str(tt_calc.lvl_ind(tot_dmg))+")")
     def_btn.configure(state="normal")
   else:
@@ -64,6 +66,8 @@ def calc_dmg(*args):
     tot_dmg = data[1]
     cog_level_indicator.configure(text="(v2.0 level "+str(tt_calc.lvl_ind(tot_dmg))+")")
     def_btn.configure(state="disabled")
+  if plating_lvl.get():
+    cog_level_indicator.configure(text="vs. v2.0 level "+str(plating_lvl.get()))
   dmg_indicator.configure(text=str(tot_dmg))
 
 #Pin window to top
@@ -354,6 +358,15 @@ program_menu.add_separator()
 program_menu.add_command(label="Check for update",command=lambda:update_checker.compare_versions(local_file="mod/version.txt",git_file="https://raw.githubusercontent.com/Vhou-Atroph/TT-Damage-Calculator/main/mod/version.txt"))
 program_menu.add_command(label="Exit",command=lambda:window.destroy(),accelerator="Alt+F4")
 toolbar.add_cascade(label="Program",menu=program_menu)
+calculations_menu=Menu(toolbar,tearoff=0)
+v2_menu=Menu(calculations_menu,tearoff=0)
+v2_menu.add_radiobutton(label="None",value=0,variable=plating_lvl,command=calc_dmg)
+v2_menu.add_radiobutton(label="Level 9",value=9,variable=plating_lvl,command=calc_dmg)
+v2_menu.add_radiobutton(label="Level 10",value=10,variable=plating_lvl,command=calc_dmg)
+v2_menu.add_radiobutton(label="Level 11",value=11,variable=plating_lvl,command=calc_dmg)
+v2_menu.add_radiobutton(label="Level 12",value=12,variable=plating_lvl,command=calc_dmg)
+calculations_menu.add_cascade(label="V2.0 Cogs",menu=v2_menu)
+toolbar.add_cascade(label="Calculations",menu=calculations_menu)
 window.configure(menu=toolbar)
 
 #Geometry - Main Columns
