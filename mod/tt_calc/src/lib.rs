@@ -15,6 +15,8 @@ fn tt_calc(_: Python<'_>, m: &PyModule) -> PyResult<()> {
     m.add_function(wrap_pyfunction!(def_parse, m)?)?;
     m.add_function(wrap_pyfunction!(lvl_ind, m)?)?;
     m.add_function(wrap_pyfunction!(v2_loop, m)?)?;
+    m.add_function(wrap_pyfunction!(advance_int, m)?)?;
+    m.add_function(wrap_pyfunction!(advance_float, m)?)?;
     Ok(())
 }
 
@@ -35,10 +37,26 @@ fn cog_hp(lvl:i64) -> i64 {
     }
 }
 
+/// Function originally meant to parse defense strings to f64 values. No longer needed but still in the program for reference purposes.
 #[pyfunction]
 fn def_parse(mut val:String) -> f64 {
     val.pop();
     val.parse::<f64>().unwrap() / 100.0
+}
+
+/// Iterate list to the next value (for i64 values)
+#[pyfunction]
+fn advance_int(list:Vec<i64>,entry:i64) -> i64 {
+    let ind = list.iter().position(|&i| i == entry).unwrap();
+    if let Some(x) = list.get(ind+1) {return *x} 0
+}
+
+/// Iterate list to the next value (for f64 values)
+/// (I really wish pyfunction supported generics)
+#[pyfunction]
+fn advance_float(list:Vec<f64>,entry:f64) -> f64 {
+    let ind = list.iter().position(|&i| i == entry).unwrap();
+    if let Some(x) = list.get(ind+1) {return *x} 0.0
 }
 
 /// Evaluates cog defense buff applicable in a round.
