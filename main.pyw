@@ -39,11 +39,10 @@ trp_used=[]
 organic=BooleanVar()
 lured=BooleanVar()
 pin_val=BooleanVar()
-dmg_down=StringVar()
+dmg_down=DoubleVar()
 plating_lvl=IntVar()
-dmg_down.set('0%')
+dmg_down.set(0.0)
 plating_lvl.set(0)
-def_values=['0%','10%','15%','20%','25%']
 def_lur_lock=StringVar()
 def_lur_lock.set('No lock')
 def_lur_options=['No lock','Lock lure','Lock defense','Lock both']
@@ -56,9 +55,8 @@ col1=Frame(window) #Will be used for calculation history
 
 #Total damage calculation
 def calc_dmg(*args):
-  tot_dmg=tt_calc.full_calc(trp_used,snd_used,trw_used,sqt_used,drp_used,lured.get(),tt_calc.def_parse(dmg_down.get()),plating_lvl.get())
+  tot_dmg=tt_calc.full_calc(trp_used,snd_used,trw_used,sqt_used,drp_used,lured.get(),dmg_down.get(),plating_lvl.get())
   cog_level_indicator.configure(text="(level "+str(tt_calc.lvl_ind(tot_dmg))+")")
-  def_btn.configure(state="normal")
   if plating_lvl.get():
     cog_level_indicator.configure(text="vs. v2.0 level "+str(plating_lvl.get()))
   dmg_indicator.configure(text=str(tot_dmg))
@@ -74,9 +72,6 @@ tog_btns=Frame(col0)
 org_btn=Button(tog_btns,text='Toggle Organic',font=('Arial',11,'normal'))
 lur_check=Checkbutton(tog_btns,text='Cog lured',variable=lured,onvalue=1,offvalue=0,font=('Arial',11,'normal'),command=calc_dmg)
 clear_btn=Button(tog_btns,text='Reset damage',font=('Arial',11,'normal'))
-def_lbl=Label(tog_btns,text='Defense:',font=('Arial',11,'normal'))
-def_btn=OptionMenu(tog_btns,dmg_down,*def_values,command=calc_dmg)
-def_btn.configure(width=4,font=('Arial',11,'normal'))
 def_lur_dropdown=OptionMenu(tog_btns,def_lur_lock,*def_lur_options)
 def_lur_dropdown.configure(width=12,font=('Arial',11,'normal'))
 
@@ -265,14 +260,7 @@ def organic_toggle(*arg):
 org_btn.configure(command=organic_toggle)
 window.bind('<'+settings.keybinds.organic+'>',organic_toggle)
 
-#Def Keybind
-def def_swap(*arg):
-  try:
-    dmg_down.set(def_values[def_values.index(dmg_down.get())+1])
-  except:
-    dmg_down.set("0%")
-  calc_dmg()
-window.bind('<'+settings.keybinds.defense+'>',def_swap)
+#window.bind('<'+settings.keybinds.defense+'>',def_swap)
 
 #Swap a toggle
 def tog_swap(tog):
@@ -294,10 +282,8 @@ def clear_inputs(*arg):
   global drp_used
   global trp_used
   hist_box.configure(state=NORMAL)
-  hist_box.insert('1.0',"--------\nCalculation finished!\nDamage calculated was: "+dmg_indicator.cget("text")+"\nDefense: "+dmg_down.get()+"\nLure: "+str(lured.get())+"\nWill kill: "+cog_level_indicator.cget("text")+"\n\n")
+  hist_box.insert('1.0',"--------\nCalculation finished!\nDamage calculated was: "+dmg_indicator.cget("text")+"\nDefense: "+str(int(dmg_down.get()*100))+"%\nLure: "+str(lured.get())+"\nWill kill: "+cog_level_indicator.cget("text")+"\n\n")
   hist_box.configure(state=DISABLED)
-  if def_lur_lock.get()=='No lock' or def_lur_lock.get()=='Lock lure':
-    dmg_down.set('0%')
   if organic.get():
     organic_toggle()
   snd_used=[]
@@ -347,6 +333,13 @@ program_menu.add_command(label="Check for update",command=lambda:update_checker.
 program_menu.add_command(label="Exit",command=lambda:window.destroy(),accelerator="Alt+F4")
 toolbar.add_cascade(label="Program",menu=program_menu)
 calculations_menu=Menu(toolbar,tearoff=0)
+def_menu=Menu(calculations_menu,tearoff=0)
+def_menu.add_radiobutton(label="None",value=0.0,variable=dmg_down,command=calc_dmg)
+def_menu.add_radiobutton(label="10% (1⭐)",value=0.1,variable=dmg_down,command=calc_dmg)
+def_menu.add_radiobutton(label="15% (2⭐)",value=0.15,variable=dmg_down,command=calc_dmg)
+def_menu.add_radiobutton(label="20% (3⭐)",value=0.2,variable=dmg_down,command=calc_dmg)
+def_menu.add_radiobutton(label="25% (4⭐)",value=0.25,variable=dmg_down,command=calc_dmg)
+calculations_menu.add_cascade(label="Cog Defense",menu=def_menu)
 v2_menu=Menu(calculations_menu,tearoff=0)
 v2_menu.add_radiobutton(label="None",value=0,variable=plating_lvl,command=calc_dmg)
 v2_menu.add_radiobutton(label="Level 9",value=9,variable=plating_lvl,command=calc_dmg)
@@ -365,8 +358,6 @@ col1.grid(column=1,row=0,padx=10)
 tog_btns.grid(column=0,row=1,pady=5)
 lur_check.grid(column=0,row=0,padx=5)
 org_btn.grid(column=1,row=0,padx=5)
-def_lbl.grid(column=2,row=0,padx=0)
-def_btn.grid(column=3,row=0)
 def_lur_dropdown.grid(column=1,row=1)
 clear_btn.grid(column=2,row=1,columnspan=2,padx=5)
 
