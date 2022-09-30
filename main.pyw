@@ -54,7 +54,9 @@ col1=Frame(window) #Will be used for calculation history
 #Total damage calculation
 def calc_dmg(*args):
   tot_dmg=tt_calc.full_calc(trp_used,snd_used,trw_used,sqt_used,drp_used,lured.get(),dmg_down.get(),plating_lvl.get())
-  cog_level_indicator.configure(text="(level "+str(tt_calc.lvl_ind(tot_dmg))+")")
+  cog_level_indicator.configure(text="level "+str(tt_calc.lvl_ind(tot_dmg)))
+  if dmg_down.get():
+    cog_level_indicator.configure(text="level "+str(tt_calc.lvl_ind(tot_dmg))+" w/ "+str(int(dmg_down.get()*100))+"% defense")
   if plating_lvl.get():
     cog_level_indicator.configure(text="vs. v2.0 level "+str(plating_lvl.get()))
   dmg_indicator.configure(text=str(tot_dmg))
@@ -278,7 +280,7 @@ def clear_inputs(*arg):
   global drp_used
   global trp_used
   hist_box.configure(state=NORMAL)
-  hist_box.insert('1.0',"--------\nCalculation finished!\nDamage calculated was: "+dmg_indicator.cget("text")+"\nDefense: "+str(int(dmg_down.get()*100))+"%\nLure: "+str(lured.get())+"\nWill kill: "+cog_level_indicator.cget("text")+"\n\n")
+  hist_box.insert('1.0',"--------\nCalculation finished!\nDamage calculated was: "+dmg_indicator.cget("text")+"\nLure: "+str(lured.get())+"\nWill kill: "+cog_level_indicator.cget("text")+"\n\n")
   hist_box.configure(state=DISABLED)
   if organic.get():
     organic_toggle()
