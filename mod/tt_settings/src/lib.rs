@@ -27,9 +27,11 @@ struct Keybinds {
     #[pyo3(get, set)]
     organic: String,
     #[pyo3(get, set)]
+    lure: String,
+    #[pyo3(get, set)]
     reset: String,
     #[pyo3(get, set)]
-    lure: String,
+    lock: String,
     #[pyo3(get, set)]
     defense: String,
     #[pyo3(get, set)]

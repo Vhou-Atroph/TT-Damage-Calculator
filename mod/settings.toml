@@ -1,7 +1,8 @@
 [keybinds]
 organic="Shift_L"
-reset="Control-r"
 lure="Control-l"
+reset="Control-r"
+lock="Control-x"
 defense="Control-d"
 v2="Control-v"
 pin="Alt-Up"

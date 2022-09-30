@@ -44,7 +44,6 @@ plating_lvl=IntVar()
 status_lock=BooleanVar()
 dmg_down.set(0.0)
 plating_lvl.set(0)
-status_lock.set(False)
 
 settings = tt_settings.Settings("mod/settings.toml")
 
@@ -262,13 +261,12 @@ window.bind('<'+settings.keybinds.organic+'>',organic_toggle)
 #Swap a toggle
 def tog_swap(tog):
   if tog.get():
-    tog.set(False)
-  else:
-    tog.set(True)
+    return tog.set(False)
+  tog.set(True)
   calc_dmg()
   pin()
 window.bind('<'+settings.keybinds.lure+'>',lambda par: tog_swap(lured))
-#window.bind('<'+settings.keybinds.v2+'>',lambda par: tog_swap(v2))
+window.bind('<'+settings.keybinds.lock+'>',lambda par: tog_swap(status_lock))
 window.bind('<'+settings.keybinds.pin+'>',lambda par: tog_swap(pin_val))
 
 #Clear inputs function
