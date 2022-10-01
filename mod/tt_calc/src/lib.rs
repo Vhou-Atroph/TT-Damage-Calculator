@@ -18,6 +18,7 @@ fn tt_calc(_: Python<'_>, m: &PyModule) -> PyResult<()> {
     m.add_function(wrap_pyfunction!(advance_int, m)?)?;
     m.add_function(wrap_pyfunction!(advance_float, m)?)?;
     m.add_function(wrap_pyfunction!(lvl_ind_string, m)?)?;
+    m.add_function(wrap_pyfunction!(calc_fin_string, m)?)?;
     Ok(())
 }
 
@@ -213,5 +214,16 @@ fn lvl_ind_string(lvl:u64,def:u64,v2:u64) -> String {
         (0,_) => format!("vs. V2.0 Level {}",v2),
         (_,0) => format!("Level {} ({}% defense)",lvl,def),
         (_,_) => format!("vs. V2.0 Level {} ({}% defense)",v2,def), // as was in the readme before, i don't actually know how v2s would calculate with a particular amount of defense. anything shown with this match guard is purely theoretical.
+    }
+}
+
+/// Matches the current defense and plating values to give a calculation finish message to reflect the cog status effects.
+#[pyfunction]
+fn calc_fin_string(dmg:i64,lvl:i64,lured:bool,def:i64,v2:i64) -> String {
+    match (def,v2) {
+        (0,0) => format!("--------\nCalculation finished!\nDamage this round: {}\nWill kill: Level {} cogs\nLured: {}\n\n",dmg,lvl,lured),
+        (0,_) => format!("--------\nCalculation finished!\nV.2.0 Level: {}\nDamage this round: {}\nWill kill: {}\nLured: {}\n\n",v2,dmg,{if dmg > cog_hp(v2) {true;} false},lured),
+        (_,0) => format!("--------\nCalculation finished!\nDamage this round:{}\nDefense: {}%\nWill kill: Level {} cogs\nLured: {}\n\n",dmg,def,lvl,lured),
+        (_,_) => format!("--------\nCalculation finished!\nV.2.0 Level: {}\nDamage this round: {}\nDefense: {}%\nWill kill: {}\nLured: {}\n\n",v2,dmg,def,{if dmg > cog_hp(v2) {true;} false},lured),
     }
 }
