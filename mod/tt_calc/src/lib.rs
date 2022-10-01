@@ -17,6 +17,7 @@ fn tt_calc(_: Python<'_>, m: &PyModule) -> PyResult<()> {
     m.add_function(wrap_pyfunction!(v2_loop, m)?)?;
     m.add_function(wrap_pyfunction!(advance_int, m)?)?;
     m.add_function(wrap_pyfunction!(advance_float, m)?)?;
+    m.add_function(wrap_pyfunction!(lvl_ind_string, m)?)?;
     Ok(())
 }
 
@@ -202,4 +203,15 @@ fn v2_loop(trap:Vec<i64>,sound:Vec<i64>,throw:Vec<i64>,squirt:Vec<i64>,drop:Vec<
         }
     }
     Ok((20,full_calc(trap,sound,throw,squirt,drop,lured,None,Some(20))))
+}
+
+/// Matches the current defense and plating values to correctly show how much defense/what level of v2 the calculator is working with.
+#[pyfunction]
+fn lvl_ind_string(lvl:u64,def:u64,v2:u64) -> String {
+    match (def,v2) {
+        (0,0) => format!("Level {}",lvl),
+        (0,_) => format!("vs. V2.0 Level {}",v2),
+        (_,0) => format!("Level {} ({}% defense)",lvl,def),
+        (_,_) => format!("vs. V2.0 Level {} ({}% defense)",v2,def), // as was in the readme before, i don't actually know how v2s would calculate with a particular amount of defense. anything shown with this match guard is purely theoretical.
+    }
 }
