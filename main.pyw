@@ -54,11 +54,7 @@ col1=Frame(window) #Will be used for calculation history
 #Total damage calculation
 def calc_dmg(*args):
   tot_dmg=tt_calc.full_calc(trp_used,snd_used,trw_used,sqt_used,drp_used,lured.get(),dmg_down.get(),plating_lvl.get())
-  cog_level_indicator.configure(text="level "+str(tt_calc.lvl_ind(tot_dmg)))
-  if dmg_down.get():
-    cog_level_indicator.configure(text="level "+str(tt_calc.lvl_ind(tot_dmg))+" w/ "+str(int(dmg_down.get()*100))+"% defense")
-  if plating_lvl.get():
-    cog_level_indicator.configure(text="vs. v2.0 level "+str(plating_lvl.get()))
+  cog_level_indicator.configure(text=tt_calc.lvl_ind_string(tt_calc.lvl_ind(tot_dmg),int(dmg_down.get()*100),plating_lvl.get()))
   dmg_indicator.configure(text=str(tot_dmg))
 
 #Pin window to top
