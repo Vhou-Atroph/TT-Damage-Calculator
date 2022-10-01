@@ -276,7 +276,7 @@ def clear_inputs(*arg):
   global drp_used
   global trp_used
   hist_box.configure(state=NORMAL)
-  hist_box.insert('1.0',"--------\nCalculation finished!\nDamage calculated was: "+dmg_indicator.cget("text")+"\nLure: "+str(lured.get())+"\nWill kill: "+cog_level_indicator.cget("text")+"\n\n")
+  hist_box.insert('1.0',tt_calc.calc_fin_string(int(dmg_indicator.cget("text")),tt_calc.lvl_ind(int(dmg_indicator.cget("text"))),lured.get(),int(dmg_down.get()*100),plating_lvl.get()))
   hist_box.configure(state=DISABLED)
   if organic.get():
     organic_toggle()
