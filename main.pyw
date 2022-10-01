@@ -205,7 +205,7 @@ cog_calc=Button(hist,text="Show Health and\n SOS Cards")
 calc_results=Frame(col0)
 dmg_this_round=Label(calc_results,text="Damage this round:",font=('Arial',16,'normal'))
 dmg_indicator=Label(calc_results,text="0",font=('Arial',16,'bold'))
-cog_level_indicator=Label(calc_results,text="(level 0)",font=('Arial',8,'normal'))
+cog_level_indicator=Label(calc_results,text="Level 0",font=('Arial',8,'normal'))
 org_indicator=Label(calc_results,text="Organic = OFF",font=('Arial',10,'bold'))
 
 #Cog HP
