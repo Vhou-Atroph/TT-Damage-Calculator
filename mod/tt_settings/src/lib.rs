@@ -10,6 +10,7 @@ use serde::{Serialize, Deserialize};
 fn tt_settings(_: Python<'_>, m: &PyModule) -> PyResult<()> {
     m.add_class::<Settings>()?;
     m.add_function(wrap_pyfunction!(toggleswap, m)?)?;
+    m.add_function(wrap_pyfunction!(orgswap,m)?)?;
     Ok(())
 }
 
@@ -55,6 +56,13 @@ impl Settings {
 
 /// Swap a toggle
 #[pyfunction]
-pub fn toggleswap(toggle:bool) -> bool {
+fn toggleswap(toggle:bool) -> bool {
     if toggle {return false;} true
+}
+
+/// Specifically swap the organic gags toggle, which is significantly more painful than the checkbox ones!
+#[pyfunction]
+fn orgswap(toggle:bool) -> (bool,String,String,String) { //(state,indicator,bg,activebg)
+    if toggle {return (false,String::from("OFF"),String::from("#1888D3"),String::from("#186AD3"));} 
+    (true,String::from("ON"),String::from("darkorange"),String::from("orange"))
 }
