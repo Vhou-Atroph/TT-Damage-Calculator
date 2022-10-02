@@ -55,6 +55,6 @@ impl Settings {
 
 /// Swap a toggle
 #[pyfunction]
-fn toggleswap(toggle:bool) -> bool {
+pub fn toggleswap(toggle:bool) -> bool {
     if toggle {return false;} true
 }
