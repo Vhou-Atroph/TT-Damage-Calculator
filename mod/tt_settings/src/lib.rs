@@ -9,6 +9,7 @@ use serde::{Serialize, Deserialize};
 #[pymodule]
 fn tt_settings(_: Python<'_>, m: &PyModule) -> PyResult<()> {
     m.add_class::<Settings>()?;
+    m.add_function(wrap_pyfunction!(toggleswap, m)?)?;
     Ok(())
 }
 
@@ -50,4 +51,10 @@ impl Settings {
         let settings: Settings = toml::from_str(data.as_str()).unwrap();
         settings
     }
+}
+
+/// Swap a toggle
+#[pyfunction]
+fn toggleswap(toggle:bool) -> bool {
+    if toggle {return false;} true
 }
