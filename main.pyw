@@ -240,7 +240,9 @@ bess=GagButton(sos_drp,image=bess_img,gag=tt_gags.Gag("Sos","Barnacle Bessie","D
 ###Keybinds
 window.bind('<'+settings.keybinds.v2+'>',lambda par: [plating_lvl.set(tt_calc.advance_int([0,9,10,11,12],plating_lvl.get())),calc_dmg()])
 window.bind('<'+settings.keybinds.defense+'>',lambda par: [dmg_down.set(tt_calc.advance_float([0.0,0.1,0.15,0.2,0.25],dmg_down.get())),calc_dmg()])
-
+window.bind('<'+settings.keybinds.lure+'>',lambda par: [lured.set(tt_settings.toggleswap(lured.get())),calc_dmg()])
+window.bind('<'+settings.keybinds.lock+'>',lambda par: [status_lock.set(tt_settings.toggleswap(status_lock.get())),calc_dmg()])
+window.bind('<'+settings.keybinds.pin+'>',lambda par: [pin_val.set(tt_settings.toggleswap(pin_val.get())),pin()])
 
 #Organic gag toggle
 def organic_toggle(*arg):
@@ -256,17 +258,6 @@ def organic_toggle(*arg):
       i.configure(bg='darkorange',activebackground='orange')
 org_btn.configure(command=organic_toggle)
 window.bind('<'+settings.keybinds.organic+'>',organic_toggle)
-
-#Swap a toggle
-def tog_swap(tog):
-  if tog.get():
-    return tog.set(False)
-  tog.set(True)
-  calc_dmg()
-  pin()
-window.bind('<'+settings.keybinds.lure+'>',lambda par: tog_swap(lured))
-window.bind('<'+settings.keybinds.lock+'>',lambda par: tog_swap(status_lock))
-window.bind('<'+settings.keybinds.pin+'>',lambda par: tog_swap(pin_val))
 
 #Clear inputs function
 def clear_inputs(*arg):
