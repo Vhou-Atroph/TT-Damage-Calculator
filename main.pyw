@@ -246,16 +246,11 @@ window.bind('<'+settings.keybinds.pin+'>',lambda par: [pin_val.set(tt_settings.t
 
 #Organic gag toggle
 def organic_toggle(*arg):
-  if organic.get():
-    organic.set(False)
-    org_indicator.configure(text="Organic = OFF")
-    for i in gag_btns:
-      i.configure(bg='#1888D3',activebackground='#186AD3')
-  else:
-    organic.set(True)
-    org_indicator.configure(text="Organic = ON")
-    for i in gag_btns:
-      i.configure(bg='darkorange',activebackground='orange')
+  data = tt_settings.orgswap(organic.get())
+  organic.set(data[0])
+  org_indicator.configure(text="Organic = "+data[1])
+  for i in gag_btns:
+    i.configure(bg=data[2],activebackground=data[3])
 org_btn.configure(command=organic_toggle)
 window.bind('<'+settings.keybinds.organic+'>',organic_toggle)
 
