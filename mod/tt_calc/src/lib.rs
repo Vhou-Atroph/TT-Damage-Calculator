@@ -192,7 +192,7 @@ fn lvl_ind(dmg:i64) -> i64 {
 /// Calculates what level of v2 cog a certain combination of gags would kill along with damage done.
 /// This function is no longer present in the actual calculator, but remains here in case anyone wants to plug it back in at any point.
 #[pyfunction]
-fn v2_loop(trap:Vec<i64>,sound:Vec<i64>,throw:Vec<i64>,squirt:Vec<i64>,drop:Vec<i64>,lured:bool) -> PyResult<(i64,i64)> {
+fn v2_loop(trap:Vec<i64>,sound:Vec<i64>,throw:Vec<i64>,squirt:Vec<i64>,drop:Vec<i64>,lured:bool) -> PyResult<(i64,i64)> { // (dmg,lvl)
     let mut lvl: i64 = 0;
     while lvl < 20 {
         lvl+=1;
