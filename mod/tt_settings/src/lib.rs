@@ -62,7 +62,7 @@ fn toggleswap(toggle:bool) -> bool {
 
 /// Specifically swap the organic gags toggle, which is significantly more painful than the checkbox ones!
 #[pyfunction]
-fn orgswap(toggle:bool) -> (bool,String,String,String) { //(state,indicator,bg,activebg)
+fn orgswap(toggle:bool) -> (bool,String,String,String) { // (state,indicator,bg,activebg)
     if toggle {return (false,String::from("OFF"),String::from("#1888D3"),String::from("#186AD3"));} 
     (true,String::from("ON"),String::from("darkorange"),String::from("orange"))
 }
