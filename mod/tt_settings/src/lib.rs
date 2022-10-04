@@ -66,3 +66,16 @@ fn orgswap(toggle:bool) -> (bool,String,String,String) { // (state,indicator,bg,
     if toggle {return (false,String::from("OFF"),String::from("#1888D3"),String::from("#186AD3"));} 
     (true,String::from("ON"),String::from("darkorange"),String::from("orange"))
 }
+
+/// Get GitHub version.txt file
+#[tokio::main]
+async fn git_version(gitfile:&str) -> Result<String,Box<dyn std::error::Error>> {
+    let data = reqwest::get(gitfile).await?.text().await?;
+    Ok(data)
+}
+
+/// Get local version.txt file
+fn loc_version(localfile:&str) -> Result<String,Box<dyn std::error::Error>> {
+    let data = fs::read_to_string(localfile)?;
+    Ok(data)
+}
