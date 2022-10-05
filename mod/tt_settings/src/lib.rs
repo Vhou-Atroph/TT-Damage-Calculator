@@ -11,6 +11,7 @@ fn tt_settings(_: Python<'_>, m: &PyModule) -> PyResult<()> {
     m.add_class::<Settings>()?;
     m.add_function(wrap_pyfunction!(toggleswap, m)?)?;
     m.add_function(wrap_pyfunction!(orgswap,m)?)?;
+    m.add_function(wrap_pyfunction!(comp_data, m)?)?;
     Ok(())
 }
 
@@ -74,8 +75,10 @@ async fn git_version(gitfile:&str) -> Result<String,Box<dyn std::error::Error>> 
     Ok(data)
 }
 
-/// Get local version.txt file
-fn loc_version(localfile:&str) -> Result<String,Box<dyn std::error::Error>> {
-    let data = fs::read_to_string(localfile)?;
-    Ok(data)
+/// Compare local and git repo versions.txt file
+#[pyfunction]
+fn comp_data(localfile:String) -> bool {
+    let repo_ver = git_version("https://raw.githubusercontent.com/Vhou-Atroph/TT-Damage-Calculator/main/mod/version.txt").unwrap();
+    let local_ver = fs::read_to_string(localfile).unwrap();
+    if repo_ver == local_ver {return true;} false
 }
