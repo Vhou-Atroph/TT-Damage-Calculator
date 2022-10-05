@@ -77,8 +77,8 @@ async fn git_version(gitfile:&str) -> Result<String,Box<dyn std::error::Error>> 
 
 /// Compare local and git repo versions.txt file
 #[pyfunction]
-fn comp_data(localfile:String) -> bool {
+fn comp_data(localfile:String) -> (bool,String,String) { // (diff,repo,loc)
     let repo_ver = git_version("https://raw.githubusercontent.com/Vhou-Atroph/TT-Damage-Calculator/main/mod/version.txt").unwrap();
     let local_ver = fs::read_to_string(localfile).unwrap();
-    if repo_ver == local_ver {return true;} false
+    if repo_ver == local_ver {return (true,repo_ver,local_ver);} (false,repo_ver,local_ver)
 }
