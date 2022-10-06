@@ -6,7 +6,7 @@ use std::fs;
 use pyo3::prelude::*;
 use serde::{Serialize, Deserialize};
 
-/// Module for managing settings, keybind functions, and handling the update checker.
+/// Module for managing settings, keybind functions, and handling the update checker. This module is implemented in Rust.
 #[pymodule]
 fn tt_settings(_: Python<'_>, m: &PyModule) -> PyResult<()> {
     m.add_class::<Settings>()?;
