@@ -5,29 +5,19 @@ Copyright (C) 2022 Vhou-Atroph
 
 from tkinter import *
 from tkinter import messagebox
-import urllib.request
 import webbrowser
 
-def compare_versions(local_file,git_file):
+from mod import tt_settings
+
+def compare_versions(local_file):
   try:
-    local_file=open(local_file,"r").read()
+    data = tt_settings.comp_data(local_file)
   except:
-    messagebox.showerror("Error", "Could not find the local version.txt")
-    raise BaseException("Could not find the local version.txt")
-  try:
-    git_file=urllib.request.urlopen(git_file).read()
-    git_file=git_file.decode('UTF-8')
-  except:
-    messagebox.showerror("Error", "Something went wrong looking for the most recent version.txt. Are you connected to the internet?")
-    raise BaseException("Something went wrong looking for the most recent version.txt. Are you connected to the internet?")
-  #print(local_file)
-  #print(git_file)
-  if local_file==git_file:
-    #print("Current version is the latest version.")
+    messagebox.showerror("Error", "Something went wrong checking your version. Are you connected to the internet and have a version.txt file?")
+  if data[0]:
     messagebox.showinfo("Latest Version", "You are using the latest version of the Toontown Gag Calculator.")
   else:
-    #print("Git version is a different version, probably later.")
-    diff_version(local_file,git_file)
+    diff_version(data[1],data[2])
 
 def diff_version(local,git):
   popup=Toplevel()
