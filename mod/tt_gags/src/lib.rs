@@ -3,6 +3,7 @@
 
 use pyo3::prelude::*;
 
+/// Module for the Gag class. This module is implemented in Rust.
 #[pymodule]
 fn tt_gags(_: Python<'_>, m: &PyModule) -> PyResult<()> {
     m.add_class::<Gag>()?;
