@@ -224,6 +224,6 @@ fn calc_fin_string(dmg:i64,lvl:i64,lured:bool,def:i64,v2:i64) -> String {
         (0,0) => format!("--------\nCalculation finished!\nDamage this round: {}\nWill kill: Level {} cogs\nLured: {}\n\n",dmg,lvl,lured),
         (0,_) => format!("--------\nCalculation finished!\nV.2.0 Level: {}\nDamage this round: {}\nWill kill: {}\nLured: {}\n\n",v2,dmg,{if dmg > cog_hp(v2) {true;} false},lured),
         (_,0) => format!("--------\nCalculation finished!\nDamage this round:{}\nDefense: {}%\nWill kill: Level {} cogs\nLured: {}\n\n",dmg,def,lvl,lured),
-        (_,_) => format!("--------\nCalculation finished!\nV.2.0 Level: {}\nDamage this round: {}\nDefense: {}%\nWill kill: {}\nLured: {}\n\n",v2,dmg,def,{if dmg > cog_hp(v2) {true;} false},lured),
+        (_,_) => format!("--------\nCalculation finished!\nV.2.0 Level: {}\nDamage this round: {}\nDefense: {}%\nWill kill: {}\nLured: {}\n\n",v2,dmg,def,{if dmg > cog_hp(v2) {true;} false},lured), // if more statuses like this are added, i will cry
     }
 }
