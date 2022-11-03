@@ -59,7 +59,7 @@ impl Settings {
 /// Swap a toggle
 #[pyfunction]
 fn toggleswap(toggle:bool) -> bool {
-    if toggle {return false;} true
+    return !toggle
 }
 
 /// Specifically swap the organic gags toggle, which is significantly more painful than the checkbox ones!
