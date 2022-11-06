@@ -4,7 +4,7 @@
 
  Gag damage calculator for [Toontown Rewritten](https://toontownrewritten.com/).
 
-![The Program](https://github.com/Vhou-Atroph/TT-Damage-Calculator/blob/main/preview.png?raw=true)
+![The Program](preview.png)
 
 ## Building
 
