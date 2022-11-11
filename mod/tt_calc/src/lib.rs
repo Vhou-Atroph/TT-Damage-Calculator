@@ -31,7 +31,7 @@ fn tt_calc(_: Python<'_>, m: &PyModule) -> PyResult<()> {
 /// }
 /// ```
 #[pyfunction]
-fn cog_hp(lvl:i64) -> i64 {
+pub fn cog_hp(lvl:i64) -> i64 {
     match lvl {
         1..=11 => (lvl+1) * (lvl+2),
         12..=20 => (lvl+1) * (lvl+2) + 14,
@@ -41,14 +41,14 @@ fn cog_hp(lvl:i64) -> i64 {
 
 /// Function originally meant to parse defense strings to f64 values. No longer needed but still in the program for reference purposes.
 #[pyfunction]
-fn def_parse(mut val:String) -> f64 {
+pub fn def_parse(mut val:String) -> f64 {
     val.pop();
     val.parse::<f64>().unwrap() / 100.0
 }
 
 /// Iterate list to the next value (for i64 values)
 #[pyfunction]
-fn advance_int(list:Vec<i64>,entry:i64) -> i64 {
+pub fn advance_int(list:Vec<i64>,entry:i64) -> i64 {
     let ind = list.iter().position(|&i| i == entry).unwrap();
     if let Some(x) = list.get(ind+1) {return *x} 0
 }
@@ -56,7 +56,7 @@ fn advance_int(list:Vec<i64>,entry:i64) -> i64 {
 /// Iterate list to the next value (for f64 values)
 /// (I really wish pyfunction supported generics)
 #[pyfunction]
-fn advance_float(list:Vec<f64>,entry:f64) -> f64 {
+pub fn advance_float(list:Vec<f64>,entry:f64) -> f64 {
     let ind = list.iter().position(|&i| i == entry).unwrap();
     if let Some(x) = list.get(ind+1) {return *x} 0.0
 }
@@ -70,7 +70,7 @@ fn advance_float(list:Vec<f64>,entry:f64) -> f64 {
 ///     println!("The damage dealt this round was: {}",dmg);
 /// }
 /// ```
-fn cog_defense(gags:Vec<i64>,strength:f64) -> Vec<i64> {
+pub fn cog_defense(gags:Vec<i64>,strength:f64) -> Vec<i64> {
     let mut newvec: Vec<i64> = Vec::new();
     for i in gags.iter() {newvec.push(i - (*i as f64 * strength).ceil() as i64);}
     newvec
@@ -137,7 +137,7 @@ fn damage_lured(gags:Vec<i64>) -> i64 {
 
 /// Evaluates which functions to perform for a particular gag usage round.
 #[pyfunction]
-fn gag_calculator(gags:Vec<i64>,lured:bool,defense:Option<f64>,plating:Option<i64>) -> i64 {
+pub fn gag_calculator(gags:Vec<i64>,lured:bool,defense:Option<f64>,plating:Option<i64>) -> i64 {
     let mut modlist: Vec<i64> = gags;
     let gagdmg: i64;
     if let Some(def) = defense { modlist = cog_defense(modlist,def) }
@@ -149,7 +149,7 @@ fn gag_calculator(gags:Vec<i64>,lured:bool,defense:Option<f64>,plating:Option<i6
 
 /// Full damage calculation for a given round in a cog battle.
 #[pyfunction]
-fn full_calc(trap:Vec<i64>,sound:Vec<i64>,throw:Vec<i64>,squirt:Vec<i64>,drop:Vec<i64>,lured:bool,defense:Option<f64>,plating:Option<i64>) -> i64 {
+pub fn full_calc(trap:Vec<i64>,sound:Vec<i64>,throw:Vec<i64>,squirt:Vec<i64>,drop:Vec<i64>,lured:bool,defense:Option<f64>,plating:Option<i64>) -> i64 {
     let mut gagdmg: i64 = 0;
     let mut lured_loc = lured;
     if trap.len() == 1 && lured_loc {
@@ -176,7 +176,7 @@ fn full_calc(trap:Vec<i64>,sound:Vec<i64>,throw:Vec<i64>,squirt:Vec<i64>,drop:Ve
 
 /// Calculates the level of cog a particular amount of damage would destroy.
 #[pyfunction]
-fn lvl_ind(dmg:i64) -> i64 {
+pub fn lvl_ind(dmg:i64) -> i64 {
     let mut lvl: i64 = 0;
     while lvl < 20 {
         lvl+=1;
@@ -192,7 +192,7 @@ fn lvl_ind(dmg:i64) -> i64 {
 /// Calculates what level of v2 cog a certain combination of gags would kill along with damage done.
 /// This function is no longer present in the actual calculator, but remains here in case anyone wants to plug it back in at any point.
 #[pyfunction]
-fn v2_loop(trap:Vec<i64>,sound:Vec<i64>,throw:Vec<i64>,squirt:Vec<i64>,drop:Vec<i64>,lured:bool) -> PyResult<(i64,i64)> { // (dmg,lvl)
+pub fn v2_loop(trap:Vec<i64>,sound:Vec<i64>,throw:Vec<i64>,squirt:Vec<i64>,drop:Vec<i64>,lured:bool) -> PyResult<(i64,i64)> { // (dmg,lvl)
     let mut lvl: i64 = 0;
     while lvl < 20 {
         lvl+=1;
@@ -208,7 +208,7 @@ fn v2_loop(trap:Vec<i64>,sound:Vec<i64>,throw:Vec<i64>,squirt:Vec<i64>,drop:Vec<
 
 /// Matches the current defense and plating values to correctly show how much defense/what level of v2 the calculator is working with.
 #[pyfunction]
-fn lvl_ind_string(lvl:u64,def:u64,v2:u64) -> String {
+pub fn lvl_ind_string(lvl:u64,def:u64,v2:u64) -> String {
     match (def,v2) {
         (0,0) => format!("Level {}",lvl),
         (0,_) => format!("vs. V2.0 Level {}",v2),
@@ -219,7 +219,7 @@ fn lvl_ind_string(lvl:u64,def:u64,v2:u64) -> String {
 
 /// Matches the current defense and plating values to give a calculation finish message to reflect the cog status effects.
 #[pyfunction]
-fn calc_fin_string(dmg:i64,lvl:i64,lured:bool,def:i64,v2:i64) -> String {
+pub fn calc_fin_string(dmg:i64,lvl:i64,lured:bool,def:i64,v2:i64) -> String {
     match (def,v2) {
         (0,0) => format!("--------\nCalculation finished!\nDamage this round: {}\nWill kill: Level {} cogs\nLured: {}\n\n",dmg,lvl,lured),
         (0,_) => format!("--------\nCalculation finished!\nV.2.0 Level: {}\nDamage this round: {}\nWill kill: {}\nLured: {}\n\n",v2,dmg,{if dmg > cog_hp(v2) {true;} false},lured),
