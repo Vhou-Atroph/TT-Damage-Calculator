@@ -19,7 +19,7 @@ fn tt_settings(_: Python<'_>, m: &PyModule) -> PyResult<()> {
 /// Struct for the Settings file
 #[pyclass]
 #[derive(Serialize,Deserialize)]
-struct Settings {
+pub struct Settings {
     #[pyo3(get, set)]
     keybinds: Keybinds
 }
@@ -27,7 +27,7 @@ struct Settings {
 /// Struct for the Keybinds portion of the Settings file
 #[pyclass]
 #[derive(Serialize,Deserialize,Clone)]
-struct Keybinds {
+pub struct Keybinds {
     #[pyo3(get, set)]
     organic: String,
     #[pyo3(get, set)]
@@ -58,13 +58,13 @@ impl Settings {
 
 /// Swap a toggle
 #[pyfunction]
-fn toggleswap(toggle:bool) -> bool {
+pub fn toggleswap(toggle:bool) -> bool {
     return !toggle
 }
 
 /// Specifically swap the organic gags toggle, which is significantly more painful than the checkbox ones!
 #[pyfunction]
-fn orgswap(toggle:bool) -> (bool,String,String,String) { // (state,indicator,bg,activebg)
+pub fn orgswap(toggle:bool) -> (bool,String,String,String) { // (state,indicator,bg,activebg)
     if toggle {return (false,String::from("OFF"),String::from("#1888D3"),String::from("#186AD3"));} 
     (true,String::from("ON"),String::from("darkorange"),String::from("orange"))
 }
@@ -78,7 +78,7 @@ async fn git_version(gitfile:&str) -> Result<String,Box<dyn std::error::Error>> 
 
 /// Compare local and git repo versions.txt file
 #[pyfunction]
-fn comp_data(localfile:String) -> (bool,String,String) { // (diff,repo,loc)
+pub fn comp_data(localfile:String) -> (bool,String,String) { // (diff,repo,loc)
     let repo_ver = git_version("https://raw.githubusercontent.com/Vhou-Atroph/TT-Damage-Calculator/main/mod/version.txt").unwrap();
     let local_ver = fs::read_to_string(localfile).unwrap();
     if repo_ver == local_ver {return (true,repo_ver,local_ver);} (false,repo_ver,local_ver)
