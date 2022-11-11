@@ -11,7 +11,7 @@ name = "tt_gags"
 crate-type = ["cdylib"]
 
 [dependencies.pyo3]
-version = "0.17.1"
+version = "0.17.3"
 features = ["extension-module"]
 
 [dependencies]

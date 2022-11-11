@@ -12,7 +12,7 @@ fn tt_gags(_: Python<'_>, m: &PyModule) -> PyResult<()> {
 
 /// Basic struct for a Gag.
 #[pyclass]
-struct Gag {
+pub struct Gag {
     #[pyo3(get, set)]
     gtype: String,
     #[pyo3(get, set)]
@@ -30,12 +30,12 @@ impl Gag {
 
     /// Creates a new Gag struct.
     #[new]
-    fn new(gtype:String,name:String,track:String,level:u8,dmg:i64) -> Self {
+    pub fn new(gtype:String,name:String,track:String,level:u8,dmg:i64) -> Self {
         Self { gtype, name, track, level, dmg }
     }
 
     /// Returns the damage an organic gag of a certain type does.
-    fn button_press(&self,org_val:bool) -> PyResult<(i64,String)> { // (damage,name)
+    pub fn button_press(&self,org_val:bool) -> PyResult<(i64,String)> { // (damage,name)
         if self.gtype == "Gag" && org_val {return Ok((org(self.dmg),format!("Organic {}",self.name)))}
         Ok((self.dmg,self.name.clone()))
     }
