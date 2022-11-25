@@ -63,3 +63,7 @@
 - Converted several modules to Rust.
 - Removed tomli dependency
 - Moved V2, Defense, and Status Locking to the new Calculations menu
+
+--V4.1.0--
+- Upgraded to Python 3.11
+- Fixed a bug with V2.0 cog calculation
