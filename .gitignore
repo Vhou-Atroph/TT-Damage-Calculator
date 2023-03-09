@@ -1,9 +1,4 @@
-
 *.pyc
-*.pyd
-*.dll
-Cargo.lock
-src/mod/*/target
 
 # Added by cargo
 
