@@ -10,7 +10,9 @@
 
 ### Prerequisites
 
-[rewrite needed]
+1. The Python 3 Programming Language. Install from <https://www.python.org/downloads/>.
+2. The Rust Programming Language. Install by following the instructions at <https://www.rust-lang.org/learn/get-started>.
+3. Maturin. Install by following the instructions at <https://www.maturin.rs/installation.html>.
 
 ### Windows
 
