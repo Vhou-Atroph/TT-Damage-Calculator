@@ -67,3 +67,7 @@
 --V4.1.0--
 - Upgraded to Python 3.11
 - Fixed a bug with V2.0 cog calculation
+
+--V4.2.0--
+- Fixed a minor bug that resulted in versions being mismatched on the update checker.
+- Changed project format to be publishable on Pypi.
