@@ -9,7 +9,7 @@ strip = true
 
 [project]
 name = "tt_damage_calculator"
-version = "0.0.1"
+version = "4.2.0"
 authors = [
   { name="Vhou-Atroph", email="vhouatroph@proton.me" },
 ]
