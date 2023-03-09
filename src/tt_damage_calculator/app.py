@@ -10,6 +10,7 @@ CONTRIBUTORS:
 """
 
 from tkinter import *
+import pathlib
 
 from . import rustygag
 from . import update_checker
@@ -18,7 +19,7 @@ from . import update_checker
 global window
 window=Tk()
 window.title("Toontown Damage Calculator")
-whole_cream_pie_img=PhotoImage(file="/tt_damage_calculator/assets/img/whole-cream-pie.png")
+whole_cream_pie_img=PhotoImage(file=str(pathlib.Path(__file__).parent.resolve())+"/assets/img/whole-cream-pie.png")
 window.iconphoto(True, whole_cream_pie_img)
 window.resizable(0,0)
 
