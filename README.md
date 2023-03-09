@@ -24,7 +24,11 @@
 
 ### Running
 
-[rewrite needed]
+After installing the wheel, you can run it from your favorite command terminal with:
+
+```shell
+python -m tt_damage_calculator
+```
 
 ### What if I don't want to build the program?
 
