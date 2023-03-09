@@ -10,21 +10,19 @@
 
 ### Prerequisites
 
-Whatever operating system you have, to run the TT-Damage-Calculator from its source, you are required to have both Python and Rust installed. You can download Python at <https://www.python.org/> and Rust at <https://www.rust-lang.org/>. Rust is required to compile the Rust libraries (rustygag, tt_gags, and rustygag), and Python is required to run the program itself.
+[rewrite needed]
 
 ### Windows
 
-To run the program on Windows, you must compile the Rust libraries into .pyd files. To do this, you must first navigate to the main project file (for rustygag this would be `mod/rustygag`) and run the command `cargo build --release` in your favorite terminal. The library should then compile.  
-Once the file is compiled, the file `mod/[module]/target/release/[module].dll` should have been created. Change the extension to `.pyd` and place the file in `mod/`. This should be done for each Rust library.
+[rewrite needed]
 
 ### Linux
 
-To run the program on Linux, you must compile the Rust libraries into .so files. To do this, you must first navigate to the main project file (for rustygag this would be `mod/rustygag`) and run the command `cargo build --release` in your favorite terminal. The library should then compile.  
-Once the file is compiled, the file `mod/[module]/target/release/lib[module].so` should have been created. Change the file's name to `[module].so` and drop it in `mod/`. This should be done for each Rust library.
+[rewrite needed]
 
 ### Running
 
-Once all dependencies are compiled and in their proper place, you can open the Calculator like any other Python script- double click main.pyw or run it in your favorite terminal with `py main.pyw`. If you have Python 2 installed as well, you may have to use `py3 main.pyw`.
+[rewrite needed]
 
 ### What if I don't want to build the program?
 
