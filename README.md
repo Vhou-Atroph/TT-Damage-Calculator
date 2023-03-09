@@ -10,16 +10,16 @@
 
 ### Prerequisites
 
-Whatever operating system you have, to run the TT-Damage-Calculator from its source, you are required to have both Python and Rust installed. You can download Python at <https://www.python.org/> and Rust at <https://www.rust-lang.org/>. Rust is required to compile the Rust libraries (tt_calc, tt_gags, and tt_settings), and Python is required to run the program itself.
+Whatever operating system you have, to run the TT-Damage-Calculator from its source, you are required to have both Python and Rust installed. You can download Python at <https://www.python.org/> and Rust at <https://www.rust-lang.org/>. Rust is required to compile the Rust libraries (rustygag, tt_gags, and rustygag), and Python is required to run the program itself.
 
 ### Windows
 
-To run the program on Windows, you must compile the Rust libraries into .pyd files. To do this, you must first navigate to the main project file (for tt_calc this would be `mod/tt_calc`) and run the command `cargo build --release` in your favorite terminal. The library should then compile.  
+To run the program on Windows, you must compile the Rust libraries into .pyd files. To do this, you must first navigate to the main project file (for rustygag this would be `mod/rustygag`) and run the command `cargo build --release` in your favorite terminal. The library should then compile.  
 Once the file is compiled, the file `mod/[module]/target/release/[module].dll` should have been created. Change the extension to `.pyd` and place the file in `mod/`. This should be done for each Rust library.
 
 ### Linux
 
-To run the program on Linux, you must compile the Rust libraries into .so files. To do this, you must first navigate to the main project file (for tt_calc this would be `mod/tt_calc`) and run the command `cargo build --release` in your favorite terminal. The library should then compile.  
+To run the program on Linux, you must compile the Rust libraries into .so files. To do this, you must first navigate to the main project file (for rustygag this would be `mod/rustygag`) and run the command `cargo build --release` in your favorite terminal. The library should then compile.  
 Once the file is compiled, the file `mod/[module]/target/release/lib[module].so` should have been created. Change the file's name to `[module].so` and drop it in `mod/`. This should be done for each Rust library.
 
 ### Running

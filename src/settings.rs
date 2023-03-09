@@ -1,20 +1,7 @@
-//! TT-Damage-Calculator
-//! Copyright (C) 2022 Vhou-Atroph
-
 use std::fs;
 
 use pyo3::prelude::*;
 use serde::{Serialize, Deserialize};
-
-/// Module for managing settings, keybind functions, and handling the update checker. This module is implemented in Rust.
-#[pymodule]
-fn tt_settings(_: Python<'_>, m: &PyModule) -> PyResult<()> {
-    m.add_class::<Settings>()?;
-    m.add_function(wrap_pyfunction!(toggleswap, m)?)?;
-    m.add_function(wrap_pyfunction!(orgswap,m)?)?;
-    m.add_function(wrap_pyfunction!(comp_data, m)?)?;
-    Ok(())
-}
 
 /// Struct for the Settings file
 #[pyclass]

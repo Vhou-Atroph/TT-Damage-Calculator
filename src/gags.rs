@@ -1,16 +1,13 @@
-//! TT-Damage-Calculator
-//! Copyright (C) 2022 Vhou-Atroph
-
 use pyo3::prelude::*;
 
-/// Module for the Gag class. This module is implemented in Rust.
-#[pymodule]
-fn tt_gags(_: Python<'_>, m: &PyModule) -> PyResult<()> {
-    m.add_class::<Gag>()?;
-    Ok(())
-}
-
-/// Basic struct for a Gag.
+/// This struct is for a basic Gag, which is a thing that toons use against cogs in the wild and wacky game Toontown Rewritten (or any of the other private servers I guess.)
+/// | Field | Description                                     |
+/// |-------|-------------------------------------------------|
+/// | gtype | Whether the gag is a regular gag or an SOS Card |
+/// | name  | The name of the gag.                            |
+/// | track | The gag track a gag belongs to as a String      |
+/// | level | The level that the gag is                       |
+/// | dmg   | The amount of damage a gag may do to a  cog.    |
 #[pyclass]
 pub struct Gag {
     #[pyo3(get, set)]

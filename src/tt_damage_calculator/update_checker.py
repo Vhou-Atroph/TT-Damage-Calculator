@@ -7,11 +7,11 @@ from tkinter import *
 from tkinter import messagebox
 import webbrowser
 
-from mod import tt_settings
+from . import rustygag
 
 def compare_versions(local_file):
   try:
-    data = tt_settings.comp_data(local_file)
+    data = rustygag.comp_data(local_file)
   except:
     messagebox.showerror("Error", "Something went wrong checking your version. Are you connected to the internet and have a version.txt file?")
   if data[0]:

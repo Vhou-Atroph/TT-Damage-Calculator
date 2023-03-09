@@ -1,0 +1,23 @@
+[package]
+name = "rustygag"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[lib]
+name = "rustygag"
+crate-type = ["cdylib"]
+
+[dependencies.pyo3]
+version = "0.18.1"
+features = ["extension-module"]
+
+[package.metadata.maturin]
+name = "tt_damage_calculator.rustygag"
+
+[dependencies]
+serde = { version = "1.0.154", features = ["derive"] }
+toml = "0.7.2"
+reqwest = "0.11.14"
+tokio = { version = "1.26.0", features = ["full"] }

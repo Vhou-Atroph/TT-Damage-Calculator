@@ -3,4 +3,9 @@
 *.pyd
 *.dll
 Cargo.lock
-mod/*/target
+src/mod/*/target
+
+# Added by cargo
+
+/target
+/Cargo.lock
