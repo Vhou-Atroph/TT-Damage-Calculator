@@ -1,3 +1,6 @@
+//! TT-Damage-Calculator
+//! Copyright (C) 2023 Vhou-Atroph
+
 use pyo3::prelude::*;
 
 use crate::gags::*;

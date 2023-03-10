@@ -1,6 +1,6 @@
 """
 TT-Damage-Calculator
-Copyright (C) 2022 Vhou-Atroph
+Copyright (C) 2023 Vhou-Atroph
 
 TT-Damage-Calculator is a gag damage calculator for Toontown Rewritten. It has an interface built with Python's tkinter library, and is supplemented with modules written in Rust.
 

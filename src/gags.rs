@@ -1,3 +1,6 @@
+//! TT-Damage-Calculator
+//! Copyright (C) 2023 Vhou-Atroph
+
 use pyo3::prelude::*;
 
 /// This struct is for a basic Gag, which is a thing that toons use against cogs in the wild and wacky game Toontown Rewritten (or any of the other private servers I guess.)
