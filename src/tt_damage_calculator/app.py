@@ -9,9 +9,9 @@ CONTRIBUTORS:
 - BoggoTV
 """
 
-from tkinter import *
 import pathlib
 import sys
+from tkinter import *
 
 from . import rustygag
 from . import update_checker
