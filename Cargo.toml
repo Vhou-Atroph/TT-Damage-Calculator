@@ -1,5 +1,8 @@
 [package]
 name = "rustygag"
+description = "Rust library providing the backend of the Toontown Damage Calculator."
+authors = ["Vhou-Atroph"]
+license = "GPLv3"
 version = "4.2.0"
 edition = "2021"
 
