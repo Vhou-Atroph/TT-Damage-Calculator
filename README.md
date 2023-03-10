@@ -44,11 +44,11 @@ python -m tt_damage_calculator
 
 ### What if I don't want to build the program?
 
-## GitHub
+#### GitHub
 
 For some versions of the calculator, I will compile it completely and release a standalone executable for users who either do not want to or are unable to compile the dependencies themselves. You can find the latest release at <https://github.com/Vhou-Atroph/TT-Damage-Calculator/releases/latest>.
 
-## Pypi
+#### Pypi
 
 Alternatively, you can install the package using Pypi:
 
