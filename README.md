@@ -48,6 +48,8 @@ python -m tt_damage_calculator
 
 For some versions of the calculator, I will compile it completely and release a standalone executable for users who either do not want to or are unable to compile the dependencies themselves. You can find the latest release at <https://github.com/Vhou-Atroph/TT-Damage-Calculator/releases/latest>.
 
+GitHub executable releases target Windows users. Linux users must use Pypi to install this program.
+
 #### Pypi
 
 Alternatively, you can install the package using Pypi:
