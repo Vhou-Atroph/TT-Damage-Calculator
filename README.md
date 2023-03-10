@@ -14,13 +14,25 @@
 2. The Rust Programming Language. Install by following the instructions at <https://www.rust-lang.org/learn/get-started>.
 3. Maturin. Install by following the instructions at <https://www.maturin.rs/installation.html>.
 
-### Windows
+### Creating the wheel
 
-[rewrite needed]
+Once the prerequisites are installed, clone the repository with git:
 
-### Linux
+```shell
+git clone https://github.com/Vhou-Atroph/TT-Damage-Calculator
+```
 
-[rewrite needed]
+With the repository cloned, navigate to the directory and build the project with maturin:
+
+```shell
+maturin build -i python
+```
+
+This should have created the "target" file in the project's main directory. Navigate to `target/wheels` and install the created file with pip:
+
+```shell
+pip install [file]
+```
 
 ### Running
 
@@ -32,7 +44,23 @@ python -m tt_damage_calculator
 
 ### What if I don't want to build the program?
 
+## GitHub
+
 For some versions of the calculator, I will compile it completely and release a standalone executable for users who either do not want to or are unable to compile the dependencies themselves. You can find the latest release at <https://github.com/Vhou-Atroph/TT-Damage-Calculator/releases/latest>.
+
+## Pypi
+
+Alternatively, you can install the package using Pypi:
+
+```shell
+pip install [ill put a package name here when im sure to have it reserved]
+```
+
+After installing the package, you can run it via the terminal:
+
+```shell
+python -m tt_damage_calculator
+```
 
 ## Usage
 
