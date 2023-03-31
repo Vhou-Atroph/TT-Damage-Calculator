@@ -1,20 +1,10 @@
 //! TT-Damage-Calculator
-//! Copyright (C) 2022 Vhou-Atroph
+//! Copyright (C) 2022-2023 Vhou-Atroph
 
 use std::fs;
 
 use pyo3::prelude::*;
 use serde::{Serialize, Deserialize};
-
-/// Module for managing settings, keybind functions, and handling the update checker. This module is implemented in Rust.
-#[pymodule]
-fn tt_settings(_: Python<'_>, m: &PyModule) -> PyResult<()> {
-    m.add_class::<Settings>()?;
-    m.add_function(wrap_pyfunction!(toggleswap, m)?)?;
-    m.add_function(wrap_pyfunction!(orgswap,m)?)?;
-    m.add_function(wrap_pyfunction!(comp_data, m)?)?;
-    Ok(())
-}
 
 /// Struct for the Settings file
 #[pyclass]
@@ -27,6 +17,15 @@ pub struct Settings {
 /// Struct for the Keybinds portion of the Settings file
 #[pyclass]
 #[derive(Serialize,Deserialize,Clone)]
+/// | Field   | Description                         |
+/// |---------|-------------------------------------|
+/// | organic | Keybind for the organic toggle      |
+/// | lure    | Keybind for the lure toggle         |
+/// | reset   | Keybind to reset calculations       |
+/// | lock    | Keybind to toggle status lock       |
+/// | defense | Keybind to set cog defense          |
+/// | v2      | Keybind to set v2 cog level         |
+/// | pin     | Keybind to toggle window pin status |
 pub struct Keybinds {
     #[pyo3(get, set)]
     organic: String,

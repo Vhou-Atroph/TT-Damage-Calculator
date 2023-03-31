@@ -1,6 +1,9 @@
-
 *.pyc
+dist
+build
+
+# Added by cargo
+
+/target
+/Cargo.lock
 *.pyd
-*.dll
-Cargo.lock
-mod/*/target

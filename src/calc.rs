@@ -1,35 +1,11 @@
 //! TT-Damage-Calculator
-//! Copyright (C) 2022 Vhou-Atroph
-
-
-use std::cmp::Ordering;
+//! Copyright (C) 2022-2023 Vhou-Atroph
 
 use pyo3::prelude::*;
 
-/// Calculation function module for TT-Damage-Calculator. This module is implemented in Rust.
-#[pymodule]
-fn tt_calc(_: Python<'_>, m: &PyModule) -> PyResult<()> {
-    m.add_function(wrap_pyfunction!(cog_hp, m)?)?;
-    m.add_function(wrap_pyfunction!(gag_calculator, m)?)?;
-    m.add_function(wrap_pyfunction!(full_calc, m)?)?;
-    m.add_function(wrap_pyfunction!(def_parse, m)?)?;
-    m.add_function(wrap_pyfunction!(lvl_ind, m)?)?;
-    m.add_function(wrap_pyfunction!(v2_loop, m)?)?;
-    m.add_function(wrap_pyfunction!(advance_int, m)?)?;
-    m.add_function(wrap_pyfunction!(advance_float, m)?)?;
-    m.add_function(wrap_pyfunction!(lvl_ind_string, m)?)?;
-    m.add_function(wrap_pyfunction!(calc_fin_string, m)?)?;
-    Ok(())
-}
+use std::cmp::Ordering;
 
 /// Basic function to evaluate health of any cog levels 1 through 20.
-/// ```
-/// use tt_calc::*;
-/// 
-/// fn lvl12s() {
-///     println!("Level 12 cogs have {} health!",cog_hp(12).expect("An error has occured"));
-/// }
-/// ```
 #[pyfunction]
 pub fn cog_hp(lvl:i64) -> i64 {
     match lvl {
@@ -62,14 +38,6 @@ pub fn advance_float(list:Vec<f64>,entry:f64) -> f64 {
 }
 
 /// Evaluates cog defense buff applicable in a round.
-/// ```
-/// use tt_calc::*;
-/// 
-/// fn round_w_def() {
-///     let dmg = damage_lureless(cog_defense(vec![50,21,21,21],0.20));
-///     println!("The damage dealt this round was: {}",dmg);
-/// }
-/// ```
 pub fn cog_defense(gags:Vec<i64>,strength:f64) -> Vec<i64> {
     let mut newvec: Vec<i64> = Vec::new();
     for i in gags.iter() {newvec.push(i - (*i as f64 * strength).ceil() as i64);}
@@ -77,14 +45,6 @@ pub fn cog_defense(gags:Vec<i64>,strength:f64) -> Vec<i64> {
 }
 
 /// Evaluates cog plating buff applicable in a round.
-/// ```
-/// use tt_calc::*;
-/// 
-/// fn round_w_plating() {
-///     let dmg = damage_lureless(cog_plating(vec![50,21,21,21],10));
-///     println!("The damage dealt this round was: {}",dmg);
-/// }
-/// ```
 fn cog_plating(gags:Vec<i64>,lvl:i64) -> Vec<i64> {
     let mut newvec: Vec<i64> = Vec::new();
     for i in gags.iter() {
@@ -96,15 +56,6 @@ fn cog_plating(gags:Vec<i64>,lvl:i64) -> Vec<i64> {
 }
 
 /// Evaluates the total damage of a group of gags used during a given round without lure.
-/// ```
-/// use tt_calc::*;
-/// 
-/// fn avg_snd_users() {
-///     let kills_10s = vec![50,21,21,21];
-///     let dmg = damage_lureless(kills_10s);
-///     println!("{} is more than enough damage to kill level 10 cogs.",dmg);
-/// }
-/// ```
 fn damage_lureless(gags:Vec<i64>) -> i64 {
     if gags.len() > 1 {
         let mut gagdmg: i64 = 0;
@@ -116,15 +67,6 @@ fn damage_lureless(gags:Vec<i64>) -> i64 {
 }
 
 /// Evaluates the total damage of a group of gags used during a given round with lure.
-/// ```
-/// use tt_calc::*;
-/// 
-/// fn avg_thrw_users() {
-///     let kills_14s = vec![132,27];
-///     let dmg = damage_lured(kills_14s);
-///     println!("{} is more than enough damage to kill level 14 cogs.",dmg);
-/// }
-/// ```
 fn damage_lured(gags:Vec<i64>) -> i64 {
     if gags.len() > 1 {
         let mut gagdmg: i64 = 0;

@@ -10,25 +10,59 @@
 
 ### Prerequisites
 
-Whatever operating system you have, to run the TT-Damage-Calculator from its source, you are required to have both Python and Rust installed. You can download Python at <https://www.python.org/> and Rust at <https://www.rust-lang.org/>. Rust is required to compile the Rust libraries (tt_calc, tt_gags, and tt_settings), and Python is required to run the program itself.
+1. The Python 3 Programming Language. Install from <https://www.python.org/downloads/>.
+2. The Rust Programming Language. Install by following the instructions at <https://www.rust-lang.org/learn/get-started>.
+3. Maturin. Install by following the instructions at <https://www.maturin.rs/installation.html>.
 
-### Windows
+### Creating the wheel
 
-To run the program on Windows, you must compile the Rust libraries into .pyd files. To do this, you must first navigate to the main project file (for tt_calc this would be `mod/tt_calc`) and run the command `cargo build --release` in your favorite terminal. The library should then compile.  
-Once the file is compiled, the file `mod/[module]/target/release/[module].dll` should have been created. Change the extension to `.pyd` and place the file in `mod/`. This should be done for each Rust library.
+Once the prerequisites are installed, clone the repository with git:
 
-### Linux
+```shell
+git clone https://github.com/Vhou-Atroph/TT-Damage-Calculator
+```
 
-To run the program on Linux, you must compile the Rust libraries into .so files. To do this, you must first navigate to the main project file (for tt_calc this would be `mod/tt_calc`) and run the command `cargo build --release` in your favorite terminal. The library should then compile.  
-Once the file is compiled, the file `mod/[module]/target/release/lib[module].so` should have been created. Change the file's name to `[module].so` and drop it in `mod/`. This should be done for each Rust library.
+With the repository cloned, navigate to the directory and build the project with maturin:
+
+```shell
+maturin build -i python
+```
+
+This should have created the "target" file in the project's main directory. Navigate to `target/wheels` and install the created file with pip:
+
+```shell
+pip install [file]
+```
 
 ### Running
 
-Once all dependencies are compiled and in their proper place, you can open the Calculator like any other Python script- double click main.pyw or run it in your favorite terminal with `py main.pyw`. If you have Python 2 installed as well, you may have to use `py3 main.pyw`.
+After installing the wheel, you can run it from your favorite command terminal with:
+
+```shell
+python -m tt_damage_calculator
+```
 
 ### What if I don't want to build the program?
 
+#### GitHub
+
 For some versions of the calculator, I will compile it completely and release a standalone executable for users who either do not want to or are unable to compile the dependencies themselves. You can find the latest release at <https://github.com/Vhou-Atroph/TT-Damage-Calculator/releases/latest>.
+
+GitHub executable releases target Windows users. Linux users must use Pypi to install this program.
+
+#### Pypi
+
+Alternatively, you can install the package using Pypi:
+
+```shell
+pip install tt_damage_calculator
+```
+
+After installing the package, you can run it via the terminal:
+
+```shell
+python -m tt_damage_calculator
+```
 
 ## Usage
 
