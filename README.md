@@ -55,7 +55,7 @@ GitHub executable releases target Windows users. Linux users must use Pypi to in
 Alternatively, you can install the package using Pypi:
 
 ```shell
-pip install [ill put a package name here when im sure to have it reserved]
+pip install tt_damage_calculator
 ```
 
 After installing the package, you can run it via the terminal:
