@@ -1,4 +1,6 @@
 *.pyc
+dist
+build
 
 # Added by cargo
 
