@@ -330,6 +330,7 @@ v2_menu.add_radiobutton(label="Level 10",value=10,variable=plating_lvl,command=c
 v2_menu.add_radiobutton(label="Level 11",value=11,variable=plating_lvl,command=calc_dmg)
 v2_menu.add_radiobutton(label="Level 12",value=12,variable=plating_lvl,command=calc_dmg)
 calculations_menu.add_cascade(label="V2.0 Cogs",menu=v2_menu)
+calculations_menu.add_radiobutton(label="Damage Immunity") #TODO: This
 calculations_menu.add_separator()
 calculations_menu.add_checkbutton(label="Lock Status",variable=status_lock,onvalue=True,offvalue=False,accelerator=settings.keybinds.lock)
 toolbar.add_cascade(label="Calculations",menu=calculations_menu)
