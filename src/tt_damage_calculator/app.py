@@ -6,7 +6,7 @@ TT-Damage-Calculator is a gag damage calculator for Toontown Rewritten. It has a
 
 CONTRIBUTORS:
 - Vhou-Atroph
-- BoggoTV
+- BoggTech
 """
 
 import os, pathlib, sys, webbrowser
