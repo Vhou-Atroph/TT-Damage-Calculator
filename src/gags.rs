@@ -36,14 +36,21 @@ impl Gag {
 
     /// Returns the damage an organic gag of a certain type does.
     pub fn button_press(&self,org_val:bool) -> PyResult<(i64,String)> { // (damage,name)
-        if self.gtype == "Gag" && org_val {return Ok((org(self.dmg),format!("Organic {}",self.name)))}
+        if self.gtype == "Gag" && org_val {return Ok((self.org().expect("An error happened!"),format!("Organic {}",self.name)))}
         Ok((self.dmg,self.name.clone()))
     }
-}
 
-/// Evaluates the amount of damage a gag will do when organic.
-fn org(n:i64) -> i64 {
-    let org_boost_f = n as f64 * 0.1;
-    if org_boost_f < 1.0 {return n+1_i64}
-    n + org_boost_f.floor() as i64
+    /// Returns the amount of damage a gag will do when organic.
+    fn org(&self) -> PyResult<(i64)> {
+        if self.track == "Throw" {
+            let org_boost_f = self.dmg as f64 * 0.05;
+            if org_boost_f < 1.0 {return Ok(self.dmg + 1_i64)}
+            return Ok(self.dmg + org_boost_f.floor() as i64)
+            }
+            else {
+                let org_boost_f = self.dmg as f64 * 0.1;
+                if org_boost_f < 1.0 {return Ok(self.dmg + 1_i64)}
+                Ok(self.dmg + org_boost_f.floor() as i64)
+            }
+    }
 }
