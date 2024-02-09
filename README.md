@@ -87,7 +87,6 @@ The program has various keybinds to expedite calculation:
 | ctrl+l      | Toggle Lure         |
 | ctrl+r      | Finish Calculation  |
 | ctrl+d      | Cycle  Defense      |
-| ctrl+v      | Cycle v2 levels     |
 | ctrl+x      | Lock/Unlock statuses|
 | alt+up      | Toggle Pinned Window|
 

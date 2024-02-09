@@ -1,5 +1,5 @@
 //! TT-Damage-Calculator
-//! Copyright (C) 2022-2023 Vhou-Atroph
+//! Copyright (C) 2022-2024 Vhou-Atroph
 
 use pyo3::prelude::*;
 
@@ -41,7 +41,7 @@ impl Gag {
     }
 
     /// Returns the amount of damage a gag will do when organic.
-    fn org(&self) -> PyResult<(i64)> {
+    fn org(&self) -> PyResult<i64> {
         if self.track == "Throw" {
             let org_boost_f = self.dmg as f64 * 0.05;
             if org_boost_f < 1.0 {return Ok(self.dmg + 1_i64)}

@@ -1,5 +1,5 @@
 //! TT-Damage-Calculator
-//! Copyright (C) 2022-2023 Vhou-Atroph
+//! Copyright (C) 2022-2024 Vhou-Atroph
 
 use std::fs;
 
