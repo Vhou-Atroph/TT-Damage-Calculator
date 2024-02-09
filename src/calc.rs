@@ -45,6 +45,9 @@ pub fn cog_defense(gags:Vec<i64>,strength:f64) -> Vec<i64> {
 }
 
 /// Evaluates cog plating buff applicable in a round.
+/// 
+/// 2-9-24: This is no longer in the game at all as of the Under New Management playtest, it is still kept here for now.
+/// https://cdn.toontownrewritten.com/community/notices/Rebalancing_Update_February_2024.pdf
 fn cog_plating(gags:Vec<i64>,lvl:i64) -> Vec<i64> {
     let mut newvec: Vec<i64> = Vec::new();
     for i in gags.iter() {
@@ -133,6 +136,9 @@ pub fn lvl_ind(dmg:i64) -> i64 {
 
 /// Calculates what level of v2 cog a certain combination of gags would kill along with damage done.
 /// This function is no longer present in the actual calculator, but remains here in case anyone wants to plug it back in at any point.
+/// 
+/// 2-9-24: This is no longer in the game at all as of the Under New Management playtest, it is still kept here for now.
+/// https://cdn.toontownrewritten.com/community/notices/Rebalancing_Update_February_2024.pdf
 #[pyfunction]
 pub fn v2_loop(trap:Vec<i64>,sound:Vec<i64>,throw:Vec<i64>,squirt:Vec<i64>,drop:Vec<i64>,lured:bool) -> PyResult<(i64,i64)> { // (dmg,lvl)
     let mut lvl: i64 = 0;

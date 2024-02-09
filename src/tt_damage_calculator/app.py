@@ -240,7 +240,6 @@ bess_img=PhotoImage(file=asset_path+'/assets/img/barnaclebessie.png')
 bess=GagButton(sos_drp,image=bess_img,gag=rustygag.Gag("Sos","Barnacle Bessie","Drop",2,170))
 
 ###Keybinds
-window.bind('<'+settings.keybinds.v2+'>',lambda par: [plating_lvl.set(rustygag.advance_int([0,9,10,11,12],plating_lvl.get())),calc_dmg()])
 window.bind('<'+settings.keybinds.defense+'>',lambda par: [dmg_down.set(rustygag.advance_float([0.0,0.1,0.15,0.2,0.25],dmg_down.get())),calc_dmg()])
 window.bind('<'+settings.keybinds.lure+'>',lambda par: [lured.set(rustygag.toggleswap(lured.get())),calc_dmg()])
 window.bind('<'+settings.keybinds.lock+'>',lambda par: [status_lock.set(rustygag.toggleswap(status_lock.get())),calc_dmg()])
@@ -323,13 +322,6 @@ def_menu.add_radiobutton(label="15% (2⭐)",value=0.15,variable=dmg_down,command
 def_menu.add_radiobutton(label="20% (3⭐)",value=0.2,variable=dmg_down,command=calc_dmg)
 def_menu.add_radiobutton(label="25% (4⭐)",value=0.25,variable=dmg_down,command=calc_dmg)
 calculations_menu.add_cascade(label="Cog Defense",menu=def_menu)
-v2_menu=Menu(calculations_menu,tearoff=0)
-v2_menu.add_radiobutton(label="None",value=0,variable=plating_lvl,command=calc_dmg)
-v2_menu.add_radiobutton(label="Level 9",value=9,variable=plating_lvl,command=calc_dmg)
-v2_menu.add_radiobutton(label="Level 10",value=10,variable=plating_lvl,command=calc_dmg)
-v2_menu.add_radiobutton(label="Level 11",value=11,variable=plating_lvl,command=calc_dmg)
-v2_menu.add_radiobutton(label="Level 12",value=12,variable=plating_lvl,command=calc_dmg)
-calculations_menu.add_cascade(label="V2.0 Cogs",menu=v2_menu)
 calculations_menu.add_radiobutton(label="Damage Immunity") #TODO: This
 calculations_menu.add_separator()
 calculations_menu.add_checkbutton(label="Lock Status",variable=status_lock,onvalue=True,offvalue=False,accelerator=settings.keybinds.lock)
