@@ -72,7 +72,7 @@ Click any gag on the grid to add it to the calculation.
 
 ### Statuses/Modifiers
 
-There are three buttons available above the gag selection that allow for certain functionalities: if a cog being lured that round, whether a gag is organic or not, and the ability to reset the current calculation. Other cog modifiers such as defense and v2 level can be found in the menu bar under "Calculations."
+There are three buttons available above the gag selection that allow for certain functionalities: if a cog being lured that round, whether a gag is organic or not, and the ability to reset the current calculation. Other cog modifiers such as defense can be found in the menu bar under "Calculations."
 
 ### Other Features
 
