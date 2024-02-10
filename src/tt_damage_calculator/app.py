@@ -322,7 +322,6 @@ def_menu.add_radiobutton(label="15% (2⭐)",value=0.15,variable=dmg_down,command
 def_menu.add_radiobutton(label="20% (3⭐)",value=0.2,variable=dmg_down,command=calc_dmg)
 def_menu.add_radiobutton(label="25% (4⭐)",value=0.25,variable=dmg_down,command=calc_dmg)
 calculations_menu.add_cascade(label="Cog Defense",menu=def_menu)
-calculations_menu.add_radiobutton(label="Damage Immunity") #TODO: This
 calculations_menu.add_separator()
 calculations_menu.add_checkbutton(label="Lock Status",variable=status_lock,onvalue=True,offvalue=False,accelerator=settings.keybinds.lock)
 toolbar.add_cascade(label="Calculations",menu=calculations_menu)
