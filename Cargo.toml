@@ -13,14 +13,20 @@ name = "rustygag"
 crate-type = ["cdylib"]
 
 [dependencies.pyo3]
-version = "0.18.1"
+version = "0.20.2"
 features = ["extension-module"]
+
+[dependencies.serde]
+version = "1.0.196"
+features = ["derive"]
+
+[dependencies.tokio]
+version = "1.36.0"
+features = ["full"]
 
 [package.metadata.maturin]
 name = "tt_damage_calculator.rustygag"
 
 [dependencies]
-serde = { version = "1.0.154", features = ["derive"] }
-toml = "0.7.2"
-reqwest = "0.11.14"
-tokio = { version = "1.26.0", features = ["full"] }
+toml = "0.8.10"
+reqwest = "0.11.24"
