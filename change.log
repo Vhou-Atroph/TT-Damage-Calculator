@@ -76,3 +76,8 @@
 
 --V4.2.1--
 - Fixed a bug that caused a 404 error when using the update checker.
+
+--V4.3.0--
+- Updated the calculator for Under New Management!
+- Organic throw has a 5% damage bonus instead of 10%
+- Reinforced Plating is no longer a mechanic
