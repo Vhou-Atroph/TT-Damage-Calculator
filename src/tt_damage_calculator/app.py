@@ -318,7 +318,12 @@ def_menu.add_radiobutton(label="10% (1⭐)", value=0.1, variable=dmg_down, comma
 def_menu.add_radiobutton(label="15% (2⭐)", value=0.15, variable=dmg_down, command=calc_dmg)
 def_menu.add_radiobutton(label="20% (3⭐)", value=0.2, variable=dmg_down, command=calc_dmg)
 def_menu.add_radiobutton(label="25% (4⭐)", value=0.25, variable=dmg_down, command=calc_dmg)
-calculations_menu.add_cascade(label="Cog Defense", menu=def_menu)
+calculations_menu.add_cascade(label="Cog Defense Up", menu=def_menu)
+def_menu2 = Menu(calculations_menu, tearoff=0)
+def_menu2.add_radiobutton(label="None", value=0.0, variable=dmg_down, command=calc_dmg)
+# def_menu2.add_radiobutton(label="-50%", value=-0.5, variable=dmg_down, command=calc_dmg) # The way negative defense currently works is inconsistent with the rest of the game; this is still a wip.
+# in the rest of the game, defense affects the group damage bonus, while negative defense does not seem to.
+calculations_menu.add_cascade(label="Cog Defense Down", menu=def_menu2)
 calculations_menu.add_separator()
 calculations_menu.add_checkbutton(label="Lock Status", variable=status_lock, onvalue=True, offvalue=False, accelerator=settings.keybinds.lock)
 toolbar.add_cascade(label="Calculations", menu=calculations_menu)

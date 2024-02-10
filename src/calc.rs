@@ -137,7 +137,7 @@ pub fn lvl_ind(dmg:i64) -> i64 {
 
 /// Matches the current defense and plating values to correctly show how much defense/what level of v2 the calculator is working with.
 #[pyfunction]
-pub fn lvl_ind_string(lvl:u64,def:u64) -> String {
+pub fn lvl_ind_string(lvl:u64,def:i64) -> String {
     match def {
         0 => format!("Level {}",lvl),
         _ => format!("Level {} ({}% defense)",lvl, def),
