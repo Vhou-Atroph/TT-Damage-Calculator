@@ -42,15 +42,13 @@ impl Gag {
 
     /// Returns the amount of damage a gag will do when organic.
     fn org(&self) -> PyResult<i64> {
-        if self.track == "Throw" {
-            let org_boost_f = self.dmg as f64 * 0.05;
-            if org_boost_f < 1.0 {return Ok(self.dmg + 1_i64)}
-            return Ok(self.dmg + org_boost_f.floor() as i64)
-            }
-            else {
-                let org_boost_f = self.dmg as f64 * 0.1;
-                if org_boost_f < 1.0 {return Ok(self.dmg + 1_i64)}
-                Ok(self.dmg + org_boost_f.floor() as i64)
-            }
+        let boost;
+        match self.track.as_str() {
+            "Throw" => boost = 0.05,
+        _ => boost = 0.1
+        }
+        let org_boost_f = self.dmg as f64 * boost;
+        if org_boost_f < 1.0 {return Ok(self.dmg + 1_i64)}
+        Ok(self.dmg + org_boost_f.floor() as i64)
     }
 }
