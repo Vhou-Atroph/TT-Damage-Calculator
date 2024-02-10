@@ -12,6 +12,9 @@ edition = "2021"
 name = "rustygag"
 crate-type = ["cdylib"]
 
+[package.metadata.maturin]
+name = "tt_damage_calculator.rustygag"
+
 [dependencies.pyo3]
 version = "0.20.2"
 features = ["extension-module"]
@@ -23,9 +26,6 @@ features = ["derive"]
 [dependencies.tokio]
 version = "1.36.0"
 features = ["full"]
-
-[package.metadata.maturin]
-name = "tt_damage_calculator.rustygag"
 
 [dependencies]
 toml = "0.8.10"
