@@ -15,7 +15,6 @@ fn rustygag(_: Python<'_>, m: &PyModule) -> PyResult<()> {
     m.add_function(wrap_pyfunction!(full_calc, m)?)?;
     m.add_function(wrap_pyfunction!(def_parse, m)?)?;
     m.add_function(wrap_pyfunction!(lvl_ind, m)?)?;
-    m.add_function(wrap_pyfunction!(v2_loop, m)?)?;
     m.add_function(wrap_pyfunction!(advance_int, m)?)?;
     m.add_function(wrap_pyfunction!(advance_float, m)?)?;
     m.add_function(wrap_pyfunction!(lvl_ind_string, m)?)?;

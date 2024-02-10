@@ -42,10 +42,8 @@ organic=BooleanVar()
 lured=BooleanVar()
 pin_val=BooleanVar()
 dmg_down=DoubleVar()
-plating_lvl=IntVar()
 status_lock=BooleanVar()
 dmg_down.set(0.0)
-plating_lvl.set(0)
 
 settings = rustygag.Settings(asset_path+"/assets/settings.toml")
 
@@ -55,8 +53,8 @@ col1=Frame(window) #Will be used for calculation history
 
 #Total damage calculation
 def calc_dmg(*args):
-  tot_dmg=rustygag.full_calc(trp_used,snd_used,trw_used,sqt_used,drp_used,lured.get(),dmg_down.get(),plating_lvl.get())
-  cog_level_indicator.configure(text=rustygag.lvl_ind_string(rustygag.lvl_ind(tot_dmg),int(dmg_down.get()*100),plating_lvl.get()))
+  tot_dmg=rustygag.full_calc(trp_used,snd_used,trw_used,sqt_used,drp_used,lured.get(),dmg_down.get())
+  cog_level_indicator.configure(text=rustygag.lvl_ind_string(rustygag.lvl_ind(tot_dmg),int(dmg_down.get()*100)))
   dmg_indicator.configure(text=str(tot_dmg))
 
 #Pin window to top
@@ -263,7 +261,7 @@ def clear_inputs(*arg):
   global drp_used
   global trp_used
   hist_box.configure(state=NORMAL)
-  hist_box.insert('1.0',rustygag.calc_fin_string(int(dmg_indicator.cget("text")),rustygag.lvl_ind(int(dmg_indicator.cget("text"))),lured.get(),int(dmg_down.get()*100),plating_lvl.get()))
+  hist_box.insert('1.0',rustygag.calc_fin_string(int(dmg_indicator.cget("text")),rustygag.lvl_ind(int(dmg_indicator.cget("text"))),lured.get(),int(dmg_down.get()*100)))
   hist_box.configure(state=DISABLED)
   if organic.get():
     organic_toggle()
@@ -275,7 +273,6 @@ def clear_inputs(*arg):
   for i in gag_btns:
     i.configure(text='0')
   if not status_lock.get():
-    plating_lvl.set(0)
     dmg_down.set(0.0)
     lured.set(0)
   calc_dmg()

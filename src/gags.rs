@@ -45,7 +45,7 @@ impl Gag {
         let boost;
         match self.track.as_str() {
             "Throw" => boost = 0.05,
-        _ => boost = 0.1
+            _ => boost = 0.1
         }
         let org_boost_f = self.dmg as f64 * boost;
         if org_boost_f < 1.0 {return Ok(self.dmg + 1_i64)}
