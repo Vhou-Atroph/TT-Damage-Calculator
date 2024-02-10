@@ -24,7 +24,6 @@ pub struct Settings {
 /// | reset   | Keybind to reset calculations       |
 /// | lock    | Keybind to toggle status lock       |
 /// | defense | Keybind to set cog defense          |
-/// | v2      | Keybind to set v2 cog level         |
 /// | pin     | Keybind to toggle window pin status |
 pub struct Keybinds {
     #[pyo3(get, set)]
@@ -37,8 +36,6 @@ pub struct Keybinds {
     lock: String,
     #[pyo3(get, set)]
     defense: String,
-    #[pyo3(get, set)]
-    v2: String,
     #[pyo3(get, set)]
     pin: String,
 }
