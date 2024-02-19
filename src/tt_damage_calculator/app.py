@@ -264,7 +264,7 @@ def clear_inputs(*arg):
   global drp_used
   global trp_used
   hist_box.configure(state=NORMAL)
-  hist_box.insert('1.0', rustygag.calc_fin_string(int(dmg_indicator.cget("text")), rustygag.lvl_ind(int(dmg_indicator.cget("text"))), lured.get(), int(dmg_down.get() * 100), int(dmg_up.get() * 100)))
+  hist_box.insert('1.0', rustygag.CalculationResults(int(dmg_indicator.cget("text")), rustygag.lvl_ind(int(dmg_indicator.cget("text"))), lured.get(), dmg_down.get(), dmg_up.get()).build())
   hist_box.configure(state=DISABLED)
   if organic.get():
     organic_toggle()

@@ -10,6 +10,7 @@ use crate::settings::*;
 #[pymodule]
 fn rustygag(_: Python<'_>, m: &PyModule) -> PyResult<()> {
     // Calc
+    m.add_class::<CalculationResults>()?;
     m.add_function(wrap_pyfunction!(cog_hp, m)?)?;
     m.add_function(wrap_pyfunction!(gag_calculator, m)?)?;
     m.add_function(wrap_pyfunction!(full_calc, m)?)?;
@@ -18,7 +19,6 @@ fn rustygag(_: Python<'_>, m: &PyModule) -> PyResult<()> {
     m.add_function(wrap_pyfunction!(advance_int, m)?)?;
     m.add_function(wrap_pyfunction!(advance_float, m)?)?;
     m.add_function(wrap_pyfunction!(lvl_ind_string, m)?)?;
-    m.add_function(wrap_pyfunction!(calc_fin_string, m)?)?;
 
     // Gags
     m.add_class::<Gag>()?;

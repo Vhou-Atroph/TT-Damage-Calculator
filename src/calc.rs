@@ -160,13 +160,44 @@ pub fn lvl_ind_string(lvl:u64, def:i64, neg_def:i64) -> String {
     }
 }
 
-/// Matches the current defense and plating values to give a calculation finish message to reflect the cog status effects.
-#[pyfunction]
-pub fn calc_fin_string(dmg:i64, lvl:i64, lured:bool, def:i64, neg_def:i64) -> String {
-    match (def, neg_def) {
-        (0, 0) => format!("--------\nCalculation finished!\nDamage this round: {}\nWill kill: Level {} cogs\nLured: {}\n\n",dmg,lvl,lured),
-        (_, 0) => format!("--------\nCalculation finished!\nDamage this round:{}\nDefense: {}%\nWill kill: Level {} cogs\nLured: {}\n\n",dmg,def,lvl,lured),
-        (0, _) => format!("--------\nCalculation finished!\nDamage this round:{}\nDefense: -{}%\nWill kill: Level {} cogs\nLured: {}\n\n",dmg,neg_def,lvl,lured),
-        (_, _) => format!("--------\nCalculation finished!\nDamage this round:{}\nDefense: +{}%/-{}%\nWill kill: Level {} cogs\nLured: {}\n\n",dmg,def,neg_def,lvl,lured),
+/// Struct to create an output for the calculation history box when a user chooses to reset the calculation.
+#[pyclass]
+pub struct CalculationResults {
+    #[pyo3(get, set)]
+    dmg: i64,
+    #[pyo3(get, set)]
+    lvl: i64,
+    #[pyo3(get, set)]
+    lured: bool,
+    #[pyo3(get, set)]
+    pdef: f64,
+    #[pyo3(get, set)]
+    ndef: f64
+}
+
+#[pymethods]
+impl CalculationResults {
+    #[new]
+    pub fn new(dmg:i64, lvl:i64, lured:bool, pdef:f64, ndef:f64) -> Self {
+        Self { dmg, lvl, lured, pdef, ndef }
+    }
+
+    /// Builds the calculation history string
+    pub fn build(&self) -> PyResult<String> {
+        Ok(format!(
+            "--------\nDamage this round:{}\nWill kill: Level {} cogs\nLured: {}\n{}\n",
+            self.dmg, self.lvl, self.lured, self.give_defense()))
+    }
+
+    /// Matches the defense values to create a string to reflect the most recent battle's calculations in calculation history.
+    fn give_defense(&self) -> String {
+        let pos_def = (self.pdef * 100.) as i64;
+        let neg_def = (self.ndef * 100.) as i64;
+        match (pos_def, neg_def) {
+            (0, 0) => format!(""),
+            (_, 0) => format!("Defense: {}%\n", pos_def),
+            (0, _) => format!("Defense: -{}%\n", neg_def),
+            (_, _) => format!("Defense: +{}%/-{}%\n", pos_def, neg_def)
+        }
     }
 }

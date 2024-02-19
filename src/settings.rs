@@ -15,8 +15,6 @@ pub struct Settings {
 }
 
 /// Struct for the Keybinds portion of the Settings file
-#[pyclass]
-#[derive(Serialize,Deserialize,Clone)]
 /// | Field            | Description                         |
 /// |------------------|-------------------------------------|
 /// | organic          | Keybind for the organic toggle      |
@@ -26,6 +24,8 @@ pub struct Settings {
 /// | defense          | Keybind to set cog defense          |
 /// | negative_defense | Keybind to set negative cog defense |
 /// | pin              | Keybind to toggle window pin status |
+#[pyclass]
+#[derive(Serialize,Deserialize,Clone)]
 pub struct Keybinds {
     #[pyo3(get, set)]
     organic: String,
