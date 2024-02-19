@@ -42,8 +42,10 @@ organic = BooleanVar()
 lured = BooleanVar()
 pin_val = BooleanVar()
 dmg_down = DoubleVar()
+dmg_up = DoubleVar()
 status_lock = BooleanVar()
 dmg_down.set(0.0)
+dmg_up.set(0.0)
 
 settings = rustygag.Settings(asset_path + "/assets/settings.toml")
 
@@ -53,7 +55,7 @@ col1 = Frame(window) # Will be used for calculation history
 
 # Total damage calculation
 def calc_dmg(*args):
-  tot_dmg = rustygag.full_calc(trp_used, snd_used, trw_used, sqt_used, drp_used, lured.get(), dmg_down.get())
+  tot_dmg = rustygag.full_calc(trp_used, snd_used, trw_used, sqt_used, drp_used, lured.get(), dmg_down.get(), dmg_up.get())
   cog_level_indicator.configure(text=rustygag.lvl_ind_string(rustygag.lvl_ind(tot_dmg), int(dmg_down.get() * 100)))
   dmg_indicator.configure(text=str(tot_dmg))
 
@@ -274,6 +276,7 @@ def clear_inputs(*arg):
     i.configure(text='0')
   if not status_lock.get():
     dmg_down.set(0.0)
+    dmg_up.set(0.0)
     lured.set(0)
   calc_dmg()
 clear_btn.configure(command=clear_inputs)
@@ -320,9 +323,8 @@ def_menu.add_radiobutton(label="20% (3⭐)", value=0.2, variable=dmg_down, comma
 def_menu.add_radiobutton(label="25% (4⭐)", value=0.25, variable=dmg_down, command=calc_dmg)
 calculations_menu.add_cascade(label="Cog Defense Up", menu=def_menu)
 def_menu2 = Menu(calculations_menu, tearoff=0)
-def_menu2.add_radiobutton(label="None", value=0.0, variable=dmg_down, command=calc_dmg)
-# def_menu2.add_radiobutton(label="-50%", value=-0.5, variable=dmg_down, command=calc_dmg) # The way negative defense currently works is inconsistent with the rest of the game; this is still a wip.
-# in the rest of the game, defense affects the group damage bonus, while negative defense does not seem to.
+def_menu2.add_radiobutton(label="None", value=0.0, variable=dmg_up, command=calc_dmg)
+def_menu2.add_radiobutton(label="-50%", value=0.5, variable=dmg_up, command=calc_dmg)
 calculations_menu.add_cascade(label="Cog Defense Down", menu=def_menu2)
 calculations_menu.add_separator()
 calculations_menu.add_checkbutton(label="Lock Status", variable=status_lock, onvalue=True, offvalue=False, accelerator=settings.keybinds.lock)

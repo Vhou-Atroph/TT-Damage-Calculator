@@ -38,10 +38,16 @@ pub fn advance_float(list:Vec<f64>,entry:f64) -> f64 {
 }
 
 /// Evaluates cog defense buff applicable in a round.
-pub fn cog_defense(gags:Vec<i64>,strength:f64) -> Vec<i64> {
+pub fn cog_defense(gags:&Vec<i64>,strength:f64) -> Vec<i64> {
     let mut newvec: Vec<i64> = Vec::new();
     for i in gags.iter() {newvec.push(i - (*i as f64 * strength).ceil() as i64);}
     newvec
+}
+
+/// Evaluates the flat damage bonus from negative cog defense.
+fn damage_negative_defense(gags:&Vec<i64>, strength:f64) -> i64 {
+    let sum: i64 = gags.iter().sum();
+    (sum as f64 * strength).ceil() as i64
 }
 
 /// Evaluates cog plating buff applicable in a round.
@@ -61,7 +67,7 @@ fn cog_plating(gags:Vec<i64>,lvl:i64) -> Vec<i64> {
 }
 
 /// Evaluates the total damage of a group of gags used during a given round without lure.
-fn damage_lureless(gags:Vec<i64>) -> i64 {
+fn damage_lureless(gags:&Vec<i64>) -> i64 {
     if gags.len() > 1 {
         let mut gagdmg: i64 = 0;
         for i in gags.iter() {gagdmg+=i;}
@@ -72,7 +78,7 @@ fn damage_lureless(gags:Vec<i64>) -> i64 {
 }
 
 /// Evaluates the total damage of a group of gags used during a given round with lure.
-fn damage_lured(gags:Vec<i64>) -> i64 {
+fn damage_lured(gags:&Vec<i64>) -> i64 {
     if gags.len() > 1 {
         let mut gagdmg: i64 = 0;
         for i in gags.iter() {gagdmg+=i;}
@@ -84,38 +90,46 @@ fn damage_lured(gags:Vec<i64>) -> i64 {
 
 /// Evaluates which functions to perform for a particular gag usage round.
 #[pyfunction]
-pub fn gag_calculator(gags:Vec<i64>,lured:bool,defense:Option<f64>) -> i64 {
+pub fn gag_calculator(gags:Vec<i64>, lured:bool, defense:Option<f64>, neg_defense:Option<f64>) -> i64 {
     let mut modlist: Vec<i64> = gags;
-    let gagdmg: i64;
-    if let Some(def) = defense { modlist = cog_defense(modlist,def) }
-    if lured {gagdmg = damage_lured(modlist);}
-    else {gagdmg = damage_lureless(modlist);}
+    let mut gagdmg: i64;
+    if let Some(def) = defense { modlist = cog_defense(&modlist, def) }
+    if lured {gagdmg = damage_lured(&modlist);}
+    else {gagdmg = damage_lureless(&modlist);}
+    if let Some(neg_def) = neg_defense { gagdmg = gagdmg + damage_negative_defense(&modlist, neg_def) }
     gagdmg
 }
 
 /// Full damage calculation for a given round in a cog battle.
 #[pyfunction]
-pub fn full_calc(trap:Vec<i64>,sound:Vec<i64>,throw:Vec<i64>,squirt:Vec<i64>,drop:Vec<i64>,lured:bool,defense:Option<f64>) -> i64 {
+pub fn full_calc(trap:Vec<i64>,
+    sound:Vec<i64>,
+    throw:Vec<i64>,
+    squirt:Vec<i64>,
+    drop:Vec<i64>,
+    lured:bool,
+    defense:Option<f64>,
+    neg_defense:Option<f64>) -> i64 {
     let mut gagdmg: i64 = 0;
     let mut lured_loc = lured;
     if trap.len() == 1 && lured_loc {
-        gagdmg+=gag_calculator(trap,false,defense);
+        gagdmg+=gag_calculator(trap,false,defense,neg_defense);
         lured_loc = false;
     }
     if !sound.is_empty() {
-        gagdmg+=gag_calculator(sound,false,defense);
+        gagdmg+=gag_calculator(sound,false,defense,neg_defense);
         lured_loc = false;
     }
     if !throw.is_empty() {
-        gagdmg+=gag_calculator(throw,lured_loc,defense);
+        gagdmg+=gag_calculator(throw,lured_loc,defense,neg_defense);
         lured_loc = false;
     }
     if !squirt.is_empty() {
-        gagdmg+=gag_calculator(squirt,lured_loc,defense);
+        gagdmg+=gag_calculator(squirt,lured_loc,defense,neg_defense);
         lured_loc = false;
     }
     if !drop.is_empty() && !lured_loc {
-        gagdmg+=gag_calculator(drop,false,defense);
+        gagdmg+=gag_calculator(drop,false,defense,neg_defense);
     }
     gagdmg
 }
