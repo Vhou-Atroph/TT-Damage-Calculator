@@ -241,6 +241,7 @@ bess = GagButton(sos_drp,image=bess_img, gag=rustygag.Gag("Sos","Barnacle Bessie
 
 ### Keybinds
 window.bind('<' + settings.keybinds.defense + '>', lambda par: [dmg_down.set(rustygag.advance_float([0.0,0.1,0.15,0.2,0.25], dmg_down.get())), calc_dmg()])
+window.bind('<' + settings.keybinds.negative_defense + '>', lambda par: [dmg_up.set(rustygag.advance_float([0.0,0.5], dmg_up.get())), calc_dmg()])
 window.bind('<' + settings.keybinds.lure + '>', lambda par: [lured.set(rustygag.toggleswap(lured.get())), calc_dmg()])
 window.bind('<' + settings.keybinds.lock + '>', lambda par: [status_lock.set(rustygag.toggleswap(status_lock.get())) , calc_dmg()])
 window.bind('<' + settings.keybinds.pin + '>', lambda par: [pin_val.set(rustygag.toggleswap(pin_val.get())), pin()])

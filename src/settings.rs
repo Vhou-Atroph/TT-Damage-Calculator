@@ -17,14 +17,15 @@ pub struct Settings {
 /// Struct for the Keybinds portion of the Settings file
 #[pyclass]
 #[derive(Serialize,Deserialize,Clone)]
-/// | Field   | Description                         |
-/// |---------|-------------------------------------|
-/// | organic | Keybind for the organic toggle      |
-/// | lure    | Keybind for the lure toggle         |
-/// | reset   | Keybind to reset calculations       |
-/// | lock    | Keybind to toggle status lock       |
-/// | defense | Keybind to set cog defense          |
-/// | pin     | Keybind to toggle window pin status |
+/// | Field            | Description                         |
+/// |------------------|-------------------------------------|
+/// | organic          | Keybind for the organic toggle      |
+/// | lure             | Keybind for the lure toggle         |
+/// | reset            | Keybind to reset calculations       |
+/// | lock             | Keybind to toggle status lock       |
+/// | defense          | Keybind to set cog defense          |
+/// | negative_defense | Keybind to set negative cog defense |
+/// | pin              | Keybind to toggle window pin status |
 pub struct Keybinds {
     #[pyo3(get, set)]
     organic: String,
@@ -36,6 +37,8 @@ pub struct Keybinds {
     lock: String,
     #[pyo3(get, set)]
     defense: String,
+    #[pyo3(get, set)]
+    negative_defense: String,
     #[pyo3(get, set)]
     pin: String,
 }

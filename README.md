@@ -81,14 +81,15 @@ There are two buttons in the bottom right corner of the program.
 'Show Health and SOS Cards' brings up a grid of all cog health values from Level 7 to Level 20, as well as the major SOS cards for Trap, Sound, and Drop. This can be toggled by clicking on it a second time.
 
 The program has various keybinds to expedite calculation:
-| Keybind     | Description         |
-| ----------- | ------------------- |
-| shift       | Toggle Organic      |
-| ctrl+l      | Toggle Lure         |
-| ctrl+r      | Finish Calculation  |
-| ctrl+d      | Cycle  Defense      |
-| ctrl+x      | Lock/Unlock statuses|
-| alt+up      | Toggle Pinned Window|
+| Keybind     | Description             |
+| ----------- | ----------------------- |
+| shift       | Toggle Organic          |
+| ctrl+l      | Toggle Lure             |
+| ctrl+r      | Finish Calculation      |
+| ctrl+d      | Cycle  Defense          |
+| alt+d       | Cycle  Negative Defense |
+| ctrl+x      | Lock/Unlock statuses    |
+| alt+up      | Toggle Pinned Window    |
 
 ## License
 
