@@ -56,7 +56,7 @@ col1 = Frame(window) # Will be used for calculation history
 # Total damage calculation
 def calc_dmg(*args):
   tot_dmg = rustygag.full_calc(trp_used, snd_used, trw_used, sqt_used, drp_used, lured.get(), dmg_down.get(), dmg_up.get())
-  cog_level_indicator.configure(text=rustygag.lvl_ind_string(rustygag.lvl_ind(tot_dmg), int(dmg_down.get() * 100)))
+  cog_level_indicator.configure(text=rustygag.lvl_ind_string(rustygag.lvl_ind(tot_dmg), int(dmg_down.get() * 100), int(dmg_up.get() * 100)))
   dmg_indicator.configure(text=str(tot_dmg))
 
 # Pin window to top
@@ -263,7 +263,7 @@ def clear_inputs(*arg):
   global drp_used
   global trp_used
   hist_box.configure(state=NORMAL)
-  hist_box.insert('1.0', rustygag.calc_fin_string(int(dmg_indicator.cget("text")), rustygag.lvl_ind(int(dmg_indicator.cget("text"))), lured.get(), int(dmg_down.get() * 100)))
+  hist_box.insert('1.0', rustygag.calc_fin_string(int(dmg_indicator.cget("text")), rustygag.lvl_ind(int(dmg_indicator.cget("text"))), lured.get(), int(dmg_down.get() * 100), int(dmg_up.get() * 100)))
   hist_box.configure(state=DISABLED)
   if organic.get():
     organic_toggle()

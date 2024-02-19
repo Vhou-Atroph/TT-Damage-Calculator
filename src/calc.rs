@@ -151,18 +151,22 @@ pub fn lvl_ind(dmg:i64) -> i64 {
 
 /// Matches the current defense and plating values to correctly show how much defense/what level of v2 the calculator is working with.
 #[pyfunction]
-pub fn lvl_ind_string(lvl:u64,def:i64) -> String {
-    match def {
-        0 => format!("Level {}",lvl),
-        _ => format!("Level {} ({}% defense)",lvl, def),
+pub fn lvl_ind_string(lvl:u64, def:i64, neg_def:i64) -> String {
+    match (def, neg_def) {
+        (0, 0) => format!("Level {}",lvl),
+        (_, 0) => format!("Level {} ({}% defense)",lvl, def),
+        (0, _) => format!("Level {} (-{}% defense)",lvl, neg_def),
+        (_, _) => format!("Level {} (+{}%/-{}% defense)",lvl, def, neg_def)
     }
 }
 
 /// Matches the current defense and plating values to give a calculation finish message to reflect the cog status effects.
 #[pyfunction]
-pub fn calc_fin_string(dmg:i64,lvl:i64,lured:bool,def:i64) -> String {
-    match def {
-        0 => format!("--------\nCalculation finished!\nDamage this round: {}\nWill kill: Level {} cogs\nLured: {}\n\n",dmg,lvl,lured),
-        _ => format!("--------\nCalculation finished!\nDamage this round:{}\nDefense: {}%\nWill kill: Level {} cogs\nLured: {}\n\n",dmg,def,lvl,lured)
+pub fn calc_fin_string(dmg:i64, lvl:i64, lured:bool, def:i64, neg_def:i64) -> String {
+    match (def, neg_def) {
+        (0, 0) => format!("--------\nCalculation finished!\nDamage this round: {}\nWill kill: Level {} cogs\nLured: {}\n\n",dmg,lvl,lured),
+        (_, 0) => format!("--------\nCalculation finished!\nDamage this round:{}\nDefense: {}%\nWill kill: Level {} cogs\nLured: {}\n\n",dmg,def,lvl,lured),
+        (0, _) => format!("--------\nCalculation finished!\nDamage this round:{}\nDefense: -{}%\nWill kill: Level {} cogs\nLured: {}\n\n",dmg,neg_def,lvl,lured),
+        (_, _) => format!("--------\nCalculation finished!\nDamage this round:{}\nDefense: +{}%/-{}%\nWill kill: Level {} cogs\nLured: {}\n\n",dmg,def,neg_def,lvl,lured),
     }
 }
