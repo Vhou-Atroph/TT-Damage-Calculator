@@ -241,7 +241,7 @@ bess = GagButton(sos_drp,image=bess_img, gag=rustygag.Gag("Sos","Barnacle Bessie
 
 ### Keybinds
 window.bind('<' + settings.keybinds.defense + '>', lambda par: [dmg_down.set(rustygag.advance_float([0.0,0.1,0.15,0.2,0.25], dmg_down.get())), calc_dmg()])
-window.bind('<' + settings.keybinds.negative_defense + '>', lambda par: [dmg_up.set(rustygag.advance_float([0.0,0.5], dmg_up.get())), calc_dmg()])
+window.bind('<' + settings.keybinds.negative_defense + '>', lambda par: [dmg_up.set(rustygag.advance_float([0.0,0.2,0.5,0.6], dmg_up.get())), calc_dmg()])
 window.bind('<' + settings.keybinds.lure + '>', lambda par: [lured.set(rustygag.toggleswap(lured.get())), calc_dmg()])
 window.bind('<' + settings.keybinds.lock + '>', lambda par: [status_lock.set(rustygag.toggleswap(status_lock.get())) , calc_dmg()])
 window.bind('<' + settings.keybinds.pin + '>', lambda par: [pin_val.set(rustygag.toggleswap(pin_val.get())), pin()])
@@ -325,7 +325,9 @@ def_menu.add_radiobutton(label="25% (4⭐)", value=0.25, variable=dmg_down, comm
 calculations_menu.add_cascade(label="Cog Defense Up", menu=def_menu)
 def_menu2 = Menu(calculations_menu, tearoff=0)
 def_menu2.add_radiobutton(label="None", value=0.0, variable=dmg_up, command=calc_dmg)
+def_menu2.add_radiobutton(label="-20%", value=0.2, variable=dmg_up, command=calc_dmg)
 def_menu2.add_radiobutton(label="-50%", value=0.5, variable=dmg_up, command=calc_dmg)
+def_menu2.add_radiobutton(label="-60%", value=0.6, variable=dmg_up, command=calc_dmg)
 calculations_menu.add_cascade(label="Cog Defense Down", menu=def_menu2)
 calculations_menu.add_separator()
 calculations_menu.add_checkbutton(label="Lock Status", variable=status_lock, onvalue=True, offvalue=False, accelerator=settings.keybinds.lock)
