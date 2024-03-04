@@ -27,7 +27,7 @@ If applicable, add screenshots to help explain your problem.
 **Desktop (please complete the following information):**  
 
 - OS: [e.g. Windows 10, Linux Mint]
-- Program Version: [e.g. 3.2.0, you can find this in mod/version.txt]
+- Program Version: [e.g. 3.2.0, you can find this in assets/version.txt]
 
 **Additional context**  
 Add any other context about the problem here.
