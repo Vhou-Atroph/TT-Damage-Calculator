@@ -14,7 +14,7 @@ authors = [
   { name="Vhou-Atroph", email="vhouatroph@proton.me" },
 ]
 description = "A Python binary package that will help you calculate gag combinations on the fly!"
-readme = "readme.md"
+readme = "README.md"
 requires-python = ">=3.11"
 classifiers = [
     "Programming Language :: Python :: 3",
