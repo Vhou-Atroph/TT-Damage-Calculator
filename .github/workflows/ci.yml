@@ -52,6 +52,8 @@ jobs:
         with:
           python-version: '3.11'
           architecture: ${{ matrix.target }}
+      - name: Install OpenSSL
+        run: sudo apt-get install pkg-config libssl-dev
       - name: Build wheels
         uses: PyO3/maturin-action@v1
         with:
