@@ -23,15 +23,13 @@ jobs:
     strategy:
       matrix:
         target: [x86_64, x86, aarch64, armv7, s390x, ppc64le]
-        library:
-            - name: openssl
-              version: 3.2.0
-              dl-path: /
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-python@v4
         with:
           python-version: '3.11'
+      - name: Install OpenSSL
+        run: sudo apt-get install libssl-dev
       - name: Build wheels
         uses: PyO3/maturin-action@v1
         with:
