@@ -24,10 +24,10 @@ jobs:
               with:
                 python-version: '3.11'
                 architecture: ${{ matrix.target }}
-            - name: Download Maturin
-              run: pip install maturin
             - name: Build .exe
-              run: make exe
+              run: |
+                pip install pyinstaller
+                make exe
             - name: Upload .exe
               uses: actions/upload-artifact@v3
               with:
