@@ -16,6 +16,7 @@ jobs:
     windows-exe:
         runs-on: windows-latest
         strategy:
+            fail-fast: false
             matrix:
                 target: [x64, x86]
         steps:
