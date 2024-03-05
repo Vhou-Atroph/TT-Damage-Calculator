@@ -1,0 +1,35 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - '*'
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+    windows-exe:
+        runs-on: windows-latest
+        strategy:
+            matrix:
+                target: [x64, x86]
+        steps:
+            - uses: actions/checkout@v3
+            - uses: actions/setup-python@v4
+              with:
+                python-version: '3.11'
+                architecture: ${{ matrix.target }}
+            - name: Download Maturin
+              run: pip install maturin
+            - name: Build .exe
+              run: make exe
+            - name: Upload .exe
+              uses: actions/upload-artifact@v3
+              with:
+                name: executables
+                path: dist
