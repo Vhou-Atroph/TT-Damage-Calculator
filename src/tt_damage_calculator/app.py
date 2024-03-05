@@ -68,7 +68,7 @@ def pin():
 # Toggles
 tog_btns = Frame(col0)
 org_btn = Button(tog_btns, text='Toggle Organic', font=('Arial', 11, 'normal'))
-lur_check = Checkbutton(tog_btns, text='Cog lured', variable=lured, onvalue=1, offvalue=0, font=('Arial',11,'normal'), command=calc_dmg)
+lur_check = Checkbutton(tog_btns, text='Cog lured', variable=lured, onvalue=1, offvalue=0, font=('Arial', 11, 'normal'), command=calc_dmg)
 clear_btn = Button(tog_btns, text='Reset damage', font=('Arial', 11, 'normal'))
 
 # The Gags
@@ -194,56 +194,62 @@ tnt = GagButton(trp_frame, image=tnt_img, gag=rustygag.Gag("Gag", "TNT", "Trap",
 railroad_img = PhotoImage(file=asset_path + '/assets/img/railroad.png')
 railroad = GagButton(trp_frame, image=railroad_img, gag=rustygag.Gag("Gag", "Railroad", "Trap", 6, 200))
 
-gag_btns=[bike_horn,whistle,bugle,aoogah,elephant_trunk,fog_horn,opera_singer,cupcake,fruit_pie_slice,cream_pie_slice,whole_fruit_pie,whole_cream_pie,birthday_cake,wedding_cake,squirting_flower,water_glass,squirt_gun,seltzer_bottle,fire_hose,storm_cloud,geyser,flower_pot,sandbag,anvil,big_weight,safe,grand_piano,toontanic,banana_peel,rake,marbles,quicksand,trapdoor,tnt,railroad]
+gag_btns=[
+  bike_horn, whistle, bugle, aoogah, elephant_trunk, fog_horn, opera_singer,
+  cupcake, fruit_pie_slice, cream_pie_slice, whole_fruit_pie, whole_cream_pie, birthday_cake, wedding_cake,
+  squirting_flower, water_glass, squirt_gun, seltzer_bottle, fire_hose, storm_cloud, geyser,
+  flower_pot, sandbag, anvil, big_weight, safe, grand_piano, toontanic,
+  banana_peel, rake, marbles, quicksand, trapdoor, tnt, railroad
+  ]
 
 # Calculation history
 hist = Frame(col1)
 hist_lbl = Label(hist, text="History")
-hist_box = Text(hist, width=25, height=22, state=DISABLED, font=('Arial',10,'normal'), wrap=WORD)
+hist_box = Text(hist, width=25, height=22, state=DISABLED, font=('Arial', 10, 'normal'), wrap=WORD)
 clear_hist_btn = Button(hist, text="Clear History")
 cog_calc = Button(hist, text="Show Health and\n SOS Cards")
 
 # Calculation results
 calc_results = Frame(col0)
-dmg_this_round = Label(calc_results,text="Damage this round:",font=('Arial',16,'normal'))
-dmg_indicator = Label(calc_results,text="0",font=('Arial',16,'bold'))
-cog_level_indicator = Label(calc_results,text="Level 0",font=('Arial',8,'normal'))
-org_indicator = Label(calc_results,text="Organic = OFF",font=('Arial',10,'bold'))
+dmg_this_round = Label(calc_results, text="Damage this round:", font=('Arial', 16, 'normal'))
+dmg_indicator = Label(calc_results, text="0", font=('Arial', 16, 'bold'))
+cog_level_indicator = Label(calc_results, text="Level 0", font=('Arial', 8, 'normal'))
+org_indicator = Label(calc_results, text="Organic = OFF", font=('Arial', 10, 'bold'))
 
 # Cog HP
 cog_health_sheet = Frame(window)
 cog_health_img = PhotoImage(file=asset_path + '/assets/img/coghp.png')
-cog_health_lbl = Label(cog_health_sheet,image=cog_health_img)
+cog_health_lbl = Label(cog_health_sheet, image=cog_health_img)
 
 # SOS Cards
 sos_cards = Frame(window)
 sos_trp = Frame(sos_cards)
 clerk_will_img = PhotoImage(file=asset_path + '/assets/img/clerkwill.png')
-clerk_will = GagButton(sos_trp,image=clerk_will_img, gag=rustygag.Gag("Sos","Clerk Will","Trap",0,60))
+clerk_will = GagButton(sos_trp,image=clerk_will_img, gag=rustygag.Gag("Sos", "Clerk Will", "Trap", 0, 60))
 clerk_penny_img = PhotoImage(file=asset_path + '/assets/img/clerkpenny.png')
-clerk_penny = GagButton(sos_trp,image=clerk_penny_img, gag=rustygag.Gag("Sos","Clerk Penny","Trap",1,120))
+clerk_penny = GagButton(sos_trp,image=clerk_penny_img, gag=rustygag.Gag("Sos", "Clerk Penny", "Trap", 1, 120))
 clerk_clara_img = PhotoImage(file=asset_path + '/assets/img/clerkclara.png')
-clerk_clara = GagButton(sos_trp,image=clerk_clara_img, gag=rustygag.Gag("Sos","Clerk Clara","Trap",2,180))
+clerk_clara = GagButton(sos_trp,image=clerk_clara_img, gag=rustygag.Gag("Sos", "Clerk Clara", "Trap", 2, 180))
 sos_snd = Frame(sos_cards)
 barb_img = PhotoImage(file=asset_path + '/assets/img/barbaraseville.png')
-barb = GagButton(sos_snd,image=barb_img, gag=rustygag.Gag("Sos","Barbara Seville","Sound",0,35))
+barb = GagButton(sos_snd,image=barb_img, gag=rustygag.Gag("Sos", "Barbara Seville", "Sound", 0, 35))
 sid_img = PhotoImage(file=asset_path + '/assets/img/sidsonata.png')
-sid = GagButton(sos_snd,image=sid_img, gag=rustygag.Gag("Sos","Sid Sonata","Sound",1,55))
+sid = GagButton(sos_snd,image=sid_img, gag=rustygag.Gag("Sos", "Sid Sonata", "Sound", 1, 55))
 moe_img = PhotoImage(file=asset_path + '/assets/img/moezart.png')
-moe = GagButton(sos_snd,image=moe_img, gag=rustygag.Gag("Sos","Moe Zart","Sound",2,75))
+moe = GagButton(sos_snd,image=moe_img, gag=rustygag.Gag("Sos", "Moe Zart", "Sound", 2, 75))
 sos_drp = Frame(sos_cards)
 ned_img = PhotoImage(file=asset_path + '/assets/img/clumsyned.png')
-ned = GagButton(sos_drp,image=ned_img, gag=rustygag.Gag("Sos","Clumsy Ned","Drop",0,60))
+ned = GagButton(sos_drp,image=ned_img, gag=rustygag.Gag("Sos", "Clumsy Ned", "Drop", 0, 60))
 franz_img = PhotoImage(file=asset_path + '/assets/img/franzneckvein.png')
-franz = GagButton(sos_drp,image=franz_img, gag=rustygag.Gag("Sos","Franz Neckvein","Drop",1,100))
+franz = GagButton(sos_drp,image=franz_img, gag=rustygag.Gag("Sos", "Franz Neckvein", "Drop", 1, 100))
 bess_img = PhotoImage(file=asset_path + '/assets/img/barnaclebessie.png')
-bess = GagButton(sos_drp,image=bess_img, gag=rustygag.Gag("Sos","Barnacle Bessie","Drop",2,170))
+bess = GagButton(sos_drp,image=bess_img, gag=rustygag.Gag("Sos", "Barnacle Bessie", "Drop", 2, 170))
 
 ### Keybinds
 window.bind('<' + settings.keybinds.defense + '>', lambda par: [dmg_down.set(rustygag.advance_float([0.0,0.1,0.15,0.2,0.25], dmg_down.get())), calc_dmg()])
 window.bind('<' + settings.keybinds.negative_defense + '>', lambda par: [dmg_up.set(rustygag.advance_float([0.0,0.2,0.4,0.5,0.6], dmg_up.get())), calc_dmg()])
 window.bind('<' + settings.keybinds.lure + '>', lambda par: [lured.set(rustygag.toggleswap(lured.get())), calc_dmg()])
-window.bind('<' + settings.keybinds.lock + '>', lambda par: [status_lock.set(rustygag.toggleswap(status_lock.get())) , calc_dmg()])
+window.bind('<' + settings.keybinds.lock + '>', lambda par: [status_lock.set(rustygag.toggleswap(status_lock.get())), calc_dmg()])
 window.bind('<' + settings.keybinds.pin + '>', lambda par: [pin_val.set(rustygag.toggleswap(pin_val.get())), pin()])
 
 # Organic gag toggle
