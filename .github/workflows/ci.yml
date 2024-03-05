@@ -65,6 +65,8 @@ jobs:
         runs-on: ubuntu-latest
         strategy:
             fail-fast: false
+            matrix:
+                target: [x86_64]
         steps:
             - name: Checkout branch
               uses: actions/checkout@v3
