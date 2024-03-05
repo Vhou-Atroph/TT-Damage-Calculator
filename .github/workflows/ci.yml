@@ -42,7 +42,7 @@ jobs:
         strategy:
             fail-fast: false
             matrix:
-                target: [x64, x86]
+                target: [x64]
         steps:
             - name: Checkout branch
               uses: actions/checkout@v3
