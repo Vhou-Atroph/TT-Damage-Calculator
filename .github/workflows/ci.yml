@@ -31,7 +31,7 @@ jobs:
                 ren ./target/release/rustygag.dll rustygag.pyd
                 move ./target/release/rustygag.pyd ./src/tt_damage_calculator
                 pyinstaller "Toontown Damage Calculator.spec"
-                xcopy "./src/tt_damage_calculator/assets" "dist/assets" /y
+                xcopy "./src/tt_damage_calculator/assets" "./dist/assets"
             - name: Upload .exe
               uses: actions/upload-artifact@v3
               with:
