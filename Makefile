@@ -5,6 +5,6 @@ linux:
 	maturin build
 exe:
 	cargo build --release
-	rename target\release\rustygag.dll rustygag.pyd
-	move target\release\rustygag.pyd src\tt_damage_calculator
+	rename target\release\tt_damage_calculator.dll tt_damage_calculator.pyd
+	move target\release\tt_damage_calculator.pyd src\tt_damage_calculator
 	pyinstaller "Toontown Damage Calculator.spec"

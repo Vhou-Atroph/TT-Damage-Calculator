@@ -8,7 +8,7 @@ use crate::calc::*;
 use crate::settings::*;
 
 #[pymodule]
-fn rustygag(_: Python<'_>, m: &PyModule) -> PyResult<()> {
+fn tt_damage_calculator(_: Python<'_>, m: &PyModule) -> PyResult<()> {
     // Calc
     m.add_class::<CalculationResults>()?;
     m.add_function(wrap_pyfunction!(cog_hp, m)?)?;
