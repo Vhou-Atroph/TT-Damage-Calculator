@@ -60,3 +60,25 @@ jobs:
               with:
                 name: wheels
                 path: dist
+
+    linux-wheel:
+        runs-on: ubuntu-latest
+        strategy:
+            fail-fast: false
+        steps:
+            - name: Checkout branch
+              uses: actions/checkout@v3
+            - name: Setup Python
+              uses: actions/setup-python@v4
+              with:
+                python-version: '3.11'
+                architecture: ${{ matrix.target }}
+            - name: Build Wheel
+              run: |
+                pip install maturin
+                maturin build --out dist
+            - name: Upload Wheel
+              uses: actions/upload-artifact@v3
+              with:
+                name: wheels
+                path: dist
