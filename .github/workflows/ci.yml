@@ -42,7 +42,7 @@ jobs:
         strategy:
             fail-fast: false
             matrix:
-                target: [x64]
+                target: [x64, x86]
         steps:
             - name: Checkout branch
               uses: actions/checkout@v3
@@ -52,9 +52,11 @@ jobs:
                 python-version: '3.11'
                 architecture: ${{ matrix.target }}
             - name: Build Wheel
-              run: |
-                pip install maturin
-                maturin build --out dist
+              uses: PyO3/maturin-action@v1
+              with:
+                target: ${{ matrix.target }}
+                args: --release --out dist --find-interpreter
+                sccache: 'true'
             - name: Upload Wheel
               uses: actions/upload-artifact@v3
               with:
