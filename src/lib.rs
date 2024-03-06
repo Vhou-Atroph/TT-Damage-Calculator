@@ -14,7 +14,6 @@ fn tt_damage_calculator(_: Python<'_>, m: &PyModule) -> PyResult<()> {
     m.add_function(wrap_pyfunction!(cog_hp, m)?)?;
     m.add_function(wrap_pyfunction!(gag_calculator, m)?)?;
     m.add_function(wrap_pyfunction!(full_calc, m)?)?;
-    m.add_function(wrap_pyfunction!(def_parse, m)?)?;
     m.add_function(wrap_pyfunction!(lvl_ind, m)?)?;
     m.add_function(wrap_pyfunction!(advance_int, m)?)?;
     m.add_function(wrap_pyfunction!(advance_float, m)?)?;

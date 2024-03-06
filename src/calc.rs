@@ -15,13 +15,6 @@ pub fn cog_hp(lvl:i64) -> i64 {
     }
 }
 
-/// Function originally meant to parse defense strings to f64 values. No longer needed but still in the program for reference purposes.
-#[pyfunction]
-pub fn def_parse(mut val:String) -> f64 {
-    val.pop();
-    val.parse::<f64>().unwrap() / 100.0
-}
-
 /// Iterate list to the next value (for i64 values)
 #[pyfunction]
 pub fn advance_int(list:Vec<i64>,entry:i64) -> i64 {
@@ -48,22 +41,6 @@ pub fn cog_defense(gags:&Vec<i64>,strength:f64) -> Vec<i64> {
 fn damage_negative_defense(gags:&Vec<i64>, strength:f64) -> i64 {
     let sum: i64 = gags.iter().sum();
     (sum as f64 * strength).ceil() as i64
-}
-
-/// Evaluates cog plating buff applicable in a round.
-/// 
-/// 2-9-24: This is no longer in the game at all as of the Under New Management playtest, it is still kept here for now.
-/// https://cdn.toontownrewritten.com/community/notices/Rebalancing_Update_February_2024.pdf
-#[allow(unused)]
-#[deprecated]
-fn cog_plating(gags:Vec<i64>,lvl:i64) -> Vec<i64> {
-    let mut newvec: Vec<i64> = Vec::new();
-    for i in gags.iter() {
-        let plating = (lvl as f64 * 1.5).floor() as i64;
-        let dmg = i - plating;
-        if dmg > 0 {newvec.push(dmg);} else {newvec.push(0);}
-    }
-    newvec
 }
 
 /// Evaluates the total damage of a group of gags used during a given round without lure.
@@ -149,7 +126,7 @@ pub fn lvl_ind(dmg:i64) -> i64 {
     20
 }
 
-/// Matches the current defense and plating values to correctly show how much defense/what level of v2 the calculator is working with.
+/// Matches the current defense and plating values to correctly show how much defense the calculator is working with.
 #[pyfunction]
 pub fn lvl_ind_string(lvl:u64, def:i64, neg_def:i64) -> String {
     match (def, neg_def) {
