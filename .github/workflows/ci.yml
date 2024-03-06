@@ -106,3 +106,22 @@ jobs:
               with:
                 name: wheels
                 path: dist
+
+    sdist:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout branch
+              uses: actions/checkout@v3
+            - name: Setup Python
+              uses: actions/setup-python@v4
+              with:
+                python-version: '3.11'
+            - name: Build Source Distribution
+              run: |
+                pip install maturin
+                maturin build --sdist --out dist
+            - name: Upload Source Distribution
+              uses: actions/upload-artifact@v3
+              with:
+                name: wheels
+                path: dist
