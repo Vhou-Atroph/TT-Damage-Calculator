@@ -76,10 +76,12 @@ jobs:
               uses: actions/setup-python@v4
               with:
                 python-version: '3.11'
+            # i cant seem to get the maturin action to work properly for linux
+            # so i will be trying my best to emulate it with a list of commands instead
             - name: Build Wheel
               run: |
                 pip install maturin
-                maturin build --out dist
+                maturin build --release --out dist --target ${{ matrix.target }}
             - name: Upload Wheel
               uses: actions/upload-artifact@v3
               with:
