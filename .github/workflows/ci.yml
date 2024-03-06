@@ -89,7 +89,7 @@ jobs:
         strategy:
             fail-fast: false
             matrix:
-                target: [x84_64, aarch64]
+                target: [x86_64, aarch64]
         steps:
             - name: Checkout branch
               uses: actions/checkout@v3
