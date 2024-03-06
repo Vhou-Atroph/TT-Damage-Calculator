@@ -83,3 +83,26 @@ jobs:
               with:
                 name: wheels
                 path: dist
+    
+    macos-wheel:
+        runs-on: macos-latest
+        strategy:
+            fail-fast: false
+            matrix:
+                target: [x84_64]
+        steps:
+            - name: Checkout branch
+              uses: actions/checkout@v3
+            - name: Setup Python
+              uses: actions/setup-python@v4
+              with:
+                python-version: '3.11'
+            - name: Build Wheel
+              run: |
+                pip install maturin
+                maturin build --out dist
+            - name: Upload Wheel
+              uses: actions/upload-artifact@v3
+              with:
+                name: wheels
+                path: dist
