@@ -68,7 +68,7 @@ jobs:
         strategy:
             fail-fast: false
             matrix:
-                target: [x86_64, aarch64, armv7, s390x]
+                target: [x86_64]
         steps:
             - name: Checkout branch
               uses: actions/checkout@v3
@@ -81,7 +81,7 @@ jobs:
             - name: Build Wheel
               run: |
                 pip install maturin
-                maturin build --release --out dist --target ${{ matrix.target }}-unknown-linux-gnu --find-interpreter
+                maturin build --release --out dist --find-interpreter
             - name: Upload Wheel
               uses: actions/upload-artifact@v3
               with:
