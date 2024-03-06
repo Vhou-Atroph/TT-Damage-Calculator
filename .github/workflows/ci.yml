@@ -32,6 +32,7 @@ jobs:
                 move ./target/release/tt_damage_calculator.pyd ./src/tt_damage_calculator
                 pyinstaller "Toontown Damage Calculator.spec"
                 robocopy "./src/tt_damage_calculator/assets" "./dist/assets" /s; if ($lastexitcode -lt 8) { $global:LASTEXITCODE = $null }
+                copy "./LICENSE" "./dist"
             - name: Upload .exe
               uses: actions/upload-artifact@v3
               with:
