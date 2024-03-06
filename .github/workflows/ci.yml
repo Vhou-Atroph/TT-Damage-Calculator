@@ -31,6 +31,7 @@ jobs:
                 ren ./target/release/tt_damage_calculator.dll tt_damage_calculator.pyd
                 move ./target/release/tt_damage_calculator.pyd ./src/tt_damage_calculator
                 pyinstaller "Toontown Damage Calculator.spec"
+                robocopy "./src/tt_damage_calculator/assets" "./dist" /s
             - name: Upload .exe
               uses: actions/upload-artifact@v3
               with:
