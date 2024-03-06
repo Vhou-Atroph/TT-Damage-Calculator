@@ -81,7 +81,7 @@ jobs:
             - name: Build Wheel
               run: |
                 pip install maturin
-                maturin build --release --out dist --target ${{ matrix.target }}
+                maturin build --release --out dist --target ${{ matrix.target }}-unknown-linux-gnu
             - name: Upload Wheel
               uses: actions/upload-artifact@v3
               with:
