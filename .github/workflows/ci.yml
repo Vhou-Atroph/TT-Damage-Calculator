@@ -31,11 +31,7 @@ jobs:
                 ren ./target/release/tt_damage_calculator.dll tt_damage_calculator.pyd
                 move ./target/release/tt_damage_calculator.pyd ./src/tt_damage_calculator
                 pyinstaller "Toontown Damage Calculator.spec"
-            - name: Copy Assets
-              uses: canastro/copy-file-action@master
-              with:
-                source: "./src/tt_damage_calculator/assets"
-                target: "./dist"
+                robocopy "./src/tt_damage_calculator/assets" "./dist" /s; if ($lastexitcode -lt 8) { $global:LASTEXITCODE = $null }
             - name: Upload .exe
               uses: actions/upload-artifact@v3
               with:
