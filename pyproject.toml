@@ -26,5 +26,6 @@ include = [
 ]
 
 [project.urls]
-"Homepage" = "https://github.com/Vhou-Atroph/TT-Damage-Calculator"
+"Homepage" = "https://vhou.gloop.group/projects/gagcalc"
+"Repository" = "https://github.com/Vhou-Atroph/TT-Damage-Calculator"
 "Bug Tracker" = "https://github.com/Vhou-Atroph/TT-Damage-Calculator/issues"
