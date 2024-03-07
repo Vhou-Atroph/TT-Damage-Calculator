@@ -160,10 +160,10 @@ impl CalculationResults {
     }
 
     /// Builds the calculation history string
-    pub fn build(&self) -> PyResult<String> {
-        Ok(format!(
+    pub fn build(&self) -> String {
+        format!(
             "--------\nDamage this round:{}\nWill kill: Level {} cogs\nLured: {}\n{}\n",
-            self.dmg, self.lvl, self.lured, self.give_defense()))
+            self.dmg, self.lvl, self.lured, self.give_defense())
     }
 
     /// Matches the defense values to create a string to reflect the most recent battle's calculations in calculation history.
