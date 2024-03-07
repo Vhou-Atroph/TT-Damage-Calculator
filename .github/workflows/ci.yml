@@ -107,8 +107,7 @@ jobs:
         run: |
           pip install pyinstaller
           cargo build --release
-          mv ./target/release/tt_damage_calculator.dll tt_damage_calculator.pyd
-          mv ./target/release/tt_damage_calculator.pyd ./src/tt_damage_calculator
+          mv ./target/release/libtt_damage_calculator.dylib ./src/tt_damage_calculator/tt_damage_calculator.so
           pyinstaller "Toontown Damage Calculator.spec"
           cp -R ./src/tt_damage_calculator/assets ./dist/assets
           cp -R ./LICENSE ./dist

@@ -8,18 +8,15 @@ edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
+[lib]
+name = "tt_damage_calculator"
+crate-type = ["cdylib"]
+
 [target.x86_64-apple-darwin]
 rustflags = [
   "-C", "link-arg=-undefined",
   "-C", "link-arg=dynamic_lookup",
 ]
-
-[lib]
-name = "tt_damage_calculator"
-crate-type = ["cdylib"]
-
-[package.metadata.maturin]
-name = "tt_damage_calculator.rustygag"
 
 [dependencies.pyo3]
 version = "0.20.2"
