@@ -12,12 +12,6 @@ edition = "2021"
 name = "tt_damage_calculator"
 crate-type = ["cdylib"]
 
-[target.x86_64-apple-darwin]
-rustflags = [
-  "-C", "link-arg=-undefined",
-  "-C", "link-arg=dynamic_lookup",
-]
-
 [dependencies.pyo3]
 version = "0.20.2"
 features = ["extension-module"]
