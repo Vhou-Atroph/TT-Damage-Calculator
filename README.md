@@ -6,34 +6,36 @@
 
 ![The Program](preview.png)
 
+## Downloading
+
+### Windows Executable
+
+The Windows executable version of the calculator requires the least setup, and is highly portable with the limitation that it only easily works on devices running the Windows operating system. You can find a download for the latest version of the Windows executable either at <https://github.com/Vhou-Atroph/TT-Damage-Calculator/releases/latest/> on GitHub, or at <https://vhou.gloop.group/projects/gagcalc> near the bottom of the page.
+
+The downloaded .zip file should contain a [LICENSE](LICENSE) file, as well as the assets folder. Once you extract the zip file to your preferred directory, the calculator should run normally!
+
+### Python Package
+
+The Python Package version of the calculator is the most accessible across operating systems that are not Windows. Downloading the Toontown Damage Calculator as a Python package will require [downloading the Python programming language](https://www.python.org/downloads/). Once this is done, you can open your command terminal and run the following command:
+
+```shell
+pip install tt_damage_calculator
+```
+
+This will install the calculator as a Python package to your computer. You can run the calculator from the command line by inputting the following into your terminal:
+
+```shell
+python -m tt_damage_calculator
+```
+
+If you are unable to download the calculator via pip for your system, you will need to build it yourself by following the [Building: Wheels (All Platforms)](https://github.com/Vhou-Atroph/TT-Damage-Calculator/wiki/Building:-Wheels-(All-Platforms)) guide on the wiki.
+
 ## Building
 
 There are guides on the [repository's wiki](https://github.com/Vhou-Atroph/TT-Damage-Calculator/wiki) for building the calculator:
 
 - [Building: Wheels (All Platforms)](https://github.com/Vhou-Atroph/TT-Damage-Calculator/wiki/Building:-Wheels-(All-Platforms))
 - [Building: Windows Executable](https://github.com/Vhou-Atroph/TT-Damage-Calculator/wiki/Building:-Windows-Executable)
-
-### What if I don't want to build the program?
-
-#### GitHub
-
-For some versions of the calculator, I will compile it completely and release a standalone executable for users who either do not want to or are unable to compile the dependencies themselves. You can find the latest release at <https://github.com/Vhou-Atroph/TT-Damage-Calculator/releases/latest>.
-
-GitHub executable releases target Windows users. Linux users must use Pypi to install this program.
-
-#### Pypi
-
-Alternatively, you can install the package using Pypi:
-
-```shell
-pip install tt_damage_calculator
-```
-
-After installing the package, you can run it via the terminal:
-
-```shell
-python -m tt_damage_calculator
-```
 
 ## Usage
 
