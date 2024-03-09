@@ -84,10 +84,11 @@ pub fn full_calc(trap:Vec<i64>,
     throw:Vec<i64>,
     squirt:Vec<i64>,
     drop:Vec<i64>,
+    no_group: i64,
     lured:bool,
     defense:Option<f64>,
     neg_defense:Option<f64>) -> i64 {
-    let mut gagdmg: i64 = 0;
+    let mut gagdmg: i64 = no_group;
     let mut lured_loc = lured;
     if trap.len() == 1 && lured_loc {
         gagdmg+=gag_calculator(trap,false,defense,neg_defense);

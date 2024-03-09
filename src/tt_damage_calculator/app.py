@@ -38,6 +38,10 @@ sqt_used = []
 drp_used = []
 trp_used = []
 
+
+no_group = IntVar()
+no_group.set(0)
+
 organic = BooleanVar()
 lured = BooleanVar()
 pin_val = BooleanVar()
@@ -55,7 +59,7 @@ col1 = Frame(window) # Will be used for calculation history
 
 # Total damage calculation
 def calc_dmg(*args):
-  tot_dmg = tt_damage_calculator.full_calc(trp_used, snd_used, trw_used, sqt_used, drp_used, lured.get(), dmg_down.get(), dmg_up.get())
+  tot_dmg = tt_damage_calculator.full_calc(trp_used, snd_used, trw_used, sqt_used, drp_used, no_group.get(), lured.get(), dmg_down.get(), dmg_up.get())
   cog_level_indicator.configure(text=tt_damage_calculator.lvl_ind_string(tt_damage_calculator.lvl_ind(tot_dmg), int(dmg_down.get() * 100), int(dmg_up.get() * 100)))
   dmg_indicator.configure(text=str(tot_dmg))
 
@@ -202,6 +206,14 @@ gag_btns=[
   banana_peel, rake, marbles, quicksand, trapdoor, tnt, railroad
   ]
 
+# Add groupless damaging gag
+def use_groupless(name:str, damage:int):
+  no_group.set(no_group.get() + damage)
+  hist_box.configure(state=NORMAL)
+  hist_box.insert('1.0', "Gag used: " + name + " (" + str(damage) + ")\n")
+  hist_box.configure(state=DISABLED)
+  calc_dmg()
+
 # Calculation history
 hist = Frame(col1)
 hist_lbl = Label(hist, text="History")
@@ -279,6 +291,7 @@ def clear_inputs(*arg):
   sqt_used = []
   drp_used = []
   trp_used = []
+  no_group.set(0)
   for i in gag_btns:
     i.configure(text='0')
   if not status_lock.get():
@@ -336,6 +349,7 @@ def_menu2.add_radiobutton(label="-40%", value=0.4, variable=dmg_up, command=calc
 def_menu2.add_radiobutton(label="-50%", value=0.5, variable=dmg_up, command=calc_dmg)
 def_menu2.add_radiobutton(label="-60%", value=0.6, variable=dmg_up, command=calc_dmg)
 calculations_menu.add_cascade(label="Cog Defense Down", menu=def_menu2)
+calculations_menu.add_command(label="Snowball", command=lambda:use_groupless("Snowball", 1))
 calculations_menu.add_separator()
 calculations_menu.add_checkbutton(label="Lock Status", variable=status_lock, onvalue=True, offvalue=False, accelerator=settings.keybinds.lock)
 toolbar.add_cascade(label="Calculations", menu=calculations_menu)
