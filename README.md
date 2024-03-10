@@ -39,6 +39,15 @@ There are guides on the [repository's wiki](https://github.com/Vhou-Atroph/TT-Da
 
 ## Usage
 
+The [TT-Damage-Calculator wiki](https://github.com/Vhou-Atroph/TT-Damage-Calculator/wiki) has several guides on the usage of the program:
+
+- [Usage: Defense](https://github.com/Vhou-Atroph/TT-Damage-Calculator/wiki/Usage:-Defense)
+- [Usage: Gags](https://github.com/Vhou-Atroph/TT-Damage-Calculator/wiki/Usage:-Gags)
+- [Usage: History](https://github.com/Vhou-Atroph/TT-Damage-Calculator/wiki/Usage:-History)
+- [Usage: Keybinds](https://github.com/Vhou-Atroph/TT-Damage-Calculator/wiki/Usage:-Keybinds)
+- [Usage: Lock Status](https://github.com/Vhou-Atroph/TT-Damage-Calculator/wiki/Usage:-Lock-Status)
+- [Usage: Lure](https://github.com/Vhou-Atroph/TT-Damage-Calculator/wiki/Usage:-Lure)
+
 ### Gag Selection
 
 Click any gag on the grid to add it to the calculation.
