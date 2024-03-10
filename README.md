@@ -65,7 +65,7 @@ The program has various keybinds to expedite calculation:
 | ctrl+x      | Lock/Unlock statuses    |
 | alt+up      | Toggle Pinned Window    |
 
-It is possible to change these keybinds by editing the `settings.toml` file in the assets folder.
+It is possible to change these keybinds. There is a guide on the wiki to doing so on the [Usage: Keybinds](https://github.com/Vhou-Atroph/TT-Damage-Calculator/wiki/Usage:-Keybinds#editing-a-keybind) page.
 
 ## License
 
