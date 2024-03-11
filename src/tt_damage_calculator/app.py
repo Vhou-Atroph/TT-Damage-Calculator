@@ -90,6 +90,7 @@ class GagButton(Button):
       self['fg'] = 'white'
     self['command'] = self.press
     self.grid(row=0, column=self.gag.level)
+    
   def list(self):
     global trp_used
     global snd_used
@@ -107,6 +108,7 @@ class GagButton(Button):
         return sqt_used
       case "Drop":
         return drp_used
+      
   def press(self):
     data = self.gag.button_press(organic.get())
     self.list().append(data[0])
