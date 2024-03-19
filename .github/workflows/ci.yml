@@ -90,6 +90,33 @@ jobs:
           name: wheels
           path: dist
   
+  macos-exe:
+    runs-on: macos-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        target: [x86_64]
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v3
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      - name: Build executable
+        run: |
+          pip install pyinstaller
+          cargo build --release -- -C link-arg=-undefined -C link-arg=dynamic_lookup
+          mv ./target/release/libtt_damage_calculator.dylib ./src/tt_damage_calculator/tt_damage_calculator.so
+          pyinstaller "Toontown Damage Calculator.spec"
+          cp -R ./src/tt_damage_calculator/assets ./dist/assets
+          cp -R ./LICENSE ./dist
+      - name: Upload executable
+        uses: actions/upload-artifact@v3
+        with:
+          name: mac64-executable
+          path: dist
+  
   macos-wheel:
     runs-on: macos-latest
     strategy:
