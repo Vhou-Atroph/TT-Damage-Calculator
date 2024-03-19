@@ -106,7 +106,7 @@ jobs:
       - name: Build executable
         run: |
           pip install pyinstaller
-          cargo build --release -- -C link-arg=-undefined -C link-arg=dynamic_lookup
+          cargo rustc --release -- -C link-arg=-undefined -C link-arg=dynamic_lookup
           mv ./target/release/libtt_damage_calculator.dylib ./src/tt_damage_calculator/tt_damage_calculator.so
           pyinstaller "Toontown Damage Calculator.spec"
           cp -R ./src/tt_damage_calculator/assets ./dist/assets
