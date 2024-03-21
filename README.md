@@ -8,11 +8,13 @@
 
 ## Downloading
 
-### Windows Executable
+### Windows and MacOS Executable
 
-The Windows executable version of the calculator requires the least setup, and is highly portable with the limitation that it only easily works on devices running the Windows operating system. You can find a download for the latest version of the Windows executable either at <https://github.com/Vhou-Atroph/TT-Damage-Calculator/releases/latest/> on GitHub, or at <https://vhou.gloop.group/projects/gagcalc> near the bottom of the page.
+The executable version of the calculator requires the least setup, and is highly portable with the limitation that it only easily works on devices running the required operating system. You can find a download for the latest version of the executable either at <https://github.com/Vhou-Atroph/TT-Damage-Calculator/releases/latest/> on GitHub, or at <https://vhou.gloop.group/projects/gagcalc> near the bottom of the page.
 
-The downloaded .zip file should contain a [LICENSE](LICENSE) file, as well as the assets folder. Once you extract the zip file to your preferred directory, the calculator should run normally!
+The downloaded archive should contain the executable, a [LICENSE](LICENSE) file, and the assets folder. Once you extract the zip file to your preferred directory, the calculator should run normally!
+
+`Note: The MacOS executable version of the gag calculator may not work properly, as it is untested due to a lack of access to the relevant hardware.`
 
 ### Python Package
 
@@ -35,6 +37,7 @@ If you are unable to download the calculator via pip for your system, you will n
 There are guides on the [repository's wiki](https://github.com/Vhou-Atroph/TT-Damage-Calculator/wiki) for building the calculator:
 
 - [Building: Wheels (All Platforms)](https://github.com/Vhou-Atroph/TT-Damage-Calculator/wiki/Building:-Wheels-(All-Platforms))
+- [Building: MacOS Executable](https://github.com/Vhou-Atroph/TT-Damage-Calculator/wiki/Building:-MacOS-Executable)
 - [Building: Windows Executable](https://github.com/Vhou-Atroph/TT-Damage-Calculator/wiki/Building:-Windows-Executable)
 
 ## Usage
