@@ -18,7 +18,7 @@ The downloaded archive should contain the executable, a [LICENSE](LICENSE) file,
 
 ### Python Package
 
-The Python Package version of the calculator is the most accessible across operating systems that are not Windows. Downloading the Toontown Damage Calculator as a Python package will require [downloading the Python programming language](https://www.python.org/downloads/). Once this is done, you can open your command terminal and run the following command:
+The Python Package version of the calculator is the most accessible across operating systems that are not Windows or MacOS. Downloading the Toontown Damage Calculator as a Python package will require [downloading the Python programming language](https://www.python.org/downloads/). Once this is done, you can open your command terminal and run the following command:
 
 ```shell
 pip install tt_damage_calculator
