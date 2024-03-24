@@ -66,8 +66,11 @@ def calc_dmg(*args):
 # Pin window to top
 def pin():
   if pin_val.get():
-    return window.attributes('-topmost', True)
+    window.attributes('-topmost', True)
+    cgags.attributes('-topmost', True)
+    return 0
   window.attributes('-topmost', False)
+  cgags.attributes('-topmost', False)
 
 # Toggles
 tog_btns = Frame(col0)
@@ -89,7 +92,8 @@ class GagButton(Button):
       self['compound'] = 'top'
       self['fg'] = 'white'
     self['command'] = self.press
-    self.grid(row=0, column=self.gag.level)
+    if parent:
+      self.grid(row=0, column=self.gag.level)
     
   def list(self):
     global trp_used
@@ -326,37 +330,6 @@ def cog_health_calc_show():
   window.geometry('')
 cog_calc.configure(command=cog_health_calc_show)
 
-# Toolbar
-toolbar = Menu(window)
-# Program
-program_menu = Menu(toolbar, tearoff=0)
-program_menu.add_command(label="Settings", command=lambda:webbrowser.open(asset_path + "/assets/settings.toml"))
-program_menu.add_checkbutton(label="Pin window", command=pin, variable=pin_val, onvalue=True, offvalue=False, accelerator=settings.keybinds.pin)
-program_menu.add_command(label="Check for update", command=lambda:update_checker.compare_versions(asset_path + "/assets/version.txt"))
-program_menu.add_separator()
-program_menu.add_command(label="Exit", command=lambda:window.destroy(), accelerator="Alt-F4")
-toolbar.add_cascade(label="Program", menu=program_menu)
-calculations_menu = Menu(toolbar, tearoff=0)
-def_menu = Menu(calculations_menu, tearoff=0)
-def_menu.add_radiobutton(label="None", value=0.0, variable=dmg_down, command=calc_dmg)
-def_menu.add_radiobutton(label="10% (1⭐)", value=0.1, variable=dmg_down, command=calc_dmg)
-def_menu.add_radiobutton(label="15% (2⭐)", value=0.15, variable=dmg_down, command=calc_dmg)
-def_menu.add_radiobutton(label="20% (3⭐)", value=0.2, variable=dmg_down, command=calc_dmg)
-def_menu.add_radiobutton(label="25% (4⭐)", value=0.25, variable=dmg_down, command=calc_dmg)
-calculations_menu.add_cascade(label="Cog Defense Up", menu=def_menu)
-def_menu2 = Menu(calculations_menu, tearoff=0)
-def_menu2.add_radiobutton(label="None", value=0.0, variable=dmg_up, command=calc_dmg)
-def_menu2.add_radiobutton(label="-20%", value=0.2, variable=dmg_up, command=calc_dmg)
-def_menu2.add_radiobutton(label="-40%", value=0.4, variable=dmg_up, command=calc_dmg)
-def_menu2.add_radiobutton(label="-50%", value=0.5, variable=dmg_up, command=calc_dmg)
-def_menu2.add_radiobutton(label="-60%", value=0.6, variable=dmg_up, command=calc_dmg)
-calculations_menu.add_cascade(label="Cog Defense Down", menu=def_menu2)
-calculations_menu.add_command(label="Snowball", command=lambda:use_groupless("Snowball", 1))
-calculations_menu.add_separator()
-calculations_menu.add_checkbutton(label="Lock Status", variable=status_lock, onvalue=True, offvalue=False, accelerator=settings.keybinds.lock)
-toolbar.add_cascade(label="Calculations", menu=calculations_menu)
-window.configure(menu=toolbar)
-
 # Geometry - Main Columns
 col0.grid(column=0, row=0, padx=5)
 col1.grid(column=1, row=0, padx=10)
@@ -391,3 +364,59 @@ dmg_this_round.grid(column=0, row=0)
 dmg_indicator.grid(column=1, row=0)
 cog_level_indicator.grid(column=2, row=0)
 org_indicator.grid(column=0, row=1, columnspan=3)
+
+### Custom Gags ###
+global custom_track
+custom_track = StringVar()
+custom_track.set("Trap")
+
+def add_custom_gag():
+  custom_gag = GagButton(None, None, tt_damage_calculator.Gag("Custom", "Custom " + custom_track.get(), custom_track.get(), 0, int(damage_entry.get(1.0, END))))
+  custom_gag.press()
+
+cgags = Toplevel(window)
+cgags.title = "Custom Gag Entry"
+cgags.resizable(0, 0)
+damage_label = Label(cgags, text="Damage", font=('Arial', 11, 'normal'))
+damage_entry = Text(cgags, width=10, height=1, font=('Arial', 11, 'normal'))
+gtype_label = Label(cgags, text="Gag Track", font=('Arial', 11, 'normal'))
+gtype_dropdown = OptionMenu(cgags, custom_track, *["Trap", "Sound", "Throw", "Squirt", "Drop"])
+custom_add = Button(cgags, text="Add to Calculation", font=('Arial', 11, 'normal'), command=add_custom_gag)
+
+damage_label.grid(column=0, row=0, pady=3, padx=2)
+damage_entry.grid(column=1, row=0, pady=3, padx=2)
+gtype_label.grid(column=0, row=1, pady=3, padx=2)
+gtype_dropdown.grid(column=1, row=1, pady=3, padx=2)
+custom_add.grid(column=0, row=2, columnspan=2, pady=8, padx=25)
+
+# Toolbar
+toolbar = Menu(window)
+# Program
+program_menu = Menu(toolbar, tearoff=0)
+program_menu.add_command(label="Settings", command=lambda:webbrowser.open(asset_path + "/assets/settings.toml"))
+program_menu.add_checkbutton(label="Pin window", command=pin, variable=pin_val, onvalue=True, offvalue=False, accelerator=settings.keybinds.pin)
+program_menu.add_command(label="Check for update", command=lambda:update_checker.compare_versions(asset_path + "/assets/version.txt"))
+program_menu.add_separator()
+program_menu.add_command(label="Exit", command=lambda:window.destroy(), accelerator="Alt-F4")
+toolbar.add_cascade(label="Program", menu=program_menu)
+calculations_menu = Menu(toolbar, tearoff=0)
+def_menu = Menu(calculations_menu, tearoff=0)
+def_menu.add_radiobutton(label="None", value=0.0, variable=dmg_down, command=calc_dmg)
+def_menu.add_radiobutton(label="10% (1⭐)", value=0.1, variable=dmg_down, command=calc_dmg)
+def_menu.add_radiobutton(label="15% (2⭐)", value=0.15, variable=dmg_down, command=calc_dmg)
+def_menu.add_radiobutton(label="20% (3⭐)", value=0.2, variable=dmg_down, command=calc_dmg)
+def_menu.add_radiobutton(label="25% (4⭐)", value=0.25, variable=dmg_down, command=calc_dmg)
+calculations_menu.add_cascade(label="Cog Defense Up", menu=def_menu)
+def_menu2 = Menu(calculations_menu, tearoff=0)
+def_menu2.add_radiobutton(label="None", value=0.0, variable=dmg_up, command=calc_dmg)
+def_menu2.add_radiobutton(label="-20%", value=0.2, variable=dmg_up, command=calc_dmg)
+def_menu2.add_radiobutton(label="-40%", value=0.4, variable=dmg_up, command=calc_dmg)
+def_menu2.add_radiobutton(label="-50%", value=0.5, variable=dmg_up, command=calc_dmg)
+def_menu2.add_radiobutton(label="-60%", value=0.6, variable=dmg_up, command=calc_dmg)
+calculations_menu.add_cascade(label="Cog Defense Down", menu=def_menu2)
+calculations_menu.add_command(label="Snowball", command=lambda:use_groupless("Snowball", 1))
+calculations_menu.add_separator()
+calculations_menu.add_checkbutton(label="Lock Status", variable=status_lock, onvalue=True, offvalue=False, accelerator=settings.keybinds.lock)
+calculations_menu.add_command(label="Custom Gags")
+toolbar.add_cascade(label="Calculations", menu=calculations_menu)
+window.configure(menu=toolbar)
