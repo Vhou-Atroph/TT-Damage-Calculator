@@ -65,6 +65,7 @@ def calc_dmg(*args):
 
 # Pin window to top
 def pin():
+  global cgags
   if pin_val.get():
     window.attributes('-topmost', True)
     cgags.attributes('-topmost', True)
@@ -372,6 +373,7 @@ custom_track.set("Trap")
 
 
 def cgags():
+  global cgags
   def add_custom_gag():
     custom_gag = GagButton(None, None, tt_damage_calculator.Gag("Custom", "Custom " + custom_track.get(), custom_track.get(), 0, int(damage_entry.get(1.0, END))))
     custom_gag.press()
@@ -390,6 +392,9 @@ def cgags():
   gtype_label.grid(column=0, row=1, pady=3, padx=2)
   gtype_dropdown.grid(column=1, row=1, pady=3, padx=2)
   custom_add.grid(column=0, row=2, columnspan=2, pady=8, padx=25)
+
+  if pin_val.get():
+    cgags.attributes('-topmost', True)
 
 # Toolbar
 toolbar = Menu(window)
