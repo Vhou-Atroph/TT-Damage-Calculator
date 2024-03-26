@@ -2,7 +2,9 @@
 TT-Damage-Calculator
 Copyright (C) 2022-2024 Vhou-Atroph
 """
-from tkinter import Frame, Text, NORMAL, DISABLED, WORD, END
+from tkinter import BooleanVar, Frame, Text, Button, PhotoImage, NORMAL, DISABLED, WORD, END
+
+from . import tt_damage_calculator
 
 class HistoryBox(Text):
     """Class for the History Box widget, a more complicated version of the normal tkinter Text widget."""
@@ -26,3 +28,37 @@ class HistoryBox(Text):
         self.configure(state=NORMAL)
         self.delete("1.0", END)
         self.configure(state=DISABLED)
+
+class GagButton(Button):
+    """Class for the Gag Button widget, a more complicated version of the normal tkinter Button widget."""
+    global organic
+
+    def __init__(self, frame: Frame, image:PhotoImage, gag:tt_damage_calculator.Gag, output:HistoryBox, orgstate:BooleanVar):
+        self.gag = gag
+        Button.__init__(self, frame)
+        self['image'] = image
+        self['command'] = lambda: self.press(output, orgstate.get())
+        if self.gag.gtype == "Gag":
+            self['text'] = "0"
+            self['font'] = ('Impress BT', 8, 'bold')
+            self['compound'] = 'top'
+            self['fg'] = 'white'
+        self.recolor(False)
+        if frame:
+            self.grid(row=0, column=self.gag.level)
+    
+    def recolor(self, orgstate:bool):
+        """Recolor the Gag Button based on whether or not the gag is a gag (not an SOS) and if organic mode is enabled or not."""
+        if self.gag.gtype == "Gag" and orgstate:
+            self['bg'] = "darkorange"
+            self['activebackground'] = "orange"
+        else:
+            self['bg'] = "#1888D3"
+            self['activebackground'] = "#186AD3"
+    
+    def press(self, output:HistoryBox, orgstate:bool):
+        """Function to execute when Gag Button is pressed."""
+        gaginfo = self.gag.button_press(orgstate)
+        self.configure(text=int(self.cget("text")) + 1)
+        output.add("Gag used: " + gaginfo[1] + " (" + str(gaginfo[0]) + ")\n")
+        #TODO: implement gag calculation here
