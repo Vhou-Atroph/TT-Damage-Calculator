@@ -29,13 +29,19 @@ class HistoryBox(Text):
         self.delete("1.0", END)
         self.configure(state=DISABLED)
 
+class GagFrame(Frame):
+    """Class for the Gag Frame widget, a type of frame that automatically places itself in the gag calculator."""
+
+    def __init__(self, parent:Frame, row:int):
+        Frame.__init__(self, parent)
+        self.grid(row=row, column=0)
+
 class GagButton(Button):
     """Class for the Gag Button widget, a more complicated version of the normal tkinter Button widget."""
-    global organic
 
-    def __init__(self, frame: Frame, image:PhotoImage, gag:tt_damage_calculator.Gag, output:HistoryBox, orgstate:BooleanVar):
+    def __init__(self, parent:GagFrame, image:PhotoImage, gag:tt_damage_calculator.Gag, output:HistoryBox, orgstate:BooleanVar):
         self.gag = gag
-        Button.__init__(self, frame)
+        Button.__init__(self, parent)
         self['image'] = image
         self['command'] = lambda: self.press(output, orgstate.get())
         if self.gag.gtype == "Gag":
@@ -44,7 +50,7 @@ class GagButton(Button):
             self['compound'] = 'top'
             self['fg'] = 'white'
         self.recolor(False)
-        if frame:
+        if parent:
             self.grid(row=0, column=self.gag.level)
     
     def recolor(self, orgstate:bool):
