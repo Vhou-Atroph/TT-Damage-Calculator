@@ -19,12 +19,14 @@ class HistoryBox(Text):
     
     def add(self, text:str):
         """Add a line to the start of the History Box."""
+
         self.configure(state=NORMAL)
         self.insert("1.0", text)
         self.configure(state=DISABLED)
     
     def clear(self):
         """Clear the History Box of text."""
+
         self.configure(state=NORMAL)
         self.delete("1.0", END)
         self.configure(state=DISABLED)
@@ -55,6 +57,7 @@ class GagButton(Button):
     
     def recolor(self, orgstate:bool):
         """Recolor the Gag Button based on whether or not the gag is a gag (not an SOS) and if organic mode is enabled or not."""
+
         if self.gag.gtype == "Gag" and orgstate:
             self['bg'] = "darkorange"
             self['activebackground'] = "orange"
@@ -64,6 +67,7 @@ class GagButton(Button):
     
     def press(self, output:HistoryBox, orgstate:bool):
         """Function to execute when Gag Button is pressed."""
+        
         gaginfo = self.gag.button_press(orgstate)
         self.configure(text=int(self.cget("text")) + 1)
         output.add("Gag used: " + gaginfo[1] + " (" + str(gaginfo[0]) + ")\n")
