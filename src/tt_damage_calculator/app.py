@@ -14,6 +14,7 @@ from tkinter import *
 
 from . import tt_damage_calculator
 from . import update_checker
+from . import widgets
 
 # Window
 global window
@@ -117,9 +118,7 @@ class GagButton(Button):
   def press(self):
     data = self.gag.button_press(organic.get())
     self.list().append(data[0])
-    hist_box.configure(state=NORMAL)
-    hist_box.insert('1.0', "Gag used: " + data[1] + " (" + str(data[0]) + ")\n")
-    hist_box.configure(state=DISABLED)
+    hist_box.add("Gag used: " + data[1] + " (" + str(data[0]) + ")\n")
     if self.gag.gtype == "Gag":
       self.configure(text=int(self.cget("text")) + 1)
     calc_dmg()
@@ -216,16 +215,14 @@ gag_btns=[
 # Add groupless damaging gag
 def use_groupless(name:str, damage:int):
   no_group.set(no_group.get() + damage)
-  hist_box.configure(state=NORMAL)
-  hist_box.insert('1.0', "Gag used: " + name + " (" + str(damage) + ")\n")
-  hist_box.configure(state=DISABLED)
+  hist_box.add("Gag used: " + name + " (" + str(damage) + ")\n")
   calc_dmg()
 
 # Calculation history
 hist = Frame(col1)
 hist_lbl = Label(hist, text="History")
-hist_box = Text(hist, width=25, height=22, state=DISABLED, font=('Arial', 10, 'normal'), wrap=WORD)
-clear_hist_btn = Button(hist, text="Clear History")
+hist_box = widgets.HistoryBox(hist)
+clear_hist_btn = Button(hist, text="Clear History", command=hist_box.clear)
 cog_calc = Button(hist, text="Show Health and\n SOS Cards")
 
 # Calculation results
@@ -288,9 +285,7 @@ def clear_inputs(*arg):
   global sqt_used
   global drp_used
   global trp_used
-  hist_box.configure(state=NORMAL)
-  hist_box.insert('1.0', tt_damage_calculator.CalculationResults(int(dmg_indicator.cget("text")), tt_damage_calculator.lvl_ind(int(dmg_indicator.cget("text"))), lured.get(), dmg_down.get(), dmg_up.get()).build())
-  hist_box.configure(state=DISABLED)
+  hist_box.add(tt_damage_calculator.CalculationResults(int(dmg_indicator.cget("text")), tt_damage_calculator.lvl_ind(int(dmg_indicator.cget("text"))), lured.get(), dmg_down.get(), dmg_up.get()).build())
   if organic.get():
     organic_toggle()
   snd_used = []
@@ -308,13 +303,6 @@ def clear_inputs(*arg):
   calc_dmg()
 clear_btn.configure(command=clear_inputs)
 window.bind('<' + settings.keybinds.reset + '>', clear_inputs)
-
-# Clear history function
-def clear_history():
-  hist_box.configure(state=NORMAL)
-  hist_box.delete('1.0', END)
-  hist_box.configure(state=DISABLED)
-clear_hist_btn.configure(command=clear_history)
 
 # Cog HP Cheatsheet Function
 def cog_health_calc_hide():
