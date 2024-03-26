@@ -61,8 +61,8 @@ col1 = Frame(window) # Will be used for calculation history
 # Total damage calculation
 def calc_dmg(*args):
   tot_dmg = tt_damage_calculator.full_calc(trp_used, snd_used, trw_used, sqt_used, drp_used, no_group.get(), lured.get(), dmg_down.get(), dmg_up.get())
-  cog_level_indicator.configure(text=tt_damage_calculator.lvl_ind_string(tt_damage_calculator.lvl_ind(tot_dmg), int(dmg_down.get() * 100), int(dmg_up.get() * 100)))
-  dmg_indicator.configure(text=str(tot_dmg))
+  calc_results.level_counter.configure(text=tt_damage_calculator.lvl_ind_string(tt_damage_calculator.lvl_ind(tot_dmg), int(dmg_down.get() * 100), int(dmg_up.get() * 100)))
+  calc_results.damage_counter.configure(text=str(tot_dmg))
 
 # Pin window to top
 def pin():
@@ -226,11 +226,7 @@ clear_hist_btn = Button(hist, text="Clear History", command=hist_box.clear)
 cog_calc = Button(hist, text="Show Health and\n SOS Cards")
 
 # Calculation results
-calc_results = Frame(col0)
-dmg_this_round = Label(calc_results, text="Damage this round:", font=('Arial', 16, 'normal'))
-dmg_indicator = Label(calc_results, text="0", font=('Arial', 16, 'bold'))
-cog_level_indicator = Label(calc_results, text="Level 0", font=('Arial', 8, 'normal'))
-org_indicator = Label(calc_results, text="Organic = OFF", font=('Arial', 10, 'bold'))
+calc_results = widgets.CalculationResults(col0)
 
 # Cog HP
 cog_health_sheet = Frame(window)
@@ -272,7 +268,7 @@ window.bind('<' + settings.keybinds.pin + '>', lambda par: [pin_val.set(tt_damag
 def organic_toggle(*arg):
   data = tt_damage_calculator.orgswap(organic.get())
   organic.set(data[0])
-  org_indicator.configure(text="Organic = " + data[1])
+  calc_results.organic_indicator.configure(text="Organic = " + data[1])
   for i in gag_btns:
     i.configure(bg=data[2], activebackground=data[3])
 org_btn.configure(command=organic_toggle)
@@ -285,7 +281,7 @@ def clear_inputs(*arg):
   global sqt_used
   global drp_used
   global trp_used
-  hist_box.add(tt_damage_calculator.CalculationResults(int(dmg_indicator.cget("text")), tt_damage_calculator.lvl_ind(int(dmg_indicator.cget("text"))), lured.get(), dmg_down.get(), dmg_up.get()).build())
+  hist_box.add(tt_damage_calculator.CalculationResults(int(calc_results.damage_counter.cget("text")), tt_damage_calculator.lvl_ind(int(calc_results.damage_counter.cget("text"))), lured.get(), dmg_down.get(), dmg_up.get()).build())
   if organic.get():
     organic_toggle()
   snd_used = []
@@ -349,10 +345,6 @@ cog_calc.grid(column=0, row=4, pady=3)
 
 # Geometry - Calculation Results
 calc_results.grid(column=0, row=0)
-dmg_this_round.grid(column=0, row=0)
-dmg_indicator.grid(column=1, row=0)
-cog_level_indicator.grid(column=2, row=0)
-org_indicator.grid(column=0, row=1, columnspan=3)
 
 ### Custom Gags ###
 global custom_track

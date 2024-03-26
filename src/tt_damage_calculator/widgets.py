@@ -2,15 +2,30 @@
 TT-Damage-Calculator
 Copyright (C) 2022-2024 Vhou-Atroph
 """
-from tkinter import BooleanVar, Frame, Text, Button, PhotoImage, NORMAL, DISABLED, WORD, END
+from tkinter import BooleanVar, Frame, Label, Text, Button, PhotoImage, NORMAL, DISABLED, WORD, END
 
 from . import tt_damage_calculator
+
+class CalculationResults(Frame):
+    """Class for the Calculation Results frame."""
+
+    def __init__(self, parent:Frame):
+        Frame.__init__(self, parent)
+        self.damage_label = Label(self, text="Damage this round:", font=('Arial', 16, 'normal'))
+        self.damage_counter = Label(self, text="0", font=('Arial', 16, 'bold'))
+        self.level_counter = Label(self, text="Level 0", font=('Arial', 8, 'normal'))
+        self.organic_indicator = Label(self, text="Organic = OFF", font=('Arial', 10, 'bold'))
+
+        self.damage_label.grid(column=0, row=0)
+        self.damage_counter.grid(column=1, row=0)
+        self.level_counter.grid(column=2, row=0)
+        self.organic_indicator.grid(column=0, row=1, columnspan=3)
 
 class HistoryBox(Text):
     """Class for the History Box widget, a more complicated version of the normal tkinter Text widget."""
 
-    def __init__(self, frame: Frame):
-        Text.__init__(self, frame)
+    def __init__(self, parent:Frame):
+        Text.__init__(self, parent)
         self['width'] = 25
         self['height'] = 22
         self['state'] = DISABLED
@@ -67,7 +82,7 @@ class GagButton(Button):
     
     def press(self, output:HistoryBox, orgstate:bool):
         """Function to execute when Gag Button is pressed."""
-        
+
         gaginfo = self.gag.button_press(orgstate)
         self.configure(text=int(self.cget("text")) + 1)
         output.add("Gag used: " + gaginfo[1] + " (" + str(gaginfo[0]) + ")\n")
