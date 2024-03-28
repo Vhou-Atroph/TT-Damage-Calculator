@@ -22,5 +22,5 @@ exe-linux:
 	cargo build --release
 	mv -n target/release/libtt_damage_calculator.so src/tt_damage_calculator/tt_damage_calculator.so
 	pyinstaller "Toontown Damage Calculator.spec"
-	cp -r -f src/tt_damage_calculator/assets dist/assets
+	cp -r -f src/tt_damage_calculator/assets dist
 	cp -f LICENSE dist/LICENSE
