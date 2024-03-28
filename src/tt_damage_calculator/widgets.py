@@ -2,7 +2,8 @@
 TT-Damage-Calculator
 Copyright (C) 2022-2024 Vhou-Atroph
 """
-from tkinter import BooleanVar, Frame, Label, Text, Button, PhotoImage, NORMAL, DISABLED, WORD, END
+import os, pathlib, sys
+from tkinter import BooleanVar, Tk, Frame, Label, Text, Button, PhotoImage, NORMAL, DISABLED, WORD, END
 
 from . import tt_damage_calculator
 
@@ -87,3 +88,16 @@ class GagButton(Button):
         self.configure(text=int(self.cget("text")) + 1)
         output.add("Gag used: " + gaginfo[1] + " (" + str(gaginfo[0]) + ")\n")
         #TODO: implement gag calculation here
+
+class App(Tk):
+    """Class for the gag calculator's full app."""
+
+    def __init__(self):
+        Tk.__init__(self)
+        self.title("Toontown Damage Calculator")
+        self.get_asset_path()
+
+    def get_asset_path(self):
+        self.asset_path = str(pathlib.Path(__file__).parent.resolve())
+        if getattr(sys, 'frozen', False) and hasattr(sys, '_MEIPASS'):
+            self.asset_path = os.getcwd()

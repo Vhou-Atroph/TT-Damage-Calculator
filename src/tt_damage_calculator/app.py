@@ -18,11 +18,8 @@ from . import widgets
 
 # Window
 global window
-window = Tk()
-window.title("Toontown Damage Calculator")
-asset_path = str(pathlib.Path(__file__).parent.resolve())
-if getattr(sys, 'frozen', False) and hasattr(sys, '_MEIPASS'):
-  asset_path = os.getcwd()
+window = widgets.App()
+asset_path = window.asset_path
 whole_cream_pie_img = PhotoImage(file=asset_path + "/assets/img/whole-cream-pie.png")
 window.iconphoto(True, whole_cream_pie_img)
 window.resizable(0, 0)
