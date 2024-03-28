@@ -256,12 +256,7 @@ def clear_inputs(*arg):
   hist_box.add(tt_damage_calculator.CalculationResults(int(calc_results.damage_counter.cget("text")), tt_damage_calculator.lvl_ind(int(calc_results.damage_counter.cget("text"))), lured.get(), dmg_down.get(), dmg_up.get()).build())
   if organic.get():
     organic_toggle()
-  window.sound = []
-  window.throw = []
-  window.squirt = []
-  window.drop = []
-  window.trap = []
-  window.nogroup.set(0)
+  window.reset_tracks()
   for i in gag_btns:
     i.configure(text='0')
   if not status_lock.get():
