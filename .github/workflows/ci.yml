@@ -83,10 +83,14 @@ jobs:
           - runner: ubuntu-latest
             target: ppc64le
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - name: Checkout branch
+        uses: actions/checkout@v4
+      - name: Setup Python
+        uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+      - name: Install libssl
+        run: sudo apt-get install libssl-dev -y
       - name: Build wheels
         uses: PyO3/maturin-action@v1
         with:
