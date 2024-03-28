@@ -66,29 +66,40 @@ jobs:
           path: dist
 
   linux-wheel:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.platform.runner }}
     strategy:
-      fail-fast: false
       matrix:
-        target: [x86_64]
+        platform:
+          - runner: ubuntu-latest
+            target: x86_64
+          - runner: ubuntu-latest
+            target: x86
+          - runner: ubuntu-latest
+            target: aarch64
+          - runner: ubuntu-latest
+            target: armv7
+          - runner: ubuntu-latest
+            target: s390x
+          - runner: ubuntu-latest
+            target: ppc64le
     steps:
-      - name: Checkout branch
-        uses: actions/checkout@v3
-      - name: Setup Python
-        uses: actions/setup-python@v4
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      # i cant seem to get the maturin action to work properly for linux
-      # so i will be trying my best to emulate it with a list of commands instead
-      - name: Build Wheel
-        run: |
-          pip install maturin
-          maturin build --release --out dist --find-interpreter
-      - name: Upload Wheel
-        uses: actions/upload-artifact@v3
+      - name: Build wheels
+        uses: PyO3/maturin-action@v1
         with:
-          name: wheels
+          target: ${{ matrix.platform.target }}
+          args: --release --out dist --find-interpreter
+          sccache: 'true'
+          manylinux: auto
+      - name: Upload wheels
+        uses: actions/upload-artifact@v4
+        with:
+          name: wheels-linux-${{ matrix.platform.target }}
           path: dist
+
   
   macos-exe:
     runs-on: macos-latest
