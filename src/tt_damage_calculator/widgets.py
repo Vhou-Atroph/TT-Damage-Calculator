@@ -99,11 +99,15 @@ class App(Tk):
         self.reset_tracks()
 
     def get_asset_path(self):
+        """Gets the asset path for the program."""
+
         self.asset_path = str(pathlib.Path(__file__).parent.resolve())
         if getattr(sys, 'frozen', False) and hasattr(sys, '_MEIPASS'):
             self.asset_path = os.getcwd()
 
     def reset_tracks(self):
+        """Empties the track lists and sets nogroup to 0 for the next calculation."""
+
         self.trap = []
         self.sound = []
         self.throw = []
