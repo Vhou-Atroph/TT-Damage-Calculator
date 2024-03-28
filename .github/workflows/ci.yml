@@ -90,7 +90,7 @@ jobs:
         with:
           python-version: '3.11'
       - name: Install libssl
-        run: sudo apt-get install pkg-config libssl-dev -y
+        run: sudo apt-get install libssl-dev -y
       - name: Build wheels
         uses: PyO3/maturin-action@v1
         with:
