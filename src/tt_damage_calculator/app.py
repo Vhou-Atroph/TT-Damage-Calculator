@@ -25,21 +25,6 @@ window.iconphoto(True, whole_cream_pie_img)
 window.resizable(0, 0)
 
 # Variables
-global snd_used
-global trw_used
-global sqt_used
-global drp_used
-global trp_used
-snd_used = []
-trw_used = []
-sqt_used = []
-drp_used = []
-trp_used = []
-
-
-no_group = IntVar()
-no_group.set(0)
-
 organic = BooleanVar()
 lured = BooleanVar()
 pin_val = BooleanVar()
@@ -57,7 +42,7 @@ col1 = Frame(window) # Will be used for calculation history
 
 # Total damage calculation
 def calc_dmg(*args):
-  tot_dmg = tt_damage_calculator.full_calc(trp_used, snd_used, trw_used, sqt_used, drp_used, no_group.get(), lured.get(), dmg_down.get(), dmg_up.get())
+  tot_dmg = tt_damage_calculator.full_calc(window.trap, window.sound, window.throw, window.squirt, window.drop, window.nogroup.get(), lured.get(), dmg_down.get(), dmg_up.get())
   calc_results.level_counter.configure(text=tt_damage_calculator.lvl_ind_string(tt_damage_calculator.lvl_ind(tot_dmg), int(dmg_down.get() * 100), int(dmg_up.get() * 100)))
   calc_results.damage_counter.configure(text=str(tot_dmg))
 
@@ -95,22 +80,17 @@ class GagButton(Button):
       self.grid(row=0, column=self.gag.level)
     
   def list(self):
-    global trp_used
-    global snd_used
-    global trw_used
-    global sqt_used
-    global drp_used
     match self.gag.track:
       case "Trap":
-        return trp_used
+        return window.trap
       case "Sound":
-        return snd_used
+        return window.sound
       case "Throw":
-        return trw_used
+        return window.throw
       case "Squirt":
-        return sqt_used
+        return window.squirt
       case "Drop":
-        return drp_used
+        return window.drop
       
   def press(self):
     data = self.gag.button_press(organic.get())
@@ -211,7 +191,7 @@ gag_btns=[
 
 # Add groupless damaging gag
 def use_groupless(name:str, damage:int):
-  no_group.set(no_group.get() + damage)
+  window.nogroup.set(window.nogroup.get() + damage)
   hist_box.add("Gag used: " + name + " (" + str(damage) + ")\n")
   calc_dmg()
 
@@ -273,20 +253,15 @@ window.bind('<' + settings.keybinds.organic + '>', organic_toggle)
 
 # Clear inputs function
 def clear_inputs(*arg):
-  global snd_used
-  global trw_used
-  global sqt_used
-  global drp_used
-  global trp_used
   hist_box.add(tt_damage_calculator.CalculationResults(int(calc_results.damage_counter.cget("text")), tt_damage_calculator.lvl_ind(int(calc_results.damage_counter.cget("text"))), lured.get(), dmg_down.get(), dmg_up.get()).build())
   if organic.get():
     organic_toggle()
-  snd_used = []
-  trw_used = []
-  sqt_used = []
-  drp_used = []
-  trp_used = []
-  no_group.set(0)
+  window.sound = []
+  window.throw = []
+  window.squirt = []
+  window.drop = []
+  window.trap = []
+  window.nogroup.set(0)
   for i in gag_btns:
     i.configure(text='0')
   if not status_lock.get():

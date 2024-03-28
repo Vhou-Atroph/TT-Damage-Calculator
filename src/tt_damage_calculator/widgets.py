@@ -3,7 +3,7 @@ TT-Damage-Calculator
 Copyright (C) 2022-2024 Vhou-Atroph
 """
 import os, pathlib, sys
-from tkinter import BooleanVar, Tk, Frame, Label, Text, Button, PhotoImage, NORMAL, DISABLED, WORD, END
+from tkinter import IntVar, BooleanVar, Tk, Frame, Label, Text, Button, PhotoImage, NORMAL, DISABLED, WORD, END
 
 from . import tt_damage_calculator
 
@@ -96,8 +96,17 @@ class App(Tk):
         Tk.__init__(self)
         self.title("Toontown Damage Calculator")
         self.get_asset_path()
+        self.reset_tracks()
 
     def get_asset_path(self):
         self.asset_path = str(pathlib.Path(__file__).parent.resolve())
         if getattr(sys, 'frozen', False) and hasattr(sys, '_MEIPASS'):
             self.asset_path = os.getcwd()
+
+    def reset_tracks(self):
+        self.trap = []
+        self.sound = []
+        self.throw = []
+        self.squirt = []
+        self.drop = []
+        self.nogroup = IntVar()
