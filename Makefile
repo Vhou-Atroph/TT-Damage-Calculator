@@ -10,13 +10,12 @@ exe:
 	copy ".\src\tt_damage_calculator\assets\img" ".\dist\assets\img"
 	copy "./LICENSE" "./dist"
 
-# im currently developing this on my rpi so i need some new makefile instructions for building the calculator here
-make-venv:
-	python -m venv .venv
-	source .venv/bin/activate
-	pip install maturin
-	pip install patchelf
-	pip install pyinstaller
+# creates a virtual environment for compiling the calculator
+.ONESHELL:
+env:
+	python3 -m venv .venv --system-site-packages
+	. .venv/bin/activate
+	python3 -m pip install -r requirements.txt
 
 exe-linux:
 	cargo build --release
