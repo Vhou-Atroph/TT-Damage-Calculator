@@ -95,6 +95,7 @@ class App(Tk):
     def __init__(self):
         Tk.__init__(self)
         self.title("Toontown Damage Calculator")
+        self.pinned = BooleanVar()
         self.get_asset_path()
         self.reset_tracks()
 
@@ -114,3 +115,7 @@ class App(Tk):
         self.squirt = []
         self.drop = []
         self.nogroup = IntVar()
+
+    def pin(self):
+        """Pin or unpin the gag calculator depending on the 'pinned' variable."""
+        self.attributes('-topmost', self.pinned.get())

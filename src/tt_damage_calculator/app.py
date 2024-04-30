@@ -27,7 +27,6 @@ window.resizable(0, 0)
 # Variables
 organic = BooleanVar()
 lured = BooleanVar()
-pin_val = BooleanVar()
 dmg_down = DoubleVar()
 dmg_up = DoubleVar()
 status_lock = BooleanVar()
@@ -45,16 +44,6 @@ def calc_dmg(*args):
   tot_dmg = tt_damage_calculator.full_calc(window.trap, window.sound, window.throw, window.squirt, window.drop, window.nogroup.get(), lured.get(), dmg_down.get(), dmg_up.get())
   calc_results.level_counter.configure(text=tt_damage_calculator.lvl_ind_string(tt_damage_calculator.lvl_ind(tot_dmg), int(dmg_down.get() * 100), int(dmg_up.get() * 100)))
   calc_results.damage_counter.configure(text=str(tot_dmg))
-
-# Pin window to top
-def pin():
-  global cgags
-  if pin_val.get():
-    window.attributes('-topmost', True)
-    cgags.attributes('-topmost', True)
-    return 0
-  window.attributes('-topmost', False)
-  cgags.attributes('-topmost', False)
 
 # Toggles
 tog_btns = Frame(col0)
@@ -239,7 +228,7 @@ window.bind('<' + settings.keybinds.defense + '>', lambda par: [dmg_down.set(tt_
 window.bind('<' + settings.keybinds.negative_defense + '>', lambda par: [dmg_up.set(tt_damage_calculator.advance_float([0.0,0.2,0.4,0.5,0.6], dmg_up.get())), calc_dmg()])
 window.bind('<' + settings.keybinds.lure + '>', lambda par: [lured.set(tt_damage_calculator.toggleswap(lured.get())), calc_dmg()])
 window.bind('<' + settings.keybinds.lock + '>', lambda par: [status_lock.set(tt_damage_calculator.toggleswap(status_lock.get())), calc_dmg()])
-window.bind('<' + settings.keybinds.pin + '>', lambda par: [pin_val.set(tt_damage_calculator.toggleswap(pin_val.get())), pin()])
+window.bind('<' + settings.keybinds.pin + '>', lambda par: [window.pinned.set(tt_damage_calculator.toggleswap(window.pinned.get())), window.pin()])
 
 # Organic gag toggle
 def organic_toggle(*arg):
@@ -340,15 +329,12 @@ def cgags():
   gtype_dropdown.grid(column=1, row=1, pady=3, padx=2)
   custom_add.grid(column=0, row=2, columnspan=2, pady=8, padx=25)
 
-  if pin_val.get():
-    cgags.attributes('-topmost', True)
-
 # Toolbar
 toolbar = Menu(window)
 # Program
 program_menu = Menu(toolbar, tearoff=0)
 program_menu.add_command(label="Settings", command=lambda:webbrowser.open(asset_path + "/assets/settings.toml"))
-program_menu.add_checkbutton(label="Pin window", command=pin, variable=pin_val, onvalue=True, offvalue=False, accelerator=settings.keybinds.pin)
+program_menu.add_checkbutton(label="Pin window", command=window.pin, variable=window.pinned, onvalue=True, offvalue=False, accelerator=settings.keybinds.pin)
 program_menu.add_command(label="Check for update", command=lambda:update_checker.compare_versions(asset_path + "/assets/version.txt"))
 program_menu.add_separator()
 program_menu.add_command(label="Exit", command=lambda:window.destroy(), accelerator="Alt-F4")
@@ -369,9 +355,8 @@ def_menu2.add_radiobutton(label="-50%", value=0.5, variable=dmg_up, command=calc
 def_menu2.add_radiobutton(label="-60%", value=0.6, variable=dmg_up, command=calc_dmg)
 calculations_menu.add_cascade(label="Cog Defense Down", menu=def_menu2)
 calculations_menu.add_command(label="Snowball", command=lambda:use_groupless("Snowball", 1))
-calculations_menu.add_command(label="Custom Gags", command=lambda:cgags())
 calculations_menu.add_separator()
 calculations_menu.add_checkbutton(label="Lock Status", variable=status_lock, onvalue=True, offvalue=False, accelerator=settings.keybinds.lock)
-calculations_menu.add_command(label="Custom Gags")
+calculations_menu.add_command(label="Custom Gags", command=cgags)
 toolbar.add_cascade(label="Calculations", menu=calculations_menu)
 window.configure(menu=toolbar)
