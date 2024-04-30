@@ -67,6 +67,7 @@ class GagButton(Button):
             self['font'] = ('Impress BT', 8, 'bold')
             self['compound'] = 'top'
             self['fg'] = 'white'
+            self['activeforeground'] = 'white'
         self.recolor(False)
         if parent:
             self.grid(row=0, column=self.gag.level)
