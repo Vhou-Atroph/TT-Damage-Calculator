@@ -32,9 +32,9 @@ python -m tt_damage_calculator
 
 If you are unable to download the calculator via pip for your system, you will need to build it yourself by following the [Building: Wheels (All Platforms)](https://github.com/Vhou-Atroph/TT-Damage-Calculator/wiki/Building:-Wheels-(All-Platforms)) guide on the wiki.
 
-#### On Linux
+#### On Linux and MacOS
 
-On certain Linux distributions, your installation of Python may not come with tkinter, which will greatly restrict your ability to run the program (you won't be able to). You can fix this with one of the below commands:
+On certain Linux distributions and MacOS, your installation of Python may not come with tkinter, which will greatly restrict your ability to run the program (you won't be able to). You can fix this with one of the below commands:
 
 ```shell
 sudo apt-get python3-tk # Debian based distributions
@@ -43,6 +43,7 @@ sudo yum install python3-tkinter # RHEL based distributions
 sudo pacman -S tk # Arch based distributions
 sudo zypper in python-tk # openSUSE based distributions
 sudo xbps-install python3-tkinter # Void based distributions
+brew install python-tk # MacOS
 ```
 
 ## Building
