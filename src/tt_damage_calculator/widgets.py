@@ -95,9 +95,13 @@ class App(Tk):
 
     def __init__(self):
         Tk.__init__(self)
+
+        # Base
         self.title("Toontown Damage Calculator")
         self.pinned = BooleanVar()
         self.get_asset_path()
+        self.settings = tt_damage_calculator.Settings(self.asset_path + "/assets/settings.toml")
+        # Tracks / Variables
         self.reset_tracks()
         self.reset_vars()
 
