@@ -94,9 +94,9 @@ class App(Tk):
     """Class for the gag calculator's full app."""
 
     def __init__(self):
-        Tk.__init__(self)
 
         # Base
+        Tk.__init__(self)
         self.title("Toontown Damage Calculator")
         self.pinned = BooleanVar()
         self.get_asset_path()
