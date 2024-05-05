@@ -57,7 +57,8 @@ class GagFrame(Frame):
 class GagButton(Button):
     """Class for the Gag Button widget, a more complicated version of the normal tkinter Button widget."""
 
-    def __init__(self, parent:GagFrame, image:PhotoImage, gag:tt_damage_calculator.Gag, output:HistoryBox, orgstate:BooleanVar):
+    def __init__(self, window:Tk, parent:GagFrame, image:PhotoImage, gag:tt_damage_calculator.Gag):
+        self.window = window
         self.gag = gag
         Button.__init__(self, parent)
         self['image'] = image
@@ -81,13 +82,30 @@ class GagButton(Button):
         else:
             self['bg'] = "#1888D3"
             self['activebackground'] = "#186AD3"
+
+    def list(self):
+        """Determines what list a particular gag belongs to."""
+
+        match self.gag.track:
+            case "Trap":
+                return self.window.trap
+            case "Sound":
+                return self.window.sound
+            case "Throw":
+                return self.window.throw
+            case "Squirt":
+                return self.window.squirt
+            case "Drop":
+                return self.window.drop
     
     def press(self, output:HistoryBox, orgstate:bool):
         """Function to execute when Gag Button is pressed."""
 
         gaginfo = self.gag.button_press(orgstate)
-        self.configure(text=int(self.cget("text")) + 1)
+        self.list().append(gaginfo[0])
         output.add("Gag used: " + gaginfo[1] + " (" + str(gaginfo[0]) + ")\n")
+        if self.gag.gtype == "Gag":
+            self.configure(text=int(self.cget("text")) + 1)
         #TODO: implement gag calculation here
 
 class App(Tk):
