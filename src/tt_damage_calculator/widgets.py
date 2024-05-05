@@ -3,7 +3,7 @@ TT-Damage-Calculator
 Copyright (C) 2022-2024 Vhou-Atroph
 """
 import os, pathlib, sys
-from tkinter import IntVar, BooleanVar, DoubleVar, Tk, Frame, Label, Text, Button, PhotoImage, NORMAL, DISABLED, WORD, END
+from tkinter import IntVar, BooleanVar, Tk, Frame, Label, Text, Button, PhotoImage, NORMAL, DISABLED, WORD, END
 
 from . import tt_damage_calculator
 
@@ -94,16 +94,11 @@ class App(Tk):
     """Class for the gag calculator's full app."""
 
     def __init__(self):
-
-        # Base
         Tk.__init__(self)
         self.title("Toontown Damage Calculator")
         self.pinned = BooleanVar()
         self.get_asset_path()
-        self.settings = tt_damage_calculator.Settings(self.asset_path + "/assets/settings.toml")
-        # Tracks / Variables
         self.reset_tracks()
-        self.reset_vars()
 
     def get_asset_path(self):
         """Gets the asset path for the program."""
@@ -122,15 +117,6 @@ class App(Tk):
         self.drop = []
         self.nogroup = IntVar()
 
-    def reset_vars(self):
-        """Resets the program's variables for the next calculation (if desired)."""
-
-        self.org = BooleanVar()
-        self.lure = BooleanVar()
-        self.buff_defense = DoubleVar()
-        self.debuff_defense = DoubleVar()
-
     def pin(self):
         """Pin or unpin the gag calculator depending on the 'pinned' variable."""
-
         self.attributes('-topmost', self.pinned.get())
