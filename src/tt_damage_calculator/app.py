@@ -235,7 +235,7 @@ window.bind('<' + settings.keybinds.pin + '>', lambda par: [window.pinned.set(tt
 def organic_toggle(*arg):
   data = tt_damage_calculator.orgswap(organic.get())
   organic.set(data[0])
-  calc_results.organic_indicator.configure(text="Organic = " + data[1])
+  calc_results.update_org(organic.get())
   for i in gag_btns:
     i.configure(bg=data[2], activebackground=data[3])
 org_btn.configure(command=organic_toggle)

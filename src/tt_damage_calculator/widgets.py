@@ -22,6 +22,13 @@ class CalculationResults(Frame):
         self.level_counter.grid(column=2, row=0)
         self.organic_indicator.grid(column=0, row=1, columnspan=3)
 
+    def update_org(self, state:bool):
+        """Update the organic gag label to be accurate to whatever state the calculator is currently in."""
+        if state:
+            self.organic_indicator.configure(text="ORGANIC = ON")
+        else:
+            self.organic_indicator.configure(text="ORGANIC = OFF")
+
 class HistoryBox(Text):
     """Class for the History Box widget, a more complicated version of the normal tkinter Text widget."""
 
