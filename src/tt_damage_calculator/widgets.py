@@ -3,7 +3,7 @@ TT-Damage-Calculator
 Copyright (C) 2022-2024 Vhou-Atroph
 """
 import os, pathlib, sys
-from tkinter import IntVar, BooleanVar, Tk, Frame, Label, Text, Button, PhotoImage, NORMAL, DISABLED, WORD, END
+from tkinter import IntVar, BooleanVar, DoubleVar, Tk, Frame, Label, Text, Button, PhotoImage, Menu, NORMAL, DISABLED, WORD, END
 
 from . import tt_damage_calculator
 
@@ -122,8 +122,11 @@ class App(Tk):
         Tk.__init__(self)
         self.title("Toontown Damage Calculator")
         self.pinned = BooleanVar()
+        self.status_lock = BooleanVar()
         self.get_asset_path()
         self.reset_tracks()
+        self.make_vars()
+        self.toolbar()
 
     def get_asset_path(self):
         """Gets the asset path for the program."""
@@ -142,6 +145,54 @@ class App(Tk):
         self.drop = []
         self.nogroup = IntVar()
 
+    def make_vars(self):
+        """Creates battle variables used in calculation. This will not reset the variables properly; use reset_vars() instead."""
+
+        self.lure = BooleanVar()
+        self.defense_buff = DoubleVar()
+        self.defense_debuff = DoubleVar()
+
+    def reset_vars(self):
+        """Resets battle variables for future calculations."""
+
+        self.lure.set(False)
+        self.defense_buff.set(0.0)
+        self.defense_debuff.set(0.0)
+
     def pin(self):
         """Pin or unpin the gag calculator depending on the 'pinned' variable."""
         self.attributes('-topmost', self.pinned.get())
+
+    def toolbar(self):
+        """Creates the program's toolbar"""
+
+        toolbar = Menu(self)
+
+        program_menu = Menu(toolbar, tearoff=0)
+        program_menu.add_checkbutton(label="Pin window", command=self.pin, variable=self.pinned, onvalue=True, offvalue=False, accelerator="Placeholder")
+        program_menu.add_separator()
+        program_menu.add_command(label="Exit", command=lambda:window.destroy(), accelerator="Alt-F4")
+        toolbar.add_cascade(label="Program", menu=program_menu)
+
+        calculations_menu = Menu(toolbar, tearoff=0)
+        def_menu = Menu(calculations_menu, tearoff=0)
+        def_menu.add_radiobutton(label="None", value=0.0, variable=self.defense_buff, command=print("unimplemented!"))
+        def_menu.add_radiobutton(label="10% (1⭐)", value=0.1, variable=self.defense_buff, command=print("unimplemented!"))
+        def_menu.add_radiobutton(label="15% (2⭐)", value=0.15, variable=self.defense_buff, command=print("unimplemented!"))
+        def_menu.add_radiobutton(label="20% (3⭐)", value=0.2, variable=self.defense_buff, command=print("unimplemented!"))
+        def_menu.add_radiobutton(label="25% (4⭐)", value=0.25, variable=self.defense_buff, command=print("unimplemented!"))
+        calculations_menu.add_cascade(label="Cog Defense Up", menu=def_menu)
+        def_menu2 = Menu(calculations_menu, tearoff=0)
+        def_menu2.add_radiobutton(label="None", value=0.0, variable=self.defense_debuff, command=print("unimplemented!"))
+        def_menu2.add_radiobutton(label="-20%", value=0.2, variable=self.defense_debuff, command=print("unimplemented!"))
+        def_menu2.add_radiobutton(label="-40%", value=0.4, variable=self.defense_debuff, command=print("unimplemented!"))
+        def_menu2.add_radiobutton(label="-50%", value=0.5, variable=self.defense_debuff, command=print("unimplemented!"))
+        def_menu2.add_radiobutton(label="-60%", value=0.6, variable=self.defense_debuff, command=print("unimplemented!"))
+        calculations_menu.add_cascade(label="Cog Defense Down", menu=def_menu2)
+        calculations_menu.add_command(label="Snowball", command=lambda:(use_groupless("Snowball", 1)))
+        calculations_menu.add_separator()
+        calculations_menu.add_checkbutton(label="Lock Status", variable=self.status_lock, onvalue=True, offvalue=False, accelerator="Placeholder")
+        calculations_menu.add_command(label="Custom Gags", command=print("unimplemented!"))
+        toolbar.add_cascade(label="Calculations", menu=calculations_menu)
+
+        self.configure(menu=toolbar)

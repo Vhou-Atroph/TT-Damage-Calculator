@@ -26,12 +26,6 @@ window.resizable(0, 0)
 
 # Variables
 organic = BooleanVar()
-lured = BooleanVar()
-dmg_down = DoubleVar()
-dmg_up = DoubleVar()
-status_lock = BooleanVar()
-dmg_down.set(0.0)
-dmg_up.set(0.0)
 
 settings = tt_damage_calculator.Settings(asset_path + "/assets/settings.toml")
 
@@ -41,14 +35,14 @@ col1 = Frame(window) # Will be used for calculation history
 
 # Total damage calculation
 def calc_dmg(*args):
-  tot_dmg = tt_damage_calculator.full_calc(window.trap, window.sound, window.throw, window.squirt, window.drop, window.nogroup.get(), lured.get(), dmg_down.get(), dmg_up.get())
-  calc_results.level_counter.configure(text=tt_damage_calculator.lvl_ind_string(tt_damage_calculator.lvl_ind(tot_dmg), int(dmg_down.get() * 100), int(dmg_up.get() * 100)))
+  tot_dmg = tt_damage_calculator.full_calc(window.trap, window.sound, window.throw, window.squirt, window.drop, window.nogroup.get(), window.lure.get(), window.defense_buff.get(), window.defense_debuff.get())
+  calc_results.level_counter.configure(text=tt_damage_calculator.lvl_ind_string(tt_damage_calculator.lvl_ind(tot_dmg), int(window.defense_buff.get() * 100), int(window.defense_debuff.get() * 100)))
   calc_results.damage_counter.configure(text=str(tot_dmg))
 
 # Toggles
 tog_btns = Frame(col0)
 org_btn = Button(tog_btns, text='Toggle Organic', font=('Arial', 11, 'normal'))
-lur_check = Checkbutton(tog_btns, text='Cog lured', variable=lured, onvalue=1, offvalue=0, font=('Arial', 11, 'normal'), command=calc_dmg)
+lur_check = Checkbutton(tog_btns, text='Cog window.lure', variable=window.lure, onvalue=1, offvalue=0, font=('Arial', 11, 'normal'), command=calc_dmg)
 clear_btn = Button(tog_btns, text='Reset damage', font=('Arial', 11, 'normal'))
 
 # The Gags
@@ -225,10 +219,10 @@ bess_img = PhotoImage(file=asset_path + '/assets/img/barnaclebessie.png')
 bess = GagButton(sos_drp,image=bess_img, gag=tt_damage_calculator.Gag("Sos", "Barnacle Bessie", "Drop", 2, 170))
 
 ### Keybinds
-window.bind('<' + settings.keybinds.defense + '>', lambda par: [dmg_down.set(tt_damage_calculator.advance_float([0.0,0.1,0.15,0.2,0.25], dmg_down.get())), calc_dmg()])
-window.bind('<' + settings.keybinds.negative_defense + '>', lambda par: [dmg_up.set(tt_damage_calculator.advance_float([0.0,0.2,0.4,0.5,0.6], dmg_up.get())), calc_dmg()])
-window.bind('<' + settings.keybinds.lure + '>', lambda par: [lured.set(tt_damage_calculator.toggleswap(lured.get())), calc_dmg()])
-window.bind('<' + settings.keybinds.lock + '>', lambda par: [status_lock.set(tt_damage_calculator.toggleswap(status_lock.get())), calc_dmg()])
+window.bind('<' + settings.keybinds.defense + '>', lambda par: [window.defense_buff.set(tt_damage_calculator.advance_float([0.0,0.1,0.15,0.2,0.25], window.defense_buff.get())), calc_dmg()])
+window.bind('<' + settings.keybinds.negative_defense + '>', lambda par: [window.defense_debuff.set(tt_damage_calculator.advance_float([0.0,0.2,0.4,0.5,0.6], window.defense_debuff.get())), calc_dmg()])
+window.bind('<' + settings.keybinds.lure + '>', lambda par: [window.lure.set(tt_damage_calculator.toggleswap(window.lure.get())), calc_dmg()])
+window.bind('<' + settings.keybinds.lock + '>', lambda par: [window.status_lock.set(tt_damage_calculator.toggleswap(window.status_lock.get())), calc_dmg()])
 window.bind('<' + settings.keybinds.pin + '>', lambda par: [window.pinned.set(tt_damage_calculator.toggleswap(window.pinned.get())), window.pin()])
 
 # Organic gag toggle
@@ -243,16 +237,14 @@ window.bind('<' + settings.keybinds.organic + '>', organic_toggle)
 
 # Clear inputs function
 def clear_inputs(*arg):
-  hist_box.add(tt_damage_calculator.CalculationResults(int(calc_results.damage_counter.cget("text")), tt_damage_calculator.lvl_ind(int(calc_results.damage_counter.cget("text"))), lured.get(), dmg_down.get(), dmg_up.get()).build())
+  hist_box.add(tt_damage_calculator.CalculationResults(int(calc_results.damage_counter.cget("text")), tt_damage_calculator.lvl_ind(int(calc_results.damage_counter.cget("text"))), window.lure.get(), window.defense_buff.get(), window.defense_debuff.get()).build())
   if organic.get():
     organic_toggle()
   window.reset_tracks()
   for i in gag_btns:
     i.configure(text='0')
-  if not status_lock.get():
-    dmg_down.set(0.0)
-    dmg_up.set(0.0)
-    lured.set(0)
+  if not window.status_lock.get():
+    window.reset_vars()
   calc_dmg()
 clear_btn.configure(command=clear_inputs)
 window.bind('<' + settings.keybinds.reset + '>', clear_inputs)
@@ -329,35 +321,3 @@ def cgags():
   gtype_label.grid(column=0, row=1, pady=3, padx=2)
   gtype_dropdown.grid(column=1, row=1, pady=3, padx=2)
   custom_add.grid(column=0, row=2, columnspan=2, pady=8, padx=25)
-
-# Toolbar
-toolbar = Menu(window)
-# Program
-program_menu = Menu(toolbar, tearoff=0)
-program_menu.add_command(label="Settings", command=lambda:webbrowser.open(asset_path + "/assets/settings.toml"))
-program_menu.add_checkbutton(label="Pin window", command=window.pin, variable=window.pinned, onvalue=True, offvalue=False, accelerator=settings.keybinds.pin)
-program_menu.add_command(label="Check for update", command=lambda:update_checker.compare_versions(asset_path + "/assets/version.txt"))
-program_menu.add_separator()
-program_menu.add_command(label="Exit", command=lambda:window.destroy(), accelerator="Alt-F4")
-toolbar.add_cascade(label="Program", menu=program_menu)
-calculations_menu = Menu(toolbar, tearoff=0)
-def_menu = Menu(calculations_menu, tearoff=0)
-def_menu.add_radiobutton(label="None", value=0.0, variable=dmg_down, command=calc_dmg)
-def_menu.add_radiobutton(label="10% (1⭐)", value=0.1, variable=dmg_down, command=calc_dmg)
-def_menu.add_radiobutton(label="15% (2⭐)", value=0.15, variable=dmg_down, command=calc_dmg)
-def_menu.add_radiobutton(label="20% (3⭐)", value=0.2, variable=dmg_down, command=calc_dmg)
-def_menu.add_radiobutton(label="25% (4⭐)", value=0.25, variable=dmg_down, command=calc_dmg)
-calculations_menu.add_cascade(label="Cog Defense Up", menu=def_menu)
-def_menu2 = Menu(calculations_menu, tearoff=0)
-def_menu2.add_radiobutton(label="None", value=0.0, variable=dmg_up, command=calc_dmg)
-def_menu2.add_radiobutton(label="-20%", value=0.2, variable=dmg_up, command=calc_dmg)
-def_menu2.add_radiobutton(label="-40%", value=0.4, variable=dmg_up, command=calc_dmg)
-def_menu2.add_radiobutton(label="-50%", value=0.5, variable=dmg_up, command=calc_dmg)
-def_menu2.add_radiobutton(label="-60%", value=0.6, variable=dmg_up, command=calc_dmg)
-calculations_menu.add_cascade(label="Cog Defense Down", menu=def_menu2)
-calculations_menu.add_command(label="Snowball", command=lambda:use_groupless("Snowball", 1))
-calculations_menu.add_separator()
-calculations_menu.add_checkbutton(label="Lock Status", variable=status_lock, onvalue=True, offvalue=False, accelerator=settings.keybinds.lock)
-calculations_menu.add_command(label="Custom Gags", command=cgags)
-toolbar.add_cascade(label="Calculations", menu=calculations_menu)
-window.configure(menu=toolbar)
