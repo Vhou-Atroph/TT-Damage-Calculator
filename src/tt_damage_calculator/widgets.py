@@ -24,6 +24,7 @@ class CalculationResults(Frame):
 
     def update_org(self, state:bool):
         """Update the organic gag label to be accurate to whatever state the calculator is currently in."""
+
         if state:
             self.organic_indicator.configure(text="ORGANIC = ON")
         else:
