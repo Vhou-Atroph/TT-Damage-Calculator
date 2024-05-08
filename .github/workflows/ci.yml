@@ -64,6 +64,7 @@ jobs:
         with:
           name: wheels
           path: dist
+          merge-multiple: true
 
   linux-wheel:
     runs-on: ubuntu-latest
@@ -89,6 +90,7 @@ jobs:
         with:
           name: wheels
           path: dist
+          merge-multiple: true
   
   macos-exe:
     runs-on: macos-latest
@@ -141,6 +143,7 @@ jobs:
         with:
           name: wheels
           path: dist
+          merge-multiple: true
 
   sdist:
     runs-on: ubuntu-latest
@@ -160,6 +163,7 @@ jobs:
         with:
           name: wheels
           path: dist
+          merge-multiple: true
 
   release:
     name: Release
