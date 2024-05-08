@@ -34,7 +34,7 @@ jobs:
           robocopy "./src/tt_damage_calculator/assets" "./dist/assets" /s; if ($lastexitcode -lt 8) { $global:LASTEXITCODE = $null }
           copy "./LICENSE" "./dist"
       - name: Upload .exe
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v3
         with:
           name: win64-executable
           path: dist
@@ -60,11 +60,10 @@ jobs:
           args: --release --out dist --find-interpreter
           sccache: 'true'
       - name: Upload Wheel
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v3
         with:
           name: wheels
           path: dist
-          merge-multiple: true
 
   linux-wheel:
     runs-on: ubuntu-latest
@@ -86,11 +85,10 @@ jobs:
           pip install maturin
           maturin build --release --out dist --find-interpreter
       - name: Upload Wheel
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v3
         with:
           name: wheels
           path: dist
-          merge-multiple: true
   
   macos-exe:
     runs-on: macos-latest
@@ -114,7 +112,7 @@ jobs:
           cp -R ./src/tt_damage_calculator/assets ./dist/assets
           cp -R ./LICENSE ./dist
       - name: Upload executable
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v3
         with:
           name: mac64-executable
           path: dist
@@ -139,11 +137,10 @@ jobs:
           args: --release --out dist --find-interpreter
           sccache: 'true'
       - name: Upload Wheel
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v3
         with:
           name: wheels
           path: dist
-          merge-multiple: true
 
   sdist:
     runs-on: ubuntu-latest
@@ -159,11 +156,10 @@ jobs:
           pip install maturin
           maturin build --release --sdist --out dist
       - name: Upload Source Distribution
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v3
         with:
           name: wheels
           path: dist
-          merge-multiple: true
 
   release:
     name: Release
