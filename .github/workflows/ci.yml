@@ -36,7 +36,7 @@ jobs:
       - name: Upload .exe
         uses: actions/upload-artifact@v4
         with:
-          name: win64-executable
+          name: executable-windows-x64
           path: dist
 
   windows-wheel:
@@ -117,7 +117,7 @@ jobs:
       - name: Upload executable
         uses: actions/upload-artifact@v4
         with:
-          name: mac64-executable
+          name: executable-macos-x86_64
           path: dist
   
   macos-wheel:
