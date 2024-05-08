@@ -29,18 +29,14 @@ organic = BooleanVar()
 
 settings = tt_damage_calculator.Settings(asset_path + "/assets/settings.toml")
 
-# Columns
-col0 = Frame(window) # Main content of the calculator
-col1 = Frame(window) # Will be used for calculation history
-
 # Total damage calculation
 def calc_dmg(*args):
   tot_dmg = tt_damage_calculator.full_calc(window.trap, window.sound, window.throw, window.squirt, window.drop, window.nogroup.get(), window.lure.get(), window.defense_buff.get(), window.defense_debuff.get())
-  calc_results.level_counter.configure(text=tt_damage_calculator.lvl_ind_string(tt_damage_calculator.lvl_ind(tot_dmg), int(window.defense_buff.get() * 100), int(window.defense_debuff.get() * 100)))
-  calc_results.damage_counter.configure(text=str(tot_dmg))
+  window.results.level_counter.configure(text=tt_damage_calculator.lvl_ind_string(tt_damage_calculator.lvl_ind(tot_dmg), int(window.defense_buff.get() * 100), int(window.defense_debuff.get() * 100)))
+  window.results.damage_counter.configure(text=str(tot_dmg))
 
 # Toggles
-tog_btns = Frame(col0)
+tog_btns = Frame(window.column_0)
 org_btn = Button(tog_btns, text='Toggle Organic', font=('Arial', 11, 'normal'))
 lur_check = Checkbutton(tog_btns, text='Cog window.lure', variable=window.lure, onvalue=1, offvalue=0, font=('Arial', 11, 'normal'), command=calc_dmg)
 clear_btn = Button(tog_btns, text='Reset damage', font=('Arial', 11, 'normal'))
@@ -84,7 +80,7 @@ class GagButton(Button):
       self.configure(text=int(self.cget("text")) + 1)
     calc_dmg()
 
-gag_frame = Frame(col0)
+gag_frame = Frame(window.column_0)
 # Sound
 snd_frame = Frame(gag_frame)
 bike_horn_img = PhotoImage(file=asset_path + '/assets/img/bike-horn.png')
@@ -180,14 +176,11 @@ def use_groupless(name:str, damage:int):
   calc_dmg()
 
 # Calculation history
-hist = Frame(col1)
+hist = Frame(window.column_1)
 hist_lbl = Label(hist, text="History")
 hist_box = widgets.HistoryBox(hist)
 clear_hist_btn = Button(hist, text="Clear History", command=hist_box.clear)
 cog_calc = Button(hist, text="Show Health and\n SOS Cards")
-
-# Calculation results
-calc_results = widgets.CalculationResults(col0)
 
 # Cog HP
 cog_health_sheet = Frame(window)
@@ -229,7 +222,7 @@ window.bind('<' + settings.keybinds.pin + '>', lambda par: [window.pinned.set(tt
 def organic_toggle(*arg):
   data = tt_damage_calculator.orgswap(organic.get())
   organic.set(data[0])
-  calc_results.update_org(organic.get())
+  window.results.update_org(organic.get())
   for i in gag_btns:
     i.configure(bg=data[2], activebackground=data[3])
 org_btn.configure(command=organic_toggle)
@@ -237,7 +230,7 @@ window.bind('<' + settings.keybinds.organic + '>', organic_toggle)
 
 # Clear inputs function
 def clear_inputs(*arg):
-  hist_box.add(tt_damage_calculator.CalculationResults(int(calc_results.damage_counter.cget("text")), tt_damage_calculator.lvl_ind(int(calc_results.damage_counter.cget("text"))), window.lure.get(), window.defense_buff.get(), window.defense_debuff.get()).build())
+  hist_box.add(tt_damage_calculator.CalculationResults(int(window.results.damage_counter.cget("text")), tt_damage_calculator.lvl_ind(int(window.results.damage_counter.cget("text"))), window.lure.get(), window.defense_buff.get(), window.defense_debuff.get()).build())
   if organic.get():
     organic_toggle()
   window.reset_tracks()
@@ -265,8 +258,8 @@ def cog_health_calc_show():
 cog_calc.configure(command=cog_health_calc_show)
 
 # Geometry - Main Columns
-col0.grid(column=0, row=0, padx=5)
-col1.grid(column=1, row=0, padx=10)
+window.column_0.grid(column=0, row=0, padx=5)
+window.column_1.grid(column=1, row=0, padx=10)
 
 # Geometry - Toggles
 tog_btns.grid(column=0, row=1, pady=5)
@@ -293,7 +286,7 @@ clear_hist_btn.grid(column=0, row=2, pady=3)
 cog_calc.grid(column=0, row=4, pady=3)
 
 # Geometry - Calculation Results
-calc_results.grid(column=0, row=0)
+window.results.grid(column=0, row=0)
 
 ### Custom Gags ###
 global custom_track

@@ -127,6 +127,7 @@ class App(Tk):
         self.get_asset_path()
         self.reset_tracks()
         self.make_vars()
+        self.build_ui()
         self.toolbar()
 
     def get_asset_path(self):
@@ -165,8 +166,16 @@ class App(Tk):
 
         self.attributes('-topmost', self.pinned.get())
 
+    def build_ui(self):
+        """Builds the UI for the calculator."""
+
+        self.column_0 = Frame(self)
+        self.column_1 = Frame(self)
+
+        self.results = CalculationResults(self.column_0)
+
     def toolbar(self):
-        """Creates the program's toolbar"""
+        """Creates the program's toolbar."""
 
         toolbar = Menu(self)
 
