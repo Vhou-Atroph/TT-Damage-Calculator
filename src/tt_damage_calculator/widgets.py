@@ -122,6 +122,7 @@ class App(Tk):
     def __init__(self):
         Tk.__init__(self)
         self.title("Toontown Damage Calculator")
+        self.resizable(0,0)
         self.pinned = BooleanVar()
         self.status_lock = BooleanVar()
         self.get_asset_path()
