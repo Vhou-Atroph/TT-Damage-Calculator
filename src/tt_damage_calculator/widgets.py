@@ -162,6 +162,7 @@ class App(Tk):
 
     def pin(self):
         """Pin or unpin the gag calculator depending on the 'pinned' variable."""
+
         self.attributes('-topmost', self.pinned.get())
 
     def toolbar(self):
