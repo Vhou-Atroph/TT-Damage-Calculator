@@ -9,7 +9,6 @@ CONTRIBUTORS:
 - BoggTech
 """
 
-import os, pathlib, sys, webbrowser
 from tkinter import *
 
 from . import tt_damage_calculator
