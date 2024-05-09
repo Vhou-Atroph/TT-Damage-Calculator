@@ -72,7 +72,7 @@ class GagButton(Button):
   def press(self):
     data = self.gag.button_press(organic.get())
     self.list().append(data[0])
-    hist_box.add("Gag used: " + data[1] + " (" + str(data[0]) + ")\n")
+    window.history.box.add("Gag used: " + data[1] + " (" + str(data[0]) + ")\n")
     if self.gag.gtype == "Gag":
       self.configure(text=int(self.cget("text")) + 1)
     calc_dmg()
@@ -169,15 +169,8 @@ gag_btns=[
 # Add groupless damaging gag
 def use_groupless(name:str, damage:int):
   window.nogroup.set(window.nogroup.get() + damage)
-  hist_box.add("Gag used: " + name + " (" + str(damage) + ")\n")
+  window.history.box.add("Gag used: " + name + " (" + str(damage) + ")\n")
   calc_dmg()
-
-# Calculation history
-hist = Frame(window.column_1)
-hist_lbl = Label(hist, text="History")
-hist_box = widgets.HistoryBox(hist)
-clear_hist_btn = Button(hist, text="Clear History", command=hist_box.clear)
-cog_calc = Button(hist, text="Show Health and\n SOS Cards")
 
 # Cog HP
 cog_health_sheet = Frame(window)
@@ -227,7 +220,7 @@ window.bind('<' + settings.keybinds.organic + '>', organic_toggle)
 
 # Clear inputs function
 def clear_inputs(*arg):
-  hist_box.add(tt_damage_calculator.CalculationResults(int(window.results.damage_counter.cget("text")), tt_damage_calculator.lvl_ind(int(window.results.damage_counter.cget("text"))), window.lure.get(), window.defense_buff.get(), window.defense_debuff.get()).build())
+  window.history.box.add(tt_damage_calculator.CalculationResults(int(window.results.damage_counter.cget("text")), tt_damage_calculator.lvl_ind(int(window.results.damage_counter.cget("text"))), window.lure.get(), window.defense_buff.get(), window.defense_debuff.get()).build())
   if organic.get():
     organic_toggle()
   window.reset_tracks()
@@ -244,15 +237,15 @@ def cog_health_calc_hide():
   cog_health_sheet.grid_remove()
   sos_cards.grid_remove()
   window.geometry('')
-  cog_calc.configure(text='Show Health and\n SOS Cards', command=cog_health_calc_show)
+  window.history.sos_button.configure(text='Show Health and\n SOS Cards', command=cog_health_calc_show)
 
 def cog_health_calc_show():
   cog_health_sheet.grid(column=0, row=3)
   cog_health_lbl.grid(column=0, row=0)
   sos_cards.grid(column=1, row=3)
-  cog_calc.configure(text='Hide Health and\n SOS Cards', command=cog_health_calc_hide)
+  window.history.sos_button.configure(text='Hide Health and\n SOS Cards', command=cog_health_calc_hide)
   window.geometry('')
-cog_calc.configure(command=cog_health_calc_show)
+window.history.sos_button.configure(command=cog_health_calc_show)
 
 # Geometry - Main Columns
 window.column_0.grid(column=0, row=0, padx=5)
@@ -276,11 +269,11 @@ sos_snd.grid(column=0, row=1)
 sos_drp.grid(column=0, row=2)
 
 # Geometry - Calculation History
-hist.grid(column=0, row=0)
-hist_lbl.grid(column=0, row=0)
-hist_box.grid(column=0, row=1)
-clear_hist_btn.grid(column=0, row=2, pady=3)
-cog_calc.grid(column=0, row=4, pady=3)
+window.history.grid(column=0, row=0)
+window.history.label.grid(column=0, row=0)
+window.history.box.grid(column=0, row=1)
+window.history.clear_button.grid(column=0, row=2, pady=3)
+window.history.sos_button.grid(column=0, row=4, pady=3)
 
 # Geometry - Calculation Results
 window.results.grid(column=0, row=0)

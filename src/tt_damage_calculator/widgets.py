@@ -55,6 +55,16 @@ class HistoryBox(Text):
         self.delete("1.0", END)
         self.configure(state=DISABLED)
 
+class HistoryFrame(Frame):
+    """Class for the History Frame widget, a frame that contains the calculator's history box, and toggle for cog health and SOS cards."""
+
+    def __init__(self, parent:Frame):
+        Frame.__init__(self, parent)
+        self.label = Label(self, text="History")
+        self.box = HistoryBox(self)
+        self.clear_button = Button(self, text="Clear History", command=self.box.clear)
+        self.sos_button = Button(self, text="Show health and\nSOS cards")
+
 class GagFrame(Frame):
     """Class for the Gag Frame widget, a type of frame that automatically places itself in the gag calculator."""
 
@@ -174,6 +184,8 @@ class App(Tk):
         self.column_1 = Frame(self)
 
         self.results = CalculationResults(self.column_0)
+
+        self.history = HistoryFrame(self.column_1)
 
     def file(self, filepath):
         """Open a specified file in its default app."""
