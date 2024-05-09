@@ -116,7 +116,7 @@ class GagButton(Button):
         if self.gag.gtype == "Gag" and orgstate:
             self['bg'] = "darkorange"
             self['activebackground'] = "orange"
-        else if self.gag.gtype == "Gag":
+        elif self.gag.gtype == "Gag":
             self['bg'] = "#1888D3"
             self['activebackground'] = "#186AD3"
 
