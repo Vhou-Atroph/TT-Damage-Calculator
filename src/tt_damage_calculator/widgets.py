@@ -3,7 +3,7 @@ TT-Damage-Calculator
 Copyright (C) 2022-2024 Vhou-Atroph
 """
 import os, pathlib, platform, sys
-from tkinter import IntVar, BooleanVar, DoubleVar, Tk, Frame, Label, Text, Button, PhotoImage, Menu, NORMAL, DISABLED, WORD, END
+from tkinter import IntVar, BooleanVar, DoubleVar, Tk, Frame, Label, Text, Button, Checkbutton, PhotoImage, Menu, NORMAL, DISABLED, WORD, END
 
 from . import tt_damage_calculator
 
@@ -29,6 +29,20 @@ class CalculationResults(Frame):
             self.organic_indicator.configure(text="ORGANIC = ON")
         else:
             self.organic_indicator.configure(text="ORGANIC = OFF")
+
+class ToggleButtons(Frame):
+    """Class for the Toggle Buttons frame."""
+
+    def __init__(self, window:Tk, parent:Frame):
+        Frame.__init__(self, parent)
+        self.window = window
+        self.organic = Button(self, text="Toggle Organic", font=('Arial', 11, 'normal'))
+        self.lure = Checkbutton(self, text='Cog lured', variable=self.window.lure, onvalue=1, offvalue=0, font=('Arial', 11, 'normal'), command=print("unimplemented!"))
+        self.clear = Button(self, text='Reset damage', font=('Arial', 11, 'normal'))
+
+        self.organic.grid(column=1, row=0, padx=5)
+        self.lure.grid(column=0, row=0, padx=5)
+        self.clear.grid(column=2, row=0, columnspan=2, padx=5)
 
 class HistoryBox(Text):
     """Class for the History Box widget, a more complicated version of the normal tkinter Text widget."""
@@ -189,6 +203,7 @@ class App(Tk):
         self.column_1 = Frame(self)
 
         self.results = CalculationResults(self.column_0)
+        self.toggles = ToggleButtons(self, self.column_0)
 
         self.history = HistoryFrame(self.column_1)
 

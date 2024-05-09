@@ -32,12 +32,6 @@ def calc_dmg(*args):
   window.results.level_counter.configure(text=tt_damage_calculator.lvl_ind_string(tt_damage_calculator.lvl_ind(tot_dmg), int(window.defense_buff.get() * 100), int(window.defense_debuff.get() * 100)))
   window.results.damage_counter.configure(text=str(tot_dmg))
 
-# Toggles
-tog_btns = Frame(window.column_0)
-org_btn = Button(tog_btns, text='Toggle Organic', font=('Arial', 11, 'normal'))
-lur_check = Checkbutton(tog_btns, text='Cog lured', variable=window.lure, onvalue=1, offvalue=0, font=('Arial', 11, 'normal'), command=calc_dmg)
-clear_btn = Button(tog_btns, text='Reset damage', font=('Arial', 11, 'normal'))
-
 # The Gags
 class GagButton(Button):
   def __init__(self, parent, image, gag):
@@ -215,7 +209,7 @@ def organic_toggle(*arg):
   window.results.update_org(organic.get())
   for i in gag_btns:
     i.configure(bg=data[2], activebackground=data[3])
-org_btn.configure(command=organic_toggle)
+window.toggles.organic.configure(command=organic_toggle)
 window.bind('<' + settings.keybinds.organic + '>', organic_toggle)
 
 # Clear inputs function
@@ -229,7 +223,7 @@ def clear_inputs(*arg):
   if not window.status_lock.get():
     window.reset_vars()
   calc_dmg()
-clear_btn.configure(command=clear_inputs)
+window.toggles.clear.configure(command=clear_inputs)
 window.bind('<' + settings.keybinds.reset + '>', clear_inputs)
 
 # Cog HP Cheatsheet Function
@@ -252,10 +246,7 @@ window.column_0.grid(column=0, row=0, padx=5)
 window.column_1.grid(column=1, row=0, padx=10)
 
 # Geometry - Toggles
-tog_btns.grid(column=0, row=1, pady=5)
-lur_check.grid(column=0, row=0, padx=5)
-org_btn.grid(column=1, row=0, padx=5)
-clear_btn.grid(column=2, row=0, columnspan=2, padx=5)
+window.toggles.grid(column=0, row=1, pady=5)
 
 # Geometry - Gags
 gag_frame.grid(column=0, row=2, pady=10)
