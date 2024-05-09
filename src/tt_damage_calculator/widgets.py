@@ -2,7 +2,7 @@
 TT-Damage-Calculator
 Copyright (C) 2022-2024 Vhou-Atroph
 """
-import os, pathlib, sys, webbrowser
+import os, pathlib, platform, sys
 from tkinter import IntVar, BooleanVar, DoubleVar, Tk, Frame, Label, Text, Button, PhotoImage, Menu, NORMAL, DISABLED, WORD, END
 
 from . import tt_damage_calculator
@@ -175,13 +175,22 @@ class App(Tk):
 
         self.results = CalculationResults(self.column_0)
 
+    def file(self, filepath):
+        match platform.system():
+            case "Windows":
+                os.startfile(filepath)
+            case "Darwin":
+                os.system(("open " + filepath))
+            case "Linux":
+                os.system(("xdg-open " + filepath))
+
     def toolbar(self):
         """Creates the program's toolbar."""
 
         toolbar = Menu(self)
 
         program_menu = Menu(toolbar, tearoff=0)
-        program_menu.add_command(label="Settings", command=lambda:webbrowser.open(self.asset_path + "/assets/settings.toml"))
+        program_menu.add_command(label="Settings", command=lambda:self.file(self.asset_path + "/assets/settings.toml"))
         program_menu.add_checkbutton(label="Pin window", command=self.pin, variable=self.pinned, onvalue=True, offvalue=False, accelerator="Placeholder")
         program_menu.add_separator()
         program_menu.add_command(label="Exit", command=lambda:window.destroy(), accelerator="Alt-F4")
