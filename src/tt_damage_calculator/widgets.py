@@ -176,6 +176,8 @@ class App(Tk):
         self.results = CalculationResults(self.column_0)
 
     def file(self, filepath):
+        """Open a specified file in its default app."""
+
         match platform.system():
             case "Windows":
                 os.startfile(filepath)
