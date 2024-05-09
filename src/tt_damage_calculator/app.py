@@ -35,7 +35,7 @@ def calc_dmg(*args):
 # Toggles
 tog_btns = Frame(window.column_0)
 org_btn = Button(tog_btns, text='Toggle Organic', font=('Arial', 11, 'normal'))
-lur_check = Checkbutton(tog_btns, text='Cog window.lure', variable=window.lure, onvalue=1, offvalue=0, font=('Arial', 11, 'normal'), command=calc_dmg)
+lur_check = Checkbutton(tog_btns, text='Cog lured', variable=window.lure, onvalue=1, offvalue=0, font=('Arial', 11, 'normal'), command=calc_dmg)
 clear_btn = Button(tog_btns, text='Reset damage', font=('Arial', 11, 'normal'))
 
 # The Gags
