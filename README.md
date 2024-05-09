@@ -51,8 +51,10 @@ brew install python-tk # MacOS
 There are guides on the [repository's wiki](https://github.com/Vhou-Atroph/TT-Damage-Calculator/wiki) for building the calculator:
 
 - [Building: Wheels (All Platforms)](https://github.com/Vhou-Atroph/TT-Damage-Calculator/wiki/Building:-Wheels-(All-Platforms))
+- [Building: Linux](https://github.com/Vhou-Atroph/TT-Damage-Calculator/wiki/Building:-Linux)
 - [Building: MacOS Executable](https://github.com/Vhou-Atroph/TT-Damage-Calculator/wiki/Building:-MacOS-Executable)
 - [Building: Windows Executable](https://github.com/Vhou-Atroph/TT-Damage-Calculator/wiki/Building:-Windows-Executable)
+- [Building: Github Actions](https://github.com/Vhou-Atroph/TT-Damage-Calculator/wiki/Building:-Github-Actions)
 
 ## Usage
 
