@@ -270,10 +270,6 @@ sos_drp.grid(column=0, row=2)
 
 # Geometry - Calculation History
 window.history.grid(column=0, row=0)
-window.history.label.grid(column=0, row=0)
-window.history.box.grid(column=0, row=1)
-window.history.clear_button.grid(column=0, row=2, pady=3)
-window.history.sos_button.grid(column=0, row=4, pady=3)
 
 # Geometry - Calculation Results
 window.results.grid(column=0, row=0)

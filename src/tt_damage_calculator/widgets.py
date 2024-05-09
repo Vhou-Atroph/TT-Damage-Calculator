@@ -65,6 +65,11 @@ class HistoryFrame(Frame):
         self.clear_button = Button(self, text="Clear History", command=self.box.clear)
         self.sos_button = Button(self, text="Show health and\nSOS cards")
 
+        self.label.grid(column=0, row=0)
+        self.box.grid(column=0, row=1)
+        self.clear_button.grid(column=0, row=2, pady=3)
+        self.sos_button.grid(column=0, row=4, pady=3)
+
 class GagFrame(Frame):
     """Class for the Gag Frame widget, a type of frame that automatically places itself in the gag calculator."""
 
