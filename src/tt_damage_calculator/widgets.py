@@ -3,7 +3,7 @@ TT-Damage-Calculator
 Copyright (C) 2022-2024 Vhou-Atroph
 """
 import os, pathlib, platform, sys
-from tkinter import IntVar, BooleanVar, DoubleVar, Tk, Frame, Label, Text, Button, Checkbutton, PhotoImage, Menu, NORMAL, DISABLED, WORD, END
+from tkinter import IntVar, BooleanVar, DoubleVar, StringVar, Tk, Frame, Label, Text, Button, Checkbutton, OptionMenu, PhotoImage, Menu, Toplevel, NORMAL, DISABLED, WORD, END
 
 from . import tt_damage_calculator
 
@@ -304,6 +304,38 @@ class HideableBottom():
         self.visible = tt_damage_calculator.toggleswap(self.visible)
         self.window.geometry('')
 
+class CustomGags(Toplevel):
+    """Class for the Custom Gags Toplevel widget."""
+
+    def __init__(self, window:Tk):
+        Toplevel.__init__(self, window)
+        self.window = window
+        self.track = StringVar()
+        self.track.set("Trap")
+        self.title = "Custom Gag Entry"
+        self.resizable(0, 0)
+        self.build_ui()
+
+    def add(self):
+        """Add a custom gag to the calculation."""
+
+        GagButton(self.window, None, None, tt_damage_calculator.Gag("Custom", "Custom " + self.track.get(), self.track.get(), 0, int(self.damage.get(1.0, END)))).press()
+
+    def build_ui(self):
+        """Builds the UI for the custom gags widget."""
+
+        self.damage_label = Label(self, text="Damage", font=('Arial', 11, 'normal'))
+        self.damage = Text(self, width=10, height=1, font=('Arial', 11, 'normal'))
+        self.gag_label = Label(self, text="Gag Track", font=('Arial', 11, 'normal'))
+        self.gag_dropdown = OptionMenu(self, self.track, *["Trap", "Sound", "Throw", "Squirt", "Drop"])
+        self.button = Button(self, text="Add to Calculation", font=('Arial', 11, 'normal'), command=self.add)
+
+        self.damage_label.grid(column=0, row=0, pady=3, padx=2)
+        self.damage.grid(column=1, row=0, pady=3, padx=2)
+        self.gag_label.grid(column=0, row=1, pady=3, padx=2)
+        self.gag_dropdown.grid(column=1, row=1, pady=3, padx=2)
+        self.button.grid(column=0, row=2, columnspan=2, pady=8, padx=25)
+
 class App(Tk):
     """Class for the gag calculator's full app."""
 
@@ -456,7 +488,7 @@ class App(Tk):
         calculations_menu.add_command(label="Snowball", command=lambda: self.add_nogroup("Snowball", 1))
         calculations_menu.add_separator()
         calculations_menu.add_checkbutton(label="Lock Status", variable=self.status_lock, onvalue=True, offvalue=False, accelerator=self.settings.keybinds.lock)
-        calculations_menu.add_command(label="Custom Gags", command=print("unimplemented!"))
+        calculations_menu.add_command(label="Custom Gags", command=lambda: CustomGags(self))
         toolbar.add_cascade(label="Calculations", menu=calculations_menu)
 
         self.configure(menu=toolbar)
