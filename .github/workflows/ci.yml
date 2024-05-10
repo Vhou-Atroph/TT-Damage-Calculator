@@ -137,6 +137,7 @@ jobs:
           python-version: '3.11'
       - name: Build executable
         run: |
+          brew install python-tk
           pip install pyinstaller
           cargo rustc --release -- -C link-arg=-undefined -C link-arg=dynamic_lookup
           mv ./target/release/libtt_damage_calculator.dylib ./src/tt_damage_calculator/tt_damage_calculator.so
