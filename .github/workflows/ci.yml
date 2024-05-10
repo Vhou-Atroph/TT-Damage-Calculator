@@ -66,6 +66,36 @@ jobs:
           name: wheels-windows-${{ matrix.platform.target }}
           path: dist
 
+  ubuntu-exe:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        target: [x86_64]
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          architecture: ${{ matrix.target }}
+      - name: Install requirements
+        run: |
+          sudo apt-get install python3-tk
+          pip install pyinstaller
+      - name: Build executable
+        run: |
+          cargo build --release
+          mv -n target/release/libtt_damage_calculator.so src/tt_damage_calculator/tt_damage_calculator.so
+          pyinstaller "Toontown Damage Calculator.spec"
+          cp -r -f src/tt_damage_calculator/assets dist
+          cp -f LICENSE dist/LICENSE
+      - name: Upload executable
+        uses: actions/upload-artifact@v4
+        with:
+          name: executable-ubuntu-x86_64
+          path: dist
 
   linux-wheel:
     runs-on: ubuntu-latest
