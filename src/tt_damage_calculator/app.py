@@ -18,8 +18,6 @@ from . import widgets
 # Window
 global window
 window = widgets.App()
-whole_cream_pie_img = PhotoImage(file=window.asset_path + "/assets/img/whole-cream-pie.png")
-window.iconphoto(True, whole_cream_pie_img)
 
 # Variables
 settings = tt_damage_calculator.Settings(window.asset_path + "/assets/settings.toml")
@@ -35,24 +33,7 @@ window.bind('<' + settings.keybinds.pin + '>', lambda par: [window.pinned.set(tt
 window.bind('<' + settings.keybinds.organic + '>', lambda par: [window.toggle_organic()])
 
 # Clear inputs function
-window.toggles.clear.configure(command=window.reset_calculation)
 window.bind('<' + settings.keybinds.reset + '>', lambda par: [window.reset_calculation()])
-
-# Geometry - Main Columns
-window.column_0.grid(column=0, row=0, padx=5)
-window.column_1.grid(column=1, row=0, padx=10)
-
-# Geometry - Toggles
-window.toggles.grid(column=0, row=1, pady=5)
-
-# Geometry - Gags
-window.gags.grid(column=0, row=2, pady=10)
-
-# Geometry - Calculation History
-window.history.grid(column=0, row=0)
-
-# Geometry - Calculation Results
-window.results.grid(column=0, row=0)
 
 ### Custom Gags ###
 global custom_track

@@ -38,7 +38,7 @@ class ToggleButtons(Frame):
         self.window = window
         self.organic = Button(self, text="Toggle Organic", font=('Arial', 11, 'normal'), command=self.window.toggle_organic)
         self.lure = Checkbutton(self, text='Cog lured', variable=self.window.lure, onvalue=1, offvalue=0, font=('Arial', 11, 'normal'), command=self.window.calculate)
-        self.clear = Button(self, text='Reset damage', font=('Arial', 11, 'normal'))
+        self.clear = Button(self, text='Reset damage', font=('Arial', 11, 'normal'), command=self.window.reset_calculation)
 
         self.organic.grid(column=1, row=0, padx=5)
         self.lure.grid(column=0, row=0, padx=5)
@@ -318,6 +318,7 @@ class App(Tk):
         self.make_vars()
         self.build_ui()
         self.toolbar()
+        self.iconphoto(True, self.gags.whole_cream_pie_image)
 
     def get_asset_path(self):
         """Gets the asset path for the program."""
@@ -404,6 +405,13 @@ class App(Tk):
         self.history = HistoryFrame(self, self.column_1)
 
         self.bottom = HideableBottom(self)
+
+        self.column_0.grid(column=0, row=0, padx=5)
+        self.column_1.grid(column=1, row=0, padx=10)
+        self.toggles.grid(column=0, row=1, pady=5)
+        self.gags.grid(column=0, row=2, pady=10)
+        self.history.grid(column=0, row=0)
+        self.results.grid(column=0, row=0)
 
     def file(self, filepath):
         """Open a specified file in its default app."""
