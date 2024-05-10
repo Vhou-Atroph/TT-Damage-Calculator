@@ -25,22 +25,6 @@ window.iconphoto(True, whole_cream_pie_img)
 settings = tt_damage_calculator.Settings(window.asset_path + "/assets/settings.toml")
 
 # The Gags
-# Squirt
-sqt_frame = Frame(window.gags)
-squirting_flower_img = PhotoImage(file=window.asset_path + '/assets/img/squirting-flower.png')
-squirting_flower = widgets.GagButton(window, sqt_frame, image=squirting_flower_img, gag=tt_damage_calculator.Gag("Gag", "Squirting Flower", "Squirt", 0, 4))
-water_glass_img = PhotoImage(file=window.asset_path + '/assets/img/glass-of-water.png')
-water_glass = widgets.GagButton(window, sqt_frame, image=water_glass_img, gag=tt_damage_calculator.Gag("Gag", "Glass of Water", "Squirt", 1, 8))
-squirt_gun_img = PhotoImage(file=window.asset_path + '/assets/img/squirt-gun.png')
-squirt_gun = widgets.GagButton(window, sqt_frame, image=squirt_gun_img, gag=tt_damage_calculator.Gag("Gag", "Squirt Gun", "Squirt", 2, 12))
-seltzer_bottle_img = PhotoImage(file=window.asset_path + '/assets/img/seltzer-bottle.png')
-seltzer_bottle = widgets.GagButton(window, sqt_frame, image=seltzer_bottle_img, gag=tt_damage_calculator.Gag("Gag", "Seltzer Bottle", "Squirt", 3, 21))
-fire_hose_img = PhotoImage(file=window.asset_path + '/assets/img/fire-hose.png')
-fire_hose = widgets.GagButton(window, sqt_frame, image=fire_hose_img, gag=tt_damage_calculator.Gag("Gag", "Fire Hose", "Squirt", 4, 30))
-storm_cloud_img = PhotoImage(file=window.asset_path + '/assets/img/storm-cloud.png')
-storm_cloud = widgets.GagButton(window, sqt_frame, image=storm_cloud_img, gag=tt_damage_calculator.Gag("Gag", "Storm Cloud", "Squirt", 5, 80))
-geyser_img = PhotoImage(file=window.asset_path + '/assets/img/geyser.png')
-geyser = widgets.GagButton(window, sqt_frame, image=geyser_img, gag=tt_damage_calculator.Gag("Gag", "Geyser", "Squirt", 6, 105))
 # Drop
 drp_frame = Frame(window.gags)
 flower_pot_img = PhotoImage(file=window.asset_path + '/assets/img/flower-pot.png')
@@ -59,7 +43,6 @@ toontanic_img = PhotoImage(file=window.asset_path + '/assets/img/toontanic.png')
 toontanic = widgets.GagButton(window, drp_frame, image=toontanic_img, gag=tt_damage_calculator.Gag("Gag", "Toontanic", "Drop", 6, 180))
 
 gag_btns=[
-  squirting_flower, water_glass, squirt_gun, seltzer_bottle, fire_hose, storm_cloud, geyser,
   flower_pot, sandbag, anvil, big_weight, safe, grand_piano, toontanic
   ]
 
@@ -96,7 +79,6 @@ window.toggles.grid(column=0, row=1, pady=5)
 
 # Geometry - Gags
 window.gags.grid(column=0, row=2, pady=10)
-sqt_frame.grid(column=0, row=3)
 drp_frame.grid(column=0, row=4)
 
 # Geometry - Calculation History

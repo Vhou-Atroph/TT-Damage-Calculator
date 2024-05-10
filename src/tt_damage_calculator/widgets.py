@@ -201,10 +201,27 @@ class Gags(Frame):
         self.wedding_cake_image = PhotoImage(file=self.window.asset_path + '/assets/img/wedding-cake.png')
         self.wedding_cake = GagButton(self.window, self.throw, image=self.wedding_cake_image, gag=tt_damage_calculator.Gag("Gag", "Wedding Cake", "Throw", 6, 120))
 
+        self.squirt = GagFrame(self, 3)
+        self.squirting_flower_image = PhotoImage(file=self.window.asset_path + '/assets/img/squirting-flower.png')
+        self.squirting_flower = GagButton(self.window, self.squirt, image=self.squirting_flower_image, gag=tt_damage_calculator.Gag("Gag", "Squirting Flower", "Squirt", 0, 4))
+        self.glass_of_water_image = PhotoImage(file=self.window.asset_path + '/assets/img/glass-of-water.png')
+        self.glass_of_water = GagButton(self.window, self.squirt, image=self.glass_of_water_image, gag=tt_damage_calculator.Gag("Gag", "Glass of Water", "Squirt", 1, 8))
+        self.squirt_gun_image = PhotoImage(file=self.window.asset_path + '/assets/img/squirt-gun.png')
+        self.squirt_gun = GagButton(self.window, self.squirt, image=self.squirt_gun_image, gag=tt_damage_calculator.Gag("Gag", "Squirt Gun", "Squirt", 2, 12))
+        self.seltzer_bottle_image = PhotoImage(file=self.window.asset_path + '/assets/img/seltzer-bottle.png')
+        self.seltzer_bottle = GagButton(self.window, self.squirt, image=self.seltzer_bottle_image, gag=tt_damage_calculator.Gag("Gag", "Seltzer Bottle", "Squirt", 3, 21))
+        self.firehose_image = PhotoImage(file=self.window.asset_path + '/assets/img/fire-hose.png')
+        self.firehose = GagButton(self.window, self.squirt, image=self.firehose_image, gag=tt_damage_calculator.Gag("Gag", "Fire Hose", "Squirt", 4, 30))
+        self.storm_cloud_image = PhotoImage(file=self.window.asset_path + '/assets/img/storm-cloud.png')
+        self.storm_cloud = GagButton(self.window, self.squirt, image=self.storm_cloud_image, gag=tt_damage_calculator.Gag("Gag", "Storm Cloud", "Squirt", 5, 80))
+        self.geyser_image = PhotoImage(file=self.window.asset_path + '/assets/img/geyser.png')
+        self.geyser = GagButton(self.window, self.squirt, image=self.geyser_image, gag=tt_damage_calculator.Gag("Gag", "Geyser", "Squirt", 6, 105))
+
         self.list= [
             self.banana_peel, self.rake, self.marbles, self.quicksand, self.trapdoor, self.tnt, self.railroad,
             self.bike_horn, self.whistle, self.bugle, self.aoogah, self.elephant_trunk, self.foghorn, self.opera,
-            self.cupcake, self.fruit_pie_slice, self.cream_pie_slice, self.whole_fruit_pie, self.whole_cream_pie, self.birthday_cake, self.wedding_cake
+            self.cupcake, self.fruit_pie_slice, self.cream_pie_slice, self.whole_fruit_pie, self.whole_cream_pie, self.birthday_cake, self.wedding_cake,
+            self.squirting_flower, self.glass_of_water, self.squirt_gun, self.seltzer_bottle, self.firehose, self.storm_cloud, self.geyser
             ]
 
 class CogHealth(Frame):
