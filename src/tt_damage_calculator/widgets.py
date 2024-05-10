@@ -2,6 +2,7 @@
 TT-Damage-Calculator
 Copyright (C) 2022-2024 Vhou-Atroph
 """
+
 import os, pathlib, platform, sys
 from tkinter import IntVar, BooleanVar, DoubleVar, StringVar, Tk, Frame, Label, Text, Button, Checkbutton, OptionMenu, PhotoImage, Menu, Toplevel, NORMAL, DISABLED, WORD, END
 
