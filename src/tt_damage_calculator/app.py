@@ -64,7 +64,7 @@ class GagButton(Button):
         return window.drop
       
   def press(self):
-    data = self.gag.button_press(organic.get())
+    data = self.gag.button_press(window.organic.get())
     self.list().append(data[0])
     window.history.box.add("Gag used: " + data[1] + " (" + str(data[0]) + ")\n")
     if self.gag.gtype == "Gag":
@@ -203,20 +203,14 @@ window.bind('<' + settings.keybinds.lock + '>', lambda par: [window.status_lock.
 window.bind('<' + settings.keybinds.pin + '>', lambda par: [window.pinned.set(tt_damage_calculator.toggleswap(window.pinned.get())), window.pin()])
 
 # Organic gag toggle
-def organic_toggle(*arg):
-  data = tt_damage_calculator.orgswap(organic.get())
-  organic.set(data[0])
-  window.results.update_org(organic.get())
-  for i in gag_btns:
-    i.configure(bg=data[2], activebackground=data[3])
-window.toggles.organic.configure(command=organic_toggle)
-window.bind('<' + settings.keybinds.organic + '>', organic_toggle)
+window.toggles.organic.configure(command=window.toggle_organic)
+window.bind('<' + settings.keybinds.organic + '>', lambda par: [window.toggle_organic()])
 
 # Clear inputs function
 def clear_inputs(*arg):
   window.history.box.add(tt_damage_calculator.CalculationResults(int(window.results.damage_counter.cget("text")), tt_damage_calculator.lvl_ind(int(window.results.damage_counter.cget("text"))), window.lure.get(), window.defense_buff.get(), window.defense_debuff.get()).build())
-  if organic.get():
-    organic_toggle()
+  if window.organic.get():
+    window.toggle_organic()
   window.reset_tracks()
   for i in gag_btns:
     i.configure(text='0')

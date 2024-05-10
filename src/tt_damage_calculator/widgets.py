@@ -180,6 +180,7 @@ class App(Tk):
     def make_vars(self):
         """Creates battle variables used in calculation. This will not reset the variables properly; use reset_vars() instead."""
 
+        self.organic = BooleanVar()
         self.lure = BooleanVar()
         self.defense_buff = DoubleVar()
         self.defense_debuff = DoubleVar()
@@ -190,6 +191,13 @@ class App(Tk):
         self.lure.set(False)
         self.defense_buff.set(0.0)
         self.defense_debuff.set(0.0)
+
+    def toggle_organic(self):
+        """Toggles the organic variable"""
+
+        self.organic.set(tt_damage_calculator.toggleswap(self.organic.get()))
+        self.results.update_org(self.organic.get())
+        #TODO: Recolor buttons
 
     def pin(self):
         """Pin or unpin the gag calculator depending on the 'pinned' variable."""

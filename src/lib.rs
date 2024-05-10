@@ -25,7 +25,6 @@ fn tt_damage_calculator(_: Python<'_>, m: &PyModule) -> PyResult<()> {
     // Settings
     m.add_class::<Settings>()?;
     m.add_function(wrap_pyfunction!(toggleswap, m)?)?;
-    m.add_function(wrap_pyfunction!(orgswap,m)?)?;
     m.add_function(wrap_pyfunction!(comp_data, m)?)?;
 
     Ok(())
