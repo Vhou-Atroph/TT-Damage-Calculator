@@ -316,8 +316,10 @@ class App(Tk):
         self.get_asset_path()
         self.reset_tracks()
         self.make_vars()
+        self.settings = tt_damage_calculator.Settings(self.asset_path + "/assets/settings.toml")
         self.build_ui()
         self.toolbar()
+        self.keybinds()
         self.iconphoto(True, self.gags.whole_cream_pie_image)
 
     def get_asset_path(self):
@@ -431,7 +433,7 @@ class App(Tk):
 
         program_menu = Menu(toolbar, tearoff=0)
         program_menu.add_command(label="Settings", command=lambda:self.file(self.asset_path + "/assets/settings.toml"))
-        program_menu.add_checkbutton(label="Pin window", command=self.pin, variable=self.pinned, onvalue=True, offvalue=False, accelerator="Placeholder")
+        program_menu.add_checkbutton(label="Pin window", command=self.pin, variable=self.pinned, onvalue=True, offvalue=False, accelerator=self.settings.keybinds.pin)
         program_menu.add_separator()
         program_menu.add_command(label="Exit", command=lambda:window.destroy(), accelerator="Alt-F4")
         toolbar.add_cascade(label="Program", menu=program_menu)
@@ -453,8 +455,19 @@ class App(Tk):
         calculations_menu.add_cascade(label="Cog Defense Down", menu=def_menu2)
         calculations_menu.add_command(label="Snowball", command=lambda: self.add_nogroup("Snowball", 1))
         calculations_menu.add_separator()
-        calculations_menu.add_checkbutton(label="Lock Status", variable=self.status_lock, onvalue=True, offvalue=False, accelerator="Placeholder")
+        calculations_menu.add_checkbutton(label="Lock Status", variable=self.status_lock, onvalue=True, offvalue=False, accelerator=self.settings.keybinds.lock)
         calculations_menu.add_command(label="Custom Gags", command=print("unimplemented!"))
         toolbar.add_cascade(label="Calculations", menu=calculations_menu)
 
         self.configure(menu=toolbar)
+
+    def keybinds(self):
+        """Creates the program's keybinds."""
+
+        self.bind('<' + self.settings.keybinds.defense + '>', lambda par: [self.defense_buff.set(tt_damage_calculator.advance_float([0.0,0.1,0.15,0.2,0.25], self.defense_buff.get())), self.calculate()])
+        self.bind('<' + self.settings.keybinds.negative_defense + '>', lambda par: [self.defense_debuff.set(tt_damage_calculator.advance_float([0.0,0.2,0.4,0.5,0.6], self.defense_debuff.get())), self.calculate()])
+        self.bind('<' + self.settings.keybinds.lure + '>', lambda par: [self.lure.set(tt_damage_calculator.toggleswap(self.lure.get())), self.calculate()])
+        self.bind('<' + self.settings.keybinds.lock + '>', lambda par: [self.status_lock.set(tt_damage_calculator.toggleswap(self.status_lock.get())), self.calculate()])
+        self.bind('<' + self.settings.keybinds.pin + '>', lambda par: [self.pinned.set(tt_damage_calculator.toggleswap(self.pinned.get())), self.pin()])
+        self.bind('<' + self.settings.keybinds.organic + '>', lambda par: [self.toggle_organic()])
+        self.bind('<' + self.settings.keybinds.reset + '>', lambda par: [self.reset_calculation()])

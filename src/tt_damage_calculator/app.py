@@ -19,22 +19,6 @@ from . import widgets
 global window
 window = widgets.App()
 
-# Variables
-settings = tt_damage_calculator.Settings(window.asset_path + "/assets/settings.toml")
-
-### Keybinds
-window.bind('<' + settings.keybinds.defense + '>', lambda par: [window.defense_buff.set(tt_damage_calculator.advance_float([0.0,0.1,0.15,0.2,0.25], window.defense_buff.get())), window.calculate()])
-window.bind('<' + settings.keybinds.negative_defense + '>', lambda par: [window.defense_debuff.set(tt_damage_calculator.advance_float([0.0,0.2,0.4,0.5,0.6], window.defense_debuff.get())), window.calculate()])
-window.bind('<' + settings.keybinds.lure + '>', lambda par: [window.lure.set(tt_damage_calculator.toggleswap(window.lure.get())), window.calculate()])
-window.bind('<' + settings.keybinds.lock + '>', lambda par: [window.status_lock.set(tt_damage_calculator.toggleswap(window.status_lock.get())), window.calculate()])
-window.bind('<' + settings.keybinds.pin + '>', lambda par: [window.pinned.set(tt_damage_calculator.toggleswap(window.pinned.get())), window.pin()])
-
-# Organic gag toggle
-window.bind('<' + settings.keybinds.organic + '>', lambda par: [window.toggle_organic()])
-
-# Clear inputs function
-window.bind('<' + settings.keybinds.reset + '>', lambda par: [window.reset_calculation()])
-
 ### Custom Gags ###
 global custom_track
 custom_track = StringVar()
