@@ -146,6 +146,50 @@ class GagButton(Button):
             self.configure(text=int(self.cget("text")) + 1)
         self.window.calculate()
 
+class Gags(Frame):
+    """Class for gag buttons and their frames."""
+
+    def __init__(self, window:Tk, parent:Frame):
+        Frame.__init__(self, parent)
+        self.window = window
+
+        self.trap = GagFrame(self, 0)
+        self.banana_peel_image = PhotoImage(file=self.window.asset_path + "/assets/img/banana-peel.png")
+        self.banana_peel = GagButton(self.window, self.trap, image=self.banana_peel_image, gag=tt_damage_calculator.Gag("Gag", "Banana Peel", "Trap", 0, 12))
+        self.rake_image = PhotoImage(file=self.window.asset_path + "/assets/img/rake.png")
+        self.rake = GagButton(self.window, self.trap, image=self.rake_image, gag=tt_damage_calculator.Gag("Gag", "Rake", "Trap", 1, 18))
+        self.marbles_image = PhotoImage(file=self.window.asset_path + "/assets/img/marbles.png")
+        self.marbles = GagButton(self.window, self.trap, image=self.marbles_image, gag=tt_damage_calculator.Gag("Gag", "Marbles", "Trap", 2, 35))
+        self.quicksand_image = PhotoImage(file=self.window.asset_path + "/assets/img/quicksand.png")
+        self.quicksand = GagButton(self.window, self.trap, image=self.quicksand_image, gag=tt_damage_calculator.Gag("Gag", "Quicksand", "Trap", 3, 50))
+        self.trapdoor_image = PhotoImage(file=self.window.asset_path + "/assets/img/trapdoor.png")
+        self.trapdoor = GagButton(self.window, self.trap, image=self.trapdoor_image, gag=tt_damage_calculator.Gag("Gag", "Trapdoor", "Trap", 4, 85))
+        self.tnt_image = PhotoImage(file=self.window.asset_path + "/assets/img/tnt.png")
+        self.tnt = GagButton(self.window, self.trap, image=self.tnt_image, gag=tt_damage_calculator.Gag("Gag", "TNT", "Trap", 5, 180))
+        self.railroad_image = PhotoImage(file=self.window.asset_path + "/assets/img/railroad.png")
+        self.railroad = GagButton(self.window, self.trap, image=self.railroad_image, gag=tt_damage_calculator.Gag("Gag", "Railroad", "Trap", 6, 200))
+
+        self.sound = GagFrame(self, 1)
+        self.bike_horn_image = PhotoImage(file=self.window.asset_path + "/assets/img/bike-horn.png")
+        self.bike_horn = GagButton(self.window, self.sound, image=self.bike_horn_image, gag=tt_damage_calculator.Gag("Gag", "Bike Horn", "Sound", 0, 4))
+        self.whistle_image = PhotoImage(file=self.window.asset_path + "/assets/img/whistle.png")
+        self.whistle = GagButton(self.window, self.sound, image=self.whistle_image, gag=tt_damage_calculator.Gag("Gag", "Whistle", "Sound", 1, 7))
+        self.bugle_image = PhotoImage(file=self.window.asset_path + "/assets/img/bugle.png")
+        self.bugle = GagButton(self.window, self.sound, image=self.bugle_image, gag=tt_damage_calculator.Gag("Gag", "Bugle", "Sound", 2, 11))
+        self.aoogah_image = PhotoImage(file=self.window.asset_path + "/assets/img/aoogah.png")
+        self.aoogah = GagButton(self.window, self.sound, image=self.aoogah_image, gag=tt_damage_calculator.Gag("Gag", "Aoogah", "Sound", 3, 16))
+        self.elephant_trunk_image = PhotoImage(file=self.window.asset_path + "/assets/img/elephant-trunk.png")
+        self.elephant_trunk = GagButton(self.window, self.sound, image=self.elephant_trunk_image, gag=tt_damage_calculator.Gag("Gag", "Elephant Trunk", "Sound", 4, 21))
+        self.foghorn_image = PhotoImage(file=self.window.asset_path + "/assets/img/fog-horn.png")
+        self.foghorn = GagButton(self.window, self.sound, image=self.foghorn_image, gag=tt_damage_calculator.Gag("Gag", "Fog Horn", "Sound", 5, 50))
+        self.opera_image = PhotoImage(file=self.window.asset_path + "/assets/img/opera-singer.png")
+        self.opera = GagButton(self.window, self.sound, image=self.opera_image, gag=tt_damage_calculator.Gag("Gag", "Opera Singer", "Sound", 6, 90))
+
+        self.list= [
+            self.banana_peel, self.rake, self.marbles, self.quicksand, self.trapdoor, self.tnt, self.railroad,
+            self.bike_horn, self.whistle, self.bugle, self.aoogah, self.elephant_trunk, self.foghorn, self.opera
+            ]
+
 class CogHealth(Frame):
     """Class for the Cog Health cheat sheet frame."""
 
@@ -261,7 +305,8 @@ class App(Tk):
 
         self.organic.set(tt_damage_calculator.toggleswap(self.organic.get()))
         self.results.update_org(self.organic.get())
-        #TODO: Recolor buttons
+        for i in self.gags.list:
+            i.recolor(self.organic.get())
 
     def add_nogroup(self, gag:str, damage:int):
         """Add gags that do not do group (or lure) bonus damage to the calculation."""
@@ -290,6 +335,7 @@ class App(Tk):
 
         self.results = CalculationResults(self.column_0)
         self.toggles = ToggleButtons(self, self.column_0)
+        self.gags = Gags(self, self.column_0)
 
         self.history = HistoryFrame(self, self.column_1)
 

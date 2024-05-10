@@ -25,25 +25,8 @@ window.iconphoto(True, whole_cream_pie_img)
 settings = tt_damage_calculator.Settings(window.asset_path + "/assets/settings.toml")
 
 # The Gags
-gag_frame = Frame(window.column_0)
-# Sound
-snd_frame = Frame(gag_frame)
-bike_horn_img = PhotoImage(file=window.asset_path + '/assets/img/bike-horn.png')
-bike_horn = widgets.GagButton(window, snd_frame, image=bike_horn_img, gag=tt_damage_calculator.Gag("Gag", "Bike Horn", "Sound", 0, 4))
-whistle_img = PhotoImage(file=window.asset_path + '/assets/img/whistle.png')
-whistle = widgets.GagButton(window, snd_frame, image=whistle_img, gag=tt_damage_calculator.Gag("Gag", "Whistle", "Sound", 1, 7))
-bugle_img = PhotoImage(file=window.asset_path + '/assets/img/bugle.png')
-bugle = widgets.GagButton(window, snd_frame, image=bugle_img, gag=tt_damage_calculator.Gag("Gag", "Bugle", "Sound", 2, 11))
-aoogah_img = PhotoImage(file=window.asset_path + '/assets/img/aoogah.png')
-aoogah = widgets.GagButton(window, snd_frame, image=aoogah_img, gag=tt_damage_calculator.Gag("Gag", "Aoogah", "Sound", 3, 16))
-elephant_trunk_img = PhotoImage(file=window.asset_path + '/assets/img/elephant-trunk.png')
-elephant_trunk = widgets.GagButton(window, snd_frame, image=elephant_trunk_img, gag=tt_damage_calculator.Gag("Gag", "Elephant Trunk", "Sound", 4, 21))
-fog_horn_img = PhotoImage(file=window.asset_path + '/assets/img/fog-horn.png')
-fog_horn = widgets.GagButton(window, snd_frame, image=fog_horn_img, gag=tt_damage_calculator.Gag("Gag", "Fog Horn", "Sound", 5, 50))
-opera_singer_img = PhotoImage(file=window.asset_path + '/assets/img/opera-singer.png')
-opera_singer = widgets.GagButton(window, snd_frame, image=opera_singer_img, gag=tt_damage_calculator.Gag("Gag", "Opera Singer", "Sound", 6, 90))
 # Throw
-trw_frame = Frame(gag_frame)
+trw_frame = Frame(window.gags)
 cupcake_img = PhotoImage(file=window.asset_path + '/assets/img/cupcake.png')
 cupcake = widgets.GagButton(window, trw_frame, image=cupcake_img, gag=tt_damage_calculator.Gag("Gag", "Cupcake", "Throw", 0, 6))
 fruit_pie_slice_img = PhotoImage(file=window.asset_path + '/assets/img/fruit-pie-slice.png')
@@ -58,7 +41,7 @@ birthday_cake = widgets.GagButton(window, trw_frame, image=birthday_cake_img, ga
 wedding_cake_img = PhotoImage(file=window.asset_path + '/assets/img/wedding-cake.png')
 wedding_cake = widgets.GagButton(window, trw_frame, image=wedding_cake_img, gag=tt_damage_calculator.Gag("Gag", "Wedding Cake", "Throw", 6, 120))
 # Squirt
-sqt_frame = Frame(gag_frame)
+sqt_frame = Frame(window.gags)
 squirting_flower_img = PhotoImage(file=window.asset_path + '/assets/img/squirting-flower.png')
 squirting_flower = widgets.GagButton(window, sqt_frame, image=squirting_flower_img, gag=tt_damage_calculator.Gag("Gag", "Squirting Flower", "Squirt", 0, 4))
 water_glass_img = PhotoImage(file=window.asset_path + '/assets/img/glass-of-water.png')
@@ -74,7 +57,7 @@ storm_cloud = widgets.GagButton(window, sqt_frame, image=storm_cloud_img, gag=tt
 geyser_img = PhotoImage(file=window.asset_path + '/assets/img/geyser.png')
 geyser = widgets.GagButton(window, sqt_frame, image=geyser_img, gag=tt_damage_calculator.Gag("Gag", "Geyser", "Squirt", 6, 105))
 # Drop
-drp_frame = Frame(gag_frame)
+drp_frame = Frame(window.gags)
 flower_pot_img = PhotoImage(file=window.asset_path + '/assets/img/flower-pot.png')
 flower_pot = widgets.GagButton(window, drp_frame, image=flower_pot_img, gag=tt_damage_calculator.Gag("Gag", "Flower Pot", "Drop", 0, 10))
 sandbag_img = PhotoImage(file=window.asset_path + '/assets/img/sandbag.png')
@@ -89,29 +72,11 @@ grand_piano_img = PhotoImage(file=window.asset_path + '/assets/img/grand-piano.p
 grand_piano = widgets.GagButton(window, drp_frame, image=grand_piano_img, gag=tt_damage_calculator.Gag("Gag", "Grand Piano", "Drop", 5, 170))
 toontanic_img = PhotoImage(file=window.asset_path + '/assets/img/toontanic.png')
 toontanic = widgets.GagButton(window, drp_frame, image=toontanic_img, gag=tt_damage_calculator.Gag("Gag", "Toontanic", "Drop", 6, 180))
-# Trap
-trp_frame = Frame(gag_frame)
-banana_peel_img = PhotoImage(file=window.asset_path + '/assets/img/banana-peel.png')
-banana_peel = widgets.GagButton(window, trp_frame, image=banana_peel_img, gag=tt_damage_calculator.Gag("Gag", "Banana Peel", "Trap", 0, 12))
-rake_img = PhotoImage(file=window.asset_path + '/assets/img/rake.png')
-rake = widgets.GagButton(window, trp_frame, image=rake_img, gag=tt_damage_calculator.Gag("Gag", "Rake", "Trap", 1, 18))
-marbles_img = PhotoImage(file=window.asset_path + '/assets/img/marbles.png')
-marbles = widgets.GagButton(window, trp_frame, image=marbles_img, gag=tt_damage_calculator.Gag("Gag", "Marbles", "Trap", 2, 35))
-quicksand_img = PhotoImage(file=window.asset_path + '/assets/img/quicksand.png')
-quicksand = widgets.GagButton(window, trp_frame, image=quicksand_img, gag=tt_damage_calculator.Gag("Gag", "Quicksand", "Trap", 3, 50))
-trapdoor_img = PhotoImage(file=window.asset_path + '/assets/img/trapdoor.png')
-trapdoor = widgets.GagButton(window, trp_frame, image=trapdoor_img, gag=tt_damage_calculator.Gag("Gag", "Trapdoor", "Trap", 4, 85))
-tnt_img = PhotoImage(file=window.asset_path + '/assets/img/tnt.png')
-tnt = widgets.GagButton(window, trp_frame, image=tnt_img, gag=tt_damage_calculator.Gag("Gag", "TNT", "Trap", 5, 180))
-railroad_img = PhotoImage(file=window.asset_path + '/assets/img/railroad.png')
-railroad = widgets.GagButton(window, trp_frame, image=railroad_img, gag=tt_damage_calculator.Gag("Gag", "Railroad", "Trap", 6, 200))
 
 gag_btns=[
-  bike_horn, whistle, bugle, aoogah, elephant_trunk, fog_horn, opera_singer,
   cupcake, fruit_pie_slice, cream_pie_slice, whole_fruit_pie, whole_cream_pie, birthday_cake, wedding_cake,
   squirting_flower, water_glass, squirt_gun, seltzer_bottle, fire_hose, storm_cloud, geyser,
-  flower_pot, sandbag, anvil, big_weight, safe, grand_piano, toontanic,
-  banana_peel, rake, marbles, quicksand, trapdoor, tnt, railroad
+  flower_pot, sandbag, anvil, big_weight, safe, grand_piano, toontanic
   ]
 
 ### Keybinds
@@ -146,12 +111,10 @@ window.column_1.grid(column=1, row=0, padx=10)
 window.toggles.grid(column=0, row=1, pady=5)
 
 # Geometry - Gags
-gag_frame.grid(column=0, row=2, pady=10)
-snd_frame.grid(column=0, row=1,)
+window.gags.grid(column=0, row=2, pady=10)
 trw_frame.grid(column=0, row=2)
 sqt_frame.grid(column=0, row=3)
 drp_frame.grid(column=0, row=4)
-trp_frame.grid(column=0, row=0)
 
 # Geometry - Calculation History
 window.history.grid(column=0, row=0)
