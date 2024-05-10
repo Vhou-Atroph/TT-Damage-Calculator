@@ -35,18 +35,8 @@ window.bind('<' + settings.keybinds.pin + '>', lambda par: [window.pinned.set(tt
 window.bind('<' + settings.keybinds.organic + '>', lambda par: [window.toggle_organic()])
 
 # Clear inputs function
-def clear_inputs(*arg):
-  window.history.box.add(tt_damage_calculator.CalculationResults(int(window.results.damage_counter.cget("text")), tt_damage_calculator.lvl_ind(int(window.results.damage_counter.cget("text"))), window.lure.get(), window.defense_buff.get(), window.defense_debuff.get()).build())
-  if window.organic.get():
-    window.toggle_organic()
-  window.reset_tracks()
-  for i in gag_btns:
-    i.configure(text='0')
-  if not window.status_lock.get():
-    window.reset_vars()
-  window.calculate()
-window.toggles.clear.configure(command=clear_inputs)
-window.bind('<' + settings.keybinds.reset + '>', clear_inputs)
+window.toggles.clear.configure(command=window.reset_calculation)
+window.bind('<' + settings.keybinds.reset + '>', lambda par: [window.reset_calculation()])
 
 # Geometry - Main Columns
 window.column_0.grid(column=0, row=0, padx=5)
