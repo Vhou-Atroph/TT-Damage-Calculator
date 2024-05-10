@@ -114,12 +114,6 @@ gag_btns=[
   banana_peel, rake, marbles, quicksand, trapdoor, tnt, railroad
   ]
 
-# Add groupless damaging gag
-def use_groupless(name:str, damage:int):
-  window.nogroup.set(window.nogroup.get() + damage)
-  window.history.box.add("Gag used: " + name + " (" + str(damage) + ")\n")
-  window.calculate()
-
 # Cog HP
 cog_health_sheet = Frame(window)
 cog_health_img = PhotoImage(file=window.asset_path + '/assets/img/coghp.png')

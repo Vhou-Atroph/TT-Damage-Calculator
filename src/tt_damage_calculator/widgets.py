@@ -199,6 +199,13 @@ class App(Tk):
         self.results.update_org(self.organic.get())
         #TODO: Recolor buttons
 
+    def add_nogroup(self, gag:str, damage:int):
+        """Add gags that do not do group (or lure) bonus damage to the calculation."""
+
+        self.nogroup.set(self.nogroup.get() + damage)
+        self.history.box.add("Gag used: " + gag + " (" + str(damage) + ")\n")
+        self.calculate()
+
     def calculate(self):
         """Updates the damage total according to the gags used during the current calculation."""
 
@@ -260,7 +267,7 @@ class App(Tk):
         def_menu2.add_radiobutton(label="-50%", value=0.5, variable=self.defense_debuff, command=self.calculate)
         def_menu2.add_radiobutton(label="-60%", value=0.6, variable=self.defense_debuff, command=self.calculate)
         calculations_menu.add_cascade(label="Cog Defense Down", menu=def_menu2)
-        calculations_menu.add_command(label="Snowball", command=lambda:(use_groupless("Snowball", 1)))
+        calculations_menu.add_command(label="Snowball", command=lambda: self.add_nogroup("Snowball", 1))
         calculations_menu.add_separator()
         calculations_menu.add_checkbutton(label="Lock Status", variable=self.status_lock, onvalue=True, offvalue=False, accelerator="Placeholder")
         calculations_menu.add_command(label="Custom Gags", command=print("unimplemented!"))
