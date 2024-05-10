@@ -99,7 +99,7 @@ class GagButton(Button):
         self.gag = gag
         Button.__init__(self, parent)
         self['image'] = image
-        self['command'] = lambda: self.press(output, orgstate.get())
+        self['command'] = lambda: self.press()
         if self.gag.gtype == "Gag":
             self['text'] = "0"
             self['font'] = ('Impress BT', 8, 'bold')
@@ -135,15 +135,15 @@ class GagButton(Button):
             case "Drop":
                 return self.window.drop
     
-    def press(self, output:HistoryBox, orgstate:bool):
+    def press(self):
         """Function to execute when Gag Button is pressed."""
 
-        gaginfo = self.gag.button_press(orgstate)
+        gaginfo = self.gag.button_press(self.window.organic.get())
         self.list().append(gaginfo[0])
-        output.add("Gag used: " + gaginfo[1] + " (" + str(gaginfo[0]) + ")\n")
+        self.window.history.box.add("Gag used: " + gaginfo[1] + " (" + str(gaginfo[0]) + ")\n")
         if self.gag.gtype == "Gag":
             self.configure(text=int(self.cget("text")) + 1)
-        #TODO: implement gag calculation here
+        self.window.calculate()
 
 class App(Tk):
     """Class for the gag calculator's full app."""
