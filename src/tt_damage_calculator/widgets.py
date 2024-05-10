@@ -217,11 +217,28 @@ class Gags(Frame):
         self.geyser_image = PhotoImage(file=self.window.asset_path + '/assets/img/geyser.png')
         self.geyser = GagButton(self.window, self.squirt, image=self.geyser_image, gag=tt_damage_calculator.Gag("Gag", "Geyser", "Squirt", 6, 105))
 
+        self.drop = GagFrame(self, 4)
+        self.flowerpot_image = PhotoImage(file=self.window.asset_path + '/assets/img/flower-pot.png')
+        self.flowerpot = GagButton(self.window, self.drop, image=self.flowerpot_image, gag=tt_damage_calculator.Gag("Gag", "Flower Pot", "Drop", 0, 10))
+        self.sandbag_image = PhotoImage(file=self.window.asset_path + '/assets/img/sandbag.png')
+        self.sandbag = GagButton(self.window, self.drop, image=self.sandbag_image, gag=tt_damage_calculator.Gag("Gag", "Sandbag", "Drop", 1, 18))
+        self.anvil_image = PhotoImage(file=self.window.asset_path + '/assets/img/anvil.png')
+        self.anvil = GagButton(self.window, self.drop, image=self.anvil_image, gag=tt_damage_calculator.Gag("Gag", "Anvil", "Drop", 2, 30))
+        self.big_weight_image = PhotoImage(file=self.window.asset_path + '/assets/img/big-weight.png')
+        self.big_weight = GagButton(self.window, self.drop, image=self.big_weight_image, gag=tt_damage_calculator.Gag("Gag", "Big Weight", "Drop", 3, 45))
+        self.safe_image = PhotoImage(file=self.window.asset_path + '/assets/img/safe.png')
+        self.safe = GagButton(self.window, self.drop, image=self.safe_image, gag=tt_damage_calculator.Gag("Gag", "Safe", "Drop", 4, 70))
+        self.grand_piano_image = PhotoImage(file=self.window.asset_path + '/assets/img/grand-piano.png')
+        self.grand_piano = GagButton(self.window, self.drop, image=self.grand_piano_image, gag=tt_damage_calculator.Gag("Gag", "Grand Piano", "Drop", 5, 170))
+        self.toontanic_image = PhotoImage(file=self.window.asset_path + '/assets/img/toontanic.png')
+        self.toontanic = GagButton(self.window, self.drop, image=self.toontanic_image, gag=tt_damage_calculator.Gag("Gag", "Toontanic", "Drop", 6, 180))
+
         self.list= [
             self.banana_peel, self.rake, self.marbles, self.quicksand, self.trapdoor, self.tnt, self.railroad,
             self.bike_horn, self.whistle, self.bugle, self.aoogah, self.elephant_trunk, self.foghorn, self.opera,
             self.cupcake, self.fruit_pie_slice, self.cream_pie_slice, self.whole_fruit_pie, self.whole_cream_pie, self.birthday_cake, self.wedding_cake,
-            self.squirting_flower, self.glass_of_water, self.squirt_gun, self.seltzer_bottle, self.firehose, self.storm_cloud, self.geyser
+            self.squirting_flower, self.glass_of_water, self.squirt_gun, self.seltzer_bottle, self.firehose, self.storm_cloud, self.geyser,
+            self.flowerpot, self.sandbag, self.anvil, self.big_weight, self.safe, self.grand_piano, self.toontanic
             ]
 
 class CogHealth(Frame):

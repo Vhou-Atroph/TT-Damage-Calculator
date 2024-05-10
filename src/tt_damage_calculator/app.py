@@ -24,28 +24,6 @@ window.iconphoto(True, whole_cream_pie_img)
 # Variables
 settings = tt_damage_calculator.Settings(window.asset_path + "/assets/settings.toml")
 
-# The Gags
-# Drop
-drp_frame = Frame(window.gags)
-flower_pot_img = PhotoImage(file=window.asset_path + '/assets/img/flower-pot.png')
-flower_pot = widgets.GagButton(window, drp_frame, image=flower_pot_img, gag=tt_damage_calculator.Gag("Gag", "Flower Pot", "Drop", 0, 10))
-sandbag_img = PhotoImage(file=window.asset_path + '/assets/img/sandbag.png')
-sandbag = widgets.GagButton(window, drp_frame, image=sandbag_img, gag=tt_damage_calculator.Gag("Gag", "Sandbag", "Drop", 1, 18))
-anvil_img = PhotoImage(file=window.asset_path + '/assets/img/anvil.png')
-anvil = widgets.GagButton(window, drp_frame, image=anvil_img, gag=tt_damage_calculator.Gag("Gag", "Anvil", "Drop", 2, 30))
-big_weight_img = PhotoImage(file=window.asset_path + '/assets/img/big-weight.png')
-big_weight = widgets.GagButton(window, drp_frame, image=big_weight_img, gag=tt_damage_calculator.Gag("Gag", "Big Weight", "Drop", 3, 45))
-safe_img = PhotoImage(file=window.asset_path + '/assets/img/safe.png')
-safe = widgets.GagButton(window, drp_frame, image=safe_img, gag=tt_damage_calculator.Gag("Gag", "Safe", "Drop", 4, 70))
-grand_piano_img = PhotoImage(file=window.asset_path + '/assets/img/grand-piano.png')
-grand_piano = widgets.GagButton(window, drp_frame, image=grand_piano_img, gag=tt_damage_calculator.Gag("Gag", "Grand Piano", "Drop", 5, 170))
-toontanic_img = PhotoImage(file=window.asset_path + '/assets/img/toontanic.png')
-toontanic = widgets.GagButton(window, drp_frame, image=toontanic_img, gag=tt_damage_calculator.Gag("Gag", "Toontanic", "Drop", 6, 180))
-
-gag_btns=[
-  flower_pot, sandbag, anvil, big_weight, safe, grand_piano, toontanic
-  ]
-
 ### Keybinds
 window.bind('<' + settings.keybinds.defense + '>', lambda par: [window.defense_buff.set(tt_damage_calculator.advance_float([0.0,0.1,0.15,0.2,0.25], window.defense_buff.get())), window.calculate()])
 window.bind('<' + settings.keybinds.negative_defense + '>', lambda par: [window.defense_debuff.set(tt_damage_calculator.advance_float([0.0,0.2,0.4,0.5,0.6], window.defense_debuff.get())), window.calculate()])
@@ -79,7 +57,6 @@ window.toggles.grid(column=0, row=1, pady=5)
 
 # Geometry - Gags
 window.gags.grid(column=0, row=2, pady=10)
-drp_frame.grid(column=0, row=4)
 
 # Geometry - Calculation History
 window.history.grid(column=0, row=0)
