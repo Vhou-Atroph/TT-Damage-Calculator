@@ -145,6 +145,46 @@ class GagButton(Button):
             self.configure(text=int(self.cget("text")) + 1)
         self.window.calculate()
 
+class CogHealth(Frame):
+    """Class for the Cog Health cheat sheet frame."""
+
+    def __init__(self, window:Tk):
+        Frame.__init__(self, window)
+        self.image = PhotoImage(file=window.asset_path + '/assets/img/coghp.png')
+        self.label = Label(self, image=self.image)
+
+        self.label.grid(column=0, row=0)
+
+class SosCards(Frame):
+    """Class for the SOS cards frame."""
+
+    def __init__(self, window:Tk):
+        Frame.__init__(self, window)
+
+        self.trap = GagFrame(self, 0)
+        self.clerk_will_image = PhotoImage(file=window.asset_path + '/assets/img/clerkwill.png')
+        self.clerk_will = GagButton(window, self.trap, image=self.clerk_will_image, gag=tt_damage_calculator.Gag("Sos", "Clerk Will", "Trap", 0, 60))
+        self.clerk_penny_image = PhotoImage(file=window.asset_path + '/assets/img/clerkpenny.png')
+        self.clerk_penny = GagButton(window, self.trap, image=self.clerk_penny_image, gag=tt_damage_calculator.Gag("Sos", "Clerk Penny", "Trap", 1, 120))
+        self.clerk_clara_image = PhotoImage(file=window.asset_path + '/assets/img/clerkclara.png')
+        self.clerk_clara = GagButton(window, self.trap, image=self.clerk_clara_image, gag=tt_damage_calculator.Gag("Sos", "Clerk Clara", "Trap", 2, 180))
+
+        self.sound = GagFrame(self, 1)
+        self.barbara_seville_image = PhotoImage(file=window.asset_path + '/assets/img/barbaraseville.png')
+        self.barbara_seville = GagButton(window, self.sound ,image=self.barbara_seville_image, gag=tt_damage_calculator.Gag("Sos", "Barbara Seville", "Sound", 0, 35))
+        self.sid_sonata_image = PhotoImage(file=window.asset_path + '/assets/img/sidsonata.png')
+        self.sid_sonata = GagButton(window, self.sound, image=self.sid_sonata_image, gag=tt_damage_calculator.Gag("Sos", "Sid Sonata", "Sound", 1, 55))
+        self.moe_zart_image = PhotoImage(file=window.asset_path + '/assets/img/moezart.png')
+        self.moe_zart = GagButton(window, self.sound, image=self.moe_zart_image, gag=tt_damage_calculator.Gag("Sos", "Moe Zart", "Sound", 2, 75))
+
+        self.drop = GagFrame(self, 2)
+        self.clumsy_ned_image = PhotoImage(file=window.asset_path + '/assets/img/clumsyned.png')
+        self.clumsy_ned = GagButton(window, self.drop, image=self.clumsy_ned_image, gag=tt_damage_calculator.Gag("Sos", "Clumsy Ned", "Drop", 0, 60))
+        self.franz_neckvein_img = PhotoImage(file=window.asset_path + '/assets/img/franzneckvein.png')
+        self.franz_neckvein = GagButton(window, self.drop, image=self.franz_neckvein_img, gag=tt_damage_calculator.Gag("Sos", "Franz Neckvein", "Drop", 1, 100))
+        self.barnacle_bessie_image = PhotoImage(file=window.asset_path + '/assets/img/barnaclebessie.png')
+        self.barnacle_bessie = GagButton(window, self.drop, image=self.barnacle_bessie_image, gag=tt_damage_calculator.Gag("Sos", "Barnacle Bessie", "Drop", 2, 170))
+
 class App(Tk):
     """Class for the gag calculator's full app."""
 
@@ -228,6 +268,9 @@ class App(Tk):
         self.toggles = ToggleButtons(self, self.column_0)
 
         self.history = HistoryFrame(self.column_1)
+
+        self.coghp = CogHealth(self)
+        self.sos = SosCards(self)
 
     def file(self, filepath):
         """Open a specified file in its default app."""

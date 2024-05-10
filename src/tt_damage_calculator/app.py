@@ -114,35 +114,6 @@ gag_btns=[
   banana_peel, rake, marbles, quicksand, trapdoor, tnt, railroad
   ]
 
-# Cog HP
-cog_health_sheet = Frame(window)
-cog_health_img = PhotoImage(file=window.asset_path + '/assets/img/coghp.png')
-cog_health_lbl = Label(cog_health_sheet, image=cog_health_img)
-
-# SOS Cards
-sos_cards = Frame(window)
-sos_trp = Frame(sos_cards)
-clerk_will_img = PhotoImage(file=window.asset_path + '/assets/img/clerkwill.png')
-clerk_will = widgets.GagButton(window, sos_trp,image=clerk_will_img, gag=tt_damage_calculator.Gag("Sos", "Clerk Will", "Trap", 0, 60))
-clerk_penny_img = PhotoImage(file=window.asset_path + '/assets/img/clerkpenny.png')
-clerk_penny = widgets.GagButton(window, sos_trp,image=clerk_penny_img, gag=tt_damage_calculator.Gag("Sos", "Clerk Penny", "Trap", 1, 120))
-clerk_clara_img = PhotoImage(file=window.asset_path + '/assets/img/clerkclara.png')
-clerk_clara = widgets.GagButton(window, sos_trp,image=clerk_clara_img, gag=tt_damage_calculator.Gag("Sos", "Clerk Clara", "Trap", 2, 180))
-sos_snd = Frame(sos_cards)
-barb_img = PhotoImage(file=window.asset_path + '/assets/img/barbaraseville.png')
-barb = widgets.GagButton(window, sos_snd,image=barb_img, gag=tt_damage_calculator.Gag("Sos", "Barbara Seville", "Sound", 0, 35))
-sid_img = PhotoImage(file=window.asset_path + '/assets/img/sidsonata.png')
-sid = widgets.GagButton(window, sos_snd,image=sid_img, gag=tt_damage_calculator.Gag("Sos", "Sid Sonata", "Sound", 1, 55))
-moe_img = PhotoImage(file=window.asset_path + '/assets/img/moezart.png')
-moe = widgets.GagButton(window, sos_snd,image=moe_img, gag=tt_damage_calculator.Gag("Sos", "Moe Zart", "Sound", 2, 75))
-sos_drp = Frame(sos_cards)
-ned_img = PhotoImage(file=window.asset_path + '/assets/img/clumsyned.png')
-ned = widgets.GagButton(window, sos_drp,image=ned_img, gag=tt_damage_calculator.Gag("Sos", "Clumsy Ned", "Drop", 0, 60))
-franz_img = PhotoImage(file=window.asset_path + '/assets/img/franzneckvein.png')
-franz = widgets.GagButton(window, sos_drp,image=franz_img, gag=tt_damage_calculator.Gag("Sos", "Franz Neckvein", "Drop", 1, 100))
-bess_img = PhotoImage(file=window.asset_path + '/assets/img/barnaclebessie.png')
-bess = widgets.GagButton(window, sos_drp,image=bess_img, gag=tt_damage_calculator.Gag("Sos", "Barnacle Bessie", "Drop", 2, 170))
-
 ### Keybinds
 window.bind('<' + settings.keybinds.defense + '>', lambda par: [window.defense_buff.set(tt_damage_calculator.advance_float([0.0,0.1,0.15,0.2,0.25], window.defense_buff.get())), window.calculate()])
 window.bind('<' + settings.keybinds.negative_defense + '>', lambda par: [window.defense_debuff.set(tt_damage_calculator.advance_float([0.0,0.2,0.4,0.5,0.6], window.defense_debuff.get())), window.calculate()])
@@ -169,15 +140,14 @@ window.bind('<' + settings.keybinds.reset + '>', clear_inputs)
 
 # Cog HP Cheatsheet Function
 def cog_health_calc_hide():
-  cog_health_sheet.grid_remove()
-  sos_cards.grid_remove()
+  window.coghp.grid_remove()
+  window.sos.grid_remove()
   window.geometry('')
   window.history.sos_button.configure(text='Show Health and\n SOS Cards', command=cog_health_calc_show)
 
 def cog_health_calc_show():
-  cog_health_sheet.grid(column=0, row=3)
-  cog_health_lbl.grid(column=0, row=0)
-  sos_cards.grid(column=1, row=3)
+  window.coghp.grid(column=0, row=3)
+  window.sos.grid(column=1, row=3)
   window.history.sos_button.configure(text='Hide Health and\n SOS Cards', command=cog_health_calc_hide)
   window.geometry('')
 window.history.sos_button.configure(command=cog_health_calc_show)
@@ -196,9 +166,6 @@ trw_frame.grid(column=0, row=2)
 sqt_frame.grid(column=0, row=3)
 drp_frame.grid(column=0, row=4)
 trp_frame.grid(column=0, row=0)
-sos_trp.grid(column=0, row=0)
-sos_snd.grid(column=0, row=1)
-sos_drp.grid(column=0, row=2)
 
 # Geometry - Calculation History
 window.history.grid(column=0, row=0)
