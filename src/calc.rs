@@ -163,7 +163,7 @@ impl CalculationResults {
     /// Builds the calculation history string
     pub fn build(&self) -> String {
         format!(
-            "--------\nDamage this round:{}\nWill kill: Level {} cogs\nLured: {}\n{}\n",
+            "--------\nDamage this round: {}\nWill kill: Level {} cogs\nLured: {}\n{}\n",
             self.dmg, self.lvl, self.lured, self.give_defense())
     }
 
