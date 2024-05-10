@@ -25,21 +25,6 @@ window.iconphoto(True, whole_cream_pie_img)
 settings = tt_damage_calculator.Settings(window.asset_path + "/assets/settings.toml")
 
 # The Gags
-# Throw
-trw_frame = Frame(window.gags)
-cupcake_img = PhotoImage(file=window.asset_path + '/assets/img/cupcake.png')
-cupcake = widgets.GagButton(window, trw_frame, image=cupcake_img, gag=tt_damage_calculator.Gag("Gag", "Cupcake", "Throw", 0, 6))
-fruit_pie_slice_img = PhotoImage(file=window.asset_path + '/assets/img/fruit-pie-slice.png')
-fruit_pie_slice = widgets.GagButton(window, trw_frame, image=fruit_pie_slice_img, gag=tt_damage_calculator.Gag("Gag", "Fruit Pie Slice", "Throw", 1, 10))
-cream_pie_slice_img = PhotoImage(file=window.asset_path + '/assets/img/cream-pie-slice.png')
-cream_pie_slice = widgets.GagButton(window, trw_frame, image=cream_pie_slice_img, gag=tt_damage_calculator.Gag("Gag", "Cream Pie Slice", "Throw", 2, 17))
-whole_fruit_pie_img = PhotoImage(file=window.asset_path + '/assets/img/whole-fruit-pie.png')
-whole_fruit_pie = widgets.GagButton(window, trw_frame, image=whole_fruit_pie_img, gag=tt_damage_calculator.Gag("Gag", "Whole Fruit Pie", "Throw", 3, 27))
-whole_cream_pie = widgets.GagButton(window, trw_frame, image=whole_cream_pie_img, gag=tt_damage_calculator.Gag("Gag", "Whole Cream Pie", "Throw", 4, 40))
-birthday_cake_img = PhotoImage(file=window.asset_path + '/assets/img/birthday-cake.png')
-birthday_cake = widgets.GagButton(window, trw_frame, image=birthday_cake_img, gag=tt_damage_calculator.Gag("Gag", "Birthday Cake", "Throw", 5, 100))
-wedding_cake_img = PhotoImage(file=window.asset_path + '/assets/img/wedding-cake.png')
-wedding_cake = widgets.GagButton(window, trw_frame, image=wedding_cake_img, gag=tt_damage_calculator.Gag("Gag", "Wedding Cake", "Throw", 6, 120))
 # Squirt
 sqt_frame = Frame(window.gags)
 squirting_flower_img = PhotoImage(file=window.asset_path + '/assets/img/squirting-flower.png')
@@ -74,7 +59,6 @@ toontanic_img = PhotoImage(file=window.asset_path + '/assets/img/toontanic.png')
 toontanic = widgets.GagButton(window, drp_frame, image=toontanic_img, gag=tt_damage_calculator.Gag("Gag", "Toontanic", "Drop", 6, 180))
 
 gag_btns=[
-  cupcake, fruit_pie_slice, cream_pie_slice, whole_fruit_pie, whole_cream_pie, birthday_cake, wedding_cake,
   squirting_flower, water_glass, squirt_gun, seltzer_bottle, fire_hose, storm_cloud, geyser,
   flower_pot, sandbag, anvil, big_weight, safe, grand_piano, toontanic
   ]
@@ -112,7 +96,6 @@ window.toggles.grid(column=0, row=1, pady=5)
 
 # Geometry - Gags
 window.gags.grid(column=0, row=2, pady=10)
-trw_frame.grid(column=0, row=2)
 sqt_frame.grid(column=0, row=3)
 drp_frame.grid(column=0, row=4)
 

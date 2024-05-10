@@ -185,9 +185,26 @@ class Gags(Frame):
         self.opera_image = PhotoImage(file=self.window.asset_path + "/assets/img/opera-singer.png")
         self.opera = GagButton(self.window, self.sound, image=self.opera_image, gag=tt_damage_calculator.Gag("Gag", "Opera Singer", "Sound", 6, 90))
 
+        self.throw = GagFrame(self, 2)
+        self.cupcake_image = PhotoImage(file=self.window.asset_path + '/assets/img/cupcake.png')
+        self.cupcake = GagButton(self.window, self.throw, image=self.cupcake_image, gag=tt_damage_calculator.Gag("Gag", "Cupcake", "Throw", 0, 6))
+        self.fruit_pie_slice_image = PhotoImage(file=self.window.asset_path + '/assets/img/fruit-pie-slice.png')
+        self.fruit_pie_slice = GagButton(self.window, self.throw, image=self.fruit_pie_slice_image, gag=tt_damage_calculator.Gag("Gag", "Fruit Pie Slice", "Throw", 1, 10))
+        self.cream_pie_slice_image = PhotoImage(file=self.window.asset_path + '/assets/img/cream-pie-slice.png')
+        self.cream_pie_slice = GagButton(self.window, self.throw, image=self.cream_pie_slice_image, gag=tt_damage_calculator.Gag("Gag", "Cream Pie Slice", "Throw", 2, 17))
+        self.whole_fruit_pie_image = PhotoImage(file=self.window.asset_path + '/assets/img/whole-fruit-pie.png')
+        self.whole_fruit_pie = GagButton(self.window, self.throw, image=self.whole_fruit_pie_image, gag=tt_damage_calculator.Gag("Gag", "Whole Fruit Pie", "Throw", 3, 27))
+        self.whole_cream_pie_image = PhotoImage(file=self.window.asset_path + '/assets/img/whole-cream-pie.png')
+        self.whole_cream_pie = GagButton(self.window, self.throw, image=self.whole_cream_pie_image, gag=tt_damage_calculator.Gag("Gag", "Whole Cream Pie", "Throw", 4, 40))
+        self.birthday_cake_image = PhotoImage(file=self.window.asset_path + '/assets/img/birthday-cake.png')
+        self.birthday_cake = GagButton(self.window, self.throw, image=self.birthday_cake_image, gag=tt_damage_calculator.Gag("Gag", "Birthday Cake", "Throw", 5, 100))
+        self.wedding_cake_image = PhotoImage(file=self.window.asset_path + '/assets/img/wedding-cake.png')
+        self.wedding_cake = GagButton(self.window, self.throw, image=self.wedding_cake_image, gag=tt_damage_calculator.Gag("Gag", "Wedding Cake", "Throw", 6, 120))
+
         self.list= [
             self.banana_peel, self.rake, self.marbles, self.quicksand, self.trapdoor, self.tnt, self.railroad,
-            self.bike_horn, self.whistle, self.bugle, self.aoogah, self.elephant_trunk, self.foghorn, self.opera
+            self.bike_horn, self.whistle, self.bugle, self.aoogah, self.elephant_trunk, self.foghorn, self.opera,
+            self.cupcake, self.fruit_pie_slice, self.cream_pie_slice, self.whole_fruit_pie, self.whole_cream_pie, self.birthday_cake, self.wedding_cake
             ]
 
 class CogHealth(Frame):
