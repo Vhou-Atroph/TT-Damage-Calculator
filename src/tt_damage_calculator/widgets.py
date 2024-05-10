@@ -314,6 +314,7 @@ class CustomGags(Toplevel):
         self.track.set("Trap")
         self.title = "Custom Gag Entry"
         self.resizable(0, 0)
+        self.wm_transient(self.window)
         self.build_ui()
 
     def add(self):
@@ -329,7 +330,6 @@ class CustomGags(Toplevel):
         self.gag_label = Label(self, text="Gag Track", font=('Arial', 11, 'normal'))
         self.gag_dropdown = OptionMenu(self, self.track, *["Trap", "Sound", "Throw", "Squirt", "Drop"])
         self.button = Button(self, text="Add to Calculation", font=('Arial', 11, 'normal'), command=self.add)
-
         self.damage_label.grid(column=0, row=0, pady=3, padx=2)
         self.damage.grid(column=1, row=0, pady=3, padx=2)
         self.gag_label.grid(column=0, row=1, pady=3, padx=2)
@@ -447,6 +447,11 @@ class App(Tk):
         self.history.grid(column=0, row=0)
         self.results.grid(column=0, row=0)
 
+    def custom_gags(self):
+        """Opens the custom gags toplevel."""
+
+        self.custom_gags_widget = CustomGags(self)
+
     def file(self, filepath):
         """Open a specified file in its default app."""
 
@@ -488,7 +493,7 @@ class App(Tk):
         calculations_menu.add_command(label="Snowball", command=lambda: self.add_nogroup("Snowball", 1))
         calculations_menu.add_separator()
         calculations_menu.add_checkbutton(label="Lock Status", variable=self.status_lock, onvalue=True, offvalue=False, accelerator=self.settings.keybinds.lock)
-        calculations_menu.add_command(label="Custom Gags", command=lambda: CustomGags(self))
+        calculations_menu.add_command(label="Custom Gags", command=lambda: self.custom_gags())
         toolbar.add_cascade(label="Calculations", menu=calculations_menu)
 
         self.configure(menu=toolbar)
