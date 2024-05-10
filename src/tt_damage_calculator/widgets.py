@@ -36,7 +36,7 @@ class ToggleButtons(Frame):
     def __init__(self, window:Tk, parent:Frame):
         Frame.__init__(self, parent)
         self.window = window
-        self.organic = Button(self, text="Toggle Organic", font=('Arial', 11, 'normal'))
+        self.organic = Button(self, text="Toggle Organic", font=('Arial', 11, 'normal'), command=self.window.toggle_organic)
         self.lure = Checkbutton(self, text='Cog lured', variable=self.window.lure, onvalue=1, offvalue=0, font=('Arial', 11, 'normal'), command=print("unimplemented!"))
         self.clear = Button(self, text='Reset damage', font=('Arial', 11, 'normal'))
 
@@ -77,7 +77,7 @@ class HistoryFrame(Frame):
         self.label = Label(self, text="History")
         self.box = HistoryBox(self)
         self.clear_button = Button(self, text="Clear History", command=self.box.clear)
-        self.sos_button = Button(self, text="Show health and\nSOS cards")
+        self.sos_button = Button(self, text="Show health and\nSOS cards", command=print("unimplemented!"))
 
         self.label.grid(column=0, row=0)
         self.box.grid(column=0, row=1)

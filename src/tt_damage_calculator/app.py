@@ -203,7 +203,6 @@ window.bind('<' + settings.keybinds.lock + '>', lambda par: [window.status_lock.
 window.bind('<' + settings.keybinds.pin + '>', lambda par: [window.pinned.set(tt_damage_calculator.toggleswap(window.pinned.get())), window.pin()])
 
 # Organic gag toggle
-window.toggles.organic.configure(command=window.toggle_organic)
 window.bind('<' + settings.keybinds.organic + '>', lambda par: [window.toggle_organic()])
 
 # Clear inputs function
