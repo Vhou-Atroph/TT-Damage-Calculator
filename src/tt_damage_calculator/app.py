@@ -138,20 +138,6 @@ def clear_inputs(*arg):
 window.toggles.clear.configure(command=clear_inputs)
 window.bind('<' + settings.keybinds.reset + '>', clear_inputs)
 
-# Cog HP Cheatsheet Function
-def cog_health_calc_hide():
-  window.coghp.grid_remove()
-  window.sos.grid_remove()
-  window.geometry('')
-  window.history.sos_button.configure(text='Show Health and\n SOS Cards', command=cog_health_calc_show)
-
-def cog_health_calc_show():
-  window.coghp.grid(column=0, row=3)
-  window.sos.grid(column=1, row=3)
-  window.history.sos_button.configure(text='Hide Health and\n SOS Cards', command=cog_health_calc_hide)
-  window.geometry('')
-window.history.sos_button.configure(command=cog_health_calc_show)
-
 # Geometry - Main Columns
 window.column_0.grid(column=0, row=0, padx=5)
 window.column_1.grid(column=1, row=0, padx=10)

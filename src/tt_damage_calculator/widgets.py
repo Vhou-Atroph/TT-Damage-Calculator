@@ -37,7 +37,7 @@ class ToggleButtons(Frame):
         Frame.__init__(self, parent)
         self.window = window
         self.organic = Button(self, text="Toggle Organic", font=('Arial', 11, 'normal'), command=self.window.toggle_organic)
-        self.lure = Checkbutton(self, text='Cog lured', variable=self.window.lure, onvalue=1, offvalue=0, font=('Arial', 11, 'normal'), command=window.calculate)
+        self.lure = Checkbutton(self, text='Cog lured', variable=self.window.lure, onvalue=1, offvalue=0, font=('Arial', 11, 'normal'), command=self.window.calculate)
         self.clear = Button(self, text='Reset damage', font=('Arial', 11, 'normal'))
 
         self.organic.grid(column=1, row=0, padx=5)
@@ -72,12 +72,13 @@ class HistoryBox(Text):
 class HistoryFrame(Frame):
     """Class for the History Frame widget, a frame that contains the calculator's history box, and toggle for cog health and SOS cards."""
 
-    def __init__(self, parent:Frame):
+    def __init__(self, window:Tk, parent:Frame):
         Frame.__init__(self, parent)
+        self.window = window
         self.label = Label(self, text="History")
         self.box = HistoryBox(self)
         self.clear_button = Button(self, text="Clear History", command=self.box.clear)
-        self.sos_button = Button(self, text="Show health and\nSOS cards", command=print("unimplemented!"))
+        self.sos_button = Button(self, text="Show health and\nSOS cards", command=lambda: self.window.bottom.toggle())
 
         self.label.grid(column=0, row=0)
         self.box.grid(column=0, row=1)
@@ -95,9 +96,9 @@ class GagButton(Button):
     """Class for the Gag Button widget, a more complicated version of the normal tkinter Button widget."""
 
     def __init__(self, window:Tk, parent:GagFrame, image:PhotoImage, gag:tt_damage_calculator.Gag):
+        Button.__init__(self, parent)
         self.window = window
         self.gag = gag
-        Button.__init__(self, parent)
         self['image'] = image
         self['command'] = lambda: self.press()
         if self.gag.gtype == "Gag":
@@ -185,6 +186,29 @@ class SosCards(Frame):
         self.barnacle_bessie_image = PhotoImage(file=window.asset_path + '/assets/img/barnaclebessie.png')
         self.barnacle_bessie = GagButton(window, self.drop, image=self.barnacle_bessie_image, gag=tt_damage_calculator.Gag("Sos", "Barnacle Bessie", "Drop", 2, 170))
 
+class HideableBottom():
+    """Class that allows the visibility of the HP cheat sheet and SOS Cards to be toggled on or off."""
+
+    def __init__(self, window:Tk):
+        self.window = window
+        self.coghp = CogHealth(self.window)
+        self.sos = SosCards(self.window)
+        self.visible = False
+
+    def toggle(self):
+        """Toggles the visibility of the bottom."""
+
+        if self.visible:
+            self.coghp.grid_remove()
+            self.sos.grid_remove()
+            self.window.history.sos_button.configure(text='Show Health and\n SOS Cards')
+        else:
+            self.coghp.grid(column=0, row=3)
+            self.sos.grid(column=1, row=3)
+            self.window.history.sos_button.configure(text='Hide Health and\n SOS Cards')
+        self.visible = tt_damage_calculator.toggleswap(self.visible)
+        self.window.geometry('')
+
 class App(Tk):
     """Class for the gag calculator's full app."""
 
@@ -267,10 +291,9 @@ class App(Tk):
         self.results = CalculationResults(self.column_0)
         self.toggles = ToggleButtons(self, self.column_0)
 
-        self.history = HistoryFrame(self.column_1)
+        self.history = HistoryFrame(self, self.column_1)
 
-        self.coghp = CogHealth(self)
-        self.sos = SosCards(self)
+        self.bottom = HideableBottom(self)
 
     def file(self, filepath):
         """Open a specified file in its default app."""
