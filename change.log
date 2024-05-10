@@ -85,3 +85,7 @@
 - Added negative defense
 - Added snowballs
 - Added the ability to add custom gags to a calculation
+- Organic toggle is now affected by status lock. This is an experimental change and may be reverted at some point in the future.
+- Massive backend rewrite
+- Compiling of executable versions the gag calculator now uses Github Actions rather than my own hardware. This means releases for MacOS are now possible alongside Windows and Linux!
+- Executable files for Linux are now also supplied in releases. These should work for any Linux distribution that uses glibc, but Ubuntu is the distribution that is specifcally targeted.
