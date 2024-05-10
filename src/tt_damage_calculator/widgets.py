@@ -37,7 +37,7 @@ class ToggleButtons(Frame):
         Frame.__init__(self, parent)
         self.window = window
         self.organic = Button(self, text="Toggle Organic", font=('Arial', 11, 'normal'), command=self.window.toggle_organic)
-        self.lure = Checkbutton(self, text='Cog lured', variable=self.window.lure, onvalue=1, offvalue=0, font=('Arial', 11, 'normal'), command=print("unimplemented!"))
+        self.lure = Checkbutton(self, text='Cog lured', variable=self.window.lure, onvalue=1, offvalue=0, font=('Arial', 11, 'normal'), command=window.calculate)
         self.clear = Button(self, text='Reset damage', font=('Arial', 11, 'normal'))
 
         self.organic.grid(column=1, row=0, padx=5)
@@ -199,6 +199,13 @@ class App(Tk):
         self.results.update_org(self.organic.get())
         #TODO: Recolor buttons
 
+    def calculate(self):
+        """Updates the damage total according to the gags used during the current calculation."""
+
+        damage = tt_damage_calculator.full_calc(self.trap, self.sound, self.throw, self.squirt, self.drop, self.nogroup.get(), self.lure.get(), self.defense_buff.get(), self.defense_debuff.get())
+        self.results.damage_counter.configure(text=str(damage))
+        self.results.level_counter.configure(text=tt_damage_calculator.lvl_ind_string(tt_damage_calculator.lvl_ind(damage), int(self.defense_buff.get() * 100), int(self.defense_debuff.get() * 100)))
+
     def pin(self):
         """Pin or unpin the gag calculator depending on the 'pinned' variable."""
 
@@ -240,18 +247,18 @@ class App(Tk):
 
         calculations_menu = Menu(toolbar, tearoff=0)
         def_menu = Menu(calculations_menu, tearoff=0)
-        def_menu.add_radiobutton(label="None", value=0.0, variable=self.defense_buff, command=print("unimplemented!"))
-        def_menu.add_radiobutton(label="10% (1⭐)", value=0.1, variable=self.defense_buff, command=print("unimplemented!"))
-        def_menu.add_radiobutton(label="15% (2⭐)", value=0.15, variable=self.defense_buff, command=print("unimplemented!"))
-        def_menu.add_radiobutton(label="20% (3⭐)", value=0.2, variable=self.defense_buff, command=print("unimplemented!"))
-        def_menu.add_radiobutton(label="25% (4⭐)", value=0.25, variable=self.defense_buff, command=print("unimplemented!"))
+        def_menu.add_radiobutton(label="None", value=0.0, variable=self.defense_buff, command=self.calculate)
+        def_menu.add_radiobutton(label="10% (1⭐)", value=0.1, variable=self.defense_buff, command=self.calculate)
+        def_menu.add_radiobutton(label="15% (2⭐)", value=0.15, variable=self.defense_buff, command=self.calculate)
+        def_menu.add_radiobutton(label="20% (3⭐)", value=0.2, variable=self.defense_buff, command=self.calculate)
+        def_menu.add_radiobutton(label="25% (4⭐)", value=0.25, variable=self.defense_buff, command=self.calculate)
         calculations_menu.add_cascade(label="Cog Defense Up", menu=def_menu)
         def_menu2 = Menu(calculations_menu, tearoff=0)
-        def_menu2.add_radiobutton(label="None", value=0.0, variable=self.defense_debuff, command=print("unimplemented!"))
-        def_menu2.add_radiobutton(label="-20%", value=0.2, variable=self.defense_debuff, command=print("unimplemented!"))
-        def_menu2.add_radiobutton(label="-40%", value=0.4, variable=self.defense_debuff, command=print("unimplemented!"))
-        def_menu2.add_radiobutton(label="-50%", value=0.5, variable=self.defense_debuff, command=print("unimplemented!"))
-        def_menu2.add_radiobutton(label="-60%", value=0.6, variable=self.defense_debuff, command=print("unimplemented!"))
+        def_menu2.add_radiobutton(label="None", value=0.0, variable=self.defense_debuff, command=self.calculate)
+        def_menu2.add_radiobutton(label="-20%", value=0.2, variable=self.defense_debuff, command=self.calculate)
+        def_menu2.add_radiobutton(label="-40%", value=0.4, variable=self.defense_debuff, command=self.calculate)
+        def_menu2.add_radiobutton(label="-50%", value=0.5, variable=self.defense_debuff, command=self.calculate)
+        def_menu2.add_radiobutton(label="-60%", value=0.6, variable=self.defense_debuff, command=self.calculate)
         calculations_menu.add_cascade(label="Cog Defense Down", menu=def_menu2)
         calculations_menu.add_command(label="Snowball", command=lambda:(use_groupless("Snowball", 1)))
         calculations_menu.add_separator()

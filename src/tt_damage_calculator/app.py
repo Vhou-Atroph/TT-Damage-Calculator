@@ -26,12 +26,6 @@ organic = BooleanVar()
 
 settings = tt_damage_calculator.Settings(window.asset_path + "/assets/settings.toml")
 
-# Total damage calculation
-def calc_dmg(*args):
-  tot_dmg = tt_damage_calculator.full_calc(window.trap, window.sound, window.throw, window.squirt, window.drop, window.nogroup.get(), window.lure.get(), window.defense_buff.get(), window.defense_debuff.get())
-  window.results.level_counter.configure(text=tt_damage_calculator.lvl_ind_string(tt_damage_calculator.lvl_ind(tot_dmg), int(window.defense_buff.get() * 100), int(window.defense_debuff.get() * 100)))
-  window.results.damage_counter.configure(text=str(tot_dmg))
-
 # The Gags
 class GagButton(Button):
   def __init__(self, parent, image, gag):
@@ -69,7 +63,7 @@ class GagButton(Button):
     window.history.box.add("Gag used: " + data[1] + " (" + str(data[0]) + ")\n")
     if self.gag.gtype == "Gag":
       self.configure(text=int(self.cget("text")) + 1)
-    calc_dmg()
+    window.calculate()
 
 gag_frame = Frame(window.column_0)
 # Sound
@@ -164,7 +158,7 @@ gag_btns=[
 def use_groupless(name:str, damage:int):
   window.nogroup.set(window.nogroup.get() + damage)
   window.history.box.add("Gag used: " + name + " (" + str(damage) + ")\n")
-  calc_dmg()
+  window.calculate()
 
 # Cog HP
 cog_health_sheet = Frame(window)
@@ -196,10 +190,10 @@ bess_img = PhotoImage(file=window.asset_path + '/assets/img/barnaclebessie.png')
 bess = GagButton(sos_drp,image=bess_img, gag=tt_damage_calculator.Gag("Sos", "Barnacle Bessie", "Drop", 2, 170))
 
 ### Keybinds
-window.bind('<' + settings.keybinds.defense + '>', lambda par: [window.defense_buff.set(tt_damage_calculator.advance_float([0.0,0.1,0.15,0.2,0.25], window.defense_buff.get())), calc_dmg()])
-window.bind('<' + settings.keybinds.negative_defense + '>', lambda par: [window.defense_debuff.set(tt_damage_calculator.advance_float([0.0,0.2,0.4,0.5,0.6], window.defense_debuff.get())), calc_dmg()])
-window.bind('<' + settings.keybinds.lure + '>', lambda par: [window.lure.set(tt_damage_calculator.toggleswap(window.lure.get())), calc_dmg()])
-window.bind('<' + settings.keybinds.lock + '>', lambda par: [window.status_lock.set(tt_damage_calculator.toggleswap(window.status_lock.get())), calc_dmg()])
+window.bind('<' + settings.keybinds.defense + '>', lambda par: [window.defense_buff.set(tt_damage_calculator.advance_float([0.0,0.1,0.15,0.2,0.25], window.defense_buff.get())), window.calculate()])
+window.bind('<' + settings.keybinds.negative_defense + '>', lambda par: [window.defense_debuff.set(tt_damage_calculator.advance_float([0.0,0.2,0.4,0.5,0.6], window.defense_debuff.get())), window.calculate()])
+window.bind('<' + settings.keybinds.lure + '>', lambda par: [window.lure.set(tt_damage_calculator.toggleswap(window.lure.get())), window.calculate()])
+window.bind('<' + settings.keybinds.lock + '>', lambda par: [window.status_lock.set(tt_damage_calculator.toggleswap(window.status_lock.get())), window.calculate()])
 window.bind('<' + settings.keybinds.pin + '>', lambda par: [window.pinned.set(tt_damage_calculator.toggleswap(window.pinned.get())), window.pin()])
 
 # Organic gag toggle
@@ -215,7 +209,7 @@ def clear_inputs(*arg):
     i.configure(text='0')
   if not window.status_lock.get():
     window.reset_vars()
-  calc_dmg()
+  window.calculate()
 window.toggles.clear.configure(command=clear_inputs)
 window.bind('<' + settings.keybinds.reset + '>', clear_inputs)
 
