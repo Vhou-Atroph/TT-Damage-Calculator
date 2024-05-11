@@ -21,13 +21,14 @@ The downloaded archive should contain the executable, a [LICENSE](LICENSE) file,
 Downloading the Toontown Damage Calculator as a Python package will require [downloading the Python programming language](https://www.python.org/downloads/). Once this is done, you can open your command terminal and run the following command:
 
 ```shell
-pip install tt_damage_calculator
+pipx install tt_damage_calculator
 ```
 
-This will install the calculator as a Python package to your computer. You can run the calculator from the command line by inputting the following into your terminal:
+This will install the calculator as a Python package to your computer. You can run the calculator from the command line by inputting one of the following commands into your terminal:
 
 ```shell
-python -m tt_damage_calculator
+tt-damage-calculator
+tt_damage_calculator
 ```
 
 If you are unable to download the calculator via pip for your system, you will need to build it yourself by following the [Building: Wheels (All Platforms)](https://github.com/Vhou-Atroph/TT-Damage-Calculator/wiki/Building:-Wheels-(All-Platforms)) guide on the wiki.
