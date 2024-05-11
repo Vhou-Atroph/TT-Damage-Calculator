@@ -337,6 +337,16 @@ class CustomGags(Toplevel):
         self.gag_dropdown.grid(column=1, row=1, pady=3, padx=2)
         self.button.grid(column=0, row=2, columnspan=2, pady=8, padx=25)
 
+class Keybind():
+    """Class to register a keybind"""
+
+    def __init__(self, window:Tk, id:str, command):
+        try:
+            window.bind('<' + getattr(window.settings.keybinds, id) + '>', command)
+        except:
+            print("Error geting keybind for " + id + " function, using default: " + getattr(window.settings.keybinds.default(), id))
+            window.bind('<' + getattr(window.settings.keybinds.default(), id) + '>', command)
+
 class App(Tk):
     """Class for the gag calculator's full app."""
 
@@ -502,13 +512,13 @@ class App(Tk):
     def keybinds(self):
         """Creates the program's keybinds."""
 
-        self.bind('<' + self.settings.keybinds.defense + '>', lambda par: [self.defense_buff.set(tt_damage_calculator.advance_float([0.0,0.1,0.15,0.2,0.25], self.defense_buff.get())), self.calculate()])
-        self.bind('<' + self.settings.keybinds.negative_defense + '>', lambda par: [self.defense_debuff.set(tt_damage_calculator.advance_float([0.0,0.2,0.4,0.5,0.6], self.defense_debuff.get())), self.calculate()])
-        self.bind('<' + self.settings.keybinds.lure + '>', lambda par: [self.lure.set(tt_damage_calculator.toggleswap(self.lure.get())), self.calculate()])
-        self.bind('<' + self.settings.keybinds.lock + '>', lambda par: [self.status_lock.set(tt_damage_calculator.toggleswap(self.status_lock.get())), self.calculate()])
-        self.bind('<' + self.settings.keybinds.pin + '>', lambda par: [self.pinned.set(tt_damage_calculator.toggleswap(self.pinned.get())), self.pin()])
-        self.bind('<' + self.settings.keybinds.organic + '>', lambda par: [self.toggle_organic()])
-        self.bind('<' + self.settings.keybinds.reset + '>', lambda par: [self.reset_calculation()])
+        Keybind(self, "defense", lambda par: [self.defense_buff.set(tt_damage_calculator.advance_float([0.0,0.1,0.15,0.2,0.25], self.defense_buff.get())), self.calculate()])
+        Keybind(self, "negative_defense", lambda par: [self.defense_debuff.set(tt_damage_calculator.advance_float([0.0,0.2,0.4,0.5,0.6], self.defense_debuff.get())), self.calculate()])
+        Keybind(self, "lure", lambda par: [self.lure.set(tt_damage_calculator.toggleswap(self.lure.get())), self.calculate()])
+        Keybind(self, "lock", lambda par: [self.status_lock.set(tt_damage_calculator.toggleswap(self.status_lock.get())), self.calculate()])
+        Keybind(self, "pin", lambda par: [self.pinned.set(tt_damage_calculator.toggleswap(self.pinned.get())), self.pin()])
+        Keybind(self, "organic", lambda par: [self.toggle_organic()])
+        Keybind(self, "reset", lambda par: [self.reset_calculation()])
 
     def run(self):
         """Run the app."""
