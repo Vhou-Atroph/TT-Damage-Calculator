@@ -15,7 +15,9 @@ exe:
 env:
 	python3 -m venv .venv --system-site-packages
 	. .venv/bin/activate
-	python3 -m pip install -r requirements.txt
+	python3 -m pip install maturin
+	python3 -m pip install patchelf
+	python3 -m pip install pyinstaller
 
 exe-linux:
 	cargo build --release
