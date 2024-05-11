@@ -55,6 +55,24 @@ pub struct Keybinds {
     pin: String,
 }
 
+#[pymethods]
+impl Keybinds {
+
+    /// Get default keybinds in case settings.toml keybinds are unusable for whatever reason
+    #[staticmethod]
+    pub fn default() -> Keybinds {
+        Keybinds {
+            organic: String::from("Shift_L"),
+            lure: String::from("Control-l"),
+            reset: String::from("Control-r"),
+            lock: String::from("Control-x"),
+            defense: String::from("Control-d"),
+            negative_defense: String::from("Alt-d"),
+            pin: String::from("Alt-Up")
+        }
+    }
+}
+
 /// Swap a toggle
 #[pyfunction]
 pub fn toggleswap(toggle:bool) -> bool {
