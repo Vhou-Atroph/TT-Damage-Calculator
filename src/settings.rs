@@ -14,6 +14,18 @@ pub struct Settings {
     keybinds: Keybinds
 }
 
+#[pymethods]
+impl Settings {
+
+    /// Opens the Settings file.
+    #[new]
+    fn new(file:&str) -> Self {
+        let data =  fs::read_to_string(file).unwrap();
+        let settings: Settings = toml::from_str(data.as_str()).unwrap();
+        settings
+    }
+}
+
 /// Struct for the Keybinds portion of the Settings file
 /// | Field            | Description                         |
 /// |------------------|-------------------------------------|
@@ -41,18 +53,6 @@ pub struct Keybinds {
     negative_defense: String,
     #[pyo3(get, set)]
     pin: String,
-}
-
-#[pymethods]
-impl Settings {
-
-    /// Opens the Settings file.
-    #[new]
-    fn new(file:&str) -> Self {
-        let data =  fs::read_to_string(file).unwrap();
-        let settings: Settings = toml::from_str(data.as_str()).unwrap();
-        settings
-    }
 }
 
 /// Swap a toggle
