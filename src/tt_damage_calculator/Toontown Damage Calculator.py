@@ -7,5 +7,4 @@ Workaround for Pyinstaller #2560 <https://github.com/pyinstaller/pyinstaller/iss
 
 import tt_damage_calculator
 
-app = tt_damage_calculator.App()
-app.mainloop()
+tt_damage_calculator.main()

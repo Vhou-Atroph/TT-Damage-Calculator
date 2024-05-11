@@ -25,6 +25,10 @@ include = [
   { path = "tt_damage_calculator/assets/*", format = ["sdist", "wheel"] }
 ]
 
+[project.scripts]
+tt-damage-calculator = "tt_damage_calculator:main"
+tt_damage_calculator = "tt_damage_calculator:main"
+
 [project.urls]
 "Homepage" = "https://vhou.gloop.group/projects/gagcalc"
 "Repository" = "https://github.com/Vhou-Atroph/TT-Damage-Calculator"

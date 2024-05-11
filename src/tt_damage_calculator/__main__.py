@@ -12,4 +12,4 @@ CONTRIBUTORS:
 from .widgets import App
 
 app = App()
-app.mainloop()
+app.run()

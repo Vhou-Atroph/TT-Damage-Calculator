@@ -509,3 +509,8 @@ class App(Tk):
         self.bind('<' + self.settings.keybinds.pin + '>', lambda par: [self.pinned.set(tt_damage_calculator.toggleswap(self.pinned.get())), self.pin()])
         self.bind('<' + self.settings.keybinds.organic + '>', lambda par: [self.toggle_organic()])
         self.bind('<' + self.settings.keybinds.reset + '>', lambda par: [self.reset_calculation()])
+
+    def run(self):
+        """Run the app."""
+
+        self.mainloop()
