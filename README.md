@@ -18,11 +18,13 @@ The downloaded archive should contain the executable, a [LICENSE](LICENSE) file,
 
 ### Python Package
 
-Downloading the Toontown Damage Calculator as a Python package will require [downloading the Python programming language](https://www.python.org/downloads/). Once this is done, you can open your command terminal and run the following command:
+Downloading the Toontown Damage Calculator as a Python package will require [downloading the Python programming language](https://www.python.org/downloads/) and [pipx](https://pipx.pypa.io/stable/installation/). Once this is done, you can open your command terminal and run the following command:
 
 ```shell
 pipx install tt_damage_calculator
 ```
+
+If you don't want to use pipx, `pip install tt_damage_calculator` should also work.
 
 This will install the calculator as a Python package to your computer. You can run the calculator from the command line by inputting one of the following commands into your terminal:
 
