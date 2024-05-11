@@ -8,7 +8,7 @@
 
 ## Downloading
 
-### Windows and MacOS Executable
+### Windows, Ubuntu, and MacOS Executable
 
 The executable version of the calculator requires the least setup, and is highly portable with the limitation that it only easily works on devices running the required operating system. You can find a download for the latest version of the executable either at <https://github.com/Vhou-Atroph/TT-Damage-Calculator/releases/latest/> on GitHub, or at <https://vhou.gloop.group/projects/gagcalc> near the bottom of the page.
 
@@ -18,7 +18,7 @@ The downloaded archive should contain the executable, a [LICENSE](LICENSE) file,
 
 ### Python Package
 
-The Python Package version of the calculator is the most accessible across operating systems that are not Windows or MacOS. Downloading the Toontown Damage Calculator as a Python package will require [downloading the Python programming language](https://www.python.org/downloads/). Once this is done, you can open your command terminal and run the following command:
+Downloading the Toontown Damage Calculator as a Python package will require [downloading the Python programming language](https://www.python.org/downloads/). Once this is done, you can open your command terminal and run the following command:
 
 ```shell
 pip install tt_damage_calculator
