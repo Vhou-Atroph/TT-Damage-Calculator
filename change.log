@@ -89,3 +89,4 @@
 - Massive backend rewrite
 - Compiling of executable versions the gag calculator now uses Github Actions rather than my own hardware. This means releases for MacOS are now possible alongside Windows and Linux!
 - Executable files for Linux are now also supplied in releases. These should work for any Linux distribution that uses glibc, but Ubuntu is the distribution that is specifcally targeted.
+- Keybinds now have a hardcoded default, if an error happens when setting a keybind it will fall back on this default.
