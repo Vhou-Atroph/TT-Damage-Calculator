@@ -40,7 +40,7 @@ If you are unable to download the calculator via pip for your system, you will n
 On certain Linux distributions and MacOS, your installation of Python may not come with tkinter, which will greatly restrict your ability to run the program (you won't be able to). You can fix this with one of the below commands:
 
 ```shell
-sudo apt-get python3-tk # Debian based distributions
+sudo apt-get install python3-tk # Debian based distributions
 sudo dnf install python3-tkinter # Fedora based distributions
 sudo yum install python3-tkinter # RHEL based distributions
 sudo pacman -S tk # Arch based distributions
