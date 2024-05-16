@@ -18,7 +18,7 @@ The downloaded archive should contain the executable, a [LICENSE](LICENSE) file,
 
 #### Linux Executable
 
-The Linux executable is compiled on an Ubuntu Github Actions runner, but the application should work on any distribution using the GCC.
+The Linux executable is compiled on an Ubuntu Github Actions runner, but the application should work on any distribution that uses glibc.
 
 ![TT-Damage-Calculator running on Arch Linux](wiki/arch.png)
 
