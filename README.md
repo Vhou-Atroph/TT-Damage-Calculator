@@ -8,13 +8,19 @@
 
 ## Downloading
 
-### Windows, Ubuntu, and MacOS Executable
+### Windows, Linux, and MacOS Executable
 
 The executable version of the calculator requires the least setup, and is highly portable with the limitation that it only easily works on devices running the required operating system. You can find a download for the latest version of the executable either at <https://github.com/Vhou-Atroph/TT-Damage-Calculator/releases/latest/> on GitHub, or at <https://vhou.gloop.group/projects/gagcalc> near the bottom of the page.
 
 The downloaded archive should contain the executable, a [LICENSE](LICENSE) file, and the assets folder. Once you extract the zip file to your preferred directory, the calculator should run normally!
 
 `Note: The MacOS executable version of the gag calculator may not work properly, as it is untested due to a lack of access to the relevant hardware.`
+
+#### Linux Executable
+
+The Linux executable is compiled on an Ubuntu Github Actions runner, but the application should work on any distribution using the GCC.
+
+![TT-Damage-Calculator running on Arch Linux](wiki/arch.png)
 
 ### Python Package
 
