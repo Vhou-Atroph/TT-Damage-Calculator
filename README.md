@@ -49,11 +49,16 @@ On certain Linux distributions and MacOS, your installation of Python may not co
 sudo apt-get install python3-tk # Debian based distributions
 sudo dnf install python3-tkinter # Fedora based distributions
 sudo yum install python3-tkinter # RHEL based distributions
-sudo pacman -S tk # Arch based distributions
+sudo pacman -Syu tk # Arch based distributions
 sudo zypper in python-tk # openSUSE based distributions
 sudo xbps-install python3-tkinter # Void based distributions
 brew install python-tk # MacOS
 ```
+
+For other distributions, you will need to consult your wikis:
+
+- [Gentoo](https://wiki.gentoo.org/wiki/Tkinter)
+- [NixOS](https://nixos.wiki/wiki/Python)
 
 ## Building
 
