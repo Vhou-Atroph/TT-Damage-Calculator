@@ -10,15 +10,6 @@ exe:
 	copy ".\src\tt_damage_calculator\assets\img" ".\dist\assets\img"
 	copy "./LICENSE" "./dist"
 
-# creates a virtual environment for compiling the calculator
-.ONESHELL:
-env:
-	python3 -m venv .venv --system-site-packages
-	. .venv/bin/activate
-	python3 -m pip install maturin
-	python3 -m pip install patchelf
-	python3 -m pip install pyinstaller
-
 exe-linux:
 	cargo build --release
 	mv -n target/release/libtt_damage_calculator.so src/tt_damage_calculator/tt_damage_calculator.so
