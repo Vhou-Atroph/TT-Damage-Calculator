@@ -79,14 +79,18 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - name: Install requirements
+      - name: Build virtual environment
         run: |
           sudo apt-get install python3-tk
+          sudo apt-get install python3-venv
+          python3 -m venv .env
+          source .env/bin/activate
           pip install pyinstaller
       - name: Build executable
         run: |
           cargo build --release
           mv -n target/release/libtt_damage_calculator.so src/tt_damage_calculator/tt_damage_calculator.so
+          source .env/bin/activate
           pyinstaller "Toontown Damage Calculator.spec"
           cp -r -f src/tt_damage_calculator/assets dist
           cp -f LICENSE dist/LICENSE
