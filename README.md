@@ -60,6 +60,22 @@ For other distributions, you will need to consult your wikis:
 - [Gentoo](https://wiki.gentoo.org/wiki/Tkinter)
 - [NixOS](https://nixos.wiki/wiki/Python)
 
+### Arch User Repository
+
+If you use an Arch-based Linux distribution, you can download the calculator through the [AUR](https://aur.archlinux.org/)! To do so, you can run the following commands through your terminal:
+
+```shell
+git clone https://aur.archlinux.org/tt-damage-calculator.git
+cd tt-damage-calculator
+makepkg -si
+```
+
+Alternatively, you can use an AUR helper to install the package. Once it is installed, you will be able to run the program on the command line just as if you downloaded it as a Python package:
+
+```shell
+tt-damage-calculator
+```
+
 ## Building
 
 There are guides on the [repository's wiki](https://github.com/Vhou-Atroph/TT-Damage-Calculator/wiki) for building the calculator:
