@@ -1,0 +1,2 @@
+pyinstaller==6.6.0
+maturin==1.5.1

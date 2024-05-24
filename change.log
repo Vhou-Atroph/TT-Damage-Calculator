@@ -76,3 +76,18 @@
 
 --V4.2.1--
 - Fixed a bug that caused a 404 error when using the update checker.
+
+--V4.3.0--
+- Updated the calculator for Under New Management!
+- Organic squirt and drop now have a 15% bonus
+- Organic gag damage ceils in general
+- Reinforced Plating is no longer a mechanic
+- Added negative defense
+- Added snowballs
+- Added the ability to add custom gags to a calculation
+- Organic toggle is now affected by status lock. This is an experimental change and may be reverted at some point in the future.
+- Massive backend rewrite
+- Compiling of executable versions the gag calculator now uses Github Actions rather than my own hardware. This means releases for MacOS are now possible alongside Windows and Linux!
+- Executable files for Linux are now also supplied in releases. These should work for any Linux distribution that uses glibc, but Ubuntu is the distribution that is specifcally targeted.
+- Keybinds now have a hardcoded default, if an error happens when setting a keybind it will fall back on this default.
+- Removed the menu bar's update checker, this change is tentative and there may be a new iteration of the update checker in the future.

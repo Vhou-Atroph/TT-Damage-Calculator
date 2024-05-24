@@ -1,70 +1,101 @@
-# TT-Damage-Calculator
+# ![TT-Damage-Calculator](wiki/headerfooter.png)
 
-![Badge showing the license of the Toontown Damage Calculator.](https://img.shields.io/github/license/Vhou-Atroph/TT-Damage-Calculator) [![Badge showing the latest release of the Toontown Damage Calculator.](https://img.shields.io/github/v/release/Vhou-Atroph/TT-Damage-Calculator)](https://github.com/Vhou-Atroph/TT-Damage-Calculator/releases/latest) ![Badge showing the number of downloads the Toontown Damage Calculator has received.](https://img.shields.io/github/downloads/Vhou-Atroph/TT-Damage-Calculator/total)
+![Badge showing the current workflow status of the Toontown Damage Calculator](https://img.shields.io/github/actions/workflow/status/Vhou-Atroph/TT-Damage-Calculator/ci.yml) [![Badge showing the latest release of the Toontown Damage Calculator.](https://img.shields.io/github/v/release/Vhou-Atroph/TT-Damage-Calculator)](https://github.com/Vhou-Atroph/TT-Damage-Calculator/releases/latest) ![Badge showing the license of the Toontown Damage Calculator.](https://img.shields.io/github/license/Vhou-Atroph/TT-Damage-Calculator) ![Badge showing the number of downloads the Toontown Damage Calculator has received.](https://img.shields.io/github/downloads/Vhou-Atroph/TT-Damage-Calculator/total)
 
  Gag damage calculator for [Toontown Rewritten](https://toontownrewritten.com/).
 
-![The Program](preview.png)
+![The Program](wiki/preview.png)
+
+## Downloading
+
+### Windows, Linux, and MacOS Executable
+
+The executable version of the calculator requires the least setup, and is highly portable with the limitation that it only easily works on devices running the required operating system. You can find a download for the latest version of the executable either at <https://github.com/Vhou-Atroph/TT-Damage-Calculator/releases/latest/> on GitHub, or at <https://vhou.gloop.group/projects/gagcalc> near the bottom of the page.
+
+The downloaded archive should contain the executable, a [LICENSE](LICENSE) file, and the assets folder. Once you extract the zip file to your preferred directory, the calculator should run normally!
+
+`Note: The MacOS executable version of the gag calculator may not work properly, as it is untested due to a lack of access to the relevant hardware.`
+
+#### Linux Executable
+
+The Linux executable is compiled on an Ubuntu Github Actions runner, but the application should work on any distribution that uses glibc.
+
+![TT-Damage-Calculator running on Arch Linux](wiki/arch.png)
+
+### Python Package
+
+Downloading the Toontown Damage Calculator as a Python package will require [downloading the Python programming language](https://www.python.org/downloads/) and [pipx](https://pipx.pypa.io/stable/installation/). Once this is done, you can open your command terminal and run the following command:
+
+```shell
+pipx install tt_damage_calculator
+```
+
+If you don't want to use pipx, `pip install tt_damage_calculator` should also work.
+
+This will install the calculator as a Python package to your computer. You can run the calculator from the command line by inputting one of the following commands into your terminal:
+
+```shell
+tt-damage-calculator
+tt_damage_calculator
+```
+
+If you are unable to download the calculator via pip for your system, you will need to build it yourself by following the [Building: Wheels (All Platforms)](https://github.com/Vhou-Atroph/TT-Damage-Calculator/wiki/Building:-Wheels-(All-Platforms)) guide on the wiki.
+
+#### On Linux and MacOS
+
+On certain Linux distributions and MacOS, your installation of Python may not come with tkinter, which will greatly restrict your ability to run the program (you won't be able to). You can fix this with one of the below commands:
+
+```shell
+sudo apt-get install python3-tk # Debian based distributions
+sudo dnf install python3-tkinter # Fedora based distributions
+sudo yum install python3-tkinter # RHEL based distributions
+sudo pacman -Syu tk # Arch based distributions
+sudo zypper in python-tk # openSUSE based distributions
+sudo xbps-install python3-tkinter # Void based distributions
+brew install python-tk # MacOS
+```
+
+For other distributions, you will need to consult your wikis:
+
+- [Gentoo](https://wiki.gentoo.org/wiki/Tkinter)
+- [NixOS](https://nixos.wiki/wiki/Python)
+
+### Arch User Repository
+
+If you use an Arch-based Linux distribution, you can download the calculator through the [AUR](https://aur.archlinux.org/)! To do so, you can run the following commands through your terminal:
+
+```shell
+git clone https://aur.archlinux.org/tt-damage-calculator.git
+cd tt-damage-calculator
+makepkg -si
+```
+
+Alternatively, you can use an AUR helper to install the package. Once it is installed, you will be able to run the program on the command line just as if you downloaded it as a Python package:
+
+```shell
+tt-damage-calculator
+```
 
 ## Building
 
-### Prerequisites
+There are guides on the [repository's wiki](https://github.com/Vhou-Atroph/TT-Damage-Calculator/wiki) for building the calculator:
 
-1. The Python 3 Programming Language. Install from <https://www.python.org/downloads/>.
-2. The Rust Programming Language. Install by following the instructions at <https://www.rust-lang.org/learn/get-started>.
-3. Maturin. Install by following the instructions at <https://www.maturin.rs/installation.html>.
-
-### Creating the wheel
-
-Once the prerequisites are installed, clone the repository with git:
-
-```shell
-git clone https://github.com/Vhou-Atroph/TT-Damage-Calculator
-```
-
-With the repository cloned, navigate to the directory and build the project with maturin:
-
-```shell
-maturin build -i python
-```
-
-This should have created the "target" file in the project's main directory. Navigate to `target/wheels` and install the created file with pip:
-
-```shell
-pip install [file]
-```
-
-### Running
-
-After installing the wheel, you can run it from your favorite command terminal with:
-
-```shell
-python -m tt_damage_calculator
-```
-
-### What if I don't want to build the program?
-
-#### GitHub
-
-For some versions of the calculator, I will compile it completely and release a standalone executable for users who either do not want to or are unable to compile the dependencies themselves. You can find the latest release at <https://github.com/Vhou-Atroph/TT-Damage-Calculator/releases/latest>.
-
-GitHub executable releases target Windows users. Linux users must use Pypi to install this program.
-
-#### Pypi
-
-Alternatively, you can install the package using Pypi:
-
-```shell
-pip install tt_damage_calculator
-```
-
-After installing the package, you can run it via the terminal:
-
-```shell
-python -m tt_damage_calculator
-```
+- [Building: Wheels (All Platforms)](https://github.com/Vhou-Atroph/TT-Damage-Calculator/wiki/Building:-Wheels-(All-Platforms))
+- [Building: Linux](https://github.com/Vhou-Atroph/TT-Damage-Calculator/wiki/Building:-Linux)
+- [Building: MacOS Executable](https://github.com/Vhou-Atroph/TT-Damage-Calculator/wiki/Building:-MacOS-Executable)
+- [Building: Windows Executable](https://github.com/Vhou-Atroph/TT-Damage-Calculator/wiki/Building:-Windows-Executable)
+- [Building: Github Actions](https://github.com/Vhou-Atroph/TT-Damage-Calculator/wiki/Building:-Github-Actions)
 
 ## Usage
+
+The [TT-Damage-Calculator wiki](https://github.com/Vhou-Atroph/TT-Damage-Calculator/wiki) has several guides on the usage of the program:
+
+- [Usage: Defense](https://github.com/Vhou-Atroph/TT-Damage-Calculator/wiki/Usage:-Defense)
+- [Usage: Gags](https://github.com/Vhou-Atroph/TT-Damage-Calculator/wiki/Usage:-Gags)
+- [Usage: History](https://github.com/Vhou-Atroph/TT-Damage-Calculator/wiki/Usage:-History)
+- [Usage: Keybinds](https://github.com/Vhou-Atroph/TT-Damage-Calculator/wiki/Usage:-Keybinds)
+- [Usage: Lock Status](https://github.com/Vhou-Atroph/TT-Damage-Calculator/wiki/Usage:-Lock-Status)
+- [Usage: Lure](https://github.com/Vhou-Atroph/TT-Damage-Calculator/wiki/Usage:-Lure)
 
 ### Gag Selection
 
@@ -72,7 +103,7 @@ Click any gag on the grid to add it to the calculation.
 
 ### Statuses/Modifiers
 
-There are three buttons available above the gag selection that allow for certain functionalities: if a cog being lured that round, whether a gag is organic or not, and the ability to reset the current calculation. Other cog modifiers such as defense and v2 level can be found in the menu bar under "Calculations."
+There are three buttons available above the gag selection that allow for certain functionalities: if a cog being lured that round, whether a gag is organic or not, and the ability to reset the current calculation. Other cog modifiers such as defense can be found in the menu bar under "Calculations."
 
 ### Other Features
 
@@ -81,15 +112,18 @@ There are two buttons in the bottom right corner of the program.
 'Show Health and SOS Cards' brings up a grid of all cog health values from Level 7 to Level 20, as well as the major SOS cards for Trap, Sound, and Drop. This can be toggled by clicking on it a second time.
 
 The program has various keybinds to expedite calculation:
-| Keybind     | Description         |
-| ----------- | ------------------- |
-| shift       | Toggle Organic      |
-| ctrl+l      | Toggle Lure         |
-| ctrl+r      | Finish Calculation  |
-| ctrl+d      | Cycle  Defense      |
-| ctrl+v      | Cycle v2 levels     |
-| ctrl+x      | Lock/Unlock statuses|
-| alt+up      | Toggle Pinned Window|
+
+| Keybind     | Description             |
+| ----------- | ----------------------- |
+| shift       | Toggle Organic          |
+| ctrl+l      | Toggle Lure             |
+| ctrl+r      | Reset  Calculation      |
+| ctrl+d      | Cycle  Defense          |
+| alt+d       | Cycle  Negative Defense |
+| ctrl+x      | Lock/Unlock statuses    |
+| alt+up      | Toggle Pinned Window    |
+
+It is possible to change these keybinds. There is a guide on the wiki to doing so on the [Usage: Keybinds](https://github.com/Vhou-Atroph/TT-Damage-Calculator/wiki/Usage:-Keybinds#editing-a-keybind) page.
 
 ## License
 
