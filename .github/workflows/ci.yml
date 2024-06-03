@@ -145,7 +145,7 @@ jobs:
           pip install pyinstaller
           cargo rustc --release -- -C link-arg=-undefined -C link-arg=dynamic_lookup
           mv ./target/release/libtt_damage_calculator.dylib ./src/tt_damage_calculator/tt_damage_calculator.so
-          pyinstaller "src/tt_damage_calculator/Toontown Damage Calculator.py" --windowed
+          pyinstaller "src/tt_damage_calculator/Toontown Damage Calculator.py" --windowed --onefile'src/tt_damage_calculator/assets/img/whole-cream-pie.ico'
           cp -R ./src/tt_damage_calculator/assets ./dist/assets
           cp -R ./LICENSE ./dist
       - name: Upload executable
