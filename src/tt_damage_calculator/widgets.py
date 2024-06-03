@@ -370,7 +370,7 @@ class App(Tk):
 
         self.asset_path = str(pathlib.Path(__file__).parent.resolve())
         if getattr(sys, 'frozen', False):
-            self.asset_path = Patch("./").parent.resolve()
+            self.asset_path = str(pathlib.Path("./").parent.resolve())
 
     def reset_tracks(self):
         """Empties the track lists and sets nogroup to 0 for the next calculation."""
