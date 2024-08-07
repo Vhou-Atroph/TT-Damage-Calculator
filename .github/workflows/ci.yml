@@ -148,6 +148,8 @@ jobs:
           pyinstaller "src/tt_damage_calculator/Toontown Damage Calculator.py" --onefile --windowed
           cp -R ./src/tt_damage_calculator/assets ./dist/assets
           cp -R ./LICENSE ./dist
+          cp -R ./src/tt_damage_calculator/assets "./dist/Toontown Damage Calculator.app/Contents/MacOS/assets"
+          cp -R ./LICENSE "./dist/Toontown Damage Calculator.app/Contents/MacOS"
       - name: Upload executable
         uses: actions/upload-artifact@v4
         with:
