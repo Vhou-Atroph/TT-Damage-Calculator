@@ -369,6 +369,9 @@ class App(Tk):
         """Gets the asset path for the program."""
 
         self.asset_path = str(pathlib.Path(__file__).parent.resolve())
+        if platform.system() == "Darwin":
+            self.asset_path = pathlib.Path(os.path.dirname(os.path.abspath(__file__)))
+
         if getattr(sys, 'frozen', False):
             self.asset_path = str(pathlib.Path("./").parent.resolve())
 
