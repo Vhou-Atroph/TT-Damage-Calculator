@@ -127,7 +127,7 @@ jobs:
 
   
   macos-exe:
-    runs-on: macos-latest
+    runs-on: macos-12
     strategy:
       fail-fast: false
       matrix:
@@ -145,7 +145,7 @@ jobs:
           pip install pyinstaller
           cargo rustc --release -- -C link-arg=-undefined -C link-arg=dynamic_lookup
           mv ./target/release/libtt_damage_calculator.dylib ./src/tt_damage_calculator/tt_damage_calculator.so
-          pyinstaller "Toontown Damage Calculator.spec"
+          pyinstaller "src/tt_damage_calculator/Toontown Damage Calculator.py" --onefile --windowed
           cp -R ./src/tt_damage_calculator/assets ./dist/assets
           cp -R ./LICENSE ./dist
       - name: Upload executable
@@ -159,7 +159,7 @@ jobs:
     strategy:
       matrix:
         platform:
-          - runner: macos-latest
+          - runner: macos-12
             target: x86_64
           - runner: macos-14
             target: aarch64

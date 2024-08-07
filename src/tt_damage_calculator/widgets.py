@@ -369,8 +369,11 @@ class App(Tk):
         """Gets the asset path for the program."""
 
         self.asset_path = str(pathlib.Path(__file__).parent.resolve())
-        if getattr(sys, 'frozen', False) and hasattr(sys, '_MEIPASS'):
-            self.asset_path = os.getcwd()
+        if platform.system() == "Darwin":
+            self.asset_path = pathlib.Path(os.path.dirname(os.path.abspath(__file__)))
+
+        if getattr(sys, 'frozen', False):
+            self.asset_path = str(pathlib.Path("./").parent.resolve())
 
     def reset_tracks(self):
         """Empties the track lists and sets nogroup to 0 for the next calculation."""

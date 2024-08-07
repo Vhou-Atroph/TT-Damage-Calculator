@@ -91,3 +91,7 @@
 - Executable files for Linux are now also supplied in releases. These should work for any Linux distribution that uses glibc, but Ubuntu is the distribution that is specifcally targeted.
 - Keybinds now have a hardcoded default, if an error happens when setting a keybind it will fall back on this default.
 - Removed the menu bar's update checker, this change is tentative and there may be a new iteration of the update checker in the future.
+
+--V4.3.1--
+- Changes to how the MacOS executable finds resources. This hopefully allows it to actually run.
+- Compatibility has been moved from macos-latest to macos-12.
